@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Dress</string>
+    <string name="app_name">Pireply</string>
+    <string name="Cart">Cart</string>
+    <string name="Home">Home</string>
+    <string name="Profile">Profile</string>
+    <string name="Categories">Categories</string>
 </resources>

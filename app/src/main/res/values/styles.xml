@@ -3,13 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#f8bbd0</item>
-        <item name="colorPrimaryDark">#c51162</item>
-        <item name="colorPrimaryLight">#fce4ec</item>
-        <item name="colorAccent">#aa00ff</item>
-        <item name="black">#000000</item>
-        <item name="white">#ffffff</item>
-
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
 </resources>
