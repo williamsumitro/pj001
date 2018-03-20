@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.main.MainActivity">
-
-        </activity>
-        <activity android:name=".view.splash.splashscreen"
+        <activity
+            android:name=".view.view.main.MainActivity"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.splash.splashscreen"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +21,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.view.product.DetailProduct"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.outletdetail.activity.DetailOutlet"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.authentication.Login"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.authentication.Register"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.DetailProduct_details"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.DetailProduct_sizeguide"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.DetailProduct_courier"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.DetailProduct_discussions"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.DetailProduct_reviews"
+            android:theme="@style/noactionbar"/>
     </application>
 
 </manifest>

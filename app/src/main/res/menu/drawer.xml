@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/drawergroup_my"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/drawer_mystore"
+            android:title="My Store"/>
+    </group>
+    <group android:id="@+id/drawergroup_notlogin"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/drawer_notloginhome"
+            android:title="@string/Home"/>
+        <item
+            android:id="@+id/drawer_login"
+            android:title="Login"/>
+        <item
+            android:id="@+id/drawer_register"
+            android:title="Register"/>
+    </group>
+    <group android:id="@+id/drawergroup_login"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/drawer_home"
+            android:title="@string/Home"/>
+        <item
+            android:id="@+id/drawer_order"
+            android:title="Order"/>
+        <item
+            android:id="@+id/drawer_wishlist"
+            android:title="@string/Wishlist" />
+        <item
+            android:id="@+id/drawer_favoritestore"
+            android:title="Favorite Store" />
+        <item
+            android:id="@+id/drawer_productdiscussion"
+            android:title="Product Discussion" />
+        <item
+            android:id="@+id/drawer_settings"
+            android:title="@string/Settings" />
+        <item
+            android:id="@+id/drawer_help"
+            android:title="Help" />
+        <item
+            android:id="@+id/drawer_logout"
+            android:title="@string/Logout" />
+    </group>
+
+</menu>

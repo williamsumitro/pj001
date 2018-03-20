@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:id="@+id/detailoutlet_appbar">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="280dp"
+            android:id="@+id/detailoutlet_collaptoolbar"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleEnabled="false">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax">
+                <ImageView
+                    android:id="@+id/detailoutlet_imgBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    app:layout_collapseMode="parallax"
+                    android:src="@drawable/fake"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:alpha="0.5"
+                    android:background="@android:color/black"
+                    android:fitsSystemWindows="true"/>
+                <ImageView
+                    android:id="@+id/shadow"
+                    android:layout_marginTop="-2dp"
+                    android:layout_marginBottom="-2dp"
+                    android:layout_marginLeft="-2dp"
+                    android:layout_marginRight="-2dp"
+                    android:layout_alignTop="@+id/detailoutlet_circleLogo"
+                    android:layout_alignBottom="@+id/detailoutlet_circleLogo"
+                    android:layout_alignStart="@+id/detailoutlet_circleLogo"
+                    android:layout_alignEnd="@+id/detailoutlet_circleLogo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/circle2"
+                    android:layout_alignLeft="@+id/detailoutlet_circleLogo"
+                    android:layout_alignRight="@+id/detailoutlet_circleLogo" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/detailoutlet_circleLogo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_above="@+id/linearLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/user" />
+
+                <ImageView
+                    android:id="@+id/detailoutlet_imgMail"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignTop="@+id/detailoutlet_imgAddtocontact"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toEndOf="@+id/detailoutlet_imgCall"
+                    android:layout_toRightOf="@+id/detailoutlet_imgCall"
+                    android:src="@drawable/circleemail" />
+
+                <ImageView
+                    android:id="@+id/detailoutlet_imgCall"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/detailoutlet_imgMail"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/circlecall"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp" />
+
+
+                <ImageView
+                    android:id="@+id/detailoutlet_imgAddtocontact"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignBottom="@+id/detailoutlet_circleLogo"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/circle_phonebook" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="30dp"
+                    android:layout_alignParentLeft="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_marginTop="-5dp"
+                            android:id="@+id/detailoutlet_tvNamaToko"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nama Toko"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp">
+                            <ImageView
+                                android:id="@+id/detailoutlet_imgAveragerating"
+                                android:layout_width="150dp"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="-10dp"
+                                android:src="@drawable/star5"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detailoutlet_Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_above="@+id/shadow"
+                android:layout_gravity="top"
+                android:layout_toEndOf="@+id/detailoutlet_imgCall"
+                app:layout_collapseMode="pin"
+                android:layout_toRightOf="@+id/detailoutlet_imgCall" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/detailoutlet_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabTextColor="@color/black"
+            app:tabIndicatorColor="@color/black"
+            app:tabSelectedTextColor="@color/black"
+            app:tabMode="fixed"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/detailoutlet_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+</android.support.design.widget.CoordinatorLayout>
