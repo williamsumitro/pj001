@@ -61,15 +61,15 @@ public class UlasanoutletFragment extends Fragment {
     }
     private void initData(){
         adapter = new UlasanoutletRVAdapter(reviewList, getContext());
-        Review review = new Review("Krenny", "Stephen Hawking", "Asyikkk masih perawan hehehe", "1 year ago", R.drawable.fake, R.drawable.fakeuser1, R.drawable.star5);
-        reviewList.add(review);
-        review = new Review("Krenny", "Bill Gates", "Bah gak perawan lagi, kecewa kali njirrr", "8 months ago", R.drawable.fake, R.drawable.fakeuser2, R.drawable.star1_2);
-        reviewList.add(review);
-        review = new Review("Krenny", "Warren Buffet", "Pffttt aku gak sanggup narik nya coeg", "4 months ago", R.drawable.fake, R.drawable.fakeuser3, R.drawable.star3);
-        reviewList.add(review);
-        review = new Review("Krenny", "Jack Ma", "Boleh lah, lebih bagus dibanding yang cina", "3 months ago", R.drawable.fake, R.drawable.fakeuser4, R.drawable.star4);
-        reviewList.add(review);
-        review = new Review("Krenny", "Elon Musk", "Nice", "2 months ago", R.drawable.fake, R.drawable.fakeuser5, R.drawable.star5);
-        reviewList.add(review);
+//        Review review = new Review("Krenny", "Stephen Hawking", "Asyikkk masih perawan hehehe", "1 year ago", R.drawable.fake, R.drawable.fakeuser1, R.drawable.star5);
+//        reviewList.add(review);
+//        review = new Review("Krenny", "Bill Gates", "Bah gak perawan lagi, kecewa kali njirrr", "8 months ago", R.drawable.fake, R.drawable.fakeuser2, R.drawable.star1_2);
+//        reviewList.add(review);
+//        review = new Review("Krenny", "Warren Buffet", "Pffttt aku gak sanggup narik nya coeg", "4 months ago", R.drawable.fake, R.drawable.fakeuser3, R.drawable.star3);
+//        reviewList.add(review);
+//        review = new Review("Krenny", "Jack Ma", "Boleh lah, lebih bagus dibanding yang cina", "3 months ago", R.drawable.fake, R.drawable.fakeuser4, R.drawable.star4);
+//        reviewList.add(review);
+//        review = new Review("Krenny", "Elon Musk", "Nice", "2 months ago", R.drawable.fake, R.drawable.fakeuser5, R.drawable.star5);
+//        reviewList.add(review);
     }
 }

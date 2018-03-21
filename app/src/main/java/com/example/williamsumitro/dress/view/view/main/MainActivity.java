@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         handler = new Handler();
         titles = getResources().getStringArray(R.array.nav_titles);
-
     }
     private void setupNavigationView(){
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(navIndex == 0)
+        if(navIndex == 1)
             getMenuInflater().inflate(R.menu.main, menu);
         // when fragment is notifications, load the menu created for notifications
 //        if (navItemIndex == 3) {

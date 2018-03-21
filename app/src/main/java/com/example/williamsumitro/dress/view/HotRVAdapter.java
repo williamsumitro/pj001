@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Cloth;
-import com.example.williamsumitro.dress.view.view.product.DetailProduct;
+import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 
 import java.util.List;
 

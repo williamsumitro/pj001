@@ -16,6 +16,7 @@
     <string name="closeDrawer">close_drawer</string>
 
     <string-array name="nav_titles">
+        <item>My Store</item>
         <item>@string/app_name</item>
         <item>Wishlist</item>
         <item>Settings</item>

@@ -39,12 +39,12 @@ public class UlasanoutletRVAdapter extends RecyclerView.Adapter<UlasanoutletRVAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Review review = reviewList.get(position);
-        holder.gambarproduk.setImageResource(review.getGambarproduk());
+//        holder.gambarproduk.setImageResource(review.getGambarproduk());
         holder.review.setText(review.getReview());
         holder.namauser.setText(review.getNamauser());
-        holder.jangkareview.setText(review.getJangkareview());
-        holder.namaproduk.setText(review.getNamaproduk());
-        holder.rating.setImageResource(review.getRating());
+//        holder.jangkareview.setText(review.getJangkareview());
+//        holder.namaproduk.setText(review.getNamaproduk());
+//        holder.rating.setImageResource(review.getRating());
         holder.gambaruser.setImageResource(review.getGambaruser());
     }
 

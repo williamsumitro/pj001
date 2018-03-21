@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.product;
+package com.example.williamsumitro.dress.view.view.product.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.view.outletdetail.activity.DetailOutlet;
+import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductSlideImagesAdapter;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -43,7 +44,6 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_tvLastOnline) TextView lastonline;
     @BindView(R.id.detailproduct_linearOutlet) LinearLayout outlet;
     @BindView(R.id.detailproduct_imgWish) ImageView wish;
-    @BindView(R.id.detailproduct_imgRating) ImageView rating;
     @BindView(R.id.detailproduct_imgFotoToko) ImageView fotoko;
     @BindView(R.id.detailproduct_btnSizeguides) Button sizeguides;
     @BindView(R.id.detailproduct_btnProductdetails) Button productdetails;
@@ -70,6 +70,20 @@ public class DetailProduct extends AppCompatActivity {
         initClick();
     }
     private void initClick(){
+        productdetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailProduct_details.class);
+                initanim(intent);
+            }
+        });
+        sizeguides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailProduct_sizeguide.class);
+                initanim(intent);
+            }
+        });
         outlet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

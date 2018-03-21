@@ -10,13 +10,13 @@
     <item
         android:id="@+id/menu_notification"
         android:orderInCategory="100"
-        android:title="@string/Search"
+        android:title="Notification"
         android:icon="@drawable/notification"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_bag"
         android:orderInCategory="100"
-        android:title="@string/Search"
+        android:title="Bag"
         android:icon="@drawable/bag"
         app:showAsAction="always" />
 </menu>

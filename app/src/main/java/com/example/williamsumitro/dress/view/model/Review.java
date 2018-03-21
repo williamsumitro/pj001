@@ -5,24 +5,15 @@ package com.example.williamsumitro.dress.view.model;
  */
 
 public class Review {
-    private String namaproduk, namauser, review, jangkareview;
-    private int gambarproduk, gambaruser, rating;
-    public Review(String namaproduk, String namauser, String review, String jangkareview, int gambarproduk, int gambaruser, int rating){
-        this.namaproduk = namaproduk;
+    private String namauser, review, tanggal;
+    private int gambaruser;
+    private double rating;
+    public Review(String namauser, String review, String tanggal, int gambaruser, double rating){
         this.namauser = namauser;
         this.review = review;
-        this.jangkareview = jangkareview;
-        this.gambarproduk = gambarproduk;
+        this.tanggal = tanggal;
         this.gambaruser = gambaruser;
         this.rating = rating;
-    }
-
-    public String getNamaproduk() {
-        return namaproduk;
-    }
-
-    public void setNamaproduk(String namaproduk) {
-        this.namaproduk = namaproduk;
     }
 
     public String getNamauser() {
@@ -37,22 +28,6 @@ public class Review {
         return review;
     }
 
-    public String getJangkareview() {
-        return jangkareview;
-    }
-
-    public void setJangkareview(String jangkareview) {
-        this.jangkareview = jangkareview;
-    }
-
-    public int getGambarproduk() {
-        return gambarproduk;
-    }
-
-    public void setGambarproduk(int gambarproduk) {
-        this.gambarproduk = gambarproduk;
-    }
-
     public int getGambaruser() {
         return gambaruser;
     }
@@ -61,11 +36,19 @@ public class Review {
         this.gambaruser = gambaruser;
     }
 
-    public int getRating() {
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 }

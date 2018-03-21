@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+    <android.support.v7.widget.Toolbar
+        android:background="@color/white"
+        android:id="@+id/detailproductdiscussiondetails_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+    <LinearLayout
+        android:padding="5dp"
+        android:id="@+id/detailproductdiscussiondetails_linearlayout"
+        android:layout_below="@id/detailproductdiscussiondetails_toolbar"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:id="@+id/detailproductdiscussiondetails_imgproduct"
+            android:src="@drawable/image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:text="Name Product"
+            android:textColor="@color/black"
+            android:id="@+id/detailproductdiscussiondetails_tvproductname"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/detailproductdiscussiondetails_linearlayout"
+        android:id="@+id/detailproductdiscussiondetails_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/detailproductdiscussiondetails_layoutcontainer"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:textSize="12sp"
+            android:hint="Type your comment here"
+            android:id="@+id/detailproductdiscussiondetails_etcomment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/detailproductdiscussiondetails_imgsend"
+            android:src="@drawable/send"
+            android:layout_gravity="center"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+</RelativeLayout>

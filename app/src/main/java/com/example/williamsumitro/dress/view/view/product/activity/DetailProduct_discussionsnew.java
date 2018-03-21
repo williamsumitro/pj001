@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.product;
+package com.example.williamsumitro.dress.view.view.product.activity;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -6,32 +6,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.williamsumitro.dress.R;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailProduct_details extends AppCompatActivity {
-    @BindView(R.id.detailproductdetails_tvwaiseline) TextView waiseline;
-    @BindView(R.id.detailproductdetails_tvstyle) TextView style;
-    @BindView(R.id.detailproductdetails_tvsleeve) TextView sleeve;
-    @BindView(R.id.detailproductdetails_tvsize) TextView size;
-    @BindView(R.id.detailproductdetails_tvseason) TextView season;
-    @BindView(R.id.detailproductdetails_tvneckline) TextView neckline;
-    @BindView(R.id.detailproductdetails_tvfabrictype) TextView fabrictype;
-    @BindView(R.id.detailproductdetails_tvdot) TextView dot;
-    @BindView(R.id.detailproductdetails_tvdecoration) TextView decoration;
-    @BindView(R.id.detailproductdetails_tvcolor) TextView color;
-    @BindView(R.id.detailproductdetails_toolbar) Toolbar toolbar;
-    @BindView(R.id.detailproductdetails_tvmaterial) TextView material;
+public class DetailProduct_discussionsnew extends AppCompatActivity {
+    @BindView(R.id.detailproductdiscussionnew_btnAdd) Button add;
+    @BindView(R.id.detailproductdiscussionnew_etcomment) EditText comment;
+    @BindView(R.id.detailproductdiscussionnew_toolbar) Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_product_details);
+        setContentView(R.layout.activity_detail_product_discussionsnew);
         initView();
         setuptoolbar();
+
     }
     private void initView(){
         ButterKnife.bind(this);
@@ -41,9 +37,9 @@ public class DetailProduct_details extends AppCompatActivity {
         final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
         arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(arrow);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Product Details");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("New Discussion");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

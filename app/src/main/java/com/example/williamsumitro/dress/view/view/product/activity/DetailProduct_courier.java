@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.product;
+package com.example.williamsumitro.dress.view.view.product.activity;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Courier;
+import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

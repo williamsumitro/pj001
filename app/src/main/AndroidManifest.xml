@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.view.product.DetailProduct"
+            android:name=".view.view.product.activity.DetailProduct"
             android:theme="@style/noactionbar" />
         <activity
             android:name=".view.view.outletdetail.activity.DetailOutlet"
@@ -33,15 +33,25 @@
         <activity
             android:name=".view.view.authentication.Register"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.product.DetailProduct_details"
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_details"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.product.DetailProduct_sizeguide"
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_sizeguide"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.product.DetailProduct_courier"
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_courier"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.product.DetailProduct_discussions"
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_discussions"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.product.DetailProduct_reviews"
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_reviews"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_discussionsnew"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.activity.DetailProduct_discussionsdetail"
             android:theme="@style/noactionbar"/>
     </application>
 

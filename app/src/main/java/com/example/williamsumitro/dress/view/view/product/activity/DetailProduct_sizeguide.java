@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.product;
+package com.example.williamsumitro.dress.view.view.product.activity;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;

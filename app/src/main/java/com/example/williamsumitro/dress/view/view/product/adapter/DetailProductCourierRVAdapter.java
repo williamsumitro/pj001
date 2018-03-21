@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.product;
+package com.example.williamsumitro.dress.view.view.product.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
