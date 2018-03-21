@@ -1,5 +1,6 @@
 package com.example.williamsumitro.dress.view.view.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,9 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.HomeFragment;
+import com.example.williamsumitro.dress.view.view.MystoreFragment;
+import com.example.williamsumitro.dress.view.view.Settings;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.authentication.Register;
 
@@ -34,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static int navIndex = 1;
 
+    private static final String MYSTORE = "MYSTORE";
+    private static final String ORDER = "ORDER";
     private static final String HOME = "HOME";
+    private static final String FAVORITESTORE = "FAVORITESTORE";
+    private static final String PRODUCTDISCUSSION = "PRODUCTDISCUSSION";
+    private static final String LOGOUT = "LOGOUT";
     private static final String WISHLIST = "WISHLIST";
     private static final String SETTINGS = "SETTINGS";
     public static String CURRENT = HOME;
@@ -46,21 +55,25 @@ public class MainActivity extends AppCompatActivity {
     private int CurrentSelectedPosition, coba;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        setupNavigationView();
-        coba = 0;
+        coba = 1;
         if(coba == 0){
             navigationView.getMenu().setGroupVisible(R.id.drawergroup_notlogin, true);
             headerLayout = navigationView.inflateHeaderView(R.layout.main_navheadernotlogin);
+            setupNavigationView();
         }
         else{
+            navigationView.getMenu().setGroupVisible(R.id.drawergroup_my, true);
+            Toast.makeText(context, "Test", Toast.LENGTH_LONG).show();
             navigationView.getMenu().setGroupVisible(R.id.drawergroup_login, true);
             headerLayout = navigationView.inflateHeaderView(R.layout.main_navheaderlogin);
+            setupNavigationView();
         }
         if(savedInstanceState == null){
             navIndex = 1;
@@ -73,9 +86,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         handler = new Handler();
+        context = this;
         titles = getResources().getStringArray(R.array.nav_titles);
     }
     private void setupNavigationView(){
+
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         if (coba == 0){
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -115,15 +130,99 @@ public class MainActivity extends AppCompatActivity {
                         item.setChecked(true);
                     }
                     item.setChecked(true);
-
                     loadHomeFragment();
-
                     return true;
                 }
             });
         }
         else {
-
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                // This method will trigger on item Click of navigation menu
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.drawer_mystore:
+                            navIndex = 0;
+                            CURRENT = MYSTORE;
+                            break;
+                        case R.id.drawer_home:
+                            navIndex = 1;
+                            CURRENT = HOME;
+                            break;
+                        case R.id.drawer_order:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+//                            Intent loginintent = new Intent(MainActivity.this, Login.class);
+//                            loginintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                            loginintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(loginintent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_wishlist:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(registerintent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_favoritestore:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(registerintent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_productdiscussion:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(registerintent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_settings:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+                            Intent settingsintent = new Intent(MainActivity.this, Settings.class);
+                            initanim(settingsintent);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_help:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(registerintent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_logout:
+                            navigationView.getMenu().getItem(1).setChecked(true);
+//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(registerintent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        default:
+                            navIndex = 1;
+                    }
+                    //Checking if the item is in checked state or not, if not make it in checked state
+                    if (item.isChecked()) {
+                        item.setChecked(false);
+                    } else {
+                        item.setChecked(true);
+                    }
+                    item.setChecked(true);
+                    loadHomeFragment();
+                    return true;
+                }
+            });
         }
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer){
             @Override
@@ -144,6 +243,13 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+    }
+    private void initanim(Intent intent){
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+        context.startActivity(intent);
     }
     private void loadHomeFragment(){
         navigationView.getMenu().getItem(1).setChecked(true);
@@ -180,6 +286,9 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getHomeFragment(){
         switch (navIndex){
             case 0 :
+                MystoreFragment mystoreFragment = new MystoreFragment();
+                return mystoreFragment;
+            case 1 :
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
 //            case 1 :

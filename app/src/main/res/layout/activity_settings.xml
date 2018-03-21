@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:background="@color/white"
+        android:id="@+id/settings_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+    <LinearLayout
+        android:layout_below="@+id/settings_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/settings_myprofile"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="My Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/settings_address"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="Address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/settings_passwords"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="Passwords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/settings_mystore"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="My Store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/settings_aboutus"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="About Us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+    </LinearLayout>
+</RelativeLayout>

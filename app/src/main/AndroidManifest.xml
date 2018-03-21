@@ -51,8 +51,13 @@
         <activity
             android:name=".view.view.product.activity.DetailProduct_discussionsnew"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.product.activity.DetailProduct_discussionsdetail"
-            android:theme="@style/noactionbar"/>
+        <activity
+            android:name=".view.view.product.activity.DetailProduct_discussionsdetail"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.Settings"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.activity.ManagePasswords"></activity>
     </application>
 
 </manifest>
