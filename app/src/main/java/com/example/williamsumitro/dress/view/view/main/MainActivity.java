@@ -22,10 +22,12 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.HomeFragment;
+import com.example.williamsumitro.dress.view.SettingsFragment;
 import com.example.williamsumitro.dress.view.view.MystoreFragment;
 import com.example.williamsumitro.dress.view.view.Settings;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.authentication.Register;
+import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_appbar_toolbar) Toolbar toolbar;
     @BindView(R.id.main_appbar_frame) FrameLayout frameLayout;
 
-    public static int navIndex = 1;
+    public static int navIndex = 0;
 
     private static final String MYSTORE = "MYSTORE";
     private static final String ORDER = "ORDER";
@@ -49,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
     public static String CURRENT = HOME;
 
     private boolean FragOnBackPress = true;
-    private String[] titles;
+    private String[] activityTitles;
+    private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler handler;
     private View headerLayout;
     private int CurrentSelectedPosition, coba;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private Context context;
+    private MenuItem activeMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +74,16 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             navigationView.getMenu().setGroupVisible(R.id.drawergroup_my, true);
-            Toast.makeText(context, "Test", Toast.LENGTH_LONG).show();
             navigationView.getMenu().setGroupVisible(R.id.drawergroup_login, true);
             headerLayout = navigationView.inflateHeaderView(R.layout.main_navheaderlogin);
             setupNavigationView();
         }
-        if(savedInstanceState == null){
-            navIndex = 1;
+        if (savedInstanceState == null) {
+            navIndex = 0;
             CURRENT = HOME;
             loadHomeFragment();
         }
+
     }
 
     private void initView(){
@@ -87,163 +91,92 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         handler = new Handler();
         context = this;
-        titles = getResources().getStringArray(R.array.nav_titles);
+        activityTitles = getResources().getStringArray(R.array.nav_titles);
+        fragmentManager = getSupportFragmentManager();
     }
     private void setupNavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        if (coba == 0){
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                // This method will trigger on item Click of navigation menu
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.drawer_notloginhome:
-                            navIndex = 1;
-                            CURRENT = HOME;
-                            break;
-                        case R.id.drawer_login:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-                            Intent loginintent = new Intent(MainActivity.this, Login.class);
-                            loginintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            loginintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(loginintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_register:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-                            Intent registerintent = new Intent(MainActivity.this, Register.class);
-                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(registerintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        default:
-                            navIndex = 1;
-                    }
-                    //Checking if the item is in checked state or not, if not make it in checked state
-                    if (item.isChecked()) {
-                        item.setChecked(false);
-                    } else {
-                        item.setChecked(true);
-                    }
-                    item.setChecked(true);
-                    loadHomeFragment();
-                    return true;
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.drawer_mystore:
+                        navIndex = 0;
+                        CURRENT = MYSTORE;
+                        break;
+                    case R.id.drawer_home:
+                        navIndex = 1;
+                        CURRENT = HOME;
+                        break;
+                    case R.id.drawer_order:
+                        navIndex = 2;
+                        CURRENT = ORDER;
+                        break;
+//                    case R.id.nav_movies:
+//                        navIndex = 3;
+//                        CURRENT = TAG_MOVIES;
+//                        break;
+//                    case R.id.nav_notifications:
+//                        navIndex = 3;
+//                        CURRENT = TAG_NOTIFICATIONS;
+//                        break;
+//                    case R.id.nav_settings:
+//                        navIndex = 4;
+//                        CURRENT = TAG_SETTINGS;
+//                        break;
+//                    case R.id.nav_about_us:
+//                        // launch new intent instead of loading fragment
+//                        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+//                        drawer.closeDrawers();
+//                        return true;
+//                    case R.id.nav_privacy_policy:
+//                        // launch new intent instead of loading fragment
+//                        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+//                        drawer.closeDrawers();
+//                        return true;
+                    default:
+                        navIndex = 0;
                 }
-            });
-        }
-        else {
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                // This method will trigger on item Click of navigation menu
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.drawer_mystore:
-                            navIndex = 0;
-                            CURRENT = MYSTORE;
-                            break;
-                        case R.id.drawer_home:
-                            navIndex = 1;
-                            CURRENT = HOME;
-                            break;
-                        case R.id.drawer_order:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-//                            Intent loginintent = new Intent(MainActivity.this, Login.class);
-//                            loginintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            loginintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(loginintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_wishlist:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(registerintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_favoritestore:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(registerintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_productdiscussion:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(registerintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_settings:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-                            Intent settingsintent = new Intent(MainActivity.this, Settings.class);
-                            initanim(settingsintent);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_help:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(registerintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        case R.id.drawer_logout:
-                            navigationView.getMenu().getItem(1).setChecked(true);
-//                            Intent registerintent = new Intent(MainActivity.this, Register.class);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(registerintent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                            drawerLayout.closeDrawers();
-                            return true;
-                        default:
-                            navIndex = 1;
-                    }
-                    //Checking if the item is in checked state or not, if not make it in checked state
-                    if (item.isChecked()) {
-                        item.setChecked(false);
-                    } else {
-                        item.setChecked(true);
-                    }
-                    item.setChecked(true);
-                    loadHomeFragment();
-                    return true;
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
                 }
-            });
-        }
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer){
+                menuItem.setChecked(true);
+
+                loadHomeFragment();
+
+                return true;
+            }
+        });
+
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                navIndex = 1;
-                navigationView.getMenu().getItem(1).setChecked(true);
                 super.onDrawerClosed(drawerView);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
                 super.onDrawerOpened(drawerView);
             }
         };
+
         //Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-    }
+            }
+
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -251,55 +184,11 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
         context.startActivity(intent);
     }
-    private void loadHomeFragment(){
-        navigationView.getMenu().getItem(1).setChecked(true);
-        navigationView.getMenu().getItem(navIndex).setChecked(true);
-        getSupportActionBar().setTitle(titles[navIndex]);
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT) != null){
-            drawerLayout.closeDrawers();
-            return;
-        }
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.main_appbar_frame, fragment, CURRENT);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-        if (mPendingRunnable != null) {
-            handler.post(mPendingRunnable);
-        }
-        drawerLayout.closeDrawers();
-        invalidateOptionsMenu();
-    }
-    private Fragment getHomeFragment(){
-        switch (navIndex){
-            case 0 :
-                MystoreFragment mystoreFragment = new MystoreFragment();
-                return mystoreFragment;
-            case 1 :
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
-//            case 1 :
-//                WishlistFragment wishlistFragment = new WishlistFragment();
-//                return wishlistFragment;
-//            case 2 :
-//                SettingsFragment settingsFragment = new SettingsFragment();
-//                return settingsFragment;
-            default:
-                return new HomeFragment();
-        }
+
+    private void initFragmentManager(){
+        CurrentSelectedPosition = 1;
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_appbar_frame, new HomeFragment()).commit();
     }
 //    private void loadNavHeader() {
 //        // name, website
@@ -323,37 +212,79 @@ public class MainActivity extends AppCompatActivity {
 //        // showing dot next to notifications label
 //        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
 //    }
-
-
-    @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawers();
-            return;
-        }
-        // This code loads home fragment when back key is pressed
-        // when user is in other fragment than home
-        if (FragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
-            if (navIndex != 0) {
-                navIndex = 0;
-                CURRENT = HOME;
-                loadHomeFragment();
-                return;
-            }
-        }
-        super.onBackPressed();
+    private void setToolbarTitle() {
+        getSupportActionBar().setTitle(activityTitles[navIndex]);
     }
 
+    private void selectNavMenu() {
+        navigationView.getMenu().getItem(navIndex).setChecked(true);
+    }
+    private void loadHomeFragment() {
+    // selecting appropriate nav menu item
+    selectNavMenu();
+
+    // set toolbar title
+    setToolbarTitle();
+
+    // if user select the current navigation menu again, don't do anything
+    // just close the navigation drawer
+    if (getSupportFragmentManager().findFragmentByTag(CURRENT) != null) {
+        drawerLayout.closeDrawers();
+        return;
+    }
+
+    // Sometimes, when fragment has huge data, screen seems hanging
+    // when switching between navigation menus
+    // So using runnable, the fragment is loaded with cross fade effect
+    // This effect can be seen in GMail app
+    Runnable mPendingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // update the main content by replacing fragments
+            Fragment fragment = getHomeFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_appbar_frame, fragment, CURRENT);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    };
+
+    // If mPendingRunnable is not null, then add to the message queue
+    if (mPendingRunnable != null) {
+        handler.post(mPendingRunnable);
+    }
+
+
+    //Closing drawer on item click
+    drawerLayout.closeDrawers();
+
+    // refresh toolbar menu
+    invalidateOptionsMenu();
+}
+    private Fragment getHomeFragment() {
+        switch (navIndex) {
+            case 0:
+                MystoreFragment mystoreFragment = new MystoreFragment();
+                return mystoreFragment;
+            case 1:
+                HomeFragment homeFragment = new HomeFragment();
+                return homeFragment;
+            case 2:
+                // movies fragment
+                OrderFragment orderFragment = new OrderFragment();
+                return orderFragment;
+            case 3:
+                // settings fragment
+                SettingsFragment settingsFragment = new SettingsFragment();
+                return settingsFragment;
+            default:
+                return new HomeFragment();
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(navIndex == 1)
-            getMenuInflater().inflate(R.menu.main, menu);
-        // when fragment is notifications, load the menu created for notifications
-//        if (navItemIndex == 3) {
-//            getMenuInflater().inflate(R.menu.notifications, menu);
-//        }
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
     @Override

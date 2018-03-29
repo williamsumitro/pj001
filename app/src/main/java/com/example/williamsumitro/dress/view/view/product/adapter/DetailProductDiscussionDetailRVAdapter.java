@@ -31,7 +31,7 @@ public class DetailProductDiscussionDetailRVAdapter extends RecyclerView.Adapter
     @Override
     public DetailProductDiscussionDetailRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_productdiscussion, parent, false);
+                .inflate(R.layout.item_productdiscussiondetail, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -48,7 +48,6 @@ public class DetailProductDiscussionDetailRVAdapter extends RecyclerView.Adapter
         }
         holder.comment.setText(discussion.getComment());
         holder.date.setText(discussion.getDate());
-        holder.commentcount.setText(String.valueOf(discussion.getCountcomment()));
         holder.image.setImageResource(discussion.getImage());
     }
 
@@ -58,15 +57,14 @@ public class DetailProductDiscussionDetailRVAdapter extends RecyclerView.Adapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.itemproductdiscussion_container)
+        @BindView(R.id.itemproductdiscussiondetail_container)
         CardView container;
-        @BindView(R.id.itemproductdiscussion_tvuserstatus)
+        @BindView(R.id.itemproductdiscussiondetail_tvuserstatus)
         TextView userstatus;
-        @BindView(R.id.itemproductdiscussion_tvusername) TextView username;
-        @BindView(R.id.itemproductdiscussion_tvdate) TextView date;
-        @BindView(R.id.itemproductdiscussion_tvcommentcount) TextView commentcount;
-        @BindView(R.id.itemproductdiscussion_tvcomment) TextView comment;
-        @BindView(R.id.itemproductdiscussion_circleimageview)
+        @BindView(R.id.itemproductdiscussiondetail_tvusername) TextView username;
+        @BindView(R.id.itemproductdiscussiondetail_tvdate) TextView date;
+        @BindView(R.id.itemproductdiscussiondetail_tvcomment) TextView comment;
+        @BindView(R.id.itemproductdiscussiondetail_circleimageview)
         CircleImageView image;
         public ViewHolder(View itemView) {
             super(itemView);

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:background="@color/white"
+        android:id="@+id/buy_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@+id/buy_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/buy_imgproduct"
+                    android:src="@drawable/image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/buy_tvnameproduct"
+                        android:textColor="@color/black"
+                        android:text="Nama Product"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="12sp"
+                        android:id="@+id/buy_tvpriceproduct"
+                        android:textColor="@color/black"
+                        android:text="Price Product"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_gravity="center"
+                android:id="@+id/buy_rvpricedetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="S : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_weight="0.5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                        <Button
+                            android:id="@+id/buy_btnmins"
+                            android:text="-"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <EditText
+                            android:id="@+id/buy_ets"
+                            android:textAlignment="center"
+                            android:text="1"
+                            android:textSize="12sp"
+                            android:layout_width="30dp"
+                            android:layout_height="35dp" />
+                        <Button
+                            android:id="@+id/buy_btnmaxs"
+                            android:text="+"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <TextView
+                            android:layout_marginLeft="15dp"
+                            android:textSize="10sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="Total : "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:textSize="12sp"
+                            android:id="@+id/buy_tvtotals"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:text="xxxx"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="M : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_weight="0.5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                        <Button
+                            android:id="@+id/buy_btnminm"
+                            android:text="-"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp" />
+                        <EditText
+                            android:id="@+id/buy_etm"
+                            android:textAlignment="center"
+                            android:text="1"
+                            android:textSize="12sp"
+                            android:layout_width="30dp"
+                            android:layout_height="35dp" />
+                        <Button
+                            android:id="@+id/buy_btnmaxm"
+                            android:text="+"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <TextView
+                            android:layout_marginLeft="15dp"
+                            android:textSize="10sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="Total : "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:textSize="12sp"
+                            android:id="@+id/buy_tvtotalm"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:text="xxxx"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="L : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_weight="0.5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                        <Button
+                            android:id="@+id/buy_btnminl"
+                            android:text="-"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <EditText
+                            android:id="@+id/buy_etl"
+                            android:textAlignment="center"
+                            android:text="1"
+                            android:textSize="12sp"
+                            android:layout_width="30dp"
+                            android:layout_height="35dp" />
+                        <Button
+                            android:id="@+id/buy_btnmaxl"
+                            android:text="+"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <TextView
+                            android:layout_marginLeft="15dp"
+                            android:textSize="10sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="Total : "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:textSize="12sp"
+                            android:id="@+id/buy_tvtotall"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:text="xxxx"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="XL : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_weight="0.5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                        <Button
+                            android:id="@+id/buy_btnminxl"
+                            android:text="-"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <EditText
+                            android:id="@+id/buy_etxl"
+                            android:textAlignment="center"
+                            android:text="1"
+                            android:textSize="12sp"
+                            android:layout_width="30dp"
+                            android:layout_height="35dp" />
+                        <Button
+                            android:id="@+id/buy_btnmaxxl"
+                            android:text="+"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"  />
+                        <TextView
+                            android:layout_marginLeft="15dp"
+                            android:textSize="10sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="Total : "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:textSize="12sp"
+                            android:id="@+id/buy_tvtotalxl"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:text="xxxx"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:textSize="14sp"
+                            android:text="Subtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textSize="14sp"
+                            android:id="@+id/buy_tvsubtotal"
+                            android:gravity="right"
+                            android:text="xxxxx"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:text="Discount "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/buy_tvpercentage"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:text="20%"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/buy_tvdiscount"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:gravity="right"
+                            android:text="xxxxx"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:text="Total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/buy_tvtotal"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:gravity="right"
+                            android:text="xxxxx"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <TextView
+                        android:layout_margin="5dp"
+                        android:textStyle="bold"
+                        android:text="Available Bank"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_margin="5dp"
+                        android:id="@+id/buy_rvbank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:text="Available Courier"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_margin="5dp"
+                android:id="@+id/buy_rvcourier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <Button
+        android:id="@+id/buy_btncontinue"
+        android:textColor="@color/white"
+        android:text="Continue"
+        android:background="@color/green1"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

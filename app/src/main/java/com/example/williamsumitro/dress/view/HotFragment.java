@@ -70,47 +70,47 @@ public class HotFragment extends Fragment {
         ButterKnife.bind(this,view);
     }
     private void initData(){
-        Cloth cloth = new Cloth("Sequin Tank Sheath Dress", R.drawable.fake, "12.000.000");
+        Cloth cloth = new Cloth("Sequin Tank Sheath Dress", R.drawable.image, "12.000.000");
         newList.add(cloth);
-        cloth = new Cloth("Striped Wrap Midi Dress", R.drawable.fake, "12.000.000");
+        cloth = new Cloth("Striped Wrap Midi Dress", R.drawable.image, "12.000.000");
         newList.add(cloth);
-        cloth = new Cloth("Long Sleeve Pocket Shirt Dress", R.drawable.fake, "10.000.000");
+        cloth = new Cloth("Long Sleeve Pocket Shirt Dress", R.drawable.image, "10.000.000");
         newList.add(cloth);
-        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.fake, "9.000.000");
+        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.image, "9.000.000");
         newList.add(cloth);
-        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.fake, "8.300.000");
+        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.image, "8.300.000");
         newList.add(cloth);
-        cloth = new Cloth("SStrappy Back Lace Inset Sheath Dress", R.drawable.fake, "14.000.000");
+        cloth = new Cloth("SStrappy Back Lace Inset Sheath Dress", R.drawable.image, "14.000.000");
         newList.add(cloth);
-        cloth = new Cloth("STie-Sleeve Shift Dress", R.drawable.fake, "2.000.000");
+        cloth = new Cloth("STie-Sleeve Shift Dress", R.drawable.image, "2.000.000");
         newList.add(cloth);
 
-        cloth = new Cloth("Ruffle Cold Shoulder Maxi Dress", R.drawable.fake, "120.000");
+        cloth = new Cloth("Ruffle Cold Shoulder Maxi Dress", R.drawable.image, "120.000");
         topList.add(cloth);
-        cloth = new Cloth("Belted Surplice Jumpsuit", R.drawable.fake, "110.000");
+        cloth = new Cloth("Belted Surplice Jumpsuit", R.drawable.image, "110.000");
         topList.add(cloth);
-        cloth = new Cloth("Smocked Off The Shoulder Dress", R.drawable.fake, "1.000.000");
+        cloth = new Cloth("Smocked Off The Shoulder Dress", R.drawable.image, "1.000.000");
         topList.add(cloth);
-        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.fake, "9.000.000");
+        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.image, "9.000.000");
         topList.add(cloth);
-        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.fake, "8.300.000");
+        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.image, "8.300.000");
         topList.add(cloth);
 
-        cloth = new Cloth("Express One Eleven Love And Wi-Fi Muscle Tank", R.drawable.fake, "50.000");
+        cloth = new Cloth("Express One Eleven Love And Wi-Fi Muscle Tank", R.drawable.image, "50.000");
         ListList.add(cloth);
-        cloth = new Cloth("Eyelet Full Cotton Midi Skirt", R.drawable.fake, "10.000");
+        cloth = new Cloth("Eyelet Full Cotton Midi Skirt", R.drawable.image, "10.000");
         ListList.add(cloth);
-        cloth = new Cloth("Side Tie Flared Skirt", R.drawable.fake, "62.000");
+        cloth = new Cloth("Side Tie Flared Skirt", R.drawable.image, "62.000");
         ListList.add(cloth);
-        cloth = new Cloth("Stripe Ruched A-Line Dress", R.drawable.fake, "40.000");
+        cloth = new Cloth("Stripe Ruched A-Line Dress", R.drawable.image, "40.000");
         ListList.add(cloth);
-        cloth = new Cloth("High Waisted Windowpane A-Line Skirt", R.drawable.fake, "32.000");
+        cloth = new Cloth("High Waisted Windowpane A-Line Skirt", R.drawable.image, "32.000");
         ListList.add(cloth);
-        cloth = new Cloth("High Waisted Striped Clean Pencil Skirt", R.drawable.fake, "12.000");
+        cloth = new Cloth("High Waisted Striped Clean Pencil Skirt", R.drawable.image, "12.000");
         ListList.add(cloth);
-        cloth = new Cloth("Ruched Sleeve Cutaway Blazer", R.drawable.fake, "54.000");
+        cloth = new Cloth("Ruched Sleeve Cutaway Blazer", R.drawable.image, "54.000");
         ListList.add(cloth);
-        cloth = new Cloth("Express One Eleven Lace Inset Tee", R.drawable.fake, "78.000");
+        cloth = new Cloth("Express One Eleven Lace Inset Tee", R.drawable.image, "78.000");
         ListList.add(cloth);
     }
 }

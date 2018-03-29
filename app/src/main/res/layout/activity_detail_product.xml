@@ -73,6 +73,12 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/detailproduct_rvpricedetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
                 <View
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
@@ -99,7 +105,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_height="40dp"
                         android:layout_weight="0.2"
-                        android:src="@drawable/circle_star"/>
+                        android:src="@drawable/unlike"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -108,6 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"/>
                 <Button
                     android:id="@+id/detailproduct_btnProductdetails"
                     android:background="@drawable/button_1"
@@ -267,7 +277,31 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <LinearLayout
-                        android:background="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray2"
+                            android:textSize="12sp"
+                            android:text="Weight"/>
+                        <ImageView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/weight"/>
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray3"
+                            android:textSize="12sp"
+                            android:text="50 gr"/>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -293,7 +327,6 @@
                             android:text="4150"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:background="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -319,7 +352,6 @@
                             android:text="50"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:background="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

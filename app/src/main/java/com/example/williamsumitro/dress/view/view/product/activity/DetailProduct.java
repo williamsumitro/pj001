@@ -12,6 +12,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +24,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.PriceDetails;
+import com.example.williamsumitro.dress.view.view.Buy;
+import com.example.williamsumitro.dress.view.view.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.outletdetail.activity.DetailOutlet;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductSlideImagesAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,12 +60,15 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_lncourier) LinearLayout courier;
     @BindView(R.id.detailproduct_lnreview) LinearLayout review;
     @BindView(R.id.detailproduct_lndiscussion) LinearLayout discussion;
+    @BindView(R.id.detailproduct_rvpricedetails) RecyclerView pricedetails;
 
     private static final Integer[] XMEN= {R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake};
     private ArrayList<Integer> XMENArray = new ArrayList<Integer>();
     private Context context;
     private static int currentPage = 0;
 
+    private List<PriceDetails> priceDetailsList;
+    private BuyRVAdapter pricedetailsadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +79,17 @@ public class DetailProduct extends AppCompatActivity {
         setupToolbar();
         init();
         initClick();
+        setupRV();
+        initData();
     }
     private void initClick(){
+        addtobag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Buy.class);
+                initanim(intent);
+            }
+        });
         productdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +147,7 @@ public class DetailProduct extends AppCompatActivity {
         if (getResources().getBoolean(R.bool.portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        priceDetailsList = new ArrayList<>();
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -188,5 +209,22 @@ public class DetailProduct extends AppCompatActivity {
                 handler.post(Update);
             }
         }, 5000, 5000);
+    }
+    private void setupRV(){
+        pricedetailsadapter = new BuyRVAdapter(null, null, priceDetailsList, context);
+        RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        pricedetails.setLayoutManager(horizontallayout);
+        pricedetails.setItemAnimator(new DefaultItemAnimator());
+        pricedetails.setAdapter(pricedetailsadapter);
+    }
+    private void initData(){
+        PriceDetails priceDetails = new PriceDetails(5, 5);
+        priceDetailsList.add(priceDetails);
+        priceDetails = new PriceDetails(15, 15);
+        priceDetailsList.add(priceDetails);
+        priceDetails = new PriceDetails(25, 25);
+        priceDetailsList.add(priceDetails);
+        priceDetails = new PriceDetails(35, 35);
+        priceDetailsList.add(priceDetails);
     }
 }

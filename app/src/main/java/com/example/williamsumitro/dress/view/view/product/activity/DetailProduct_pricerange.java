@@ -13,23 +13,13 @@ import com.example.williamsumitro.dress.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailProduct_details extends AppCompatActivity {
-    @BindView(R.id.detailproductdetails_tvwaiseline) TextView waiseline;
-    @BindView(R.id.detailproductdetails_tvstyle) TextView style;
-    @BindView(R.id.detailproductdetails_tvsleeve) TextView sleeve;
-    @BindView(R.id.detailproductdetails_tvsize) TextView size;
-    @BindView(R.id.detailproductdetails_tvseason) TextView season;
-    @BindView(R.id.detailproductdetails_tvneckline) TextView neckline;
-    @BindView(R.id.detailproductdetails_tvfabrictype) TextView fabrictype;
-    @BindView(R.id.detailproductdetails_tvdot) TextView dot;
-    @BindView(R.id.detailproductdetails_tvdecoration) TextView decoration;
-    @BindView(R.id.detailproductdetails_tvcolor) TextView color;
-    @BindView(R.id.detailproductdetails_toolbar) Toolbar toolbar;
-    @BindView(R.id.detailproductdetails_tvmaterial) TextView material;
+public class DetailProduct_pricerange extends AppCompatActivity {
+    @BindView(R.id.detailproductpricerange_toolbar) Toolbar toolbar;
+    @BindView(R.id.detailproductpricerange_tv) TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_product_details);
+        setContentView(R.layout.activity_detail_product_pricerange);
         initView();
         setuptoolbar();
     }
@@ -43,7 +33,7 @@ public class DetailProduct_details extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Product Details");
+        getSupportActionBar().setTitle("Product Price Details");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

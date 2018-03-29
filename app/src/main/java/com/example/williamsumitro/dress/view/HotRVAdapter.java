@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder> {
     private List<Cloth> clothList;
-    private int choice, starclick = 0;
+    private int choice, favoriteclick = 0;
     private Context context;
     public HotRVAdapter (List<Cloth> clothList, int choice, Context context){
         this.clothList = clothList;
@@ -47,16 +47,16 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder> 
         holder.price.setText(cloth.getPrice());
 //        Picasso.with(context).load(cloth.getPicture()).into(holder.image);
         holder.image.setImageResource(cloth.getPicture());
-        holder.star.setOnClickListener(new View.OnClickListener() {
+        holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (starclick == 0){
-                    holder.star.setImageResource(R.drawable.wish1);
-                    starclick = 1;
+                if (favoriteclick == 0){
+                    holder.favorite.setImageResource(R.drawable.like);
+                    favoriteclick = 1;
                 }
                 else {
-                    holder.star.setImageResource(R.drawable.wish);
-                    starclick = 0;
+                    holder.favorite.setImageResource(R.drawable.unlike);
+                    favoriteclick = 0;
                 }
             }
         });
@@ -78,7 +78,7 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder> 
         @BindView(R.id.item_newbrands_image) ImageView image;
         @BindView(R.id.item_newbrands_name) TextView name;
         @BindView(R.id.item_newbrands_price) TextView price;
-        @BindView(R.id.item_newbrands_star) ImageView star;
+        @BindView(R.id.item_newbrands_favorite) ImageView favorite;
         @BindView(R.id.item_newbrands_container) LinearLayout container;
         public ViewHolder(View itemView) {
             super(itemView);
