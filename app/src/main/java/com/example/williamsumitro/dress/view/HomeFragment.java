@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
 
     }
     private void setupVP(ViewPager viewPager){
-        TabHomeAdapter adapter = new TabHomeAdapter(getFragmentManager());
+        TabHomeAdapter adapter = new TabHomeAdapter(getChildFragmentManager());
         adapter.addFragment(new HotFragment(), "Hot");
         adapter.addFragment(new CategoryFragment(), "Category");
         adapter.addFragment(new OutletFragment(), "Outlet");

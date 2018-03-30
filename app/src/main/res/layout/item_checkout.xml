@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/itemshoppingbag_tvnamatoko"
+            android:id="@+id/itemcheckout_tvnamatoko"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama Toko"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:id="@+id/itemshoppingbag_imgbarang"
+                android:id="@+id/itemcheckout_imgbarang"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/image"/>
@@ -32,14 +32,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/itemshoppingbag_tvnamabarang"
+                    android:id="@+id/itemcheckout_tvnamabarang"
                     android:layout_marginLeft="5dp"
                     android:text="Nama Barang"
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/itemshoppingbag_tvprice"
+                    android:id="@+id/itemcheckout_tvprice"
                     android:textSize="12sp"
                     android:layout_marginLeft="5dp"
                     android:text="IDR"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <TextView
-                android:id="@+id/itemshoppingbag_tvx"
+                android:id="@+id/itemcheckout_tvx"
                 android:gravity="center_vertical"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/black"
@@ -57,7 +57,7 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/itemshoppingbag_lninformationdetail"
+            android:id="@+id/itemcheckout_lninformationdetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <ImageView
-                android:id="@+id/itemshoppingbag_imgcaret"
+                android:id="@+id/itemcheckout_imgcaret"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/caret"
@@ -77,7 +77,7 @@
         </LinearLayout>
         <LinearLayout
             android:visibility="gone"
-            android:id="@+id/itemshoppingbag_lndetail"
+            android:id="@+id/itemcheckout_lndetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -99,13 +99,13 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_qtyS"
+                    android:id="@+id/itemcheckout_qtyS"
                     android:text="(20)"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_priceS"
+                    android:id="@+id/itemcheckout_priceS"
                     android:gravity="right"
                     android:text="xxxxx"
                     android:layout_weight="1"
@@ -125,13 +125,13 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_qtyM"
+                    android:id="@+id/itemcheckout_qtyM"
                     android:text="(20)"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_priceM"
+                    android:id="@+id/itemcheckout_priceM"
                     android:gravity="right"
                     android:text="xxxxx"
                     android:layout_weight="1"
@@ -151,13 +151,13 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_qtyL"
+                    android:id="@+id/itemcheckout_qtyL"
                     android:text="(20)"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_priceL"
+                    android:id="@+id/itemcheckout_priceL"
                     android:gravity="right"
                     android:text="xxxxx"
                     android:layout_weight="1"
@@ -177,13 +177,13 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_qtyXL"
+                    android:id="@+id/itemcheckout_qtyXL"
                     android:text="(20)"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
-                    android:id="@+id/itemshoppingbag_priceXL"
+                    android:id="@+id/itemcheckout_priceXL"
                     android:gravity="right"
                     android:text="xxxxx"
                     android:layout_weight="1"
@@ -203,13 +203,13 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textColor="@color/black"
-                    android:id="@+id/itemshoppingbag_qtySubtotal"
+                    android:id="@+id/itemcheckout_qtySubtotal"
                     android:text="(20)"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textColor="@color/black"
-                    android:id="@+id/itemshoppingbag_priceSubtotal"
+                    android:id="@+id/itemcheckout_priceSubtotal"
                     android:gravity="right"
                     android:text="xxxxx"
                     android:layout_weight="1"
@@ -229,13 +229,13 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textColor="@color/red"
-                    android:id="@+id/itemshoppingbag_percentage"
+                    android:id="@+id/itemcheckout_percentage"
                     android:text="20%"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textColor="@color/red"
-                    android:id="@+id/itemshoppingbag_discount"
+                    android:id="@+id/itemcheckout_discount"
                     android:gravity="right"
                     android:text="xxxxx"
                     android:layout_weight="1"
@@ -261,7 +261,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/itemshoppingbag_tvtotal"
+                android:id="@+id/itemcheckout_tvtotal"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:gravity="right"
@@ -271,5 +271,123 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <View
+            android:layout_marginTop="5dp"
+            android:background="@color/gray1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:text="Shipping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/itemcheckout_spinnershipping"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="Shipping Fee"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/itemcheckout_tvshippingfee"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="IDR xxx"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:layout_marginTop="5dp"
+            android:background="@color/gray1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:text="Available Bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/itemcheckout_spinnerbank"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="Account Number"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/itemcheckout_tvaccountnumber"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="xxxxxxx"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="Holder Name"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/itemcheckout_tvholdername"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="Sum Ti Wong"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/itemcheckout_etnote"
+            android:layout_marginTop="5dp"
+            android:gravity="top"
+            android:textSize="12sp"
+            android:hint="Enter your note to supplier here"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

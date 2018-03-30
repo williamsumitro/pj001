@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view;
+package com.example.williamsumitro.dress.view.view.bag.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +13,8 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Courier;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
-import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by WilliamSumitro on 24/03/2018.

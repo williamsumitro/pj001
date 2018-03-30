@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,8 +24,8 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
-import com.example.williamsumitro.dress.view.view.Buy;
-import com.example.williamsumitro.dress.view.view.BuyRVAdapter;
+import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
+import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.outletdetail.activity.DetailOutlet;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductSlideImagesAdapter;
 

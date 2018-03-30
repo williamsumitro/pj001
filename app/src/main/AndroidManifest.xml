@@ -61,12 +61,20 @@
         <activity
             android:name=".view.view.product.activity.DetailProduct_pricerange"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.Aboutus"
+        <activity
+            android:name=".view.view.Aboutus"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.Help"
+        <activity
+            android:name=".view.view.Help"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.Buy"
-            android:theme="@style/noactionbar"/>
+        <activity
+            android:name=".view.view.bag.activity.Buy"
+            android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.bag.activity.ShoppingBag"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.checkout.activity.Checkout"
+            android:theme="@style/noactionbar" />
     </application>
 
 </manifest>

@@ -45,7 +45,7 @@ public class OrderFragment extends Fragment {
 
     }
     private void setupVP(ViewPager viewPager){
-        TabOrderAdapter adapter = new TabOrderAdapter(getFragmentManager());
+        TabOrderAdapter adapter = new TabOrderAdapter(getChildFragmentManager());
         adapter.addFragment(new OrderorderFragment(), "Order");
         adapter.addFragment(new PaymentstatusFragment(), "Payment Status");
         adapter.addFragment(new OrderstatusFragment(), "Order Status");

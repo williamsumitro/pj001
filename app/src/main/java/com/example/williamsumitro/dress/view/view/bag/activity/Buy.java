@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view;
+package com.example.williamsumitro.dress.view.view.bag.activity;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -20,6 +20,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Courier;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
+import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

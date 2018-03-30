@@ -27,6 +27,7 @@ import com.example.williamsumitro.dress.view.view.MystoreFragment;
 import com.example.williamsumitro.dress.view.view.Settings;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.authentication.Register;
+import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
 
 import butterknife.BindView;
@@ -290,10 +291,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-//        if (id == R.id.menu_logout) {
-//            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-//            return true;
-//        }
+        if (id == R.id.menu_bag) {
+            Intent intent = new Intent(this, ShoppingBag.class);
+            initanim(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
