@@ -12,7 +12,7 @@
             android:id="@+id/order_tabs"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:tabTextColor="#000000"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabGravity="fill"/>
     </android.support.design.widget.AppBarLayout>
 

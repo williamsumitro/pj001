@@ -2,11 +2,80 @@
 <android.support.v7.widget.CardView
     android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Toko"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/image"/>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="Nama Barang"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginRight="5dp"
+                android:textColor="@color/black"
+                android:text="x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Total"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="right"
+                android:text="IDR XXX"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:background="@color/gray1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="Information Detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

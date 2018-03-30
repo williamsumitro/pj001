@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_appbar_toolbar) Toolbar toolbar;
     @BindView(R.id.main_appbar_frame) FrameLayout frameLayout;
 
-    public static int navIndex = 0;
+    public static int navIndex = 1;
 
     private static final String MYSTORE = "MYSTORE";
     private static final String ORDER = "ORDER";
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             setupNavigationView();
         }
         if (savedInstanceState == null) {
-            navIndex = 0;
+            navIndex = 1;
             CURRENT = HOME;
             loadHomeFragment();
         }
@@ -185,11 +185,6 @@ public class MainActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    private void initFragmentManager(){
-        CurrentSelectedPosition = 1;
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_appbar_frame, new HomeFragment()).commit();
-    }
 //    private void loadNavHeader() {
 //        // name, website
 //        txtName.setText("Ravi Tamada");
