@@ -12,6 +12,12 @@ public class Bank {
         this.accountholder = accountholder;
         this.accountnumber = accountnumber;
     }
+    public Bank(int image, String bankname, String accountholder, String accountnumber){
+        this.image = image;
+        this.bankname = bankname;
+        this.accountholder = accountholder;
+        this.accountnumber = accountnumber;
+    }
     public Bank(int image){
         this.image = image;
     }

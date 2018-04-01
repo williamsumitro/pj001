@@ -1,7 +1,11 @@
 package com.example.williamsumitro.dress.view;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,10 +65,12 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder> 
             }
         });
         holder.container.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailProduct.class);
-                context.startActivity(intent);
+                Bundle bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.slideleft).toBundle();
+                context.startActivity(intent, bundle);
             }
         });
     }

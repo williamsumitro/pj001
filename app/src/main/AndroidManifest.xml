@@ -73,8 +73,14 @@
         <activity
             android:name=".view.view.bag.activity.ShoppingBag"
             android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.checkout.activity.Checkout"
+        <activity
+            android:name=".view.view.checkout.activity.Checkout"
             android:theme="@style/noactionbar" />
+        <activity
+            android:name=".view.view.order.activity.PaymentDetail"
+            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.order.activity.OrderDetail"
+            android:theme="@style/noactionbar"/>
     </application>
 
 </manifest>

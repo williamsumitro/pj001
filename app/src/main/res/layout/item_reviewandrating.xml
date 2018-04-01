@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/itemreviewandrating_container"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/itemreviewandrating_tvordernumber"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="order number"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/itemreviewandrating_tvstorename"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Store Name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/itemreviewandrating_tvoderdate"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:text="Order date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:id="@+id/itemreviewandrating_tvreceiptnumber"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:text="Receipt Number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/itemreviewandrating_btnReview"
+            android:layout_marginTop="10dp"
+            android:background="@color/yellow1"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:text="@string/rate_amp_review_store_and_product"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

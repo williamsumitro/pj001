@@ -51,4 +51,5 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(adapter);
     }
 
+
 }

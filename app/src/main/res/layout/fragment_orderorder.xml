@@ -23,17 +23,28 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_gravity="center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:text="Payment"
+            <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:text="Payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="To monitor the payment is being paid or not"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/megaphone"
                 android:layout_width="30dp"
@@ -61,6 +72,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:layout_marginLeft="5dp"
             android:layout_gravity="center_vertical"
@@ -68,10 +84,16 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:text="Order Status"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="To monitor the payment is being paid or not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
         <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
             android:src="@drawable/megaphone"
             android:layout_width="30dp"
@@ -99,6 +121,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:layout_marginLeft="5dp"
             android:layout_gravity="center_vertical"
@@ -106,10 +133,16 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:text="Receipt Confirmation"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="To monitor the payment is being paid or not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
         <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
             android:src="@drawable/megaphone"
             android:layout_width="30dp"
@@ -137,6 +170,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:layout_marginLeft="5dp"
             android:layout_gravity="center_vertical"
@@ -144,10 +182,16 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:text="Review and Rating"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="To monitor the payment is being paid or not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
         <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
             android:src="@drawable/megaphone"
             android:layout_width="30dp"
@@ -175,6 +219,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:layout_marginLeft="5dp"
             android:layout_gravity="center_vertical"
@@ -182,10 +231,16 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:text="Transaction History"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:text="To monitor the payment is being paid or not"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
         <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
             android:src="@drawable/megaphone"
             android:layout_width="30dp"

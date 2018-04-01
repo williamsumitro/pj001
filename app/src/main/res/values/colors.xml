@@ -10,8 +10,125 @@
     <color name="gray1">#bdbdbd</color>
     <color name="gray2">#616161</color>
     <color name="gray3">#212121</color>
-    <color name="green">#81c784</color>
-    <color name="green1">#4CAF50</color>
     <color name="gold">#FFC107</color>
+
+    <!-- red -->
     <color name="red">#f44336</color>
+    <color name="red1">#b71c1c</color>
+    <color name="red2">#c62828</color>
+    <color name="red3">#d32f2f</color>
+    <color name="red4">#e53935</color>
+    <color name="red5">#ef5350</color>
+    <color name="red6">#e57373</color>
+    <color name="red7">#ef9a9a</color>
+    <color name="red8">#ffcdd2</color>
+    <color name="red9">#ffebee</color>
+
+    <!-- pink -->
+    <color name="pink">#880E4F</color>
+    <color name="pink1">#AD1457</color>
+    <color name="pink2">#C2185B</color>
+    <color name="pink3">#D81B60</color>
+    <color name="pink4">#E91E63</color>
+    <color name="pink5">#EC407A</color>
+    <color name="pink6">#F06292</color>
+    <color name="pink7">#F48FB1</color>
+    <color name="pink8">#F8BBD0</color>
+    <color name="pink9">#FCE4EC</color>
+
+    <!-- purple -->
+    <color name="purple">#4A148C</color>
+    <color name="purple1">#6A1B9A</color>
+    <color name="purple2">#7B1FA2</color>
+    <color name="purple3">#8E24AA</color>
+    <color name="purple4">#9C27B0</color>
+    <color name="purple5">#AB47BC</color>
+    <color name="purple6">#BA68C8</color>
+    <color name="purple7">#CE93D8</color>
+    <color name="purple8">#E1BEE7</color>
+    <color name="purple9">#F3E5F5</color>
+
+    <!-- indigo -->
+    <color name="indigo">#1A237E</color>
+    <color name="indigo1">#283593</color>
+    <color name="indigo2">#303F9F</color>
+    <color name="indigo3">#3949AB</color>
+    <color name="indigo4">#3F51B5</color>
+    <color name="indigo5">#5C6BC0</color>
+    <color name="indigo6">#7986CB</color>
+    <color name="indigo7">#9FA8DA</color>
+    <color name="indigo8">#C5CAE9</color>
+    <color name="indigo9">#E8EAF6</color>
+
+    <!-- blue -->
+    <color name="blue">#0D47A1</color>
+    <color name="blue1">#1565C0</color>
+    <color name="blue2">#1976D2</color>
+    <color name="blue3">#1E88E5</color>
+    <color name="blue4">#2196F3</color>
+    <color name="blue5">#42A5F5</color>
+    <color name="blue6">#64B5F6</color>
+    <color name="blue7">#90CAF9</color>
+    <color name="blue8">#BBDEFB</color>
+    <color name="blue9">#E3F2FD</color>
+
+    <!-- cyan -->
+    <color name="cyan">#006064</color>
+    <color name="cyan1">#00838F</color>
+    <color name="cyan2">#0097A7</color>
+    <color name="cyan3">#00ACC1</color>
+    <color name="cyan4">#00BCD4</color>
+    <color name="cyan5">#26C6DA</color>
+    <color name="cyan6">#4DD0E1</color>
+    <color name="cyan7">#80DEEA</color>
+    <color name="cyan8">#B2EBF2</color>
+    <color name="cyan9">#E0F7FA</color>
+
+    <!-- green -->
+    <color name="green6">#1B5E20</color>
+    <color name="green4">#2E7D32</color>
+    <color name="green2">#388E3C</color>
+    <color name="green3">#43A047</color>
+    <color name="green1">#4CAF50</color>
+    <color name="green5">#66BB6A</color>
+    <color name="green">#81C784</color>
+    <color name="green7">#A5D6A7</color>
+    <color name="green8">#C8E6C9</color>
+    <color name="green9">#E8F5E9</color>
+
+    <!-- yellow -->
+    <color name="yellow">#F57F17</color>
+    <color name="yellow1">#F9A825</color>
+    <color name="yellow2">#FBC02D</color>
+    <color name="yellow3">#FDD835</color>
+    <color name="yellow4">#FFEB3B</color>
+    <color name="yellow5">#FFEE58</color>
+    <color name="yellow6">#FFF176</color>
+    <color name="yellow7">#FFF59D</color>
+    <color name="yellow8">#FFF9C4</color>
+    <color name="yellow9">#FFFDE7</color>
+
+    <!-- grey -->
+    <color name="grey">#212121</color>
+    <color name="grey1">#424242</color>
+    <color name="grey2">#616161</color>
+    <color name="grey3">#757575</color>
+    <color name="grey4">#9E9E9E</color>
+    <color name="grey5">#BDBDBD</color>
+    <color name="grey6">#E0E0E0</color>
+    <color name="grey7">#EEEEEE</color>
+    <color name="grey8">#F5F5F5</color>
+    <color name="grey9">#FAFAFA</color>
+
+    <!-- Orange -->
+    <color name="orange">#E65100</color>
+    <color name="orange1">#EF6C00</color>
+    <color name="orange2">#F57C00</color>
+    <color name="orange3">#FB8C00</color>
+    <color name="orange4">#FF9800</color>
+    <color name="orange5">#FFA726</color>
+    <color name="orange6">#FFB74D</color>
+    <color name="orange7">#FFCC80</color>
+    <color name="orange8">#FFE0B2</color>
+    <color name="orange9">#FFF3E0</color>
 </resources>
