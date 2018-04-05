@@ -7,19 +7,6 @@
             android:id="@+id/drawer_mystore"
             android:title="My Store"/>
     </group>
-    <group android:id="@+id/drawergroup_notlogin"
-        android:checkableBehavior="single"
-        android:visible="false">
-        <item
-            android:id="@+id/drawer_notloginhome"
-            android:title="@string/Home"/>
-        <item
-            android:id="@+id/drawer_login"
-            android:title="Login"/>
-        <item
-            android:id="@+id/drawer_register"
-            android:title="Register"/>
-    </group>
     <group android:id="@+id/drawergroup_login"
         android:checkableBehavior="single"
         android:visible="false">

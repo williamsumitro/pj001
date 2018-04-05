@@ -1,5 +1,6 @@
 package com.example.williamsumitro.dress.view.view.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -12,14 +13,20 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.HomeFragment;
 import com.example.williamsumitro.dress.view.view.MystoreFragment;
+import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.authentication.Register;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
@@ -29,6 +36,7 @@ import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFrag
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_nav) NavigationView navigationView;
@@ -37,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_appbar_frame) FrameLayout frameLayout;
 
     public static int navIndex = 1;
-
     private static final String MYSTORE = "MYSTORE";
     private static final String ORDER = "ORDER";
     private static final String HOME = "HOME";
@@ -64,24 +71,68 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        coba = 1;
-        if(coba == 0){
-            navigationView.getMenu().setGroupVisible(R.id.drawergroup_notlogin, true);
-            headerLayout = navigationView.inflateHeaderView(R.layout.main_navheadernotlogin);
-            setupNavigationView();
-        }
-        else{
-            navigationView.getMenu().setGroupVisible(R.id.drawergroup_my, true);
-            navigationView.getMenu().setGroupVisible(R.id.drawergroup_login, true);
-            headerLayout = navigationView.inflateHeaderView(R.layout.main_navheaderlogin);
-            setupNavigationView();
-        }
+        coba = 0;
+        setupNavigationView();
         if (savedInstanceState == null) {
             navIndex = 1;
             CURRENT = HOME;
             loadHomeFragment();
         }
+        loadNavBar();
+    }
 
+    private void loadNavBar() {
+        headerLayout = navigationView.inflateHeaderView(R.layout.main_navheaderlogin);
+        View header = navigationView.getHeaderView(0);
+        RelativeLayout containerlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containerlogin);
+        RelativeLayout containernotlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containernotlogin);
+        TextView nama = (TextView) header.findViewById(R.id.nav_header_name);
+        CircleImageView image = (CircleImageView) header.findViewById(R.id.nav_header_image);
+        if (coba==0){
+            containernotlogin.setVisibility(View.VISIBLE);
+            containerlogin.setVisibility(View.GONE);
+        }else {
+            containernotlogin.setVisibility(View.GONE);
+            containerlogin.setVisibility(View.VISIBLE);
+        }
+        containernotlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Login.class);
+                initanim(intent);
+            }
+        });
+        Menu menu = navigationView.getMenu();
+        MenuItem home = menu.findItem(R.id.drawer_home);
+        MenuItem settings = menu.findItem(R.id.drawer_settings);
+        MenuItem help = menu.findItem(R.id.drawer_help);
+        MenuItem mystore = menu.findItem(R.id.drawer_mystore);
+        MenuItem order = menu.findItem(R.id.drawer_order);
+        MenuItem wishlist = menu.findItem(R.id.drawer_wishlist);
+        MenuItem favstore = menu.findItem(R.id.drawer_favoritestore);
+        MenuItem discussion = menu.findItem(R.id.drawer_productdiscussion);
+        MenuItem logout = menu.findItem(R.id.drawer_logout);
+        if(coba==0){
+            home.setVisible(true);
+            settings.setVisible(true);
+            help.setVisible(true);
+            mystore.setVisible(false);
+            order.setVisible(false);
+            wishlist.setVisible(false);
+            favstore.setVisible(false);
+            discussion.setVisible(false);
+            logout.setVisible(false);
+        }else {
+            home.setVisible(true);
+            settings.setVisible(true);
+            help.setVisible(true);
+            mystore.setVisible(true);
+            order.setVisible(true);
+            wishlist.setVisible(true);
+            favstore.setVisible(true);
+            discussion.setVisible(true);
+            logout.setVisible(true);
+        }
     }
 
     private void initView(){
@@ -93,34 +144,35 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
     }
     private void setupNavigationView(){
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.drawer_mystore:
-                        Intent intent = new Intent(context, MyStore.class);
-                        initanim(intent);
-                        drawerLayout.closeDrawers();
-                        return true;
-                    case R.id.drawer_home:
-                        navIndex = 1;
-                        CURRENT = HOME;
-                        break;
-                    case R.id.drawer_order:
-                        navIndex = 2;
-                        CURRENT = ORDER;
-                        break;
-                    case R.id.drawer_wishlist:
-                        navIndex = 3;
-                        CURRENT = WISHLIST;
-                        break;
-                    case R.id.drawer_favoritestore:
-                        navIndex = 4;
-                        CURRENT = FAVORITESTORE;
-                        break;
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                    //Check to see which item was being clicked and perform appropriate action
+                    switch (menuItem.getItemId()) {
+                        //Replacing the main content with ContentFragment Which is our Inbox View;
+                        case R.id.drawer_mystore:
+                            Intent intent = new Intent(context, MyStore.class);
+                            initanim(intent);
+                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_home:
+                            navIndex = 1;
+                            CURRENT = HOME;
+                            break;
+                        case R.id.drawer_order:
+                            navIndex = 2;
+                            CURRENT = ORDER;
+                            break;
+                        case R.id.drawer_wishlist:
+                            navIndex = 3;
+                            CURRENT = WISHLIST;
+                            break;
+                        case R.id.drawer_favoritestore:
+                            navIndex = 4;
+                            CURRENT = FAVORITESTORE;
+                            break;
 //                    case R.id.nav_settings:
 //                        navIndex = 4;
 //                        CURRENT = TAG_SETTINGS;
@@ -135,23 +187,24 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
 //                        drawer.closeDrawers();
 //                        return true;
-                    default:
-                        navIndex = 0;
-                }
+                        default:
+                            navIndex = 0;
+                    }
 
-                //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
+                    //Checking if the item is in checked state or not, if not make it in checked state
+                    if (menuItem.isChecked()) {
+                        menuItem.setChecked(false);
+                    } else {
+                        menuItem.setChecked(true);
+                    }
                     menuItem.setChecked(true);
+
+                    loadHomeFragment();
+
+                    return true;
                 }
-                menuItem.setChecked(true);
+            });
 
-                loadHomeFragment();
-
-                return true;
-            }
-        });
 
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {

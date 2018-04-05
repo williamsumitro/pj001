@@ -1,64 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
+        android:background="@color/grey"
         android:id="@+id/login_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
     <LinearLayout
-        android:background="@color/gray"
+        android:layout_below="@id/login_toolbar"
+        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <ImageView
+            android:src="@drawable/logo1"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:text="Welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:text="to B2B Dress App"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/white"
             android:id="@+id/login_layoutemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputEditText
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/white"
                 android:id="@+id/login_etemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email Address"/>
+                android:hint="Email Address"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/user1"
+                android:drawableLeft="@drawable/user1" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
+            android:textColorHint="@color/white"
             android:id="@+id/login_layoutpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputEditText
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/white"
                 android:id="@+id/login_etpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/password"
+                android:drawableLeft="@drawable/password"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
-        <Button
+        <LinearLayout
             android:layout_marginTop="10dp"
-            android:background="@color/gray3"
-            android:textColor="@color/white"
-            android:id="@+id/login_btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="or"
-            android:layout_gravity="center"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/login_tvRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal">
+            <Button
+                android:background="@drawable/button1"
+                android:textColor="@color/white"
+                android:id="@+id/login_btnLogin"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Login"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="to explore more feature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/login_lnRegister"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:clickable="false"
+            android:textColor="@color/white"
+            android:text="Register"
+            android:background="@drawable/button2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:clickable="false"
+            android:text=">>"
+            android:textColor="@color/white"
+            android:background="@drawable/button2_1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

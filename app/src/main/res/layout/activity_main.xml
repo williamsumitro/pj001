@@ -16,8 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/main_nav"
-        app:itemIconTint="@color/color_drawer"
-        app:itemTextColor="@color/color_drawer"
+        android:background="@color/grey8"
+        app:itemBackground="@drawable/navitem_selectedbackground"
+        app:itemTextColor="@drawable/navitem_selectedtext"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/drawer"/>
