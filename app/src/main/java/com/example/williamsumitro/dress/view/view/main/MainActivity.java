@@ -3,12 +3,10 @@ package com.example.williamsumitro.dress.view.view.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,17 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.HomeFragment;
-import com.example.williamsumitro.dress.view.SettingsFragment;
 import com.example.williamsumitro.dress.view.view.MystoreFragment;
-import com.example.williamsumitro.dress.view.view.Settings;
-import com.example.williamsumitro.dress.view.view.authentication.Login;
-import com.example.williamsumitro.dress.view.view.authentication.Register;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
+import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
+import com.example.williamsumitro.dress.view.view.search.activity.Search;
+import com.example.williamsumitro.dress.view.view.store.activity.MyStore;
+import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,9 +101,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.drawer_mystore:
-                        navIndex = 0;
-                        CURRENT = MYSTORE;
-                        break;
+                        Intent intent = new Intent(context, MyStore.class);
+                        initanim(intent);
+                        drawerLayout.closeDrawers();
+                        return true;
                     case R.id.drawer_home:
                         navIndex = 1;
                         CURRENT = HOME;
@@ -115,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
                         navIndex = 2;
                         CURRENT = ORDER;
                         break;
-//                    case R.id.nav_movies:
-//                        navIndex = 3;
-//                        CURRENT = TAG_MOVIES;
-//                        break;
-//                    case R.id.nav_notifications:
-//                        navIndex = 3;
-//                        CURRENT = TAG_NOTIFICATIONS;
-//                        break;
+                    case R.id.drawer_wishlist:
+                        navIndex = 3;
+                        CURRENT = WISHLIST;
+                        break;
+                    case R.id.drawer_favoritestore:
+                        navIndex = 4;
+                        CURRENT = FAVORITESTORE;
+                        break;
 //                    case R.id.nav_settings:
 //                        navIndex = 4;
 //                        CURRENT = TAG_SETTINGS;
@@ -266,13 +264,20 @@ public class MainActivity extends AppCompatActivity {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 2:
-                // movies fragment
                 OrderFragment orderFragment = new OrderFragment();
                 return orderFragment;
             case 3:
-                // settings fragment
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;
+                WishlistFragment wishlistFragment = new WishlistFragment();
+                return wishlistFragment;
+            case 4:
+                FavoriteStoreFragment favoriteStoreFragment = new FavoriteStoreFragment();
+                return favoriteStoreFragment;
+            case 5:
+
+            case 6:
+
+            case 7:
+
             default:
                 return new HomeFragment();
         }
@@ -292,6 +297,10 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_bag) {
             Intent intent = new Intent(this, ShoppingBag.class);
+            initanim(intent);
+            return true;
+        }else if(id == R.id.menu_search){
+            Intent intent = new Intent(this, Search.class);
             initanim(intent);
             return true;
         }

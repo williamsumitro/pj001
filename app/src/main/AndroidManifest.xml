@@ -8,10 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".view.view.main.MainActivity"
-            android:theme="@style/noactionbar" />
+        android:theme="@style/noactionbar">
+        <activity android:name=".view.view.main.MainActivity" />
         <activity
             android:name=".view.view.splash.splashscreen"
             android:theme="@style/SplashScreen">
@@ -21,66 +19,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.view.product.activity.DetailProduct"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.outletdetail.activity.DetailOutlet"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.authentication.Login"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.authentication.Register"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_details"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_sizeguide"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_courier"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_discussions"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_reviews"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_discussionsnew"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_discussionsdetail"
-            android:theme="@style/noactionbar" />
+        <activity android:name=".view.view.product.activity.DetailProduct" />
+        <activity android:name=".view.view.store.activity.DetailOutlet" />
+        <activity android:name=".view.view.authentication.Login" />
+        <activity android:name=".view.view.authentication.Register" />
+        <activity android:name=".view.view.product.activity.DetailProduct_details" />
+        <activity android:name=".view.view.product.activity.DetailProduct_sizeguide" />
+        <activity android:name=".view.view.product.activity.DetailProduct_courier" />
+        <activity android:name=".view.view.product.activity.DetailProduct_discussions" />
+        <activity android:name=".view.view.product.activity.DetailProduct_reviews" />
+        <activity android:name=".view.view.product.activity.DetailProduct_discussionsnew" />
+        <activity android:name=".view.view.product.activity.DetailProduct_discussionsdetail" />
         <activity android:name=".view.view.Settings" />
-        <activity
-            android:name=".view.view.product.activity.ManagePasswords"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.product.activity.DetailProduct_pricerange"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.Aboutus"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.Help"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.bag.activity.Buy"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.bag.activity.ShoppingBag"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.checkout.activity.Checkout"
-            android:theme="@style/noactionbar" />
-        <activity
-            android:name=".view.view.order.activity.PaymentDetail"
-            android:theme="@style/noactionbar" />
-        <activity android:name=".view.view.order.activity.OrderDetail"
-            android:theme="@style/noactionbar"/>
+        <activity android:name=".view.view.product.activity.ManagePasswords" />
+        <activity android:name=".view.view.product.activity.DetailProduct_pricerange" />
+        <activity android:name=".view.view.Aboutus" />
+        <activity android:name=".view.view.Help" />
+        <activity android:name=".view.view.bag.activity.Buy" />
+        <activity android:name=".view.view.bag.activity.ShoppingBag" />
+        <activity android:name=".view.view.checkout.activity.Checkout" />
+        <activity android:name=".view.view.order.activity.PaymentDetail" />
+        <activity android:name=".view.view.order.activity.OrderDetail" />
+        <activity android:name=".view.view.order.activity.ReviewandrateDetail" />
+        <activity android:name=".view.view.filter.Filter" />
+        <activity android:name=".view.view.search.activity.Search" />
+        <activity android:name=".view.view.search.activity.SearchResult" />
+        <activity android:name=".view.view.category.activity.CategoryDetail" />
+        <activity android:name=".view.view.store.activity.MyStore"></activity>
     </application>
 
 </manifest>

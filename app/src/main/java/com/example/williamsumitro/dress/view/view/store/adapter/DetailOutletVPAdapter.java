@@ -1,14 +1,12 @@
-package com.example.williamsumitro.dress.view.view.outletdetail.adapter;
+package com.example.williamsumitro.dress.view.view.store.adapter;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.williamsumitro.dress.view.OutletFragment;
-import com.example.williamsumitro.dress.view.view.outletdetail.fragment.InformasioutletFragment;
-import com.example.williamsumitro.dress.view.view.outletdetail.fragment.ProdukoutletFragment;
-import com.example.williamsumitro.dress.view.view.outletdetail.fragment.UlasanoutletFragment;
+import com.example.williamsumitro.dress.view.view.store.fragment.InformasioutletFragment;
+import com.example.williamsumitro.dress.view.view.store.fragment.ProdukoutletFragment;
+import com.example.williamsumitro.dress.view.view.store.fragment.UlasanoutletFragment;
 
 /**
  * Created by WilliamSumitro on 14/03/2018.

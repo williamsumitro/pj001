@@ -10,10 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.CategoryFragment;
-import com.example.williamsumitro.dress.view.HotFragment;
-import com.example.williamsumitro.dress.view.OutletFragment;
-import com.example.williamsumitro.dress.view.TabHomeAdapter;
 import com.example.williamsumitro.dress.view.view.order.adapter.TabOrderAdapter;
 
 import butterknife.BindView;

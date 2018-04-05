@@ -5,8 +5,8 @@ package com.example.williamsumitro.dress.view.model;
  */
 
 public class Review {
-    private String namauser, review, tanggal;
-    private int gambaruser;
+    private String namauser, review, tanggal, namapakaian;
+    private int gambaruser, gambarpakaian;
     private double rating;
     public Review(String namauser, String review, String tanggal, int gambaruser, double rating){
         this.namauser = namauser;
@@ -15,7 +15,15 @@ public class Review {
         this.gambaruser = gambaruser;
         this.rating = rating;
     }
-
+    public Review(String namapakaian, String namauser, String review, String tanggal, int gambaruser, int gambarpakaian, double rating){
+        this.namapakaian = namapakaian;
+        this.namauser = namauser;
+        this.review = review;
+        this.tanggal = tanggal;
+        this.gambaruser = gambaruser;
+        this.gambarpakaian = gambarpakaian;
+        this.rating = rating;
+    }
     public String getNamauser() {
         return namauser;
     }
@@ -50,5 +58,21 @@ public class Review {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public int getGambarpakaian() {
+        return gambarpakaian;
+    }
+
+    public void setGambarpakaian(int gambarpakaian) {
+        this.gambarpakaian = gambarpakaian;
+    }
+
+    public String getNamapakaian() {
+        return namapakaian;
+    }
+
+    public void setNamapakaian(String namapakaian) {
+        this.namapakaian = namapakaian;
     }
 }

@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.williamsumitro.dress.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.williamsumitro.dress.view.view.category.fragment.CategoryFragment;
+import com.example.williamsumitro.dress.view.view.store.fragment.StoreFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +46,7 @@ public class HomeFragment extends Fragment {
         TabHomeAdapter adapter = new TabHomeAdapter(getChildFragmentManager());
         adapter.addFragment(new HotFragment(), "Hot");
         adapter.addFragment(new CategoryFragment(), "Category");
-        adapter.addFragment(new OutletFragment(), "Outlet");
+        adapter.addFragment(new StoreFragment(), "Outlet");
         viewPager.setAdapter(adapter);
     }
 

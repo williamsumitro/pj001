@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.outletdetail.activity;
+package com.example.williamsumitro.dress.view.view.store.activity;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.view.outletdetail.adapter.DetailOutletVPAdapter;
+import com.example.williamsumitro.dress.view.view.store.adapter.DetailOutletVPAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

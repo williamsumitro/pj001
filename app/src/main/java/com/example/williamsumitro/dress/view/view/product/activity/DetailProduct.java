@@ -26,7 +26,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
 import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
-import com.example.williamsumitro.dress.view.view.outletdetail.activity.DetailOutlet;
+import com.example.williamsumitro.dress.view.view.store.activity.DetailOutlet;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductSlideImagesAdapter;
 
 import java.util.ArrayList;

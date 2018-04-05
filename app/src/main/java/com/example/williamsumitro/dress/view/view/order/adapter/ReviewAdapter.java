@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Order;
 import com.example.williamsumitro.dress.view.view.order.activity.OrderDetail;
+import com.example.williamsumitro.dress.view.view.order.activity.ReviewandrateDetail;
 
 import java.util.List;
 
@@ -53,7 +54,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.btnreviewd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, ReviewandrateDetail.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bundle = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.slideleft).toBundle();
+                    context.startActivity(intent, bundle);
+                }
+                else {
+                    context.startActivity(intent);
+                }
             }
         });
 
