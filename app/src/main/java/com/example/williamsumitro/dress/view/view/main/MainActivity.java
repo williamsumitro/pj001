@@ -1,8 +1,12 @@
 package com.example.williamsumitro.dress.view.view.main;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,6 +21,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,7 +32,10 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.HomeFragment;
+import com.example.williamsumitro.dress.view.SettingsFragment;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.MystoreFragment;
+import com.example.williamsumitro.dress.view.view.Settings;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.authentication.Register;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
@@ -34,11 +45,19 @@ import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.store.activity.MyStore;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
+    public static  MainActivity mainactivity;
+    public static final String EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X";
+    public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
+    private int revealX;
+    private int revealY;
+
     @BindView(R.id.main_nav) NavigationView navigationView;
     @BindView(R.id.main_drawerlayout) DrawerLayout drawerLayout;
     @BindView(R.id.main_appbar_toolbar) Toolbar toolbar;
@@ -53,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOGOUT = "LOGOUT";
     private static final String WISHLIST = "WISHLIST";
     private static final String SETTINGS = "SETTINGS";
+    private static final String HELP = "HELP";
     public static String CURRENT = HOME;
 
     private boolean FragOnBackPress = true;
@@ -65,13 +85,15 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     private Context context;
     private MenuItem activeMenuItem;
-
+    private SessionManagement sessionManagement;
+    private String jwt="", name, email;
+    private Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        coba = 0;
+        initSession();
         setupNavigationView();
         if (savedInstanceState == null) {
             navIndex = 1;
@@ -79,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
             loadHomeFragment();
         }
         loadNavBar();
+
+        initTransition(savedInstanceState);
+    }
+    private void initSession(){
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        jwt = user.get(SessionManagement.JWT);
+        name = user.get(SessionManagement.KEY_NAME);
+        email = user.get(SessionManagement.KEY_EMAIL);
     }
 
     private void loadNavBar() {
@@ -88,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout containernotlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containernotlogin);
         TextView nama = (TextView) header.findViewById(R.id.nav_header_name);
         CircleImageView image = (CircleImageView) header.findViewById(R.id.nav_header_image);
-        if (coba==0){
+        if (jwt == null){
             containernotlogin.setVisibility(View.VISIBLE);
             containerlogin.setVisibility(View.GONE);
         }else {
@@ -112,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem favstore = menu.findItem(R.id.drawer_favoritestore);
         MenuItem discussion = menu.findItem(R.id.drawer_productdiscussion);
         MenuItem logout = menu.findItem(R.id.drawer_logout);
-        if(coba==0){
+        if(jwt == null){
             home.setVisible(true);
             settings.setVisible(true);
             help.setVisible(true);
@@ -136,22 +166,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView(){
+        mainactivity = this;
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         handler = new Handler();
         context = this;
         activityTitles = getResources().getStringArray(R.array.nav_titles);
         fragmentManager = getSupportFragmentManager();
+        sessionManagement = new SessionManagement(getApplicationContext());
     }
     private void setupNavigationView(){
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                    //Check to see which item was being clicked and perform appropriate action
                     switch (menuItem.getItemId()) {
-                        //Replacing the main content with ContentFragment Which is our Inbox View;
                         case R.id.drawer_mystore:
                             Intent intent = new Intent(context, MyStore.class);
                             initanim(intent);
@@ -172,6 +201,21 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.drawer_favoritestore:
                             navIndex = 4;
                             CURRENT = FAVORITESTORE;
+                            break;
+                        case R.id.drawer_productdiscussion:
+                            navIndex = 5;
+                            CURRENT = PRODUCTDISCUSSION;
+                            break;
+                        case R.id.drawer_settings:
+                            navIndex = 6;
+                            CURRENT = SETTINGS;
+                            break;
+                        case R.id.drawer_help:
+                            navIndex = 7;
+                            CURRENT = HELP;
+                            break;
+                        case R.id.drawer_logout:
+                            initDialog("", 10);
                             break;
 //                    case R.id.nav_settings:
 //                        navIndex = 4;
@@ -227,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-            }
+    }
 
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -236,28 +280,6 @@ public class MainActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-//    private void loadNavHeader() {
-//        // name, website
-//        txtName.setText("Ravi Tamada");
-//        txtWebsite.setText("www.androidhive.info");
-//
-//        // loading header background image
-//        Glide.with(this).load(urlNavHeaderBg)
-//                .crossFade()
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(imgNavHeaderBg);
-//
-//        // Loading profile image
-//        Glide.with(this).load(urlProfileImg)
-//                .crossFade()
-//                .thumbnail(0.5f)
-//                .bitmapTransform(new CircleTransform(this))
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(imgProfile);
-//
-//        // showing dot next to notifications label
-//        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
-//    }
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navIndex]);
     }
@@ -328,7 +350,8 @@ public class MainActivity extends AppCompatActivity {
             case 5:
 
             case 6:
-
+                SettingsFragment settingsFragment = new SettingsFragment();
+                return settingsFragment;
             case 7:
 
             default:
@@ -359,5 +382,146 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void initTransition(Bundle savedInstanceState){
+        final Intent intent = getIntent();
+        if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+                intent.hasExtra(EXTRA_CIRCULAR_REVEAL_X) &&
+                intent.hasExtra(EXTRA_CIRCULAR_REVEAL_Y)) {
+            revealX = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_X, 0);
+            revealY = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_Y, 0);
+            ViewTreeObserver viewTreeObserver = frameLayout.getViewTreeObserver();
+            if (viewTreeObserver.isAlive()) {
+                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        revealActivity(revealX, revealY);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            frameLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        }
+                    }
+                });
+            }else {
+                frameLayout.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+    protected void revealActivity(int x, int y) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            float finalRadius = (float) (Math.max(frameLayout.getWidth(), frameLayout.getHeight()) * 1.1);
+
+            // create the animator for this view (the start radius is zero)
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(frameLayout, x, y, 0, finalRadius);
+            circularReveal.setDuration(400);
+            circularReveal.setInterpolator(new AccelerateInterpolator());
+
+            // make the view visible and start the animation
+            frameLayout.setVisibility(View.VISIBLE);
+            circularReveal.start();
+        } else {
+            finish();
+        }
+    }
+
+    protected void unRevealActivity() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            finish();
+        } else {
+            float finalRadius = (float) (Math.max(frameLayout.getWidth(), frameLayout.getHeight()) * 1.1);
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
+                    frameLayout, revealX, revealY, finalRadius, 0);
+
+            circularReveal.setDuration(400);
+            circularReveal.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    frameLayout.setVisibility(View.INVISIBLE);
+                    finish();
+                }
+            });
+
+
+            circularReveal.start();
+        }
+    }
+    private void initDialog(String message, int stats){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
+        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
+        if(stats == 0){
+            status.setText("Oops!");
+            detail.setText(message);
+            imageView.setImageResource(R.drawable.emoji_oops);
+            buttonok.setBackgroundResource(R.drawable.button1_red);
+            buttonok.setText("Try Again");
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+        else if(stats == 1){
+            status.setText("Registered Success!");
+            detail.setText(message);
+            imageView.setImageResource(R.drawable.emoji_success);
+            buttonok.setBackgroundResource(R.drawable.button1_green);
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    startActivity(new Intent(context, Login.class));
+                    finish();
+                }
+            });
+            dialog.show();
+        }
+        else if (stats == 3){
+            status.setText("Uh Oh!");
+            detail.setText("There is a problem with internet connection or the server");
+            imageView.setImageResource(R.drawable.emoji_cry);
+            buttonok.setBackgroundResource(R.drawable.button1_red);
+            buttonok.setText("Try Again");
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+        else if (stats == 10){
+            buttoncancel.setVisibility(View.VISIBLE);
+            status.setText("Are you sure want to logout ?");
+            detail.setText(message);
+            imageView.setImageResource(R.drawable.emoji_smile);
+            buttonok.setBackgroundResource(R.drawable.button1_green);
+            buttoncancel.setBackgroundResource(R.drawable.button1_red);
+            buttonok.setText("Ok");
+            buttoncancel.setText("Cancel");
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    sessionManagement.logoutUser();
+                    finish();
+                }
+            });
+            buttoncancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    navigationView.getMenu().getItem(8).setChecked(false);
+//                    navigationView.setCheckedItem(R.id.drawer_home);
+                    navigationView.getMenu().getItem(navIndex).setChecked(true);
+                }
+            });
+            dialog.show();
+        }
     }
 }

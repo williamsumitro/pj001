@@ -71,30 +71,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
-                android:drawableStart="@drawable/password"
-                android:drawableLeft="@drawable/password"
+                android:drawableStart="@drawable/password1"
+                android:drawableLeft="@drawable/password1"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:background="@drawable/button1"
-                android:textColor="@color/white"
-                android:id="@+id/login_btnLogin"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Login"/>
+            android:orientation="vertical">
             <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
-                android:text="to explore more feature"
+                android:text="Login to explore more features"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/login_imgLogin"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/login"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

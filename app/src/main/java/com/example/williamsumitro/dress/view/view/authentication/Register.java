@@ -1,5 +1,6 @@
 package com.example.williamsumitro.dress.view.view.authentication;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +17,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
@@ -29,14 +32,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,9 +57,9 @@ public class Register extends AppCompatActivity {
     @BindView(R.id.register_container) RelativeLayout container;
     private RadioButton sexbutton;
     private Context context;
-    private ProgressDialog progressDialog;
     private apiService service;
-
+    private Dialog dialog;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,9 +159,9 @@ public class Register extends AppCompatActivity {
         }else if(sexbutton.getText().toString().toLowerCase().equals("male")){
             sex = "M";
         }
-        progressDialog.setMessage("Wait a sec ...");
-        progressDialog.show();
 
+        progressDialog.setMessage("Wait a sec..");
+        progressDialog.show();
 
         service = apiUtils.getAPIService();
         service.req_register(email.getText().toString(), password.getText().toString(), name.getText().toString(), sex, phonenumber.getText().toString()).
@@ -175,12 +174,12 @@ public class Register extends AppCompatActivity {
                                 JSONObject jsonResults = new JSONObject(response.body().string());
                                 if(jsonResults.getString("message").equals("User created successfully")){
                                     String message = jsonResults.getString("message");
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(context, Login.class));
-                                    finish();
+                                    progressDialog.dismiss();
+                                    initDialog(message, 1);
                                 }else{
                                     String message = jsonResults.getString("message");
-                                    Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                    initDialog(message, 0);
                                 }
                             }catch (JSONException e){
                                 e.printStackTrace();
@@ -191,16 +190,64 @@ public class Register extends AppCompatActivity {
                         else {
                             Log.i("debug", "onResponse: FAILED");
                         }
-                        progressDialog.dismiss();
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-                        Toast.makeText(context, "There is a problem with internet connection or the server", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
+                        initDialog(t.getMessage(), 3);
                     }
                 });
-
-
+    }
+    private void initDialog(String message, int stats){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+        Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
+        if(stats == 1){
+            status.setText("Registered Success!");
+            detail.setText(message);
+            imageView.setImageResource(R.drawable.emoji_success);
+            button.setBackgroundResource(R.drawable.button1_green);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    startActivity(new Intent(context, Login.class));
+                    finish();
+                }
+            });
+            dialog.show();
+        }
+        else if(stats == 0){
+            status.setText("Oops!");
+            detail.setText(message);
+            imageView.setImageResource(R.drawable.emoji_oops);
+            button.setBackgroundResource(R.drawable.button1_red);
+            button.setText("Try Again");
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+        else if (stats == 3){
+            status.setText("Uh Oh!");
+            detail.setText("There is a problem with internet connection or the server");
+            imageView.setImageResource(R.drawable.emoji_cry);
+            button.setBackgroundResource(R.drawable.button1_red);
+            button.setText("Try Again");
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
     }
 }

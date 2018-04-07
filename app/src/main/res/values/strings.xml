@@ -21,6 +21,11 @@
         <item>Order</item>
         <item>Wishlist</item>
         <item>Favorite Store</item>
+        <item>Product Discussion</item>
+        <item>Settings</item>
+        <item>Help</item>
+        <item>Logout</item>
+        <!--<item>@string/app_name</item>-->
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
