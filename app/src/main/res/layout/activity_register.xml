@@ -6,10 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/white"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:background="@color/grey"
+        android:background="@color/white"
         android:id="@+id/register_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
@@ -21,12 +21,12 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
         <ImageView
-            android:src="@drawable/logo1"
+            android:src="@drawable/logo3"
             android:layout_gravity="center"
             android:layout_width="75dp"
             android:layout_height="75dp" />
         <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:id="@+id/register_layoutfullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -35,16 +35,16 @@
                 android:drawableStart="@drawable/user2"
                 android:drawableLeft="@drawable/user2"
                 android:textSize="14sp"
-                android:textColorHint="@color/white"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/black"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:id="@+id/register_etfullname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full Name"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:id="@+id/register_layoutemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -54,16 +54,16 @@
                 android:drawableLeft="@drawable/email1"
                 android:inputType="textEmailAddress"
                 android:textSize="14sp"
-                android:textColorHint="@color/white"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/black"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:id="@+id/register_etemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email Address"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:id="@+id/register_layoutpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -73,9 +73,9 @@
                 android:drawableLeft="@drawable/password"
                 android:inputType="textPassword"
                 android:textSize="14sp"
-                android:textColorHint="@color/white"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/black"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:id="@+id/register_etpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             android:layout_marginTop="5dp"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -97,8 +97,8 @@
                 <RadioButton
                     android:id="@+id/register_rbmale"
                     android:textSize="14sp"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
+                    android:buttonTint="@color/black"
+                    android:textColor="@color/black"
                     android:text="Male"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -106,15 +106,15 @@
                 <RadioButton
                     android:id="@+id/register_rbfemale"
                     android:textSize="14sp"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
+                    android:buttonTint="@color/black"
+                    android:textColor="@color/black"
                     android:text="Female"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
         </RadioGroup>
         <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:id="@+id/register_layoutphonenumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -124,9 +124,9 @@
                 android:drawableLeft="@drawable/phone"
                 android:inputType="phone"
                 android:textSize="14sp"
-                android:textColorHint="@color/white"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/black"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:id="@+id/register_etphonenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

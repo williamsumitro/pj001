@@ -45,7 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Login extends AppCompatActivity{
-    @BindView(R.id.login_imgLogin) ImageView login;
+    @BindView(R.id.login_btnLogin) Button login;
     @BindView(R.id.login_etemail) TextInputEditText email;
     @BindView(R.id.login_lnRegister) LinearLayout register;
     @BindView(R.id.login_toolbar) Toolbar toolbar;
@@ -132,10 +132,12 @@ public class Login extends AppCompatActivity{
                                     progressDialog.dismiss();
                                     dialog = new Dialog(context);
                                     dialog.setContentView(R.layout.custom_dialog);
+                                    LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
                                     TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
                                     TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
                                     ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
                                     Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
+                                    bg.setBackgroundResource(R.color.green7);
                                     status.setText("Welcome back!");
                                     detail.setText("Hello there, check out our new dresses");
                                     imageView.setImageResource(R.drawable.emoji_success1);
@@ -181,12 +183,12 @@ public class Login extends AppCompatActivity{
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
         final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        arrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Login");
-        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(Color.BLACK);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +208,7 @@ public class Login extends AppCompatActivity{
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_dialog);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
         ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
@@ -213,6 +216,7 @@ public class Login extends AppCompatActivity{
         if(stats == 1){
             status.setText("Registered Success!");
             detail.setText(message);
+            bg.setBackgroundResource(R.color.green7);
             imageView.setImageResource(R.drawable.emoji_success);
             button.setBackgroundResource(R.drawable.button1_green);
             button.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +232,7 @@ public class Login extends AppCompatActivity{
         else if(stats == 0){
             status.setText("Oops!");
             detail.setText(message);
+            bg.setBackgroundResource(R.color.red7);
             imageView.setImageResource(R.drawable.emoji_oops);
             button.setBackgroundResource(R.drawable.button1_red);
             button.setText("Try Again");
@@ -241,6 +246,7 @@ public class Login extends AppCompatActivity{
         }
         else if (stats == 3){
             status.setText("Uh Oh!");
+            bg.setBackgroundResource(R.color.red7);
             detail.setText("There is a problem with internet connection or the server");
             imageView.setImageResource(R.drawable.emoji_cry);
             button.setBackgroundResource(R.drawable.button1_red);

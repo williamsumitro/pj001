@@ -27,6 +27,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -447,6 +448,7 @@ public class MainActivity extends AppCompatActivity {
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_dialog);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
         ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
@@ -455,6 +457,7 @@ public class MainActivity extends AppCompatActivity {
         if(stats == 0){
             status.setText("Oops!");
             detail.setText(message);
+            bg.setBackgroundResource(R.color.red7);
             imageView.setImageResource(R.drawable.emoji_oops);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
@@ -469,6 +472,7 @@ public class MainActivity extends AppCompatActivity {
         else if(stats == 1){
             status.setText("Registered Success!");
             detail.setText(message);
+            bg.setBackgroundResource(R.color.green7);
             imageView.setImageResource(R.drawable.emoji_success);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttonok.setOnClickListener(new View.OnClickListener() {
@@ -484,6 +488,7 @@ public class MainActivity extends AppCompatActivity {
         else if (stats == 3){
             status.setText("Uh Oh!");
             detail.setText("There is a problem with internet connection or the server");
+            bg.setBackgroundResource(R.color.red7);
             imageView.setImageResource(R.drawable.emoji_cry);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
@@ -500,10 +505,11 @@ public class MainActivity extends AppCompatActivity {
             status.setText("Are you sure want to logout ?");
             detail.setText(message);
             imageView.setImageResource(R.drawable.emoji_smile);
+            bg.setBackgroundResource(R.color.blue7);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttoncancel.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Ok");
-            buttoncancel.setText("Cancel");
+            buttonok.setText("Yes");
+            buttoncancel.setText("No");
             buttonok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

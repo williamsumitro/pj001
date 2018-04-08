@@ -92,12 +92,12 @@ public class Register extends AppCompatActivity {
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
         final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        arrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Register");
-        toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,6 +202,7 @@ public class Register extends AppCompatActivity {
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_dialog);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
         ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
@@ -209,6 +210,7 @@ public class Register extends AppCompatActivity {
         if(stats == 1){
             status.setText("Registered Success!");
             detail.setText(message);
+            bg.setBackgroundResource(R.color.green7);
             imageView.setImageResource(R.drawable.emoji_success);
             button.setBackgroundResource(R.drawable.button1_green);
             button.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +226,7 @@ public class Register extends AppCompatActivity {
         else if(stats == 0){
             status.setText("Oops!");
             detail.setText(message);
+            bg.setBackgroundResource(R.color.red6);
             imageView.setImageResource(R.drawable.emoji_oops);
             button.setBackgroundResource(R.drawable.button1_red);
             button.setText("Try Again");
@@ -236,6 +239,7 @@ public class Register extends AppCompatActivity {
             dialog.show();
         }
         else if (stats == 3){
+            bg.setBackgroundResource(R.color.red7);
             status.setText("Uh Oh!");
             detail.setText("There is a problem with internet connection or the server");
             imageView.setImageResource(R.drawable.emoji_cry);
