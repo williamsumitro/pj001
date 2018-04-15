@@ -8,6 +8,59 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dressbg2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<RelativeLayout-->
+                <!--android:padding="10dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignBaseline="@+id/hot_btnSeeNew"-->
+                    <!--android:layout_alignBottom="@+id/hot_btnSeeNew"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:text="New Brands Out"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:id="@+id/tvnew" />-->
+                <!--<Button-->
+                    <!--android:id="@+id/hot_btnSeeNew"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:text="See all"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textSize="12sp" />-->
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_below="@+id/hot_btnSeeNew"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:background="@color/black"-->
+                    <!--android:id="@+id/viewnew" />-->
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:clipToPadding="false"-->
+                    <!--android:id="@+id/hot_rvNew"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_below="@+id/viewnew"-->
+                    <!--android:layout_marginTop="10dp"/>-->
+            <!--</RelativeLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
         <android.support.v7.widget.CardView
             android:layout_margin="5dp"
             android:layout_width="match_parent"
@@ -19,62 +72,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/hot_btnSeeNew"
-                    android:layout_alignBottom="@+id/hot_btnSeeNew"
+                    android:layout_alignBaseline="@+id/hot_btn_openbid"
+                    android:layout_alignBottom="@+id/hot_btn_openbid"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="New Brands Out"
-                    android:textSize="14sp"
-                    android:id="@+id/tvnew" />
-                <Button
-                    android:id="@+id/hot_btnSeeNew"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text="See all"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/hot_btnSeeNew"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/black"
-                    android:id="@+id/viewnew" />
-                <android.support.v7.widget.RecyclerView
-                    android:clipToPadding="false"
-                    android:id="@+id/hot_rvNew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/viewnew"
-                    android:layout_marginTop="10dp"/>
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RelativeLayout
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/hot_btnSeeTop"
-                    android:layout_alignBottom="@+id/hot_btnSeeTop"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="Top Brands"
+                    android:text="Opening Bid"
                     android:textSize="14sp"
                     android:id="@+id/tvtop" />
                 <Button
-                    android:id="@+id/hot_btnSeeTop"
+                    android:id="@+id/hot_btn_openbid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -87,12 +93,12 @@
                     android:layout_height="1dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/hot_btnSeeTop"
+                    android:layout_below="@+id/hot_btn_openbid"
                     android:layout_marginTop="5dp"
                     android:background="@color/black"
                     android:id="@+id/viewtop" />
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/hot_rvTop"
+                    android:id="@+id/hot_rv_OpenBid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -101,15 +107,28 @@
                     android:layout_marginTop="10dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dressbg1"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dressbg3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keep Your Look Pretty"
-            android:textColor="@color/black"
-            android:padding="10dp"/>
+            android:textColor="@color/black"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/hot_rvList"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

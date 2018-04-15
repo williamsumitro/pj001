@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by William Sumitro on 01/04/2018.
@@ -47,6 +48,7 @@ public class ConfirmationRVAdapter extends RecyclerView.Adapter<ConfirmationRVAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Order order = orderList.get(position);
+        holder.storeimage.setImageResource(order.getImage());
         holder.ordernumber.setText(order.getOrdernumber());
         holder.orderdate.setText(order.getOrderdate());
         holder.storename.setText(order.getStorename());
@@ -84,6 +86,7 @@ public class ConfirmationRVAdapter extends RecyclerView.Adapter<ConfirmationRVAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.itemconfirmation_storeimage) CircleImageView storeimage;
         @BindView(R.id.itemconfirmation_btnReceived) Button btnreceived;
         @BindView(R.id.itemconfirmation_tvreceiptnumber) TextView receiptnumber;
         @BindView(R.id.itemconfirmation_tvstorename) TextView storename;

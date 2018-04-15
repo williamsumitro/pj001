@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     android:id="@+id/itemconfirmation_container"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="225dp"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
+        android:background="@color/grey8"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
             <TextView
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
                 android:id="@+id/itemconfirmation_tvordernumber"
                 android:layout_gravity="center_vertical"
                 android:textSize="12sp"
                 android:text="order number"
                 android:textColor="@color/black"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/itemconfirmation_storeimage"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
             <TextView
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
                 android:id="@+id/itemconfirmation_tvstorename"
-                android:layout_gravity="center_vertical"
-                android:textSize="12sp"
-                android:gravity="right"
-                android:textStyle="bold"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:text="Store Name"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"  />
         <TextView
+            android:textAlignment="center"
             android:id="@+id/itemconfirmation_tvoderdate"
-            android:layout_marginTop="2dp"
-            android:textSize="10sp"
+            android:layout_marginTop="4dp"
+            android:textSize="13sp"
             android:text="Order date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginTop="15dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:id="@+id/itemconfirmation_tvreceiptnumber"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
                 android:textSize="16sp"
                 android:text="Receipt Number"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         <Button
             android:id="@+id/itemconfirmation_btnReceived"

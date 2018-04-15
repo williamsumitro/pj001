@@ -104,11 +104,11 @@ public class PaymentDetail extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void initData(){
-        Bank bank = new Bank(R.drawable.bank2, "Union Pay", "Tek Kin Lung", "1231232321311");
+        Bank bank = new Bank("bca", "Tek Kin Lung", "1563016616");
         bankList.add(bank);
-        bank = new Bank(R.drawable.bank3, "Pay Pay", "Tek Kin Lung", "1231232321311");
+        bank = new Bank("mandiri", "Tek Kin Lung", "1300000109473");
         bankList.add(bank);
-        bank = new Bank(R.drawable.bank1, "HSBC", "Tek Kin Lung", "1231232321311");
+        bank = new Bank("ocbc", "Tek Kin Lung", "084800005252");
         bankList.add(bank);
     }
 }

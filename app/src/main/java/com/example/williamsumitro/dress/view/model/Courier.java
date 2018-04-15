@@ -11,6 +11,9 @@ public class Courier {
         this.name = name;
         this.image = image;
     }
+    public Courier(String name){
+        this.name = name;
+    }
     public int getImage() {
         return image;
     }

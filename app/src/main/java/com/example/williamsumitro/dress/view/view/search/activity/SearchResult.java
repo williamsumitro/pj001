@@ -16,9 +16,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.HotRVAdapter;
+import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.model.Cloth;
-import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 
 import java.util.ArrayList;
 import java.util.List;

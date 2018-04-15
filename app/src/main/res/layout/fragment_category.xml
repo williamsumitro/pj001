@@ -7,229 +7,653 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_bohemian_container"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/bohemian"
+                android:layout_width="180dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="125dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/up_bohemian" />
             <LinearLayout
-                android:id="@+id/category_lncategory1"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                android:background="#BCAAA4"
+                android:layout_width="200dp"
+                android:layout_height="match_parent">
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory2"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory3"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:id="@+id/category_bohemian_title"
+                android:layout_gravity="center"
+                android:text="BOHEMIAN"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/category_bohemian_view"
+                android:layout_below="@+id/category_bohemian_title"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:layout_width="220dp"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/category_bohemian_view"
+                android:textSize="12sp"
+                android:text="Bohemian style of 1960s and 1970s"
+                android:textColor="@color/white"
+                android:layout_width="215dp"
+                android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_brief_container"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/category_lncategory4"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/brief"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_brief" />
+                <LinearLayout
+                    android:background="#90CAF9"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_brief_title"
+                    android:layout_gravity="center"
+                    android:text="BRIEF"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory5"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                <View
+                    android:id="@+id/category_brief_view"
+                    android:layout_below="@+id/category_brief_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_brief_view"
+                    android:textSize="12sp"
+                    android:text="We provide a new brief dress"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory6"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_casual_container"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/category_lncategory7"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/casual"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_casual" />
+                <LinearLayout
+                    android:background="#BDBDBD"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_casual_title"
+                    android:layout_gravity="center"
+                    android:text="CASUAL"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory8"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                <View
+                    android:id="@+id/category_casual_view"
+                    android:layout_below="@+id/category_casual_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_casual_view"
+                    android:textSize="12sp"
+                    android:text="casual emphasizes comfort and personal expression over presentation, formality and conformity"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory9"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_cute_container"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/category_lncategory10"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/cute"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_cute" />
+                <LinearLayout
+                    android:background="#ef9a9a"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_cute_title"
+                    android:layout_gravity="center"
+                    android:text="CUTE"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory11"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                <View
+                    android:id="@+id/category_cute_view"
+                    android:layout_below="@+id/category_cute_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_cute_view"
+                    android:textSize="12sp"
+                    android:text="Show how cute you are with these dresses"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_fashion_container"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/fashion"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_fashion" />
+                <LinearLayout
+                    android:background="#B39DDB"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_fashion_title"
+                    android:layout_gravity="center"
+                    android:text="FASHION"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/category_lncategory12"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                <View
+                    android:id="@+id/category_fashion_view"
+                    android:layout_below="@+id/category_fashion_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
                 <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    android:text="Catregory Name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_fashion_view"
+                    android:textSize="12sp"
+                    android:text="Lack of fashion ? Follow the new trends based on fashion"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_flare_container"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/flare"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_flare" />
+                <LinearLayout
+                    android:background="#ef5350"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_flare_title"
+                    android:layout_gravity="center"
+                    android:text="FLARE"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <View
+                    android:id="@+id/category_flare_view"
+                    android:layout_below="@+id/category_flare_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_flare_view"
+                    android:textSize="12sp"
+                    android:text="Fitted through the waist and flaring out at or below the hips"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_novelty_container"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/novelty"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_novelty" />
+                <LinearLayout
+                    android:background="#80CBC4"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_novelty_title"
+                    android:layout_gravity="center"
+                    android:text="NOVELTY"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:id="@+id/category_novelty_view"
+                    android:layout_below="@+id/category_novelty_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_novelty_view"
+                    android:textSize="12sp"
+                    android:text="If you are going for a 1960s look then you need to see this"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_ol_container"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ol"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="125dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up_ol" />
+                <LinearLayout
+                    android:background="#FFE082"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/category_ol_title"
+                    android:layout_gravity="center"
+                    android:text="OFFICE LADY"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:id="@+id/category_ol_view"
+                    android:layout_below="@+id/category_ol_title"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_width="220dp"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/category_ol_view"
+                    android:textSize="12sp"
+                    android:text="Get your office dressing tips here"
+                    android:textColor="@color/white"
+                    android:layout_width="215dp"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_party_container"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/party"
+                android:layout_width="180dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="125dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/up_party" />
+            <LinearLayout
+                android:background="#CE93D8"
+                android:layout_width="200dp"
+                android:layout_height="match_parent">
             </LinearLayout>
-        </LinearLayout>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:id="@+id/category_party_title"
+                android:layout_gravity="center"
+                android:text="PARTY"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/category_party_view"
+                android:layout_below="@+id/category_party_title"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:layout_width="220dp"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/category_party_view"
+                android:textSize="12sp"
+                android:text="Choose your party dresses based on party"
+                android:textColor="@color/white"
+                android:layout_width="215dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_sexy_container"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/sexy"
+                android:layout_width="180dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="125dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/up_sexy" />
+            <LinearLayout
+                android:background="#212121"
+                android:layout_width="200dp"
+                android:layout_height="match_parent">
+            </LinearLayout>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:id="@+id/category_sexy_title"
+                android:layout_gravity="center"
+                android:text="SEXY"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/category_sexy_view"
+                android:layout_below="@+id/category_sexy_title"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:layout_width="220dp"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/category_sexy_view"
+                android:textSize="12sp"
+                android:text="Choose the perfect dresses to show your perfect body"
+                android:textColor="@color/white"
+                android:layout_width="215dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_vintage_container"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/vintage"
+                android:layout_width="180dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="125dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/up_vintage" />
+            <LinearLayout
+                android:background="#FFCC80"
+                android:layout_width="200dp"
+                android:layout_height="match_parent">
+            </LinearLayout>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:id="@+id/category_vintage_title"
+                android:layout_gravity="center"
+                android:text="VINTAGE"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/category_vintage_view"
+                android:layout_below="@+id/category_vintage_title"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:layout_width="220dp"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/category_vintage_view"
+                android:textSize="12sp"
+                android:text="Dress that made copy of an older garment"
+                android:textColor="@color/white"
+                android:layout_width="215dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/category_work_container"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/work"
+                android:layout_width="180dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="125dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/up_work" />
+            <LinearLayout
+                android:background="#B0BEC5"
+                android:layout_width="200dp"
+                android:layout_height="match_parent">
+            </LinearLayout>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:id="@+id/category_work_title"
+                android:layout_gravity="center"
+                android:text="WORK"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/category_work_view"
+                android:layout_below="@+id/category_work_title"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:layout_width="220dp"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/category_work_view"
+                android:textSize="12sp"
+                android:text="No one notice you on work ? Change your outfit now !"
+                android:textColor="@color/white"
+                android:layout_width="215dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

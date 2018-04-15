@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.HotRVAdapter;
 import com.example.williamsumitro.dress.view.model.Cloth;
 import com.example.williamsumitro.dress.view.view.wishlist.adapter.WishlistRVAdapter;
 

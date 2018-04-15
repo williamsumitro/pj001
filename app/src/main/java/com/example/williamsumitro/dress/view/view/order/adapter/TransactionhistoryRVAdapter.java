@@ -20,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by WilliamSumitro on 01/04/2018.
@@ -50,7 +51,7 @@ public class TransactionhistoryRVAdapter extends RecyclerView.Adapter<Transactio
         holder.orderdate.setText(order.getOrderdate());
         holder.storename.setText(order.getStorename());
         holder.receiptnumber.setText(order.getReceiptnumber());
-
+        holder.storeimage.setImageResource(order.getImage());
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +78,7 @@ public class TransactionhistoryRVAdapter extends RecyclerView.Adapter<Transactio
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.itemtransactionhistory_storeimage) CircleImageView storeimage;
         @BindView(R.id.itemtransactionhistory_tvreceiptnumber) TextView receiptnumber;
         @BindView(R.id.itemtransactionhistory_tvstorename) TextView storename;
         @BindView(R.id.itemtransactionhistory_tvordernumber) TextView ordernumber;

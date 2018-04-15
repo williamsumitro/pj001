@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Order;
@@ -27,9 +28,11 @@ import butterknife.ButterKnife;
  */
 public class OrderstatusFragment extends Fragment {
     @BindView(R.id.orderstatus_recyclerview) RecyclerView recyclerView;
+    @BindView(R.id.orderstatus_tv_pending) TextView pending;
     private Context context;
     private List<Order> orderList;
     private StatusRVAdapter adapter;
+    private int temp;
 
     public OrderstatusFragment() {
         // Required empty public constructor
@@ -43,6 +46,11 @@ public class OrderstatusFragment extends Fragment {
         initView(view);
         initData();
         setupRV();
+        for(int i = 0;i<orderList.size();i++){
+            if(orderList.get(i).getStatus().toLowerCase().equals("waiting seller response"))
+                temp += 1;
+        }
+        pending.setText(String.valueOf(temp));
         return view;
     }
     private void initView(View view){
@@ -52,15 +60,15 @@ public class OrderstatusFragment extends Fragment {
     }
     private void setupRV(){
         adapter = new StatusRVAdapter(orderList, context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
     private void initData(){
-        Order order = new Order("ABC Store", "ODR/2018/02/001/XX", "20 Februari 2018", 2000000, "Waiting Seller Response");
+        Order order = new Order(R.drawable.fake_store, "ABC Store", "ODR/2018/02/001/XX", "20 Februari 2018", 2000000, "Waiting Seller Response");
         orderList.add(order);
-        order = new Order("TEK Store", "ODR/2018/01/001/XX", "18 Januari 2018", 2000000, "Order Approved");
+        order = new Order(R.drawable.fake_store1, "TEK Store", "ODR/2018/01/001/XX", "18 Januari 2018", 2000000, "Order Approved");
         orderList.add(order);
     }
 

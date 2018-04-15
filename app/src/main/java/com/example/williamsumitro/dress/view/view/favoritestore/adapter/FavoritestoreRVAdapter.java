@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
@@ -37,65 +39,39 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Store store = storeList.get(position);
+        if (position%10==0){
+            holder.container.setBackgroundResource(R.color.brown7);
+        }
+        else if (position%10==1){
+            holder.container.setBackgroundResource(R.color.red7);
+        }
+        else if (position%10==2){
+            holder.container.setBackgroundResource(R.color.blue7);
+        }
+        else if (position%10==3){
+            holder.container.setBackgroundResource(R.color.orange7);
+        }
+        else if (position%10==4){
+            holder.container.setBackgroundResource(R.color.green7);
+        }
+        else if (position%10==5){
+            holder.container.setBackgroundResource(R.color.indigo7);
+        }
+        else if (position%10==6){
+            holder.container.setBackgroundResource(R.color.pink7);
+        }
+        else if (position%10==7){
+            holder.container.setBackgroundResource(R.color.lightblue7);
+        }
+        else if (position%10==8){
+            holder.container.setBackgroundResource(R.color.yellow7);
+        }
+        else if (position%10==9){
+            holder.container.setBackgroundResource(R.color.purple7);
+        }
         holder.storeimage.setImageResource(store.getImage());
         holder.storename.setText(store.getName());
-        if (store.getRate() == 0){
-            holder.star1.setImageResource(R.drawable.star0);
-            holder.star2.setImageResource(R.drawable.star0);
-            holder.star3.setImageResource(R.drawable.star0);
-            holder.star4.setImageResource(R.drawable.star0);
-            holder.star5.setImageResource(R.drawable.star0);
-        }
-        else if(store.getRate()>0 && store.getRate()<1){
-            holder.star1.setImageResource(R.drawable.star1);
-        }
-        else if (store.getRate() == 1){
-            holder.star1.setImageResource(R.drawable.star);
-        }
-        else if(store.getRate()>1 && store.getRate()<2){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star1);
-        }
-        else if (store.getRate() == 2){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-        }
-        else if(store.getRate()>2 && store.getRate()<3){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-            holder.star3.setImageResource(R.drawable.star1);
-        }
-        else if (store.getRate() == 3){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-            holder.star3.setImageResource(R.drawable.star);
-        }
-        else if(store.getRate()>3 && store.getRate()<4){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-            holder.star3.setImageResource(R.drawable.star);
-            holder.star4.setImageResource(R.drawable.star1);
-        }
-        else if (store.getRate() == 4){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-            holder.star3.setImageResource(R.drawable.star);
-            holder.star4.setImageResource(R.drawable.star);
-        }
-        else if(store.getRate()>4 && store.getRate()<5){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-            holder.star3.setImageResource(R.drawable.star);
-            holder.star4.setImageResource(R.drawable.star);
-            holder.star5.setImageResource(R.drawable.star1);
-        }
-        else if (store.getRate() == 5){
-            holder.star1.setImageResource(R.drawable.star);
-            holder.star2.setImageResource(R.drawable.star);
-            holder.star3.setImageResource(R.drawable.star);
-            holder.star4.setImageResource(R.drawable.star);
-            holder.star5.setImageResource(R.drawable.star);
-        }
+
     }
 
     @Override
@@ -104,17 +80,36 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.itemfavoritestore_imgdelete) ImageView delete;
-        @BindView(R.id.itemfavoritestore_imgstar1) ImageView star1;
-        @BindView(R.id.itemfavoritestore_imgstar2) ImageView star2;
-        @BindView(R.id.itemfavoritestore_imgstar3) ImageView star3;
-        @BindView(R.id.itemfavoritestore_imgstar4) ImageView star4;
-        @BindView(R.id.itemfavoritestore_imgstar5) ImageView star5;
+        @BindView(R.id.itemfavoritestore_img_delete) ImageView delete;
+        @BindView(R.id.itemfavoritestore_rl_background) RelativeLayout background;
+        @BindView(R.id.itemfavoritestore_ln_container) LinearLayout container;
+        @BindView(R.id.itemfavoritestore_rl_container) RelativeLayout container1;
+        @BindView(R.id.itemfavoritestore_ln_follower) LinearLayout container_follower;
+        @BindView(R.id.itemfavoritestore_ln_partnership) LinearLayout container_partnership;
+        @BindView(R.id.itemfavoritestore_ln_product) LinearLayout container_product;
+        @BindView(R.id.itemfavoritestore_ln_rating) LinearLayout container_rating;
+        @BindView(R.id.itemfavoritestore_tv_follower) TextView follower;
+        @BindView(R.id.itemfavoritestore_tv_partnership) TextView partnership;
+        @BindView(R.id.itemfavoritestore_tv_product) TextView product;
+        @BindView(R.id.itemfavoritestore_tv_rating) TextView rating;
         @BindView(R.id.itemfavoritestore_tvname) TextView storename;
         @BindView(R.id.itemfavoritestore_imgStore) ImageView storeimage;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+    public void removeItem(int position) {
+        storeList.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Store item, int position) {
+        storeList.add(position, item);
+        // notify item added by position
+        notifyItemInserted(position);
     }
 }

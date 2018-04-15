@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,11 +30,9 @@ public class DetailOutlet extends AppCompatActivity {
     @BindView(R.id.detailoutlet_tvNamaToko) TextView namatoko;
     @BindView(R.id.detailoutlet_Toolbar) Toolbar toolbar;
     @BindView(R.id.detailoutlet_tablayout) TabLayout tabLayout;
-    @BindView(R.id.detailoutlet_imgMail) ImageView mail;
-    @BindView(R.id.detailoutlet_imgCall) ImageView call;
     @BindView(R.id.detailoutlet_imgBanner) ImageView banner;
+    @BindView(R.id.detailoutlet_btnFollow) Button follow;
     @BindView(R.id.detailoutlet_imgAveragerating) ImageView averagerating;
-    @BindView(R.id.detailoutlet_imgAddtocontact) ImageView addtocontact;
     @BindView(R.id.detailoutlet_collaptoolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.detailoutlet_circleLogo) CircleImageView circleImageView;
 

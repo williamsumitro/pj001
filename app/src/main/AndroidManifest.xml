@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.williamsumitro.dress">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/noactionbar">
-        <activity android:name=".view.view.main.MainActivity"/>
+        <activity android:name=".view.view.main.MainActivity" />
         <activity
             android:name=".view.view.splash.splashscreen"
             android:theme="@style/SplashScreen">
@@ -21,8 +23,8 @@
         </activity>
         <activity android:name=".view.view.product.activity.DetailProduct" />
         <activity android:name=".view.view.store.activity.DetailOutlet" />
-        <activity android:name=".view.view.authentication.Login"/>
-        <activity android:name=".view.view.authentication.Register"/>
+        <activity android:name=".view.view.authentication.Login" />
+        <activity android:name=".view.view.authentication.Register" />
         <activity android:name=".view.view.product.activity.DetailProduct_details" />
         <activity android:name=".view.view.product.activity.DetailProduct_sizeguide" />
         <activity android:name=".view.view.product.activity.DetailProduct_courier" />
@@ -45,7 +47,8 @@
         <activity android:name=".view.view.search.activity.Search" />
         <activity android:name=".view.view.search.activity.SearchResult" />
         <activity android:name=".view.view.category.activity.CategoryDetail" />
-        <activity android:name=".view.view.store.activity.MyStore"/>
+        <activity android:name=".view.view.store.activity.MyStore" />
+        <activity android:name=".view.view.bid.activity.BidDetail"></activity>
     </application>
 
 </manifest>

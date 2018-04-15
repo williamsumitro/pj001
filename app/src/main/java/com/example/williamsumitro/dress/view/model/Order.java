@@ -22,24 +22,27 @@ public class Order {
         this.price = price;
         this.reason = reason;
     }
-    public Order(String storename, String ordernumber, String orderdate, int total){
+    public Order(int image, String storename, String ordernumber, String orderdate, int total){
         this.ordernumber = ordernumber;
         this.orderdate = orderdate;
         this.total = total;
         this.storename = storename;
+        this.image = image;
     }
-    public Order(String storename, String ordernumber, String orderdate, int total, String status){
+    public Order(int image, String storename, String ordernumber, String orderdate, int total, String status){
         this.ordernumber = ordernumber;
         this.orderdate = orderdate;
         this.total = total;
         this.storename = storename;
         this.status = status;
+        this.image = image;
     }
-    public Order(String storename, String ordernumber, String orderdate, String receiptnumber){
+    public Order(int image, String storename, String ordernumber, String orderdate, String receiptnumber){
         this.ordernumber = ordernumber;
         this.orderdate = orderdate;
         this.storename = storename;
         this.receiptnumber = receiptnumber;
+        this.image = image;
     }
     public String getOrdernumber() {
         return ordernumber;

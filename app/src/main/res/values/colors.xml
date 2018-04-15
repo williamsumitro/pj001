@@ -71,7 +71,28 @@
     <color name="blue7">#90CAF9</color>
     <color name="blue8">#BBDEFB</color>
     <color name="blue9">#E3F2FD</color>
+    <color name="ocbc">#FF8A65</color>
 
+    <color name="lightblue">#01579B</color>
+    <color name="lightblue1">#0277BD</color>
+    <color name="lightblue2">#0288D1</color>
+    <color name="lightblue3">#039BE5</color>
+    <color name="lightblue4">#03A9F4</color>
+    <color name="lightblue5">#29B6F6</color>
+    <color name="lightblue6">#4FC3F7</color>
+    <color name="lightblue7">#81D4FA</color>
+    <color name="lightblue8">#B3E5FC</color>
+
+    <color name="brown">#3E2723</color>
+    <color name="brown1">#4E342E</color>
+    <color name="brown2">#5D4037</color>
+    <color name="brown3">#6D4C41</color>
+    <color name="brown4">#795548</color>
+    <color name="brown5">#8D6E63</color>
+    <color name="brown6">#A1887F</color>
+    <color name="brown7">#BCAAA4</color>
+    <color name="brown8">#D7CCC8</color>
+    <color name="brown9">#EFEBE9</color>
     <!-- cyan -->
     <color name="cyan">#006064</color>
     <color name="cyan1">#00838F</color>
@@ -108,6 +129,7 @@
     <color name="yellow8">#FFF9C4</color>
     <color name="yellow9">#FFFDE7</color>
 
+    <color name="orange01">#FFD54F</color>
     <!-- grey -->
     <color name="grey">#212121</color>
     <color name="grey1">#424242</color>

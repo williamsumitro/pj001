@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by William Sumitro on 30/03/2018.
@@ -55,6 +56,7 @@ public class PaymentRVAdapter extends RecyclerView.Adapter<PaymentRVAdapter.View
         holder.orderdate.setText(order.getOrderdate());
         holder.total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(order.getTotal()))));
         holder.storename.setText(order.getStorename());
+        holder.storeimage.setImageResource(order.getImage());
         holder.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +106,7 @@ public class PaymentRVAdapter extends RecyclerView.Adapter<PaymentRVAdapter.View
         @BindView(R.id.itempayment_tvordernumber) TextView ordernumber;
         @BindView(R.id.itempayment_tvoderdate) TextView orderdate;
         @BindView(R.id.itempayment_container) CardView container;
+        @BindView(R.id.itempayment_storeimage) CircleImageView storeimage;
             public ViewHolder(View itemView) {
             super(itemView);
                 ButterKnife.bind(this,itemView);

@@ -94,7 +94,6 @@ public class BuyRVAdapter extends RecyclerView.Adapter<BuyRVAdapter.ViewHolder> 
         public ViewHolder(View itemView) {
             super(itemView);
             if(courierList != null){
-                courier = (TextView) itemView.findViewById(R.id.itemcourier1_courier);
                 imagecourier = (ImageView) itemView.findViewById(R.id.itemcourier1_image);
             }
             else if(bankList!= null){

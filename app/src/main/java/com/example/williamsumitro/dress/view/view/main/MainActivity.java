@@ -2,7 +2,6 @@ package com.example.williamsumitro.dress.view.view.main;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +30,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.HomeFragment;
+import com.example.williamsumitro.dress.view.view.home.fragment.HomeFragment;
 import com.example.williamsumitro.dress.view.SettingsFragment;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.MystoreFragment;
-import com.example.williamsumitro.dress.view.view.Settings;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
-import com.example.williamsumitro.dress.view.view.authentication.Register;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
@@ -125,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             containernotlogin.setVisibility(View.GONE);
             containerlogin.setVisibility(View.VISIBLE);
+            image.setImageResource(R.drawable.man);
         }
         containernotlogin.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by William Sumitro on 01/04/2018.
@@ -51,6 +52,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.orderdate.setText(order.getOrderdate());
         holder.storename.setText(order.getStorename());
         holder.receiptnumber.setText(order.getReceiptnumber());
+        holder.stroeimage.setImageResource(order.getImage());
         holder.btnreviewd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +96,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.itemreviewandrating_storeimage)
+        CircleImageView stroeimage;
         @BindView(R.id.itemreviewandrating_btnReview)
         Button btnreviewd;
         @BindView(R.id.itemreviewandrating_tvreceiptnumber)

@@ -10,17 +10,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.HotRVAdapter;
+import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.model.Cloth;
-import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
-import com.example.williamsumitro.dress.view.view.search.activity.Search;
 
 import java.util.ArrayList;
 import java.util.List;

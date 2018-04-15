@@ -52,15 +52,15 @@ public class ReviewandratingFragment extends Fragment {
     }
     private void setupRV(){
         adapter = new ReviewAdapter(orderList, context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
     private void initData(){
-        Order order = new Order("ABC Store", "ODR/2018/02/001/XX", "20 Februari 2018", "RCP/22+10/223/122/XX/1");
+        Order order = new Order(R.drawable.fake_store,"ABC Store", "ODR/2018/02/001/XX", "20 Februari 2018", "RCP/22+10/223/122/XX/1");
         orderList.add(order);
-        order = new Order("TEK Store", "ODR/2018/01/001/XX", "18 Januari 2018", "RCP/2210/223/122/XX/2");
+        order = new Order(R.drawable.fake_store1,"TEK Store", "ODR/2018/01/001/XX", "18 Januari 2018", "RCP/2210/223/122/XX/2");
         orderList.add(order);
     }
 
