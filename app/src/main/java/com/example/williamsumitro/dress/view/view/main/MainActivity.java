@@ -38,6 +38,7 @@ import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
+import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.store.activity.MyStore;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
@@ -161,8 +162,14 @@ public class MainActivity extends AppCompatActivity {
             discussion.setVisible(true);
             logout.setVisible(true);
         }
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Profile.class);
+                initanim(intent);
+            }
+        });
     }
-
     private void initView(){
         mainactivity = this;
         ButterKnife.bind(this);

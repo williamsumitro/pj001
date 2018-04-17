@@ -48,7 +48,11 @@
         <activity android:name=".view.view.search.activity.SearchResult" />
         <activity android:name=".view.view.category.activity.CategoryDetail" />
         <activity android:name=".view.view.store.activity.MyStore" />
-        <activity android:name=".view.view.bid.activity.BidDetail"></activity>
+        <activity android:name=".view.view.bid.activity.BidDetail" />
+        <activity android:name=".view.view.profile.activity.Profile" />
+        <activity android:name=".view.view.profile.activity.EditProfile" />
+        <activity android:name=".view.view.profile.activity.ChangePassword" />
+        <activity android:name=".view.view.profile.activity.ChangeProfilePicture"></activity>
     </application>
 
 </manifest>

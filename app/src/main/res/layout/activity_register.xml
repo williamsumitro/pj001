@@ -93,7 +93,7 @@
             android:id="@+id/register_radiogroup"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
                 <RadioButton
                     android:id="@+id/register_rbmale"
                     android:textSize="14sp"
