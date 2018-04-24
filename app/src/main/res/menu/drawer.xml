@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:id="@+id/drawergroup_my"
         android:checkableBehavior="single"
         android:visible="false">
@@ -15,7 +16,8 @@
             android:title="@string/Home"/>
         <item
             android:id="@+id/drawer_order"
-            android:title="Order"/>
+            android:title="Order"
+            app:actionViewClass="android.widget.TextView" />
         <item
             android:id="@+id/drawer_wishlist"
             android:title="@string/Wishlist" />
@@ -24,7 +26,8 @@
             android:title="Favorite Store" />
         <item
             android:id="@+id/drawer_productdiscussion"
-            android:title="Product Discussion" />
+            android:title="Product Discussion"
+            app:actionViewClass="android.widget.TextView"/>
         <item
             android:id="@+id/drawer_settings"
             android:title="@string/Settings" />

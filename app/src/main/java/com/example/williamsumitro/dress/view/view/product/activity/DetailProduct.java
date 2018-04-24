@@ -39,6 +39,10 @@ import butterknife.ButterKnife;
 import me.relex.circleindicator.CircleIndicator;
 
 public class DetailProduct extends AppCompatActivity {
+    @BindView(R.id.detailproduct_rv_partnership) RecyclerView rv_partnership;
+    @BindView(R.id.detailproduct_ln_partnership) LinearLayout partnership;
+    @BindView(R.id.detailproduct_ln_detailpartnership) LinearLayout detailpartnership;
+    @BindView(R.id.detailproduct_imgcaret) ImageView caret;
     @BindView(R.id.detailproduct_appbar) AppBarLayout appBarLayout;
     @BindView(R.id.detailproduct_circleindicator) CircleIndicator circleIndicator;
     @BindView(R.id.detailproduct_collapstoolbar) CollapsingToolbarLayout collapsingToolbarLayout;

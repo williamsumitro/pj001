@@ -13,7 +13,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:background="@color/white"
-            android:layout_height="280dp"
+            android:layout_height="500dp"
             android:id="@+id/detailproduct_collapstoolbar"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
@@ -91,6 +91,41 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Min. Order = 10 pcs"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/detailproduct_ln_partnership"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="Partnership store which sell below qty order"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/detailproduct_imgcaret"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/caret"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/detailproduct_ln_detailpartnership"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_marginTop="5dp"
+                        android:background="@color/gray1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/detailproduct_rv_partnership"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                     android:layout_marginTop="5dp"

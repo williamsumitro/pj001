@@ -12,11 +12,13 @@
         android:orderInCategory="100"
         android:title="Notification"
         android:icon="@drawable/notification"
+        app:actionLayout="@layout/badge_menuitem_notification"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_bag"
         android:orderInCategory="100"
         android:title="Bag"
         android:icon="@drawable/bag"
+        app:actionLayout="@layout/badge_menuitem_bag"
         app:showAsAction="always" />
 </menu>

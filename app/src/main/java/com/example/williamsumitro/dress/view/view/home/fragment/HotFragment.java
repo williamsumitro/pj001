@@ -65,21 +65,21 @@ public class HotFragment extends Fragment {
         ButterKnife.bind(this,view);
     }
     private void initData(){
-        Cloth cloth = new Cloth("Express One Eleven Love And Wi-Fi Muscle Tank", R.drawable.image, "50.000");
+        Cloth cloth = new Cloth("Express One Eleven Love And Wi-Fi Muscle Tank", R.drawable.fake_dress1, "50.000");
         ListList.add(cloth);
-        cloth = new Cloth("Eyelet Full Cotton Midi Skirt", R.drawable.image, "10.000");
+        cloth = new Cloth("Eyelet Full Cotton Midi Skirt", R.drawable.fake_dress2, "10.000");
         ListList.add(cloth);
-        cloth = new Cloth("Side Tie Flared Skirt", R.drawable.image, "62.000");
+        cloth = new Cloth("Side Tie Flared Skirt", R.drawable.fake_dress3, "62.000");
         ListList.add(cloth);
-        cloth = new Cloth("Stripe Ruched A-Line Dress", R.drawable.image, "40.000");
+        cloth = new Cloth("Stripe Ruched A-Line Dress", R.drawable.fake_dress4, "40.000");
         ListList.add(cloth);
-        cloth = new Cloth("High Waisted Windowpane A-Line Skirt", R.drawable.image, "32.000");
+        cloth = new Cloth("High Waisted Windowpane A-Line Skirt", R.drawable.fake_dress5, "32.000");
         ListList.add(cloth);
-        cloth = new Cloth("High Waisted Striped Clean Pencil Skirt", R.drawable.image, "12.000");
+        cloth = new Cloth("High Waisted Striped Clean Pencil Skirt", R.drawable.fake_dress6, "12.000");
         ListList.add(cloth);
-        cloth = new Cloth("Ruched Sleeve Cutaway Blazer", R.drawable.image, "54.000");
+        cloth = new Cloth("Ruched Sleeve Cutaway Blazer", R.drawable.fake_dress2, "54.000");
         ListList.add(cloth);
-        cloth = new Cloth("Express One Eleven Lace Inset Tee", R.drawable.image, "78.000");
+        cloth = new Cloth("Express One Eleven Lace Inset Tee", R.drawable.fake_dress1, "78.000");
         ListList.add(cloth);
 
         Bid bid = new Bid("Dress sexy", "Sexy Store", R.drawable.fake_dress1, 4,4,1,"2 days",true);

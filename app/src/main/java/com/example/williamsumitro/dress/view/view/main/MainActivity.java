@@ -5,17 +5,20 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +45,8 @@ import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.store.activity.MyStore;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -86,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private String jwt="", name, email;
     private Dialog dialog;
+    private BadgeNavDrawer badgeNavDrawer;
+    private int count_bag = 0, count_notification = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
         loadNavBar();
 
         initTransition(savedInstanceState);
+        TextView order = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.drawer_order));
+        TextView product_discussion = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.drawer_productdiscussion));
+        order.setGravity(Gravity.CENTER_VERTICAL);
+        order.setTypeface(null, Typeface.BOLD);
+        order.setTextColor(getResources().getColor(R.color.red));
+        order.setText("12");
+        product_discussion.setGravity(Gravity.CENTER_VERTICAL);
+        product_discussion.setTypeface(null, Typeface.BOLD);
+        product_discussion.setTextColor(getResources().getColor(R.color.red));
+        product_discussion.setText("12");
     }
     private void initSession(){
         HashMap<String, String> user = sessionManagement.getUserDetails();
@@ -141,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem favstore = menu.findItem(R.id.drawer_favoritestore);
         MenuItem discussion = menu.findItem(R.id.drawer_productdiscussion);
         MenuItem logout = menu.findItem(R.id.drawer_logout);
+        jwt = "cc";
         if(jwt == null){
             home.setVisible(true);
             settings.setVisible(true);
@@ -179,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         activityTitles = getResources().getStringArray(R.array.nav_titles);
         fragmentManager = getSupportFragmentManager();
         sessionManagement = new SessionManagement(getApplicationContext());
+        badgeNavDrawer = new BadgeNavDrawer(getSupportActionBar().getThemedContext());
     }
     private void setupNavigationView(){
 
@@ -270,7 +289,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
             }
         };
-
+        actionBarDrawerToggle.setDrawerArrowDrawable(badgeNavDrawer);
+        badgeNavDrawer.setText("24");
         //Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
@@ -366,6 +386,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        final MenuItem menubag = menu.findItem(R.id.menu_bag);
+        View actionbag = MenuItemCompat.getActionView(menubag);
+        TextView tv_bag = (TextView) actionbag.findViewById(R.id.bag_badge);
+
+        final  MenuItem menunotification = menu.findItem(R.id.menu_notification);
+        View actionnotification = MenuItemCompat.getActionView(menunotification);
+        TextView tv_notification = (TextView) actionnotification.findViewById(R.id.notification_badge);
+
+        if(tv_bag != null){
+            if(count_bag==0){
+                if(tv_bag.getVisibility() != View.GONE)
+                    tv_bag.setVisibility(View.GONE);
+            }
+            else {
+                tv_bag.setText(String.valueOf(Math.min(count_bag, 99)));
+                if (tv_bag.getVisibility() != View.VISIBLE) {
+                    tv_bag.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+        if(tv_notification != null){
+            if(count_notification==0){
+                if(tv_notification.getVisibility() != View.GONE)
+                    tv_notification.setVisibility(View.GONE);
+            }
+            else {
+                tv_notification.setText(String.valueOf(Math.min(count_notification, 99)));
+                if (tv_notification.getVisibility() != View.VISIBLE) {
+                    tv_notification.setVisibility(View.VISIBLE);
+                }
+            }
+        }
         return true;
     }
     @Override
