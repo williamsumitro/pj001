@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.view.product.activity.DetailProduct" />
-        <activity android:name=".view.view.store.activity.DetailOutlet" />
+        <activity android:name=".view.view.sellerpanel.activity.DetailOutlet" />
         <activity android:name=".view.view.authentication.Login" />
         <activity android:name=".view.view.authentication.Register" />
         <activity android:name=".view.view.product.activity.DetailProduct_details" />
@@ -32,7 +32,6 @@
         <activity android:name=".view.view.product.activity.DetailProduct_reviews" />
         <activity android:name=".view.view.product.activity.DetailProduct_discussionsnew" />
         <activity android:name=".view.view.product.activity.DetailProduct_discussionsdetail" />
-        <activity android:name=".view.view.Settings" />
         <activity android:name=".view.view.product.activity.ManagePasswords" />
         <activity android:name=".view.view.product.activity.DetailProduct_pricerange" />
         <activity android:name=".view.view.Aboutus" />
@@ -47,12 +46,21 @@
         <activity android:name=".view.view.search.activity.Search" />
         <activity android:name=".view.view.search.activity.SearchResult" />
         <activity android:name=".view.view.category.activity.CategoryDetail" />
-        <activity android:name=".view.view.store.activity.MyStore" />
+        <activity android:name=".view.view.sellerpanel.activity.PreviewStore" />
         <activity android:name=".view.view.bid.activity.BidDetail" />
         <activity android:name=".view.view.profile.activity.Profile" />
         <activity android:name=".view.view.profile.activity.EditProfile" />
         <activity android:name=".view.view.profile.activity.ChangePassword" />
-        <activity android:name=".view.view.profile.activity.ChangeProfilePicture"></activity>
+        <activity android:name=".view.view.profile.activity.ChangeProfilePicture" />
+        <activity android:name=".view.view.sellerpanel.activity.StoreSettings" />
+        <activity android:name=".view.view.sellerpanel.activity.StoreEditInformation" />
+        <activity android:name=".view.view.sellerpanel.activity.StoreEditBank" />
+        <activity android:name=".view.view.sellerpanel.activity.StoreEditCourier" />
+        <activity android:name=".view.view.sellerpanel.activity.OpenStore" />
+        <activity android:name=".view.view.authentication.Unauthorized" />
+        <activity android:name=".view.view.Wallet.activity.Mywallet" />
+        <activity android:name=".view.view.Wallet.activity.Withdraw" />
+        <activity android:name=".view.view.sellerpanel.activity.SellerPanel"></activity>
     </application>
 
 </manifest>

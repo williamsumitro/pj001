@@ -48,11 +48,11 @@ public class Login extends AppCompatActivity{
     @BindView(R.id.login_btnLogin) Button login;
     @BindView(R.id.login_etemail) TextInputEditText email;
     @BindView(R.id.login_lnRegister) LinearLayout register;
-    @BindView(R.id.login_toolbar) Toolbar toolbar;
     @BindView(R.id.login_layoutpassword) TextInputLayout layoutpassword;
     @BindView(R.id.login_layoutemail) TextInputLayout layoutemail;
     @BindView(R.id.login_etpassword) TextInputEditText password;
     @BindView(R.id.login_container) RelativeLayout container;
+    @BindView(R.id.login_lnskip) LinearLayout skip;
     private Context context;
     private apiService service;
     private String token;
@@ -64,7 +64,6 @@ public class Login extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-        setuptoolbar();
         initOnClick();
     }
 
@@ -79,6 +78,13 @@ public class Login extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Register.class);
+                initanim(intent);
+            }
+        });
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity.class);
                 initanim(intent);
             }
         });
@@ -126,49 +132,51 @@ public class Login extends AppCompatActivity{
                         if(response.code() == 200){
                             Log.i("debug", "onResponse: SUCCESS");
                             try{
-                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                if(jsonResults.getString("status").toLowerCase().equals("true")){
-                                    token = jsonResults.getString("jwt");
-                                    progressDialog.dismiss();
-                                    dialog = new Dialog(context);
-                                    dialog.setContentView(R.layout.custom_dialog);
-                                    LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-                                    TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-                                    TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-                                    ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-                                    Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
-                                    bg.setBackgroundResource(R.color.green7);
-                                    status.setText("Welcome back!");
-                                    detail.setText("Hello there, check out our new dresses");
-                                    imageView.setImageResource(R.drawable.emoji_success1);
-                                    button.setBackgroundResource(R.drawable.button1_green);
-                                    button.setText("Ok");
-                                    button.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            dialog.dismiss();
-                                            sessionManagement.createLoginSession("eee aa",email.getText().toString(), token);
-                                            MainActivity.mainactivity.finish();
-                                            presentActivity(view);
-                                        }
-                                    });
-                                    dialog.show();
-                                }else if (jsonResults.getString("status").toLowerCase().equals("false")){
-                                    String message = jsonResults.getString("message");
-                                    progressDialog.dismiss();
-                                    initDialog(message, 0);
-                                }else {
-                                    Snackbar.make(container, "FUCKING ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
-                                }
-                            }catch (JSONException e){
-                                e.printStackTrace();
-                            }catch (IOException e){
-                                e.printStackTrace();
+                            JSONObject jsonResults = new JSONObject(response.body().string());
+                            if(jsonResults.getString("status").toLowerCase().equals("true")){
+                                token = jsonResults.getString("jwt");
+                                progressDialog.dismiss();
+                                dialog = new Dialog(context);
+                                dialog.setCancelable(false);
+                                dialog.setCanceledOnTouchOutside(false);
+                                dialog.setContentView(R.layout.custom_dialog);
+                                LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
+                                TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+                                TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+                                ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+                                Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
+                                bg.setBackgroundResource(R.color.green7);
+                                status.setText("Welcome back!");
+                                detail.setText("Hello there, check out our new dresses");
+                                imageView.setImageResource(R.drawable.emoji_success1);
+                                button.setBackgroundResource(R.drawable.button1_green);
+                                button.setText("Ok");
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                        sessionManagement.createLoginSession(token);
+                                        MainActivity.mainactivity.finish();
+                                        presentActivity(view);
+                                    }
+                                });
+                                dialog.show();
+                            }else if (jsonResults.getString("status").toLowerCase().equals("false")){
+                                String message = jsonResults.getString("message");
+                                progressDialog.dismiss();
+                                initDialog(message, 0);
+                            }else {
+                                Snackbar.make(container, "FUCKING ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
                             }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }catch (IOException e){
+                            e.printStackTrace();
                         }
+                    }
                         else{
-                            Snackbar.make(container, "Invalid Email or Password", Snackbar.LENGTH_LONG).show();
-                        }
+                        Snackbar.make(container, "Invalid Email or Password", Snackbar.LENGTH_LONG).show();
+                    }
                         progressDialog.dismiss();
                     }
 
@@ -180,25 +188,6 @@ public class Login extends AppCompatActivity{
                     }
                 });
     }
-    private void setuptoolbar(){
-        setSupportActionBar(toolbar);
-        final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(arrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Login");
-        toolbar.setTitleTextColor(Color.BLACK);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
-                finish();
-            }
-        });
-    }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -207,6 +196,8 @@ public class Login extends AppCompatActivity{
     }
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.custom_dialog);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);

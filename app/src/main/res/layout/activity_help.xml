@@ -40,6 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray1"/>
+        <LinearLayout
+            android:id="@+id/help_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
     </LinearLayout>
     <LinearLayout
         android:layout_alignParentBottom="true"

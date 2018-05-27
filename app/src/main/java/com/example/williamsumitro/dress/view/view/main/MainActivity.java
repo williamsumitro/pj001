@@ -5,20 +5,17 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,26 +30,34 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.UserResponse;
+import com.example.williamsumitro.dress.view.model.UserDetails;
+import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.view.Help;
+import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.home.fragment.HomeFragment;
-import com.example.williamsumitro.dress.view.SettingsFragment;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.MystoreFragment;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
+import com.example.williamsumitro.dress.view.view.Wallet.activity.Mywallet;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
-import com.example.williamsumitro.dress.view.view.store.activity.MyStore;
+import com.example.williamsumitro.dress.view.view.sellerpanel.activity.OpenStore;
+import com.example.williamsumitro.dress.view.view.sellerpanel.fragment.MyStoreFragment;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
-
-import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     public static  MainActivity mainactivity;
@@ -66,16 +71,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_appbar_toolbar) Toolbar toolbar;
     @BindView(R.id.main_appbar_frame) FrameLayout frameLayout;
 
-    public static int navIndex = 1;
+    public static int navIndex = 2;
     private static final String MYSTORE = "MYSTORE";
     private static final String ORDER = "ORDER";
     private static final String HOME = "HOME";
     private static final String FAVORITESTORE = "FAVORITESTORE";
-    private static final String PRODUCTDISCUSSION = "PRODUCTDISCUSSION";
     private static final String LOGOUT = "LOGOUT";
     private static final String WISHLIST = "WISHLIST";
-    private static final String SETTINGS = "SETTINGS";
     private static final String HELP = "HELP";
+    private static final String OPENINGREQUEST = "OPENINGREQUEST";
     public static String CURRENT = HOME;
 
     private boolean FragOnBackPress = true;
@@ -89,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private MenuItem activeMenuItem;
     private SessionManagement sessionManagement;
-    private String jwt="", name, email;
+    private String token ="", name, email;
     private Dialog dialog;
     private BadgeNavDrawer badgeNavDrawer;
     private int count_bag = 0, count_notification = 100;
+    private apiService service;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,92 +106,13 @@ public class MainActivity extends AppCompatActivity {
         initSession();
         setupNavigationView();
         if (savedInstanceState == null) {
-            navIndex = 1;
+            navIndex = 2;
             CURRENT = HOME;
             loadHomeFragment();
         }
+        api_getauthuser();
         loadNavBar();
-
         initTransition(savedInstanceState);
-        TextView order = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.drawer_order));
-        TextView product_discussion = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.drawer_productdiscussion));
-        order.setGravity(Gravity.CENTER_VERTICAL);
-        order.setTypeface(null, Typeface.BOLD);
-        order.setTextColor(getResources().getColor(R.color.red));
-        order.setText("12");
-        product_discussion.setGravity(Gravity.CENTER_VERTICAL);
-        product_discussion.setTypeface(null, Typeface.BOLD);
-        product_discussion.setTextColor(getResources().getColor(R.color.red));
-        product_discussion.setText("12");
-    }
-    private void initSession(){
-        HashMap<String, String> user = sessionManagement.getUserDetails();
-        jwt = user.get(SessionManagement.JWT);
-        name = user.get(SessionManagement.KEY_NAME);
-        email = user.get(SessionManagement.KEY_EMAIL);
-    }
-
-    private void loadNavBar() {
-        headerLayout = navigationView.inflateHeaderView(R.layout.main_navheaderlogin);
-        View header = navigationView.getHeaderView(0);
-        RelativeLayout containerlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containerlogin);
-        RelativeLayout containernotlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containernotlogin);
-        TextView nama = (TextView) header.findViewById(R.id.nav_header_name);
-        CircleImageView image = (CircleImageView) header.findViewById(R.id.nav_header_image);
-        if (jwt == null){
-            containernotlogin.setVisibility(View.VISIBLE);
-            containerlogin.setVisibility(View.GONE);
-        }else {
-            containernotlogin.setVisibility(View.GONE);
-            containerlogin.setVisibility(View.VISIBLE);
-            image.setImageResource(R.drawable.man);
-        }
-        containernotlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, Login.class);
-                initanim(intent);
-            }
-        });
-        Menu menu = navigationView.getMenu();
-        MenuItem home = menu.findItem(R.id.drawer_home);
-        MenuItem settings = menu.findItem(R.id.drawer_settings);
-        MenuItem help = menu.findItem(R.id.drawer_help);
-        MenuItem mystore = menu.findItem(R.id.drawer_mystore);
-        MenuItem order = menu.findItem(R.id.drawer_order);
-        MenuItem wishlist = menu.findItem(R.id.drawer_wishlist);
-        MenuItem favstore = menu.findItem(R.id.drawer_favoritestore);
-        MenuItem discussion = menu.findItem(R.id.drawer_productdiscussion);
-        MenuItem logout = menu.findItem(R.id.drawer_logout);
-        jwt = "cc";
-        if(jwt == null){
-            home.setVisible(true);
-            settings.setVisible(true);
-            help.setVisible(true);
-            mystore.setVisible(false);
-            order.setVisible(false);
-            wishlist.setVisible(false);
-            favstore.setVisible(false);
-            discussion.setVisible(false);
-            logout.setVisible(false);
-        }else {
-            home.setVisible(true);
-            settings.setVisible(true);
-            help.setVisible(true);
-            mystore.setVisible(true);
-            order.setVisible(true);
-            wishlist.setVisible(true);
-            favstore.setVisible(true);
-            discussion.setVisible(true);
-            logout.setVisible(true);
-        }
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, Profile.class);
-                initanim(intent);
-            }
-        });
     }
     private void initView(){
         mainactivity = this;
@@ -197,42 +123,133 @@ public class MainActivity extends AppCompatActivity {
         activityTitles = getResources().getStringArray(R.array.nav_titles);
         fragmentManager = getSupportFragmentManager();
         sessionManagement = new SessionManagement(getApplicationContext());
-        badgeNavDrawer = new BadgeNavDrawer(getSupportActionBar().getThemedContext());
+    }
+    private void initSession(){
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
+    }
+    private void api_getauthuser(){
+        service = apiUtils.getAPIService();
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if(response.code()==200){
+                    UserDetails userDetails = response.body().getUserDetails();
+                    View header = navigationView.getHeaderView(0);
+                    TextView nama = (TextView) header.findViewById(R.id.nav_header_name);
+                    CircleImageView image = (CircleImageView) header.findViewById(R.id.nav_header_image);
+                    nama.setText(userDetails.getFullName());
+                    if (userDetails.getGender().toLowerCase().equals("m"))
+                        Picasso.with(context).load(apiUtils.getUrlImage()+userDetails.getAvatar()).placeholder(R.drawable.man).into(image);
+                    else
+                        Picasso.with(context).load(apiUtils.getUrlImage()+userDetails.getAvatar()).placeholder(R.drawable.woman1).into(image);
+                }
+                else if (response.code()==500){
+                    startActivity(new Intent(context, Unauthorized.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                initDialog("", 3);
+            }
+        });
+    }
+    private void loadNavBar() {
+        headerLayout = navigationView.inflateHeaderView(R.layout.main_navheaderlogin);
+        View header = navigationView.getHeaderView(0);
+
+        RelativeLayout containerlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containerlogin);
+        RelativeLayout containernotlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containernotlogin);
+
+
+
+
+        containernotlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Login.class);
+                initanim(intent);
+            }
+        });
+        Menu menu = navigationView.getMenu();
+        MenuItem wallet = menu.findItem(R.id.drawer_wallet);
+        MenuItem home = menu.findItem(R.id.drawer_home);
+        MenuItem openingrequest = menu.findItem(R.id.drawer_openrequest);
+        MenuItem help = menu.findItem(R.id.drawer_help);
+        MenuItem sellerpanel = menu.findItem(R.id.drawer_sellerpanel);
+        MenuItem order = menu.findItem(R.id.drawer_order);
+        MenuItem wishlist = menu.findItem(R.id.drawer_wishlist);
+        MenuItem favstore = menu.findItem(R.id.drawer_favoritestore);
+        MenuItem logout = menu.findItem(R.id.drawer_logout);
+
+        if(token == null){
+            containernotlogin.setVisibility(View.VISIBLE);
+            containerlogin.setVisibility(View.GONE);
+            wallet.setVisible(false);
+            home.setVisible(true);
+            help.setVisible(true);
+            openingrequest.setVisible(false);
+            sellerpanel.setVisible(false);
+            order.setVisible(false);
+            wishlist.setVisible(false);
+            favstore.setVisible(false);
+            logout.setVisible(false);
+        }else {
+            api_getauthuser();
+            containernotlogin.setVisibility(View.GONE);
+            containerlogin.setVisibility(View.VISIBLE);
+            wallet.setVisible(true);
+            home.setVisible(true);
+            help.setVisible(true);
+            openingrequest.setVisible(true);
+            sellerpanel.setVisible(true);
+            order.setVisible(true);
+            wishlist.setVisible(true);
+            favstore.setVisible(true);
+            logout.setVisible(true);
+        }
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Profile.class);
+                initanim(intent);
+            }
+        });
     }
     private void setupNavigationView(){
-
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
-                        case R.id.drawer_mystore:
-                            Intent intent = new Intent(context, MyStore.class);
+                        case R.id.drawer_wallet:
+                            Intent intent = new Intent(MainActivity.this, Mywallet.class);
                             initanim(intent);
-                            drawerLayout.closeDrawers();
+                            return true;
+                        case R.id.drawer_sellerpanel:
+                            Intent intent1 = new Intent(MainActivity.this, OpenStore.class);
+                            initanim(intent1);
                             return true;
                         case R.id.drawer_home:
-                            navIndex = 1;
+                            navIndex = 2;
                             CURRENT = HOME;
                             break;
+                        case R.id.drawer_openrequest:
+                            navIndex = 3;
+                            CURRENT = OPENINGREQUEST;
+                            break;
                         case R.id.drawer_order:
-                            navIndex = 2;
+                            navIndex = 4;
                             CURRENT = ORDER;
                             break;
                         case R.id.drawer_wishlist:
-                            navIndex = 3;
+                            navIndex = 5;
                             CURRENT = WISHLIST;
                             break;
                         case R.id.drawer_favoritestore:
-                            navIndex = 4;
-                            CURRENT = FAVORITESTORE;
-                            break;
-                        case R.id.drawer_productdiscussion:
-                            navIndex = 5;
-                            CURRENT = PRODUCTDISCUSSION;
-                            break;
-                        case R.id.drawer_settings:
                             navIndex = 6;
-                            CURRENT = SETTINGS;
+                            CURRENT = FAVORITESTORE;
                             break;
                         case R.id.drawer_help:
                             navIndex = 7;
@@ -241,24 +258,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.drawer_logout:
                             initDialog("", 10);
                             break;
-//                    case R.id.nav_settings:
-//                        navIndex = 4;
-//                        CURRENT = TAG_SETTINGS;
-//                        break;
-//                    case R.id.nav_about_us:
-//                        // launch new intent instead of loading fragment
-//                        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
-//                        drawer.closeDrawers();
-//                        return true;
-//                    case R.id.nav_privacy_policy:
-//                        // launch new intent instead of loading fragment
-//                        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
-//                        drawer.closeDrawers();
-//                        return true;
                         default:
-                            navIndex = 0;
+                            navIndex = 2;
                     }
-
                     //Checking if the item is in checked state or not, if not make it in checked state
                     if (menuItem.isChecked()) {
                         menuItem.setChecked(false);
@@ -266,9 +268,7 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                     }
                     menuItem.setChecked(true);
-
                     loadHomeFragment();
-
                     return true;
                 }
             });
@@ -289,11 +289,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
             }
         };
-        actionBarDrawerToggle.setDrawerArrowDrawable(badgeNavDrawer);
-        badgeNavDrawer.setText("24");
         //Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
     }
@@ -301,8 +298,8 @@ public class MainActivity extends AppCompatActivity {
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
         context.startActivity(intent);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
 
     private void setToolbarTitle() {
@@ -343,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    // If mPendingRunnable is not null, then add to the message queue
+    // If mPendingRunnable is not null, then add1 to the message queue
     if (mPendingRunnable != null) {
         handler.post(mPendingRunnable);
     }
@@ -358,27 +355,27 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getHomeFragment() {
         switch (navIndex) {
             case 0:
-                MystoreFragment mystoreFragment = new MystoreFragment();
-                return mystoreFragment;
+
             case 1:
+                MyStoreFragment mystoreFragment = new MyStoreFragment();
+                return mystoreFragment;
+            case 2:
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
-            case 2:
+            case 3:
                 OrderFragment orderFragment = new OrderFragment();
                 return orderFragment;
-            case 3:
+            case 4:
                 WishlistFragment wishlistFragment = new WishlistFragment();
                 return wishlistFragment;
-            case 4:
+            case 5:
                 FavoriteStoreFragment favoriteStoreFragment = new FavoriteStoreFragment();
                 return favoriteStoreFragment;
-            case 5:
-
             case 6:
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;
-            case 7:
 
+            case 7:
+                Intent intent = new Intent(context, Help.class);
+                initanim(intent);
             default:
                 return new HomeFragment();
         }
@@ -386,39 +383,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        final MenuItem menubag = menu.findItem(R.id.menu_bag);
-        View actionbag = MenuItemCompat.getActionView(menubag);
-        TextView tv_bag = (TextView) actionbag.findViewById(R.id.bag_badge);
 
-        final  MenuItem menunotification = menu.findItem(R.id.menu_notification);
-        View actionnotification = MenuItemCompat.getActionView(menunotification);
-        TextView tv_notification = (TextView) actionnotification.findViewById(R.id.notification_badge);
-
-        if(tv_bag != null){
-            if(count_bag==0){
-                if(tv_bag.getVisibility() != View.GONE)
-                    tv_bag.setVisibility(View.GONE);
-            }
-            else {
-                tv_bag.setText(String.valueOf(Math.min(count_bag, 99)));
-                if (tv_bag.getVisibility() != View.VISIBLE) {
-                    tv_bag.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-
-        if(tv_notification != null){
-            if(count_notification==0){
-                if(tv_notification.getVisibility() != View.GONE)
-                    tv_notification.setVisibility(View.GONE);
-            }
-            else {
-                tv_notification.setText(String.valueOf(Math.min(count_notification, 99)));
-                if (tv_notification.getVisibility() != View.VISIBLE) {
-                    tv_notification.setVisibility(View.VISIBLE);
-                }
-            }
-        }
         return true;
     }
     @Override
@@ -504,6 +469,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.custom_dialog);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);

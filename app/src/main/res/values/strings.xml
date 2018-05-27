@@ -16,7 +16,8 @@
     <string name="closeDrawer">close_drawer</string>
 
     <string-array name="nav_titles">
-        <item>My Store</item>
+        <item>My Wallet</item>
+        <item>Seller Panel</item>
         <item>@string/app_name</item>
         <item>Order</item>
         <item>Wishlist</item>
@@ -27,9 +28,23 @@
         <item>Logout</item>
         <!--<item>@string/app_name</item>-->
     </string-array>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="rate_amp_review_store_and_product"><![CDATA[Rate & Review]]></string>
     <string name="arrowleft"><![CDATA[<<]]></string>
+
+    <string-array name="month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>

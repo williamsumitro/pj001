@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +43,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
-    @BindView(R.id.register_toolbar) Toolbar toolbar;
     @BindView(R.id.register_layoutphonenumber) TextInputLayout layoutphonenumber;
     @BindView(R.id.register_layoutpassword) TextInputLayout layoutpassword;
     @BindView(R.id.register_layoutfullname) TextInputLayout layoutname;
@@ -55,6 +55,7 @@ public class Register extends AppCompatActivity {
     @BindView(R.id.register_lnLogin) LinearLayout login;
     @BindView(R.id.register_radiogroup) RadioGroup radioGroup;
     @BindView(R.id.register_container) RelativeLayout container;
+    @BindView(R.id.register_lnskip) LinearLayout skip;
     private RadioButton sexbutton;
     private Context context;
     private apiService service;
@@ -65,7 +66,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
-        setuptoolbar();
         initOnClick();
     }
     private void initOnClick() {
@@ -82,30 +82,18 @@ public class Register extends AppCompatActivity {
                 initanim(intent);
             }
         });
-
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity.class);
+                initanim(intent);
+            }
+        });
     }
     private void initView(){
         ButterKnife.bind(this);
         context= this;
         progressDialog = new ProgressDialog(this);
-    }
-    private void setuptoolbar(){
-        setSupportActionBar(toolbar);
-        final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(arrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Register");
-            toolbar.setTitleTextColor(Color.BLACK);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
-                finish();
-            }
-        });
     }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -172,7 +160,7 @@ public class Register extends AppCompatActivity {
                             Log.i("debug", "onResponse: SUCCESS");
                             try{
                                 JSONObject jsonResults = new JSONObject(response.body().string());
-                                if(jsonResults.getString("message").equals("User created successfully")){
+                                if(jsonResults.getString("message").equals("UserResponse created successfully")){
                                     String message = jsonResults.getString("message");
                                     progressDialog.dismiss();
                                     initDialog(message, 1);
