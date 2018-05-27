@@ -46,6 +46,7 @@ import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.sellerpanel.activity.OpenStore;
+import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
 import com.example.williamsumitro.dress.view.view.sellerpanel.fragment.MyStoreFragment;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 import com.squareup.picasso.Picasso;
@@ -228,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                             initanim(intent);
                             return true;
                         case R.id.drawer_sellerpanel:
-                            Intent intent1 = new Intent(MainActivity.this, OpenStore.class);
+                            Intent intent1 = new Intent(MainActivity.this, SellerPanel.class);
                             initanim(intent1);
                             return true;
                         case R.id.drawer_home:
@@ -469,8 +470,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.custom_dialog);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
