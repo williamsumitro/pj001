@@ -21,6 +21,7 @@ import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Courier;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.example.williamsumitro.dress.view.view.bag.adapter.CourierRVAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class Buy extends AppCompatActivity {
     @BindView(R.id.buy_toolbar) Toolbar toolbar;
     @BindView(R.id.buy_rvpricedetails) RecyclerView pricedetails;
     @BindView(R.id.buy_rvcourier) RecyclerView courier;
-    @BindView(R.id.buy_rvbank) RecyclerView bank;
     @BindView(R.id.buy_imgproduct) ImageView imageproduct;
     @BindView(R.id.buy_etxl) EditText etXL;
     @BindView(R.id.buy_ets) EditText etS;
@@ -59,11 +59,11 @@ public class Buy extends AppCompatActivity {
     @BindView(R.id.buy_btnmaxl) Button maxL;
     @BindView(R.id.buy_btncontinue) Button continues;
 
-    private List<Bank> bankList;
     private List<Courier> courierList;
     private List<PriceDetails> priceDetailsList;
     private Context context;
-    private BuyRVAdapter bankadapter, courieradapter, pricedetailsadapter;
+    private BuyRVAdapter pricedetailsadapter;
+    private CourierRVAdapter courieradapter;
     private int qtyS = 0, qtyM = 0, qtyL = 0, qtyXL = 0, subtot = 0, tot = 0, disc = 0, percen = 0, price = 100000;
     private DecimalFormat formatter;
 
@@ -80,7 +80,6 @@ public class Buy extends AppCompatActivity {
     private void initView(){
         ButterKnife.bind(this);
         context = this;
-        bankList = new ArrayList<>();
         courierList = new ArrayList<>();
         priceDetailsList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
@@ -88,10 +87,10 @@ public class Buy extends AppCompatActivity {
         etM.setText(String.valueOf(qtyM));
         etL.setText(String.valueOf(qtyL));
         etXL.setText(String.valueOf(qtyXL));
-        totalS.setText("0" );
-        totalM.setText("0" );
-        totalL.setText("0" );
-        totalXL.setText("0" );
+        totalS.setText("0");
+        totalM.setText("0");
+        totalL.setText("0");
+        totalXL.setText("0");
         subtotal.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(subtot))));
         percentage.setText(String.valueOf(percen) + "%");
         total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(tot))));
@@ -118,15 +117,10 @@ public class Buy extends AppCompatActivity {
         });
     }
     private void setupRV(){
-        bankadapter = new BuyRVAdapter(null, bankList, null, context);
-        courieradapter = new BuyRVAdapter(courierList, null, null, context);
-        pricedetailsadapter = new BuyRVAdapter(null, null, priceDetailsList, context);
-        RecyclerView.LayoutManager gridlayout = new GridLayoutManager(context, 3);
+        courieradapter = new CourierRVAdapter(courierList, context);
+        pricedetailsadapter = new BuyRVAdapter(priceDetailsList, context);
         RecyclerView.LayoutManager gridlayout1 = new GridLayoutManager(context, 4);
         RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        bank.setLayoutManager(gridlayout);
-        bank.setItemAnimator(new DefaultItemAnimator());
-        bank.setAdapter(bankadapter);
         courier.setLayoutManager(gridlayout1);
         courier.setItemAnimator(new DefaultItemAnimator());
         courier.setAdapter(courieradapter);
@@ -135,21 +129,6 @@ public class Buy extends AppCompatActivity {
         pricedetails.setAdapter(pricedetailsadapter);
     }
     private void initData(){
-        Bank bank = new Bank(R.drawable.bank);
-        bankList.add(bank);
-        bank = new Bank(R.drawable.bank1);
-        bankList.add(bank);
-        bank = new Bank(R.drawable.bank2);
-        bankList.add(bank);
-        bank = new Bank(R.drawable.bank3);
-        bankList.add(bank);
-        bank = new Bank(R.drawable.bank4);
-        bankList.add(bank);
-        bank = new Bank(R.drawable.bank5);
-        bankList.add(bank);
-        bank = new Bank(R.drawable.bank6);
-        bankList.add(bank);
-
         Courier courier = new Courier(R.drawable.courier1, "JNE");
         courierList.add(courier);
         courier = new Courier(R.drawable.courier2, "Rabbit");

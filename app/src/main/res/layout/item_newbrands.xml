@@ -61,22 +61,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
+                        android:id="@+id/item_newbrands_star1"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@drawable/star"/>
                     <ImageView
+                        android:id="@+id/item_newbrands_star2"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@drawable/star"/>
                     <ImageView
+                        android:id="@+id/item_newbrands_star3"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@drawable/star"/>
                     <ImageView
+                        android:id="@+id/item_newbrands_star4"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@drawable/star"/>
                     <ImageView
+                        android:id="@+id/item_newbrands_star5"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@drawable/star0"/>
@@ -88,6 +93,7 @@
                     android:background="@drawable/unlike"/>
             </LinearLayout>
             <TextView
+                android:id="@+id/item_newbrands_storename"
                 android:layout_marginTop="5dp"
                 android:textSize="8sp"
                 android:text="Store Name"

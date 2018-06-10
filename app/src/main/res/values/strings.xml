@@ -15,6 +15,7 @@
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
 
+    <string name="string_choose_image">choose image</string>
     <string-array name="nav_titles">
         <item>My Wallet</item>
         <item>Seller Panel</item>

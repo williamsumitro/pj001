@@ -70,8 +70,17 @@
             android:id="@+id/openstore_choosestorename_btnCheckStore"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/button1"
+            android:background="@drawable/button1_3"
             android:text="Check Store"
+            android:textColor="@color/white"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/openstore_choosestorename_btnRegistereStore"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button1"
+            android:text="Register Store"
             android:textColor="@color/white"
             android:layout_width="150dp"
             android:layout_height="wrap_content" />

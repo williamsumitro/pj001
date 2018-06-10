@@ -14,6 +14,52 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/sellerpanel_ln_top"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"
+                    android:text="Store Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/sellerpanel_tv_status"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="Waiting for admin approval heheheheh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/sellerpanel_ln_top_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:text="Reject Comment : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/sellerpanel_tv_comment"
+                        android:textSize="20sp"
+                        android:text="Waiting for admin approval heheheheh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/sellerpanel_ln_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -77,193 +123,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <android.support.v7.widget.CardView
-                        android:layout_margin="10dp"
-                        android:id="@+id/sellerpanel_cv_storesettings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:background="@color/blue9"
-                            android:padding="5dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:id="@+id/sellerpanel_edit"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:src="@drawable/circleedit"/>
-                                <TextView
-                                    android:textSize="12sp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Edit Store"
-                                    android:textColor="@color/black"
-                                    android:textAlignment="center"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:id="@+id/sellerpanel_viewstore"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:src="@drawable/circleview"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="View Store"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-
-                                <ImageView
-                                    android:layout_gravity="center"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:src="@drawable/store1" />
-                                <LinearLayout
-                                    android:id="@+id/sellerpanel_editprofilephoto"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                            android:src="@drawable/circlepictures"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Change Store Image"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:id="@+id/sellerpanel_legaldoc"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:src="@drawable/circlelegaldoc"/>
-                                <TextView
-                                    android:textSize="12sp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Upload Documents"
-                                    android:textColor="@color/black"
-                                    android:textAlignment="center"/>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/sellerpanel_cv_managesales"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignEnd="@+id/imageView1"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignRight="@+id/imageView1"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="25dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/green9"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="5dp">
-                            <ImageView
-                                android:layout_width="130dp"
-                                android:layout_height="130dp"
-                                android:src="@drawable/sales" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="Manage Sales"
-                                android:textColor="@color/blue"
-                                android:textSize="20sp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
                     <LinearLayout
                         android:layout_margin="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <LinearLayout
-                            android:id="@+id/sellerpanel_viewproduct"
+                        <android.support.v7.widget.CardView
+                            android:layout_marginRight="5dp"
+                            android:id="@+id/sellerpanel_cv_managesales"
+                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/circleview"/>
-                            <TextView
-                                android:textSize="12sp"
-                                android:layout_marginTop="5dp"
+                            android:layout_gravity="center">
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="View Product"
-                                android:textColor="@color/black"
-                                android:textAlignment="center"/>
-                        </LinearLayout>
-                        <ImageView
-                            android:layout_gravity="center"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/product" />
-                        <LinearLayout
-                            android:id="@+id/sellerpanel_addproduct"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/circlepictures"/>
-                            <TextView
-                                android:textSize="12sp"
-                                android:layout_marginTop="5dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Change Store Image"
-                                android:textColor="@color/black"
-                                android:textAlignment="center"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_margin="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/sales" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Manage Sales"
+                                    android:textColor="@color/black" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
                         <android.support.v7.widget.CardView
                             android:id="@+id/sellerpanel_cv_openrequest"
                             android:layout_marginRight="5dp"
@@ -284,7 +173,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Opening Request"
+                                    android:text="Request"
                                     android:textColor="@color/black" />
                             </LinearLayout>
                         </android.support.v7.widget.CardView>
@@ -313,6 +202,164 @@
                             </LinearLayout>
                         </android.support.v7.widget.CardView>
                     </LinearLayout>
+                    <android.support.v7.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:background="@color/blue9"
+                            android:padding="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center">
+                                <ImageView
+                                    android:id="@+id/sellerpanel_img_edit"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/circleedit"/>
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Edit Store"
+                                    android:textColor="@color/black"
+                                    android:textAlignment="center"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center"
+                                    android:layout_weight="1">
+                                    <ImageView
+                                        android:id="@+id/sellerpanel_ing_viewstore"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:src="@drawable/circleview"/>
+                                    <TextView
+                                        android:textSize="12sp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="View Store"
+                                        android:textColor="@color/black"
+                                        android:textAlignment="center"/>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/store1" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center"
+                                    android:layout_weight="1">
+                                    <ImageView
+                                        android:id="@+id/sellerpanel_img_editprofilephoto"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:src="@drawable/circlepictures"/>
+                                    <TextView
+                                        android:textSize="12sp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Change Store Image"
+                                        android:textColor="@color/black"
+                                        android:textAlignment="center"/>
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center">
+                                <ImageView
+                                    android:id="@+id/sellerpanel_img_legaldoc"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/circlelegaldoc"/>
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Upload Documents"
+                                    android:textColor="@color/black"
+                                    android:textAlignment="center"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:background="@color/yellow9"
+                            android:padding="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+                                <ImageView
+                                    android:id="@+id/sellerpanel_img_viewproduct"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/circleview"/>
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="View Product"
+                                    android:textColor="@color/black"
+                                    android:textAlignment="center"/>
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/product" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+                                <ImageView
+                                    android:id="@+id/sellerpanel_img_addproduct"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/circleaddclothes"/>
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Add Product"
+                                    android:textColor="@color/black"
+                                    android:textAlignment="center"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
     </LinearLayout>

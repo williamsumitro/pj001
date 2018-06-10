@@ -132,54 +132,26 @@ public class Login extends AppCompatActivity{
                         if(response.code() == 200){
                             Log.i("debug", "onResponse: SUCCESS");
                             try{
-                            JSONObject jsonResults = new JSONObject(response.body().string());
-                            if(jsonResults.getString("status").toLowerCase().equals("true")){
-                                token = jsonResults.getString("jwt");
-                                progressDialog.dismiss();
-                                dialog = new Dialog(context);
-                                dialog.setCancelable(false);
-                                dialog.setCanceledOnTouchOutside(false);
-                                dialog.setContentView(R.layout.custom_dialog);
-                                LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-                                TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-                                TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-                                ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-                                Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
-                                bg.setBackgroundResource(R.color.green7);
-                                status.setText("Welcome back!");
-                                detail.setText("Hello there, check out our new dresses");
-                                imageView.setImageResource(R.drawable.emoji_success1);
-                                button.setBackgroundResource(R.drawable.button1_green);
-                                button.setText("Ok");
-                                button.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        dialog.dismiss();
-                                        sessionManagement.createLoginSession(token);
-                                        MainActivity.mainactivity.finish();
-                                        presentActivity(view);
-                                    }
-                                });
-                                dialog.show();
-                            }else if (jsonResults.getString("status").toLowerCase().equals("false")){
-                                String message = jsonResults.getString("message");
-                                progressDialog.dismiss();
-                                initDialog(message, 0);
-                            }else {
-                                Snackbar.make(container, "FUCKING ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
+                                JSONObject jsonResults = new JSONObject(response.body().string());
+                                if(jsonResults.getBoolean("status")){
+                                    token = jsonResults.getString("jwt");
+                                    progressDialog.dismiss();
+                                    initDialog(token, 1);
+                                }else if (!jsonResults.getBoolean("status")){
+                                    String message = jsonResults.getString("message");
+                                    progressDialog.dismiss();
+                                    initDialog(message, 0);
+                                }else {
+                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
+                                }
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }catch (IOException e){
+                                e.printStackTrace();
                             }
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }catch (IOException e){
-                            e.printStackTrace();
                         }
-                    }
-                        else{
-                        Snackbar.make(container, "Invalid Email or Password", Snackbar.LENGTH_LONG).show();
-                    }
                         progressDialog.dismiss();
                     }
-
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.e("debug", "onFailure: ERROR > " + t.getMessage());
@@ -194,7 +166,7 @@ public class Login extends AppCompatActivity{
         context.startActivity(intent);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
-    private void initDialog(String message, int stats){
+    private void initDialog(final String message, int stats){
         dialog = new Dialog(context);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
@@ -202,20 +174,20 @@ public class Login extends AppCompatActivity{
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
         Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
         if(stats == 1){
-            status.setText("Registered Success!");
-            detail.setText(message);
             bg.setBackgroundResource(R.color.green7);
-            imageView.setImageResource(R.drawable.emoji_success);
+            status.setText("Welcome back!");
+            detail.setText("Hello there, check out our new dresses");
             button.setBackgroundResource(R.drawable.button1_green);
+            button.setText("Ok");
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    startActivity(new Intent(context, Login.class));
-                    finish();
+                    sessionManagement.createLoginSession(message);
+                    MainActivity.mainactivity.finish();
+                    presentActivity(view);
                 }
             });
             dialog.show();
@@ -224,7 +196,6 @@ public class Login extends AppCompatActivity{
             status.setText("Oops!");
             detail.setText(message);
             bg.setBackgroundResource(R.color.red7);
-            imageView.setImageResource(R.drawable.emoji_oops);
             button.setBackgroundResource(R.drawable.button1_red);
             button.setText("Try Again");
             button.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +210,6 @@ public class Login extends AppCompatActivity{
             status.setText("Uh Oh!");
             bg.setBackgroundResource(R.color.red7);
             detail.setText("There is a problem with internet connection or the server");
-            imageView.setImageResource(R.drawable.emoji_cry);
             button.setBackgroundResource(R.drawable.button1_red);
             button.setText("Try Again");
             button.setOnClickListener(new View.OnClickListener() {

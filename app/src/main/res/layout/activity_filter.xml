@@ -1,1434 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.NestedScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="50dp"
+    android:layout_below="@+id/filter_toolbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray"
-    android:orientation="vertical">
-    <android.support.v7.widget.Toolbar
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:fillViewport="true">
+    <LinearLayout
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+     <android.support.v7.widget.Toolbar
         android:background="@color/white"
         android:id="@+id/filter_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
-    <android.support.v4.widget.NestedScrollView
-        android:layout_marginBottom="50dp"
-        android:layout_below="@+id/filter_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:fillViewport="true">
         <LinearLayout
-            android:padding="10dp"
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:text="Minimal Order :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:hint=" "
+                    android:layout_gravity="center_vertical"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/filter_etminorder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+                android:id="@+id/filter_crystalseekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:corner_radius="10"
+                app:min_value="1"
+                app:max_value="50"
+                app:bar_color="@color/cyan4"
+                app:bar_highlight_color="@color/cyan"
+                app:left_thumb_color="@color/cyan1"
+                app:left_thumb_color_pressed="@color/cyan6"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/filter_tvminordervalue"
+                    android:text="min value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/filter_tvmaxordervalue"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:text="max value" />
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:text="Price Range : "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/filter_tvminpricerange"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="100000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text=" - "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/filter_tvmaxpricerange"
+                    android:layout_gravity="center_vertical"
+                    android:text="100000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <TextView
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:text="Minimal Order :"
+                        android:text="Minimum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <EditText
-                        android:hint=" "
-                        android:layout_gravity="center_vertical"
-                        android:inputType="number"
+                        android:id="@+id/filter_etminpricerange"
                         android:textSize="14sp"
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/filter_etminorder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-                <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                    android:id="@+id/filter_crystalseekbar"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:corner_radius="10"
-                    app:min_value="1"
-                    app:max_value="50"
-                    app:bar_color="@color/cyan4"
-                    app:bar_highlight_color="@color/cyan"
-                    app:left_thumb_color="@color/cyan1"
-                    app:left_thumb_color_pressed="@color/cyan6"/>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
                     <TextView
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/filter_tvminordervalue"
-                        android:text="min value"
+                        android:text="Maximum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/black"
-                        android:layout_marginRight="10dp"
-                        android:id="@+id/filter_tvmaxordervalue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:text="max value" />
-                </RelativeLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:text="Price Range : "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/filter_tvminpricerange"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="100000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text=" - "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/filter_tvmaxpricerange"
-                        android:layout_gravity="center_vertical"
-                        android:text="100000000"
+                    <EditText
+                        android:layout_gravity="right"
+                        android:id="@+id/filter_etmaxpricerange"
+                        android:textSize="14sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_marginTop="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:text="Minimum"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <EditText
-                            android:id="@+id/filter_etminpricerange"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:text="Maximum"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <EditText
-                            android:layout_gravity="right"
-                            android:id="@+id/filter_etmaxpricerange"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </RelativeLayout>
-                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                    android:id="@+id/filter_rangeseekbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:corner_radius="10"
-                    app:min_value="100000"
-                    app:max_value="100000000"
-                    app:steps="100000"
-                    app:bar_color="@color/cyan4"
-                    app:bar_highlight_color="@color/cyan"
-                    app:left_thumb_color="@color/cyan1"
-                    app:left_thumb_color_pressed="@color/cyan6"
-                    app:right_thumb_color="@color/blue"
-                    app:right_thumb_color_pressed="@color/blue6"/>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/filter_tvminpricerangevalue"
-                        android:text="min value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/black"
-                        android:layout_marginRight="10dp"
-                        android:id="@+id/filter_tvmaxpricerangevalue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:text="max value" />
-                </RelativeLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lncity"
+            </RelativeLayout>
+            <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                android:id="@+id/filter_rangeseekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:corner_radius="10"
+                app:min_value="100000"
+                app:max_value="100000000"
+                app:steps="100000"
+                app:bar_color="@color/cyan4"
+                app:bar_highlight_color="@color/cyan"
+                app:left_thumb_color="@color/cyan1"
+                app:left_thumb_color_pressed="@color/cyan6"
+                app:right_thumb_color="@color/blue"
+                app:right_thumb_color_pressed="@color/blue6"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:text="City"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/filter_tvminpricerangevalue"
+                    android:text="min value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/filter_tvcityresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected city"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgcitycaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lncitydetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallcity"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallcity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvcity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplycity"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnshipment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:text="Shipment"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/filter_tvmaxpricerangevalue"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvshipmentresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected shipment"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgshipmentcaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnshipmentdetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallshipment"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallshipment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvshipment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplyshipment"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lncolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvcolorresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected color"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgcolorcaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lncolordetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallcolor"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallcolor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvcolor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplycolor"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnstyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvstyleresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected style"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgstylecaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnstyledetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallstyle"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallstyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvstyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplystyle"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnrating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvratingresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected rating"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgratingcaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnratingdetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallrating"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallrating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvrating"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplyrating"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnsize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvsizeresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected size"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgsizecaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnsizedetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallsize"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallsize"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvsize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplysize"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnseason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Season"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvseasonresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected season"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgseasoncaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnseasondetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallseason"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallseason"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvseason"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplyseason"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnneckline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Neckline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvnecklineresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected neckline"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgnecklinecaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnnecklinedetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallneckline"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallneckline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvneckline"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplyneckline"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnsleevelength"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Sleeve Length"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvsleevelengthresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected sleevelength"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgsleevelengthcaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnsleevelengthdetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallsleevelength"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallsleevelength"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvsleevelength"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplysleevelength"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnwaiseline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Waiseline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvwaiselineresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected waiseline"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgwaiselinecaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnwaiselinedetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallwaiseline"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallwaiseline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvwaiseline"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplywaiseline"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnmaterial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Material"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvmaterialresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected material"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgmaterialcaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnmaterialdetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallmaterial"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallmaterial"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvmaterial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplymaterial"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnfabrictype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Fabric Type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvfabrictyperesult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected fabrictype"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgfabrictypecaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnfabrictypedetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallfabrictype"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallfabrictype"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvfabrictype"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplyfabrictype"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lndecoration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Decoration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvdecorationresult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected decoration"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgdecorationcaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lndecorationdetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckalldecoration"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearalldecoration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvdecoration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplydecoration"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray1"/>
-            <LinearLayout
-                android:id="@+id/filter_lnpatterntype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Pattern Type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/filter_tvpatterntyperesult"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Selected patterntype"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/filter_imgpatterntypecaret"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/caret"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/filter_lnpatterntypedetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_marginTop="5dp"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/filter_btncheckallpatterntype"
-                            android:text="Check All"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <Button
-                            android:layout_marginRight="5dp"
-                            android:id="@+id/filter_btnclearallpatterntype"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:text="Clear All"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/filter_rvpatterntype"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <Button
-                        android:id="@+id/filter_btnapplypatterntype"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Apply"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:text="max value" />
+            </RelativeLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
-    <Button
-        android:id="@+id/filter_btnSet"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button1"
-        android:text="Set" />
-</RelativeLayout>
+        <View
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray1"/>
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Province"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/filter_spinner_province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="City"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/filter_spinner_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Shipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/filter_spinner_shipping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:id="@+id/filter_btnSet"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button1"
+            android:text="Set" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

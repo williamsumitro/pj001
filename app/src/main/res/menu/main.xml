@@ -11,7 +11,16 @@
         android:id="@+id/menu_notification"
         android:title="Notification"
         android:icon="@drawable/notification"
-        app:showAsAction="always" />
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menu_notification_purchase"
+                android:title="Purchase" />
+            <item
+                android:id="@+id/menu_notification_request"
+                android:title="Request for Quotation" />
+        </menu>
+    </item>
     <item
         android:id="@+id/menu_bag"
         android:orderInCategory="100"

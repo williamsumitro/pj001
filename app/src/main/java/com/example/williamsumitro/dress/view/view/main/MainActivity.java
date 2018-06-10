@@ -2,11 +2,13 @@ package com.example.williamsumitro.dress.view.view.main;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.provider.Telephony;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,8 +30,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.StoreDetails;
+import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.UserDetails;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
@@ -41,13 +46,13 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
-import com.example.williamsumitro.dress.view.view.Wallet.activity.Mywallet;
+import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.OpenStore;
+import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
 import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.OpenStore;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
-import com.example.williamsumitro.dress.view.view.sellerpanel.fragment.MyStoreFragment;
+import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;
+import com.example.williamsumitro.dress.view.view.sellerpanel.store.fragment.MyStoreFragment;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 import com.squareup.picasso.Picasso;
 
@@ -99,19 +104,24 @@ public class MainActivity extends AppCompatActivity {
     private BadgeNavDrawer badgeNavDrawer;
     private int count_bag = 0, count_notification = 100;
     private apiService service;
+    private Boolean status = false;
+    private StoreDetails storeDetails;
+    private final static String STATUS = "STATUS";
+    private final static String COMMENT = "COMMENT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
         initSession();
+//        api_checkauthuser();
         setupNavigationView();
         if (savedInstanceState == null) {
             navIndex = 2;
             CURRENT = HOME;
             loadHomeFragment();
         }
-        api_getauthuser();
         loadNavBar();
         initTransition(savedInstanceState);
     }
@@ -128,6 +138,22 @@ public class MainActivity extends AppCompatActivity {
     private void initSession(){
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+    }
+    private void api_checkauthuser(){
+        service = apiUtils.getAPIService();
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() == 500){
+                    startActivity(new Intent(context, Unauthorized.class));
+                    finish();
+                }
+            }
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                initDialog(3);
+            }
+        });
     }
     private void api_getauthuser(){
         service = apiUtils.getAPIService();
@@ -146,14 +172,15 @@ public class MainActivity extends AppCompatActivity {
                         Picasso.with(context).load(apiUtils.getUrlImage()+userDetails.getAvatar()).placeholder(R.drawable.woman1).into(image);
                 }
                 else if (response.code()==500){
-                    startActivity(new Intent(context, Unauthorized.class));
+                    Intent intent = new Intent(context, Unauthorized.class);
+                    initanim(intent);
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                initDialog("", 3);
+                initDialog(3);
             }
         });
     }
@@ -163,9 +190,6 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout containerlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containerlogin);
         RelativeLayout containernotlogin = (RelativeLayout) header.findViewById(R.id.nav_header_containernotlogin);
-
-
-
 
         containernotlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +243,57 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void api_hasstore(){
+        service = apiUtils.getAPIService();
+        service.req_get_user_store(token).enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                if(response.code()==200){
+                    status = response.body().getHaveStore();
+                    storeDetails = response.body().getStore();
+                    if(status){
+                        Toast.makeText(context, storeDetails.getStoreActiveStatus(), Toast.LENGTH_SHORT).show();
+                        if (storeDetails.getStoreActiveStatus().equals("0")){
+                            Intent intent = new Intent(context, SellerPanel.class);
+                            intent.putExtra(STATUS, storeDetails.getStoreActiveStatus());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                        }
+                        else if (storeDetails.getStoreActiveStatus().equals("1")){
+                            Intent intent = new Intent(context, SellerPanel.class);
+                            intent.putExtra(STATUS, storeDetails.getStoreActiveStatus());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                        }
+                        else {
+                            Intent intent = new Intent(context, SellerPanel.class);
+                            intent.putExtra(STATUS, storeDetails.getStoreActiveStatus());
+//                            intent.putExtra(COMMENT, storeDetails.getRejectComment().toString());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+                        }
+                    }else {
+                        Intent intent = new Intent(context, OpenStore.class);
+                        initanim(intent);
+                    }
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                initDialog(3);
+            }
+        });
+    }
     private void setupNavigationView(){
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -229,8 +304,7 @@ public class MainActivity extends AppCompatActivity {
                             initanim(intent);
                             return true;
                         case R.id.drawer_sellerpanel:
-                            Intent intent1 = new Intent(MainActivity.this, SellerPanel.class);
-                            initanim(intent1);
+                            api_hasstore();
                             return true;
                         case R.id.drawer_home:
                             navIndex = 2;
@@ -257,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                             CURRENT = HELP;
                             break;
                         case R.id.drawer_logout:
-                            initDialog("", 10);
+                            initDialog(10);
                             break;
                         default:
                             navIndex = 2;
@@ -384,25 +458,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-
+        if (token==null){
+            menu.findItem(R.id.menu_notification).setVisible(false);
+            menu.findItem(R.id.menu_bag).setVisible(false);
+        }
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button1, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_bag) {
             Intent intent = new Intent(this, ShoppingBag.class);
             initanim(intent);
-            return true;
         }else if(id == R.id.menu_search){
             Intent intent = new Intent(this, Search.class);
             initanim(intent);
-            return true;
+        }else if(id == R.id.menu_notification_purchase){
+            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.menu_notification_request){
+            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -468,20 +544,46 @@ public class MainActivity extends AppCompatActivity {
             circularReveal.start();
         }
     }
-    private void initDialog(String message, int stats){
+    private void initDialog(int stats){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
         Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
         Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if(stats == 0){
-            status.setText("Oops!");
-            detail.setText(message);
+            status.setText("Sorry");
+            detail.setText("You need to login first");
             bg.setBackgroundResource(R.color.red7);
-            imageView.setImageResource(R.drawable.emoji_oops);
+            buttonok.setBackgroundResource(R.drawable.button1_green);
+            buttoncancel.setBackgroundResource(R.drawable.button1_1);
+            buttonok.setText("Login");
+            buttoncancel.setVisibility(View.VISIBLE);
+            buttoncancel.setText("Cancel");
+            buttoncancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, Login.class);
+                    initanim(intent);
+                }
+            });
+            dialog.show();
+        }
+        else if(stats == 4){
+            status.setText("Oops!");
+            detail.setText("");
+            bg.setBackgroundResource(R.color.red7);
+//            imageView.setImageResource(R.drawable.emoji_oops);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
             buttonok.setOnClickListener(new View.OnClickListener() {
@@ -494,9 +596,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(stats == 1){
             status.setText("Registered Success!");
-            detail.setText(message);
+            detail.setText("");
             bg.setBackgroundResource(R.color.green7);
-            imageView.setImageResource(R.drawable.emoji_success);
+//            imageView.setImageResource(R.drawable.emoji_success);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttonok.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -512,22 +614,27 @@ public class MainActivity extends AppCompatActivity {
             status.setText("Uh Oh!");
             detail.setText("There is a problem with internet connection or the server");
             bg.setBackgroundResource(R.color.red7);
-            imageView.setImageResource(R.drawable.emoji_cry);
+//            imageView.setImageResource(R.drawable.emoji_cry);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
             buttonok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                    Intent restart = new Intent(context, MainActivity.class);
+                    initanim(restart);
                 }
             });
-            dialog.show();
+            if(!((Activity) context).isFinishing())
+            {
+                dialog.show();
+            }
         }
         else if (stats == 10){
             buttoncancel.setVisibility(View.VISIBLE);
             status.setText("Are you sure want to logout ?");
-            detail.setText(message);
-            imageView.setImageResource(R.drawable.emoji_smile);
+            detail.setText("");
+//            imageView.setImageResource(R.drawable.emoji_smile);
             bg.setBackgroundResource(R.color.blue7);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttoncancel.setBackgroundResource(R.drawable.button1_red);
@@ -537,8 +644,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    sessionManagement.logoutUser();
                     finish();
+                    sessionManagement.logoutUser();
                 }
             });
             buttoncancel.setOnClickListener(new View.OnClickListener() {

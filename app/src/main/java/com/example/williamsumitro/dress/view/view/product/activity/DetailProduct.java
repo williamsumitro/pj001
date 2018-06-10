@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,12 +22,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
+import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.DetailOutlet;
+import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
+import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.DetailOutlet;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductSlideImagesAdapter;
 
 import java.util.ArrayList;
@@ -37,6 +43,9 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.relex.circleindicator.CircleIndicator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_rv_partnership) RecyclerView rv_partnership;
@@ -44,10 +53,10 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_ln_detailpartnership) LinearLayout detailpartnership;
     @BindView(R.id.detailproduct_imgcaret) ImageView caret;
     @BindView(R.id.detailproduct_appbar) AppBarLayout appBarLayout;
-    @BindView(R.id.detailproduct_circleindicator) CircleIndicator circleIndicator;
+//    @BindView(R.id.detailproduct_circleindicator) CircleIndicator circleIndicator;
     @BindView(R.id.detailproduct_collapstoolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.detailproduct_toolbar) Toolbar toolbar;
-    @BindView(R.id.detailproduct_vp) ViewPager viewPager;
+//    @BindView(R.id.detailproduct_vp) ViewPager viewPager;
     @BindView(R.id.detailproduct_tvTitle) TextView title;
     @BindView(R.id.detailproduct_tvPrice) TextView price;
     @BindView(R.id.detailproduct_tvNamaToko) TextView namatoko;
@@ -64,6 +73,7 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_lnreview) LinearLayout review;
     @BindView(R.id.detailproduct_lndiscussion) LinearLayout discussion;
     @BindView(R.id.detailproduct_rvpricedetails) RecyclerView pricedetails;
+    @BindView(R.id.detailproduct_image) ImageView image;
 
     private static final Integer[] XMEN= {R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake};
     private ArrayList<Integer> XMENArray = new ArrayList<Integer>();
@@ -72,6 +82,7 @@ public class DetailProduct extends AppCompatActivity {
 
     private List<PriceDetails> priceDetailsList;
     private BuyRVAdapter pricedetailsadapter;
+    private apiService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +91,7 @@ public class DetailProduct extends AppCompatActivity {
         initObject();
         initCollapToolbar();
         setupToolbar();
-        init();
+//        init();
         initClick();
         setupRV();
         initData();
@@ -189,32 +200,32 @@ public class DetailProduct extends AppCompatActivity {
             }
         });
     }
-    private void init() {
-        for(int i=0;i<XMEN.length;i++)
-            XMENArray.add(XMEN[i]);
-        viewPager.setAdapter(new DetailProductSlideImagesAdapter(context,XMENArray));
-        circleIndicator.setViewPager(viewPager);
-
-        // Auto start of viewpager
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == XMEN.length) {
-                    currentPage = 0;
-                }
-                viewPager.setCurrentItem(currentPage++, true);
-            }
-        };
-        Timer swipeTimer = new Timer();
-        swipeTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, 5000, 5000);
-    }
+//    private void init() {
+//        for(int i=0;i<XMEN.length;i++)
+//            XMENArray.add(XMEN[i]);
+//        viewPager.setAdapter(new DetailProductSlideImagesAdapter(context,XMENArray));
+//        circleIndicator.setViewPager(viewPager);
+//
+//        // Auto start of viewpager
+//        final Handler handler = new Handler();
+//        final Runnable Update = new Runnable() {
+//            public void run() {
+//                if (currentPage == XMEN.length) {
+//                    currentPage = 0;
+//                }
+//                viewPager.setCurrentItem(currentPage++, true);
+//            }
+//        };
+//        Timer swipeTimer = new Timer();
+//        swipeTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                handler.post(Update);
+//            }
+//        }, 5000, 5000);
+//    }
     private void setupRV(){
-        pricedetailsadapter = new BuyRVAdapter(null, null, priceDetailsList, context);
+        pricedetailsadapter = new BuyRVAdapter(priceDetailsList, context);
         RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         pricedetails.setLayoutManager(horizontallayout);
         pricedetails.setItemAnimator(new DefaultItemAnimator());
@@ -229,5 +240,29 @@ public class DetailProduct extends AppCompatActivity {
         priceDetailsList.add(priceDetails);
         priceDetails = new PriceDetails(35, 35);
         priceDetailsList.add(priceDetails);
+    }
+    private void api_getdetailproduct(){
+        service = apiUtils.getAPIService();
+        service.req_get_product_detail("22").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+//                    productInfo = response.body().getProductInfo();
+//                    Toast.makeText(getContext(), productInfo.toString(), Toast.LENGTH_SHORT).show();
+//                    productInfoList.add(productInfo);
+//                    adapterList = new HotRVAdapter(productInfoList, getContext());
+//                    Toast.makeText(getContext(), String.valueOf(productInfoList.size()), Toast.LENGTH_SHORT).show();
+//                    RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getContext(), 2);
+//                    rvList.setLayoutManager(grid_layoutmanager);
+//                    rvList.setItemAnimator(new DefaultItemAnimator());
+//                    rvList.setAdapter(adapterList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
     }
 }

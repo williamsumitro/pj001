@@ -57,7 +57,7 @@ public class SessionManagement {
     }
     public void keepStoreInformation(String establishedyear, String id_province,
                                      String id_city, String name, String jobtitle,
-                                     String phonenumber, String description, String province, String city){
+                                     String phonenumber, String description, String province, String city, String businesstype){
         editor.putString(STORE_ESTABLISHED_YEAR, establishedyear);
         editor.putString(STORE_ID_PROVINCE, id_province);
         editor.putString(STORE_ID_CITY, id_city);
@@ -67,19 +67,21 @@ public class SessionManagement {
         editor.putString(STORE_DESCRIPTION, description);
         editor.putString(STORE_PROVINCE, province);
         editor.putString(STORE_CITY, city);
+        editor.putString(STORE_BUSINESS_TYPE, businesstype);
         editor.commit();
     }
     public HashMap<String , String> getStoreInformation(){
         HashMap<String, String> store = new HashMap<String, String>();
         store.put(STORE_NAME, pref.getString(STORE_NAME, null));
         store.put(STORE_ESTABLISHED_YEAR, pref.getString(STORE_ESTABLISHED_YEAR, null));
-        store.put(STORE_PROVINCE, pref.getString(STORE_PROVINCE, null));
-        store.put(STORE_CITY, pref.getString(STORE_CITY, null));
+        store.put(STORE_ID_PROVINCE, pref.getString(STORE_ID_PROVINCE, null));
+        store.put(STORE_ID_CITY, pref.getString(STORE_ID_CITY, null));
         store.put(STORE_CONTACT_PERSON_NAME, pref.getString(STORE_CONTACT_PERSON_NAME, null));
         store.put(STORE_CONTACT_PERSON_JOB_TITLE, pref.getString(STORE_CONTACT_PERSON_JOB_TITLE, null));
         store.put(STORE_CONTACT_PERSON_PHONE_NUMBER, pref.getString(STORE_CONTACT_PERSON_PHONE_NUMBER, null));
         store.put(STORE_DESCRIPTION, pref.getString(STORE_DESCRIPTION, null));
         store.put(STORE_COURIER, pref.getString(STORE_COURIER, null));
+        store.put(STORE_BUSINESS_TYPE, pref.getString(STORE_BUSINESS_TYPE, null));
         return store;
     }
 //    public void createLoginSession(String name, String email, String jwt){

@@ -10,7 +10,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Order;
-import com.example.williamsumitro.dress.view.view.order.adapter.BankRVAdapter;
+import com.example.williamsumitro.dress.view.view.order.adapter.OrderDetailRVAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +75,6 @@ public class OrderDetail extends AppCompatActivity {
     }
     private void initView(){
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
         context = this;
         lnapprove.setVisibility(View.GONE);
         lnpending.setVisibility(View.GONE);

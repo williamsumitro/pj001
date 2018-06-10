@@ -5,11 +5,11 @@ package com.example.williamsumitro.dress.view.presenter.api;
  */
 
 public class apiUtils {
-    public static final String IP ="http://192.168.100.7/";
+    public static final String IP ="http://192.168.100.4/";
 
     public static final String BASE = IP+"dress_marketplace/";
     public static final String BASE_URL = BASE+"api/";
-    public static final String BASE_IMAGE = IP+"franchise_marketplace_api/storage/app/public/";
+    public static final String BASE_IMAGE = IP+"dress_marketplace/public/storage/";
 
     public static apiService getAPIService(){
         return apiClient.getClient(BASE_URL).create(apiService.class);

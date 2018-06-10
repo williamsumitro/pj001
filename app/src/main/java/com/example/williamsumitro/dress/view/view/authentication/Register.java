@@ -136,7 +136,7 @@ public class Register extends AppCompatActivity {
             layoutphonenumber.setError("Phone number is required");
             return;
         } else if(radioGroup.getCheckedRadioButtonId() == -1){
-            Snackbar.make(container, "Please choose your sex", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(container, "Please choose your gender", Snackbar.LENGTH_LONG).show();
             return;
         }
         int selectedID = radioGroup.getCheckedRadioButtonId();
@@ -160,7 +160,7 @@ public class Register extends AppCompatActivity {
                             Log.i("debug", "onResponse: SUCCESS");
                             try{
                                 JSONObject jsonResults = new JSONObject(response.body().string());
-                                if(jsonResults.getString("message").equals("UserResponse created successfully")){
+                                if(jsonResults.getBoolean("status")){
                                     String message = jsonResults.getString("message");
                                     progressDialog.dismiss();
                                     initDialog(message, 1);
@@ -193,13 +193,13 @@ public class Register extends AppCompatActivity {
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
         Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
         if(stats == 1){
             status.setText("Registered Success!");
             detail.setText(message);
             bg.setBackgroundResource(R.color.green7);
-            imageView.setImageResource(R.drawable.emoji_success);
+//            imageView.setImageResource(R.drawable.emoji_success);
             button.setBackgroundResource(R.drawable.button1_green);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -215,7 +215,7 @@ public class Register extends AppCompatActivity {
             status.setText("Oops!");
             detail.setText(message);
             bg.setBackgroundResource(R.color.red6);
-            imageView.setImageResource(R.drawable.emoji_oops);
+//            imageView.setImageResource(R.drawable.emoji_oops);
             button.setBackgroundResource(R.drawable.button1_red);
             button.setText("Try Again");
             button.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +230,7 @@ public class Register extends AppCompatActivity {
             bg.setBackgroundResource(R.color.red7);
             status.setText("Uh Oh!");
             detail.setText("There is a problem with internet connection or the server");
-            imageView.setImageResource(R.drawable.emoji_cry);
+//            imageView.setImageResource(R.drawable.emoji_cry);
             button.setBackgroundResource(R.drawable.button1_red);
             button.setText("Try Again");
             button.setOnClickListener(new View.OnClickListener() {

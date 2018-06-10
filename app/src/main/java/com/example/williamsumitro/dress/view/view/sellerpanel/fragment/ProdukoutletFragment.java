@@ -121,27 +121,27 @@ public class ProdukoutletFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapternew.getFilter().filter(newText);
+//                adapternew.getFilter().filter(newText);
                 return false;
             }
         });
 
     }
     private void initData(){
-        adapternew = new HotRVAdapter(newList, 1, getContext());
-        Cloth cloth = new Cloth("Sequin Tank Sheath Dress", R.drawable.image, "12.000.000");
-        newList.add(cloth);
-        cloth = new Cloth("Striped Wrap Midi Dress", R.drawable.image, "12.000.000");
-        newList.add(cloth);
-        cloth = new Cloth("Long Sleeve Pocket Shirt Dress", R.drawable.image, "10.000.000");
-        newList.add(cloth);
-        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.image, "9.000.000");
-        newList.add(cloth);
-        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.image, "8.300.000");
-        newList.add(cloth);
-        cloth = new Cloth("SStrappy Back Lace Inset Sheath Dress", R.drawable.image, "14.000.000");
-        newList.add(cloth);
-        cloth = new Cloth("STie-Sleeve Shift Dress", R.drawable.image, "2.000.000");
-        newList.add(cloth);
+//        adapternew = new HotRVAdapter(newList, 1, getContext());
+//        Cloth cloth = new Cloth("Sequin Tank Sheath Dress", R.drawable.image, "12.000.000");
+//        newList.add(cloth);
+//        cloth = new Cloth("Striped Wrap Midi Dress", R.drawable.image, "12.000.000");
+//        newList.add(cloth);
+//        cloth = new Cloth("Long Sleeve Pocket Shirt Dress", R.drawable.image, "10.000.000");
+//        newList.add(cloth);
+//        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.image, "9.000.000");
+//        newList.add(cloth);
+//        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.image, "8.300.000");
+//        newList.add(cloth);
+//        cloth = new Cloth("SStrappy Back Lace Inset Sheath Dress", R.drawable.image, "14.000.000");
+//        newList.add(cloth);
+//        cloth = new Cloth("STie-Sleeve Shift Dress", R.drawable.image, "2.000.000");
+//        newList.add(cloth);
     }
 }
