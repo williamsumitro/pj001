@@ -9,17 +9,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bag;
+import com.example.williamsumitro.dress.view.model.Bagz;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Shipping;
-import com.example.williamsumitro.dress.view.view.bag.adapter.ShoppingBagRVAdapter;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
 
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ public class Checkout extends AppCompatActivity {
     @BindView(R.id.checkout_btnchooseanotheraddress) Button chooseanotherdress;
     private Context context;
     private CheckoutRVAdapter adapter;
-    private List<Bag> bagList;
+    private List<Bagz> bagList;
     private List<Shipping> shippingList;
     private List<Bank> bankList;
 
@@ -101,7 +99,7 @@ public class Checkout extends AppCompatActivity {
         shippingList.add(shipping);
         shipping = new Shipping("THH", 10000);
         shippingList.add(shipping);
-        Bag bag = new Bag("ABC Store", "Baju Renang", R.drawable.image, 60000, 10, 20, 30 ,10, 70, 35, 500000, 8000000, 7500000, 600000, 1200000, 1800000, 600000, shippingList, bankList);
+        Bagz bag = new Bagz("ABC Store", "Baju Renang", R.drawable.image, 60000, 10, 20, 30 ,10, 70, 35, 500000, 8000000, 7500000, 600000, 1200000, 1800000, 600000, shippingList, bankList);
         bagList.add(bag);
     }
 }

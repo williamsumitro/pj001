@@ -218,6 +218,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
         </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Pick the Courier"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/openstore_storeinformation_rv_courier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <Button
             android:layout_marginTop="10dp"
             android:id="@+id/openstore_storeinformation_btn_check"

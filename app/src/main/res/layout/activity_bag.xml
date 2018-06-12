@@ -14,76 +14,12 @@
         android:layout_below="@+id/bag_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="130dp">
         <LinearLayout
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <android.support.v7.widget.CardView
-                android:layout_margin="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:padding="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="Total Pembayaran"
-                            android:textSize="18sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/bag_tvTotalPembayaran"
-                            android:gravity="right"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="IDR XXX"
-                            android:textSize="18sp"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:text="Point anda saat ini"
-                            android:textSize="10sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/bag_tvpoint"
-                            android:gravity="right"
-                            android:text="IDR 0"
-                            android:textSize="10sp"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <TextView
-                        android:layout_marginTop="6dp"
-                        android:textSize="12sp"
-                        android:text="I agree with all the terms and conditions using this payment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <Button
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/bag_btncheckout"
-                        android:textColor="@color/white"
-                        android:text="Checkout"
-                        android:background="@color/green1"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
             <android.support.v7.widget.RecyclerView
                 android:layout_marginTop="5dp"
                 android:id="@+id/bag_rvshoppingbag"
@@ -96,6 +32,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/bag_tvTotal"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="Total "
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/bag_tvTotalPembayaran"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="IDR XXX"
+                        android:textSize="18sp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <Button
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/bag_btncheckout"
+                    android:textColor="@color/white"
+                    android:text="Checkout"
+                    android:background="@color/green1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+            </LinearLayout>
         <Button
             android:id="@+id/bag_btncontinue"
             android:textColor="@color/black"

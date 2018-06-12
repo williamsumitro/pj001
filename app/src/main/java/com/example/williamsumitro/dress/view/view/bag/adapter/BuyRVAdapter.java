@@ -12,20 +12,24 @@ import android.widget.TextView;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Courier;
-import com.example.williamsumitro.dress.view.model.PriceDetails;
+import com.example.williamsumitro.dress.view.model.Price;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by WilliamSumitro on 24/03/2018.
  */
 
 public class BuyRVAdapter extends RecyclerView.Adapter<BuyRVAdapter.ViewHolder> {
-    private List<PriceDetails> priceDetailsList;
+    private List<Price> priceList;
     private Context context;
-    public BuyRVAdapter(List<PriceDetails> priceDetailsList, Context context){
+    public BuyRVAdapter(List<Price> priceList, Context context){
         this.context = context;
-        this.priceDetailsList = priceDetailsList;
+        this.priceList = priceList;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,26 +40,35 @@ public class BuyRVAdapter extends RecyclerView.Adapter<BuyRVAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-            PriceDetails priceDetails = priceDetailsList.get(position);
-            Log.d("Fuck the tag", String.valueOf(priceDetails.getDiscount()));
-            holder.discount.setText(String.valueOf(priceDetails.getDiscount()));
-            holder.qty.setText(String.valueOf(priceDetails.getQty()));
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+            Price price = priceList.get(position);
+            if (price.getQtyMax().toLowerCase().equals("max")){
+                holder.qty_min.setText(formatter.format(Double.parseDouble(String.valueOf(price.getQtyMin()))));
+                holder.semicolon.setText("Qty >= ");
+            }
+            else {
+                holder.qty_min.setText(formatter.format(Double.parseDouble(String.valueOf(price.getQtyMin()))));
+                holder.qty_max.setText(formatter.format(Double.parseDouble(String.valueOf(price.getQtyMax()))));
+                holder.dash.setText(" - ");
+                holder.semicolon.setText("Qty : ");
+            }
+            holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(price.getPrice()))));
     }
 
     @Override
     public int getItemCount() {
-       return priceDetailsList.size();
+       return priceList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView bank;
-        ImageView imagebank;
-        TextView discount;
-        TextView qty;
+        @BindView(R.id.itempricedetails_qtymin) TextView qty_min;
+        @BindView(R.id.itempricedetails_qtymax) TextView qty_max;
+        @BindView(R.id.itempricedetails_price) TextView price;
+        @BindView(R.id.itempricedetail_dash) TextView dash;
+        @BindView(R.id.itempricedetail_semicolon) TextView semicolon;
         public ViewHolder(View itemView) {
             super(itemView);
-            discount = (TextView) itemView.findViewById(R.id.itempricedetails_discount);
-            qty = (TextView) itemView.findViewById(R.id.itempricedetails_qty);
+            ButterKnife.bind(this,itemView);
         }
     }
 }

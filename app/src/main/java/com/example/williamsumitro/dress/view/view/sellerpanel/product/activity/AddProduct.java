@@ -233,6 +233,15 @@ public class AddProduct extends AppCompatActivity {
                 LinearLayout.LayoutParams etParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 etParams.width = 200;
 
+                TextView row = new TextView(context);
+                LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                txtParams.setMarginStart(2);
+                txtParams.setMarginEnd(2);
+                row.setGravity(Gravity.CENTER_VERTICAL);
+                row.setLayoutParams(txtParams);
+                row.setTextSize(12);
+                row.setText(String.valueOf(index+1) + ". ");
+
                 final EditText qtymin = new EditText(context);
                 qtymin.setInputType(InputType.TYPE_CLASS_NUMBER);
                 qtymin.setHint("Qty (Min)");
@@ -242,7 +251,6 @@ public class AddProduct extends AppCompatActivity {
 
 
                 TextView textView = new TextView(context);
-                LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 txtParams.setMarginStart(5);
                 txtParams.setMarginEnd(10);
                 textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -285,11 +293,12 @@ public class AddProduct extends AppCompatActivity {
                 price.setTextSize(12);
                 price.addTextChangedListener(new FinancialTextWatcher(price));
 
-                firstChildLinearLayout.addView(qtymin, 0);
-                firstChildLinearLayout.addView(textView, 1);
-                firstChildLinearLayout.addView(qtymax, 2);
-                firstChildLinearLayout.addView(button, 3);
-                firstChildLinearLayout.addView(price, 4);
+                firstChildLinearLayout.addView(row, 0);
+                firstChildLinearLayout.addView(qtymin, 1);
+                firstChildLinearLayout.addView(textView, 2);
+                firstChildLinearLayout.addView(qtymax, 3);
+                firstChildLinearLayout.addView(button, 4);
+                firstChildLinearLayout.addView(price, 5);
 
                 LinearLayout secondChildLinearLayout = new LinearLayout(context);
                 LinearLayout.LayoutParams secondChildParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
@@ -319,9 +328,9 @@ public class AddProduct extends AppCompatActivity {
             v = layout.getChildAt(i);
             if (v instanceof LinearLayout) {
                 View tempView = ((LinearLayout) v).getChildAt(0);
-                View et_qtymin = ((LinearLayout) tempView).getChildAt(0);
-                View et_qtymax = ((LinearLayout) tempView).getChildAt(2);
-                View et_price = ((LinearLayout) tempView).getChildAt(4);
+                View et_qtymin = ((LinearLayout) tempView).getChildAt(1);
+                View et_qtymax = ((LinearLayout) tempView).getChildAt(3);
+                View et_price = ((LinearLayout) tempView).getChildAt(5);
                 String et_minvalue = null;
                 String et_maxvalue = null;
                 String et_pricevalue = null;
@@ -490,13 +499,17 @@ public class AddProduct extends AppCompatActivity {
                         applyallsize.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                StringBuilder stringBuilder = new StringBuilder();
                                 int count = rv_size.getAdapter().getItemCount();
                                 list_size_result.clear();
                                 for(int i = 0; i< count; i++){
                                     LinearLayout item = (LinearLayout) rv_size.getChildAt(i);
                                     CheckBox checkBox = (CheckBox) item.findViewById(R.id.itemgridviewfilter_checkbox);
+                                    TextView size_name = (TextView) item.findViewById(R.id.itemgridviewfilter_tvnamakota);
                                     if(checkBox.isChecked()){
                                         list_size_result.add(checkBox.getTag().toString());
+                                        stringBuilder.append(size_name.getText());
+                                        stringBuilder.append(" ");
                                     }
                                 }
                                 int count1 = list_size_result.size();
@@ -507,7 +520,7 @@ public class AddProduct extends AppCompatActivity {
                                     else
                                         temp += list_size_result.get(i).toLowerCase();
                                 }
-                                tv_size.setText(temp);
+                                tv_size.setText(stringBuilder);
                                 for(int i = 0; i< count; i++){
                                     LinearLayout item = (LinearLayout) rv_size.getChildAt(i);
                                     CheckBox checkBox = (CheckBox) item.findViewById(R.id.itemgridviewfilter_checkbox);
@@ -680,31 +693,43 @@ public class AddProduct extends AppCompatActivity {
             Snackbar.make(container, "Please select the size", Snackbar.LENGTH_LONG).show();
             return;
         }else if(container_price.size() == 0){
-            Snackbar.make(container, "Please insert your price", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(container, "Please add your price", Snackbar.LENGTH_LONG).show();
             return;
         }else if(container_price.size()!=0) {
             Boolean check = true;
             int k = 0;
             String error = null;
             for (int i = 0; i < container_price.size() * 3; i++) {
-                if (i % 3 == 0) {
-                    if (container_price.get(k).getQty_min().equals("")) {
-                        check = false;
-                        error = "Please insert the qty minimum";
-                    }
+                String qty_min = container_price.get(k).getQty_min(), qty_max = container_price.get(k).getQty_max(), price = container_price.get(k).getprice();
+                int min, max, pric;
+                if (qty_min.equals("")) {
+                    check = false;
+                    error = "Please insert the qty minimum at row " + String.valueOf(k+1);
+                    break;
                 }
-                else if (i%3==1){
-                    if (container_price.get(k).getQty_max().equals("")) {
-                        check = false;
-                        error = "Please insert the qty maximum";
-                    }
+                if (qty_max.equals("")) {
+                    check = false;
+                    error = "Please insert the qty maximum at row " + String.valueOf(k+1);
+                    break;
+                }
+                if (price.equals("")) {
+                    check = false;
+                    error = "Please insert the price at row " + String.valueOf(k+1);
+                    break;
                 }
                 else {
-                    if (container_price.get(k).getprice().equals("")) {
-                        check = false;
-                        error = "Please insert the price";
+                    min = Integer.parseInt(qty_min);
+                    pric = Integer.parseInt(price);
+                    if (!qty_max.equals("max")) {
+                        max = Integer.parseInt(qty_max);
+                        if (min > max) {
+                            check = false;
+                            error = "Qty minimum cannot bigger than qty maximum at row " + String.valueOf(k+1);
+                            break;
+                        }
                     }
                 }
+
                 if (i % 3 == 2) {
                     k++;
                 }

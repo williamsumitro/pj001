@@ -74,7 +74,7 @@ public class Openstore_courierserviceFragment extends Fragment implements Step {
             if (courierDetails.getSelected()) {
                 if (stringBuilder.length() > 0)
                     stringBuilder.append(",");
-                stringBuilder.append(courierDetails.getCourierName());
+                stringBuilder.append(courierDetails.getCourierId());
             }
         }
         if (stringBuilder.length()>0){

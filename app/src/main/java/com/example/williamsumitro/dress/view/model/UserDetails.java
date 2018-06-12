@@ -1,5 +1,6 @@
 package com.example.williamsumitro.dress.view.model;
 
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -71,7 +72,7 @@ public class UserDetails {
     }
 
     public String getAvatar() {
-        return avatar;
+        return apiUtils.getUrlImage() + avatar;
     }
 
     public void setAvatar(String avatar) {

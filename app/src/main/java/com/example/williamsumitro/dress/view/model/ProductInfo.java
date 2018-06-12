@@ -5,6 +5,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -113,10 +114,10 @@ public class ProductInfo {
     private Integer sold;
     @SerializedName("size")
     @Expose
-    private List<Size> size = null;
+    private ArrayList<Size> size = null;
     @SerializedName("price")
     @Expose
-    private List<Price> price = null;
+    private ArrayList<Price> price = null;
 
     public Integer getProductId() {
         return productId;
@@ -382,19 +383,19 @@ public class ProductInfo {
         this.sold = sold;
     }
 
-    public List<Size> getSize() {
+    public ArrayList<Size> getSize() {
         return size;
     }
 
-    public void setSize(List<Size> size) {
+    public void setSize(ArrayList<Size> size) {
         this.size = size;
     }
 
-    public List<Price> getPrice() {
+    public ArrayList<Price> getPrice() {
         return price;
     }
 
-    public void setPrice(List<Price> price) {
+    public void setPrice(ArrayList<Price> price) {
         this.price = price;
     }
 }

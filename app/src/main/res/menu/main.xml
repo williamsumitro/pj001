@@ -26,5 +26,6 @@
         android:orderInCategory="100"
         android:title="Bag"
         android:icon="@drawable/bag"
+        app:actionLayout="@layout/custom_shoppingbag"
         app:showAsAction="always" />
 </menu>

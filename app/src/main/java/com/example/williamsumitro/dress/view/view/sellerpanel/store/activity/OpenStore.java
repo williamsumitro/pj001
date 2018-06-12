@@ -79,6 +79,7 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
     public void onCompleted(View completeButton) {
         Intent intent = new Intent(this, Openstrore_Fileupload.class);
         initanim(intent);
+        finish();
     }
 
     @Override

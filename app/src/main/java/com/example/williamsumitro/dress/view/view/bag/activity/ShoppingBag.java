@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,17 +16,24 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bag;
-import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.example.williamsumitro.dress.view.model.BagResponse;
+import com.example.williamsumitro.dress.view.model.Bagz;
+import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.ShoppingBagRVAdapter;
 import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShoppingBag extends AppCompatActivity {
     @BindView(R.id.bag_btncheckout) Button checkout;
@@ -35,18 +41,24 @@ public class ShoppingBag extends AppCompatActivity {
     @BindView(R.id.bag_rvshoppingbag) RecyclerView recyclerView;
     @BindView(R.id.bag_toolbar) Toolbar toolbar;
     @BindView(R.id.bag_tvTotalPembayaran) TextView totalpembayaran;
-    @BindView(R.id.bag_tvpoint) TextView point;
+    @BindView(R.id.bag_tvTotal) TextView total;
+//    @BindView(R.id.bag_tvpoint) TextView point;
     private ShoppingBagRVAdapter adapter;
     private Context context;
-    private List<Bag> bagList;
+    private List<Bagz> bagList;
+    private apiService service;
+    private String token;
+    private SessionManagement sessionManagement;
+    private ArrayList<Bag> bagArrayList;
+    private String total_qty, total_price;
+    private DecimalFormat formatter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bag);
         initView();
-        setupRV();
+        api_viewshoppingbag();
         setuptoolbar();
-        initData();
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,11 +66,50 @@ public class ShoppingBag extends AppCompatActivity {
                 initanim(intent);
             }
         });
+        initonClick();
+    }
+
+    private void initonClick() {
+        continues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
+                finish();
+            }
+        });
+    }
+
+    private void api_viewshoppingbag() {
+        service = apiUtils.getAPIService();
+        service.req_view_shopping_bag(token).enqueue(new Callback<BagResponse>() {
+            @Override
+            public void onResponse(Call<BagResponse> call, Response<BagResponse> response) {
+                if (response.code()==200){
+                    bagArrayList = response.body().getBagDetail();
+                    total_price = response.body().getTotalPrice();
+                    total_qty = response.body().getTotalQty();
+                    initData();
+                    setupRV();
+                }
+            }
+            @Override
+            public void onFailure(Call<BagResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    private void initStore(){
+
     }
     private void initView(){
         ButterKnife.bind(this);
         context = this;
         bagList = new ArrayList<>();
+        formatter = new DecimalFormat("#,###,###");
+        sessionManagement = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -67,7 +118,7 @@ public class ShoppingBag extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Bag");
+        getSupportActionBar().setTitle("Shopping Bag");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,15 +129,15 @@ public class ShoppingBag extends AppCompatActivity {
         });
     }
     private void setupRV(){
-        adapter = new ShoppingBagRVAdapter(bagList, context);
+        adapter = new ShoppingBagRVAdapter(bagArrayList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
     private void initData(){
-        Bag bag = new Bag("ABC Store", "Baju Renang", R.drawable.image, 60000, 10, 20, 30 ,10, 70, 35, 500000, 8000000, 7500000, 600000, 1200000, 1800000, 600000);
-        bagList.add(bag);
+        totalpembayaran.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(total_price))));
+        total.setText("Total ("+formatter.format(Double.parseDouble(total_qty))+" pcs)");
     }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

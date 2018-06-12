@@ -70,21 +70,70 @@ public class HotFragment extends Fragment {
     private void initView(View view){
         ButterKnife.bind(this,view);
     }
+    private void addProductInfo(ProductInfo productInfo){
+        productInfoList.add(productInfo);
+    }
+    private void setupRV(){
+        adapterList = new HotRVAdapter(productInfoList, getContext());
+        RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getContext(), 2);
+        rvList.setLayoutManager(grid_layoutmanager);
+        rvList.setItemAnimator(new DefaultItemAnimator());
+        rvList.setAdapter(adapterList);
+    }
     private void initData(){
         service = apiUtils.getAPIService();
-        service.req_get_product_detail("22").enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail("23").enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
                 if (response.code()==200){
                     productInfo = response.body().getProductInfo();
-                    Toast.makeText(getContext(), productInfo.toString(), Toast.LENGTH_SHORT).show();
-                    productInfoList.add(productInfo);
-                    adapterList = new HotRVAdapter(productInfoList, getContext());
-                    Toast.makeText(getContext(), String.valueOf(productInfoList.size()), Toast.LENGTH_SHORT).show();
-                    RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getContext(), 2);
-                    rvList.setLayoutManager(grid_layoutmanager);
-                    rvList.setItemAnimator(new DefaultItemAnimator());
-                    rvList.setAdapter(adapterList);
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("25").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("26").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("27").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
                 }
             }
 

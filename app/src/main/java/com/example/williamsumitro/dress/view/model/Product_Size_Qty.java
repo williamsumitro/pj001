@@ -10,24 +10,28 @@ import com.google.gson.annotations.SerializedName;
 public class Product_Size_Qty {
     @SerializedName("size_id")
     @Expose
-    private String size_id;
+    private int size_id;
     @SerializedName("qty")
     @Expose
-    private String qty;
+    private int qty;
 
-    public String getSize_id() {
+    public Product_Size_Qty(int size_id, int qty){
+        this.size_id = size_id;
+        this.qty = qty;
+    }
+    public int getSize_id() {
         return size_id;
     }
 
-    public void setSize_id(String size_id) {
+    public void setSize_id(int size_id) {
         this.size_id = size_id;
     }
 
-    public String getQty() {
+    public int getQty() {
         return qty;
     }
 
-    public void setQty(String qty) {
+    public void setQty(int qty) {
         this.qty = qty;
     }
 }

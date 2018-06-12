@@ -1,5 +1,7 @@
 package com.example.williamsumitro.dress.view.presenter.api;
 
+import com.example.williamsumitro.dress.view.model.AddToBag;
+import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.Price;
@@ -16,6 +18,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
@@ -121,4 +124,12 @@ public interface apiService {
     @FormUrlEncoded
     @POST("get_product_detail")
     Call<ProductDetail> req_get_product_detail(@Field("product_id") String product_id);
+
+    @POST("add_to_bag")
+    Call<ResponseBody> req_add_to_bag(@Body AddToBag addToBag);
+
+
+    @FormUrlEncoded
+    @POST("view_shopping_bag")
+    Call<BagResponse> req_view_shopping_bag(@Field("token") String token);
 }

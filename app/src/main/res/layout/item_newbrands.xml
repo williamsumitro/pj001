@@ -28,28 +28,15 @@
                 android:singleLine="true"
                 android:textSize="12sp"
                 android:text="asdfsdafsdaffsdafsadfsadfsadfsdf"/>
-            <LinearLayout
+            <TextView
                 android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:id="@+id/item_newbrands_price"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="Rp. "/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:id="@+id/item_newbrands_price"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="120000"/>
-            </LinearLayout>
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="120000"/>
             <LinearLayout
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -63,28 +50,23 @@
                     <ImageView
                         android:id="@+id/item_newbrands_star1"
                         android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/star"/>
+                        android:layout_height="15dp"/>
                     <ImageView
                         android:id="@+id/item_newbrands_star2"
                         android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/star"/>
+                        android:layout_height="15dp"/>
                     <ImageView
                         android:id="@+id/item_newbrands_star3"
                         android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/star"/>
+                        android:layout_height="15dp"/>
                     <ImageView
                         android:id="@+id/item_newbrands_star4"
                         android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/star"/>
+                        android:layout_height="15dp"/>
                     <ImageView
                         android:id="@+id/item_newbrands_star5"
                         android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/star0"/>
+                        android:layout_height="15dp"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/item_newbrands_favorite"

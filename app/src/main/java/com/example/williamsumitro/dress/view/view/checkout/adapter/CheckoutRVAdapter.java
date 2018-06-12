@@ -4,9 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,10 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bag;
+import com.example.williamsumitro.dress.view.model.Bagz;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Shipping;
-import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -35,12 +32,12 @@ import butterknife.ButterKnife;
  */
 
 public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.ViewHolder> {
-    private List<Bag> bagList;
+    private List<Bagz> bagList;
     private Context context;
     private DecimalFormat formatter;
     private boolean open = false;
 
-    public CheckoutRVAdapter(List<Bag> bagList, Context context){
+    public CheckoutRVAdapter(List<Bagz> bagList, Context context){
         this.context = context;
         this.bagList = bagList;
     }
@@ -53,7 +50,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Bag bag = bagList.get(position);
+        Bagz bag = bagList.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.namatoko.setText(bag.getNamatoko());
         holder.namabarang.setText(bag.getNamaproduk());

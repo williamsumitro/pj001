@@ -24,6 +24,7 @@ import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,9 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
     private List<ProductInfo> productInfoList;
     private int favoriteclick = 0;
     private Context context;
+    private DecimalFormat formatter;
     private List<Price> priceList = new ArrayList<>();
+    private final static String PRODUCT_ID = "PRODUCT_ID";
     public HotRVAdapter (List<ProductInfo> productInfoList, Context context){
         this.productInfoList = productInfoList;
         this.context = context;
@@ -53,13 +56,14 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        ProductInfo productInfo = productInfoList.get(position);
+        final ProductInfo productInfo = productInfoList.get(position);
+        formatter = new DecimalFormat("#,###,###");
         holder.name.setText(productInfo.getProductName());
         priceList = productInfo.getPrice();
-        holder.price.setText(String.valueOf(priceList.get(0).getPrice()));
+        holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(priceList.get(0).getPrice()))));
         Picasso.with(context)
                 .load(productInfo.getPhoto())
-                .placeholder(R.drawable.logo)
+                .placeholder(R.drawable.logo404)
                 .into(holder.image);
         holder.storename.setText(productInfo.getStoreName());
 //        Picasso.with(context).load(cloth.getPicture()).into(holder.image);
@@ -139,6 +143,7 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailProduct.class);
+                intent.putExtra(PRODUCT_ID, productInfo.getProductId().toString());
                 Bundle bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
                 context.startActivity(intent, bundle);
             }

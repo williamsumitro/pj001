@@ -10,6 +10,9 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -30,6 +33,8 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.CityDetails;
 import com.example.williamsumitro.dress.view.model.CityResponse;
+import com.example.williamsumitro.dress.view.model.CourierDetails;
+import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.ProvinceDetails;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
@@ -38,6 +43,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
+import com.example.williamsumitro.dress.view.view.sellerpanel.store.adapter.OpenStore_CourierAdapter;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -74,6 +80,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     @BindView(R.id.openstore_storeinformation_spinner_businesstype) Spinner spinner_businesstype;
     @BindView(R.id.openstore_storeinformation_layout_yearestbalished) TextInputLayout layout_since;
     @BindView(R.id.openstore_storeinformation_yearestbalished) TextInputEditText since;
+    @BindView(R.id.openstore_storeinformation_rv_courier) RecyclerView rv_courier;
     private apiService service;
     private Context context;
     private List<ProvinceDetails> provinceDetailsList;
@@ -84,6 +91,10 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     private String idprovince, idcity, choosen_province, choosen_city, chosen_businesstype;
     private Boolean checked = false;
     private List<String> bisnis = new ArrayList<>();
+    private List<CourierDetails> courierDetailsList;
+    private OpenStore_CourierAdapter adapter;
+    private ArrayList<String> courier_name;
+    private ArrayList<String> courier_id;
 
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
@@ -97,6 +108,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_openstore_storeinformation, container, false);
         initView(view);
+        api_getcourier();
         initOnClick();
         initProvinceSpinner();
         initBisnisSpinner();
@@ -231,12 +243,15 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     layout_phonenumber.setError("Phone number is required");
                     checked = false;
                 }if (TextUtils.isEmpty(since.getText().toString())){
-                    layout_phonenumber.setErrorEnabled(true);
-                    layout_phonenumber.setError("Year Established is required");
+                    layout_since.setErrorEnabled(true);
+                    layout_since.setError("Year Established is required");
                     checked = false;
                 }if (TextUtils.isEmpty(detail.getText().toString())){
                     layout_detail.setErrorEnabled(true);
                     layout_detail.setError("Description is required");
+                    checked = false;
+                }if (!ischecked()){
+                    Snackbar.make(container, "Please pick any courier", Snackbar.LENGTH_SHORT).show();
                     checked = false;
                 }
                 if (checked) {
@@ -247,6 +262,27 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     status.setText("Please check the information again, something is error");
                     status.setTextColor(getResources().getColor(R.color.red));
                 }
+            }
+        });
+    }
+    public void api_getcourier(){
+        service = apiUtils.getAPIService();
+        service.req_get_courier_list().enqueue(new Callback<CourierResponse>() {
+            @Override
+            public void onResponse(Call<CourierResponse> call, Response<CourierResponse> response) {
+                if(response.code()==200){
+                    courierDetailsList = response.body().getCourier();
+                    adapter = new OpenStore_CourierAdapter(courierDetailsList, context);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                    rv_courier.setLayoutManager(layoutManager);
+                    rv_courier.setItemAnimator(new DefaultItemAnimator());
+                    rv_courier.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CourierResponse> call, Throwable t) {
+
             }
         });
     }
@@ -350,5 +386,21 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     }
     private boolean isInformationValid(){
         return checked;
+    }
+    private boolean ischecked(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (CourierDetails courierDetails : courierDetailsList) {
+            if (courierDetails.getSelected()) {
+                if (stringBuilder.length() > 0)
+                    stringBuilder.append(",");
+                stringBuilder.append(courierDetails.getCourierId());
+            }
+        }
+        if (stringBuilder.length()>0){
+            String baru = stringBuilder.toString();
+            sessionManagement.keepStoreCourier(baru);
+            return true;
+        }
+        else return false;
     }
 }

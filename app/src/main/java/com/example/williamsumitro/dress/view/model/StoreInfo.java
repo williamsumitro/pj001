@@ -1,8 +1,10 @@
 package com.example.williamsumitro.dress.view.model;
 
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +23,10 @@ public class StoreInfo {
     private String name;
     @SerializedName("photo")
     @Expose
-    private Object photo;
+    private String photo;
     @SerializedName("banner")
     @Expose
-    private Object banner;
+    private String banner;
     @SerializedName("description")
     @Expose
     private String description;
@@ -63,19 +65,19 @@ public class StoreInfo {
     private String updatedAt;
     @SerializedName("ktp")
     @Expose
-    private Object ktp;
+    private String ktp;
     @SerializedName("siup")
     @Expose
-    private Object siup;
+    private String siup;
     @SerializedName("npwp")
     @Expose
-    private Object npwp;
+    private String npwp;
     @SerializedName("skdp")
     @Expose
-    private Object skdp;
+    private String skdp;
     @SerializedName("tdp")
     @Expose
-    private Object tdp;
+    private String tdp;
     @SerializedName("sold")
     @Expose
     private Integer sold;
@@ -84,7 +86,7 @@ public class StoreInfo {
     private Integer transaction;
     @SerializedName("courier_service")
     @Expose
-    private List<Object> courierService = null;
+    private ArrayList<model_CourierService> courierService = null;
 
     public Integer getStoreId() {
         return storeId;
@@ -110,19 +112,19 @@ public class StoreInfo {
         this.name = name;
     }
 
-    public Object getPhoto() {
-        return photo;
+    public String getPhoto() {
+        return apiUtils.getUrlImage() + photo;
     }
 
-    public void setPhoto(Object photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public Object getBanner() {
-        return banner;
+    public String getBanner() {
+        return apiUtils.getUrlImage() +  banner;
     }
 
-    public void setBanner(Object banner) {
+    public void setBanner(String banner) {
         this.banner = banner;
     }
 
@@ -222,43 +224,43 @@ public class StoreInfo {
         this.updatedAt = updatedAt;
     }
 
-    public Object getKtp() {
-        return ktp;
+    public String getKtp() {
+        return apiUtils.getUrlImage() + ktp;
     }
 
-    public void setKtp(Object ktp) {
+    public void setKtp(String ktp) {
         this.ktp = ktp;
     }
 
-    public Object getSiup() {
-        return siup;
+    public String getSiup() {
+        return apiUtils.getUrlImage() + siup;
     }
 
-    public void setSiup(Object siup) {
+    public void setSiup(String siup) {
         this.siup = siup;
     }
 
-    public Object getNpwp() {
-        return npwp;
+    public String getNpwp() {
+        return apiUtils.getUrlImage() + npwp;
     }
 
-    public void setNpwp(Object npwp) {
+    public void setNpwp(String npwp) {
         this.npwp = npwp;
     }
 
-    public Object getSkdp() {
-        return skdp;
+    public String getSkdp() {
+        return apiUtils.getUrlImage() + skdp;
     }
 
-    public void setSkdp(Object skdp) {
+    public void setSkdp(String skdp) {
         this.skdp = skdp;
     }
 
-    public Object getTdp() {
-        return tdp;
+    public String getTdp() {
+        return apiUtils.getUrlImage() + tdp;
     }
 
-    public void setTdp(Object tdp) {
+    public void setTdp(String tdp) {
         this.tdp = tdp;
     }
 
@@ -278,11 +280,11 @@ public class StoreInfo {
         this.transaction = transaction;
     }
 
-    public List<Object> getCourierService() {
+    public ArrayList<model_CourierService> getCourierService() {
         return courierService;
     }
 
-    public void setCourierService(List<Object> courierService) {
+    public void setCourierService(ArrayList<model_CourierService> courierService) {
         this.courierService = courierService;
     }
 }

@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/splashscreen</item>
+        <item name="android:windowBackground">@drawable/logo</item>
     </style>
     <style name="noactionbar" parent="AppTheme">
         <item name="android:actionButtonStyle">@style/myActionButtonStyle</item>

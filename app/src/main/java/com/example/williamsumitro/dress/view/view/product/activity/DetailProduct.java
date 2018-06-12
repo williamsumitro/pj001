@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,24 +22,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
+import com.example.williamsumitro.dress.view.model.StoreInfo;
+import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
+import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
-import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.DetailOutlet;
-import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductSlideImagesAdapter;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,27 +51,49 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_ln_detailpartnership) LinearLayout detailpartnership;
     @BindView(R.id.detailproduct_imgcaret) ImageView caret;
     @BindView(R.id.detailproduct_appbar) AppBarLayout appBarLayout;
-//    @BindView(R.id.detailproduct_circleindicator) CircleIndicator circleIndicator;
     @BindView(R.id.detailproduct_collapstoolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.detailproduct_toolbar) Toolbar toolbar;
-//    @BindView(R.id.detailproduct_vp) ViewPager viewPager;
-    @BindView(R.id.detailproduct_tvTitle) TextView title;
+    @BindView(R.id.detailproduct_tvMinOrder) TextView minOrder;
     @BindView(R.id.detailproduct_tvPrice) TextView price;
-    @BindView(R.id.detailproduct_tvNamaToko) TextView namatoko;
-    @BindView(R.id.detailproduct_tvLocation) TextView location;
-    @BindView(R.id.detailproduct_tvLastOnline) TextView lastonline;
-    @BindView(R.id.detailproduct_linearOutlet) LinearLayout outlet;
-    @BindView(R.id.detailproduct_imgWish) ImageView wish;
-    @BindView(R.id.detailproduct_imgFotoToko) ImageView fotoko;
-    @BindView(R.id.detailproduct_btnSizeguides) Button sizeguides;
-    @BindView(R.id.detailproduct_btnProductdetails) Button productdetails;
-    @BindView(R.id.detailproduct_imgAddtocontact) ImageView addtocontract;
+    @BindView(R.id.detailproduct_tv_store) TextView storename;
     @BindView(R.id.detailproduct_btnAddtobag) Button addtobag;
-    @BindView(R.id.detailproduct_lncourier) LinearLayout courier;
+    @BindView(R.id.detailproduct_lncourier) LinearLayout container_courier;
     @BindView(R.id.detailproduct_lnreview) LinearLayout review;
-    @BindView(R.id.detailproduct_lndiscussion) LinearLayout discussion;
     @BindView(R.id.detailproduct_rvpricedetails) RecyclerView pricedetails;
     @BindView(R.id.detailproduct_image) ImageView image;
+    @BindView(R.id.detailproduct_tv_decoration) TextView decoration;
+    @BindView(R.id.detailproduct_tv_waiseline) TextView waiseline;
+    @BindView(R.id.detailproduct_tv_style) TextView style;
+    @BindView(R.id.detailproduct_tv_sleeveLength) TextView sleevelength;
+    @BindView(R.id.detailproduct_tv_productdetail) TextView productdetail;
+    @BindView(R.id.detailproduct_tv_patterntype) TextView patterntype;
+    @BindView(R.id.detailproduct_tv_neckline) TextView neckline;
+    @BindView(R.id.detailproduct_tv_material) TextView material;
+    @BindView(R.id.detailproduct_tv_season) TextView season;
+    @BindView(R.id.detailproduct_tv_fabrictype) TextView fabrictype;
+    @BindView(R.id.detailproduct_lnproduct) LinearLayout container_product;
+    @BindView(R.id.detailproduct_ln_productdetail) LinearLayout container_productdetail;
+    @BindView(R.id.detailproduct_img_productcaret) ImageView productcaret;
+    @BindView(R.id.detailproduct_tv_weight) TextView weight;
+    @BindView(R.id.detailproduct_tv_sold) TextView sold;
+    @BindView(R.id.detailproduct_tv_size) TextView size;
+    @BindView(R.id.detailproduct_tv_rating) TextView rating;
+    @BindView(R.id.detailproduct_tv_courier) TextView courier;
+    @BindView(R.id.detailproduct_lnsize) LinearLayout container_size;
+    @BindView(R.id.detailproduct_img_star5) ImageView star5;
+    @BindView(R.id.detailproduct_img_star4) ImageView star4;
+    @BindView(R.id.detailproduct_img_star3) ImageView star3;
+    @BindView(R.id.detailproduct_img_star2) ImageView star2;
+    @BindView(R.id.detailproduct_img_star1) ImageView star1;
+    @BindView(R.id.detailproduct_lnstore) LinearLayout container_store;
+
+    private final static String NAMAPRODUCT = "NAMAPRODUCT";
+    private final static String QTYMINORDER = "QTYMINORDER";
+    private final static String GAMBARPRODUCT = "GAMBARPRODUCT";
+    private final static String MINORDER = "MINORDER";
+    private final static String PRICELIST = "PRICELIST";
+    private final static String SIZELIST = "SIZELIST";
+    private final static String PRODUCT_ID = "PRODUCT_ID";
 
     private static final Integer[] XMEN= {R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake};
     private ArrayList<Integer> XMENArray = new ArrayList<Integer>();
@@ -83,6 +103,14 @@ public class DetailProduct extends AppCompatActivity {
     private List<PriceDetails> priceDetailsList;
     private BuyRVAdapter pricedetailsadapter;
     private apiService service;
+    private ProductInfo productInfo;
+    private StoreInfo storeInfo;
+    private ArrayList<Size> sizeList;
+    private ArrayList<Price> priceList;
+    private ArrayList<String> qtyminlist, priceminlist, availablesizelist;
+    private Boolean detailclick = false;
+    private ArrayList<model_CourierService> courierServiceList;
+    private String extra_productid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,40 +119,165 @@ public class DetailProduct extends AppCompatActivity {
         initObject();
         initCollapToolbar();
         setupToolbar();
-//        init();
-        initClick();
-        setupRV();
-        initData();
+        initGetIntent();
+        api_getdetailproduct();
+    }
+    private void initGetIntent(){
+        Intent getintent = getIntent();
+        if (getintent.hasExtra(PRODUCT_ID)){
+            extra_productid = getintent.getExtras().getString(PRODUCT_ID);
+        }
+        else{
+            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void initProductDetails() {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(priceList.get(0).getPrice()))));
+        minOrder.setText(String.valueOf(productInfo.getMinOrder()));
+        Picasso.with(context)
+                .load(productInfo.getPhoto())
+                .placeholder(R.drawable.logo404)
+                .into(image);
+        style.setText(productInfo.getStyleName());
+        season.setText(productInfo.getSeasonName());
+        neckline.setText(productInfo.getNecklineName());
+        sleevelength.setText(productInfo.getSleevelengthName());
+        waiseline.setText(productInfo.getWaiselineName());
+        material.setText(productInfo.getMaterialName());
+        fabrictype.setText(productInfo.getFabrictypeName());
+        decoration.setText(productInfo.getDecorationName());
+        patterntype.setText(productInfo.getPatterntypeName());
+        rating.setText("("+productInfo.getRating()+")");
+        weight.setText(String.valueOf(productInfo.getWeight()));
+        courier.setText(String.valueOf(courierServiceList.size()));
+        if (productInfo.getRating() == 0){
+            star1.setImageResource(R.drawable.star0);
+            star2.setImageResource(R.drawable.star0);
+            star3.setImageResource(R.drawable.star0);
+            star4.setImageResource(R.drawable.star0);
+            star5.setImageResource(R.drawable.star0);
+        }
+        else if(productInfo.getRating()>0 && productInfo.getRating()<1){
+            star1.setImageResource(R.drawable.star1);
+        }
+        else if (productInfo.getRating() == 1){
+            star1.setImageResource(R.drawable.star);
+        }
+        else if(productInfo.getRating()>1 && productInfo.getRating()<2){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star1);
+        }
+        else if (productInfo.getRating() == 2){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+        }
+        else if(productInfo.getRating()>2 && productInfo.getRating()<3){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star1);
+        }
+        else if (productInfo.getRating() == 3){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+        }
+        else if(productInfo.getRating()>3 && productInfo.getRating()<4){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star1);
+        }
+        else if (productInfo.getRating() == 4){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+        }
+        else if(productInfo.getRating()>4 && productInfo.getRating()<5){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+            star5.setImageResource(R.drawable.star1);
+        }
+        else if (productInfo.getRating() == 5){
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+            star5.setImageResource(R.drawable.star);
+        }
+        StringBuilder availablesize = new StringBuilder();
+        for (int i = 0; i<sizeList.size();i++) {
+            availablesizelist.add(String.valueOf(sizeList.get(i).getSizeId()));
+            availablesize.append(sizeList.get(i).getSizeName());
+            if (i<sizeList.size()-1)
+                availablesize.append(", ");
+        }
+        size.setText(availablesize);
+        sold.setText(String.valueOf(productInfo.getSold()));
+        storename.setText(storeInfo.getName());
+
+    }
+    private void initSendData(Intent intent){
+        intent.putExtra(PRODUCT_ID, extra_productid);
+        intent.putExtra(NAMAPRODUCT, productInfo.getProductName());
+        intent.putExtra(GAMBARPRODUCT, productInfo.getPhoto());
+        intent.putExtra(MINORDER, String.valueOf(productInfo.getMinOrder()));
+        intent.putStringArrayListExtra(PRICELIST, priceminlist);
+        intent.putStringArrayListExtra(QTYMINORDER, qtyminlist);
+        intent.putStringArrayListExtra(SIZELIST, availablesizelist);
     }
     private void initClick(){
         addtobag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                for (int i = 0; i <priceList.size(); i++){
+                    priceminlist.add(String.valueOf(priceList.get(i).getPrice()));
+                    qtyminlist.add(String.valueOf(priceList.get(i).getQtyMin()));
+                }
                 Intent intent = new Intent(context, Buy.class);
+                initSendData(intent);
                 initanim(intent);
             }
         });
-        productdetails.setOnClickListener(new View.OnClickListener() {
+        container_product.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DetailProduct_details.class);
-                initanim(intent);
+            public void onClick(View v) {
+                if (!detailclick){
+                    container_productdetail.setVisibility(View.VISIBLE);
+                    detailclick = true;
+                    productcaret.setImageResource(R.drawable.caret1);
+                }
+                else {
+                    container_productdetail.setVisibility(View.GONE);
+                    detailclick = false;
+                    productcaret.setImageResource(R.drawable.caret);
+                }
             }
         });
-        sizeguides.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DetailProduct_sizeguide.class);
-                initanim(intent);
-            }
-        });
-        outlet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DetailOutlet.class);
-                initanim(intent);
-            }
-        });
+//        productdetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, DetailProduct_details.class);
+//                initanim(intent);
+//            }
+//        });
+//        sizeguides.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, DetailProduct_sizeguide.class);
+//                initanim(intent);
+//            }
+//        });
+//        outlet.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, DetailOutlet.class);
+//                initanim(intent);
+//            }
+//        });
         courier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,13 +285,13 @@ public class DetailProduct extends AppCompatActivity {
                 initanim(intent);
             }
         });
-        discussion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DetailProduct_discussions.class);
-                initanim(intent);
-            }
-        });
+//        discussion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, DetailProduct_discussions.class);
+//                initanim(intent);
+//            }
+//        });
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,9 +303,8 @@ public class DetailProduct extends AppCompatActivity {
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
         context.startActivity(intent);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
     private void initObject() {
         ButterKnife.bind(this);
@@ -162,6 +314,12 @@ public class DetailProduct extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         priceDetailsList = new ArrayList<>();
+        priceList = new ArrayList<>();
+        sizeList = new ArrayList<>();
+        courierServiceList = new ArrayList<>();
+        priceminlist = new ArrayList<>();
+        qtyminlist = new ArrayList<>();
+        availablesizelist = new ArrayList<>();
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -174,7 +332,7 @@ public class DetailProduct extends AppCompatActivity {
                     scrollrange = appBarLayout.getTotalScrollRange();
                 }
                 if(scrollrange + verticalOffset == 0){
-                    toolbar.setTitle("Detail Product");
+                    toolbar.setTitle(productInfo.getProductName());
                     isShow = true;
                 } else if (isShow) {
                     toolbar.setTitle(" ");
@@ -225,37 +383,36 @@ public class DetailProduct extends AppCompatActivity {
 //        }, 5000, 5000);
 //    }
     private void setupRV(){
-        pricedetailsadapter = new BuyRVAdapter(priceDetailsList, context);
+        pricedetailsadapter = new BuyRVAdapter(priceList, context);
         RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         pricedetails.setLayoutManager(horizontallayout);
         pricedetails.setItemAnimator(new DefaultItemAnimator());
         pricedetails.setAdapter(pricedetailsadapter);
     }
-    private void initData(){
-        PriceDetails priceDetails = new PriceDetails(5, 5);
-        priceDetailsList.add(priceDetails);
-        priceDetails = new PriceDetails(15, 15);
-        priceDetailsList.add(priceDetails);
-        priceDetails = new PriceDetails(25, 25);
-        priceDetailsList.add(priceDetails);
-        priceDetails = new PriceDetails(35, 35);
-        priceDetailsList.add(priceDetails);
-    }
+//    private void initData(){
+//        PriceDetails priceDetails = new PriceDetails(5, 5);
+//        priceDetailsList.add(priceDetails);
+//        priceDetails = new PriceDetails(15, 15);
+//        priceDetailsList.add(priceDetails);
+//        priceDetails = new PriceDetails(25, 25);
+//        priceDetailsList.add(priceDetails);
+//        priceDetails = new PriceDetails(35, 35);
+//        priceDetailsList.add(priceDetails);
+//    }
     private void api_getdetailproduct(){
         service = apiUtils.getAPIService();
-        service.req_get_product_detail("22").enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail(extra_productid).enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
                 if (response.code()==200){
-//                    productInfo = response.body().getProductInfo();
-//                    Toast.makeText(getContext(), productInfo.toString(), Toast.LENGTH_SHORT).show();
-//                    productInfoList.add(productInfo);
-//                    adapterList = new HotRVAdapter(productInfoList, getContext());
-//                    Toast.makeText(getContext(), String.valueOf(productInfoList.size()), Toast.LENGTH_SHORT).show();
-//                    RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getContext(), 2);
-//                    rvList.setLayoutManager(grid_layoutmanager);
-//                    rvList.setItemAnimator(new DefaultItemAnimator());
-//                    rvList.setAdapter(adapterList);
+                    productInfo = response.body().getProductInfo();
+                    storeInfo = response.body().getStoreInfo();
+                    priceList = productInfo.getPrice();
+                    sizeList = productInfo.getSize();
+                    courierServiceList = storeInfo.getCourierService();
+                    setupRV();
+                    initProductDetails();
+                    initClick();
                 }
             }
 

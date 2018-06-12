@@ -32,8 +32,6 @@ public class StepAdapter extends AbstractFragmentStepAdapter {
                 return new Openstore_choosestorenameFragment();
             case 1:
                 return new Openstore_storeinformationFragment();
-            case 2:
-                return new Openstore_courierserviceFragment();
             default:
                 throw new IllegalArgumentException("Unsupported position: " + position);
         }
@@ -41,7 +39,7 @@ public class StepAdapter extends AbstractFragmentStepAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
     @NonNull
     @Override
@@ -53,9 +51,6 @@ public class StepAdapter extends AbstractFragmentStepAdapter {
         }
         else if(position == 1){
             builder.setTitle("Store Information");
-        }
-        else if(position == 2){
-            builder.setTitle("Courier Service");
         }
         return builder.create();
     }

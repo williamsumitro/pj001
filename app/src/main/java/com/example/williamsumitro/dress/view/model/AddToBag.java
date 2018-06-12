@@ -19,7 +19,11 @@ public class AddToBag {
     @SerializedName("product_size_qty")
     @Expose
     private ArrayList<Product_Size_Qty> product_size_qtyArrayList = new ArrayList<>();
-
+    public AddToBag(String token, String product_id, ArrayList<Product_Size_Qty> product_size_qties){
+        this.token = token;
+        this.product_id = product_id;
+        this.product_size_qtyArrayList = product_size_qties;
+    }
     public String getToken() {
         return token;
     }

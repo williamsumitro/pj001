@@ -13,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
@@ -99,16 +101,15 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private MenuItem activeMenuItem;
     private SessionManagement sessionManagement;
-    private String token ="", name, email;
+    private String token ="", name, email, total_qty="0";
     private Dialog dialog;
     private BadgeNavDrawer badgeNavDrawer;
     private int count_bag = 0, count_notification = 100;
     private apiService service;
     private Boolean status = false;
-    private StoreDetails storeDetails;
     private final static String STATUS = "STATUS";
     private final static String COMMENT = "COMMENT";
-
+    private TextView itemcount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,22 +140,6 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
     }
-    private void api_checkauthuser(){
-        service = apiUtils.getAPIService();
-        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.code() == 500){
-                    startActivity(new Intent(context, Unauthorized.class));
-                    finish();
-                }
-            }
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                initDialog(3);
-            }
-        });
-    }
     private void api_getauthuser(){
         service = apiUtils.getAPIService();
         service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
@@ -167,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
                     CircleImageView image = (CircleImageView) header.findViewById(R.id.nav_header_image);
                     nama.setText(userDetails.getFullName());
                     if (userDetails.getGender().toLowerCase().equals("m"))
-                        Picasso.with(context).load(apiUtils.getUrlImage()+userDetails.getAvatar()).placeholder(R.drawable.man).into(image);
+                        Picasso.with(context).load(userDetails.getAvatar()).placeholder(R.drawable.man).into(image);
                     else
-                        Picasso.with(context).load(apiUtils.getUrlImage()+userDetails.getAvatar()).placeholder(R.drawable.woman1).into(image);
+                        Picasso.with(context).load(userDetails.getAvatar()).placeholder(R.drawable.woman1).into(image);
                 }
                 else if (response.code()==500){
                     Intent intent = new Intent(context, Unauthorized.class);
@@ -250,41 +235,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
                 if(response.code()==200){
                     status = response.body().getHaveStore();
-                    storeDetails = response.body().getStore();
                     if(status){
-                        Toast.makeText(context, storeDetails.getStoreActiveStatus(), Toast.LENGTH_SHORT).show();
-                        if (storeDetails.getStoreActiveStatus().equals("0")){
-                            Intent intent = new Intent(context, SellerPanel.class);
-                            intent.putExtra(STATUS, storeDetails.getStoreActiveStatus());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                        }
-                        else if (storeDetails.getStoreActiveStatus().equals("1")){
-                            Intent intent = new Intent(context, SellerPanel.class);
-                            intent.putExtra(STATUS, storeDetails.getStoreActiveStatus());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                        }
-                        else {
-                            Intent intent = new Intent(context, SellerPanel.class);
-                            intent.putExtra(STATUS, storeDetails.getStoreActiveStatus());
-//                            intent.putExtra(COMMENT, storeDetails.getRejectComment().toString());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
-                            overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-                        }
+                        Intent intent = new Intent(context, SellerPanel.class);
+                        initanim(intent);
+
                     }else {
                         Intent intent = new Intent(context, OpenStore.class);
                         initanim(intent);
                     }
-                }
-                else {
-
                 }
             }
 
@@ -462,17 +420,25 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.menu_notification).setVisible(false);
             menu.findItem(R.id.menu_bag).setVisible(false);
         }
+        else {
+            final MenuItem menuItem = menu.findItem(R.id.menu_bag);
+            View actionView = MenuItemCompat.getActionView(menuItem);
+            itemcount = (TextView) actionView.findViewById(R.id.customshoppingbag_cart_badge);
+            actionView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShoppingBag.class);
+                    initanim(intent);
+                }
+            });
+            api_viewshoppingbag();
+        }
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_bag) {
-            Intent intent = new Intent(this, ShoppingBag.class);
-            initanim(intent);
-        }else if(id == R.id.menu_search){
+        if(id == R.id.menu_search){
             Intent intent = new Intent(this, Search.class);
             initanim(intent);
         }else if(id == R.id.menu_notification_purchase){
@@ -482,6 +448,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void setupBadge(){
+        int qtytot = Integer.parseInt(total_qty);
+        Toast.makeText(context, String.valueOf(qtytot), Toast.LENGTH_SHORT).show();
+        if (qtytot==0){
+            if (itemcount.getVisibility() != View.GONE)
+                itemcount.setVisibility(View.GONE);
+        }
+        else {
+            itemcount.setText(String.valueOf(Math.min(qtytot, 99)));
+            if (itemcount.getVisibility() != View.VISIBLE)
+                itemcount.setVisibility(View.VISIBLE);
+        }
+    }
+    private void api_viewshoppingbag() {
+        service = apiUtils.getAPIService();
+        service.req_view_shopping_bag(token).enqueue(new Callback<BagResponse>() {
+            @Override
+            public void onResponse(Call<BagResponse> call, Response<BagResponse> response) {
+                if (response.code()==200){
+                    total_qty = response.body().getTotalQty();
+                    setupBadge();
+                }
+            }
+            @Override
+            public void onFailure(Call<BagResponse> call, Throwable t) {
+
+            }
+        });
     }
     private void initTransition(Bundle savedInstanceState){
         final Intent intent = getIntent();

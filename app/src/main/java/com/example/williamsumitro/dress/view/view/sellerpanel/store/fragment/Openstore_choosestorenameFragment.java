@@ -30,6 +30,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.stepstone.stepper.Step;
+import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import org.json.JSONException;
