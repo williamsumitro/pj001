@@ -537,7 +537,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                initDialog(3);
             }
         });
     }
@@ -546,5 +546,33 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+    }
+    private void initDialog(int stats){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
+        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+        Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
+        Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
+
+        if (stats == 3){
+            status.setText("Uh Oh!");
+            bg.setBackgroundResource(R.color.red7);
+            detail.setText("There is a problem with internet connection or the server");
+//            imageView.setImageResource(R.drawable.emoji_cry);
+            ok.setBackgroundResource(R.drawable.button1_red);
+            ok.setText("Try Again");
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
     }
 }

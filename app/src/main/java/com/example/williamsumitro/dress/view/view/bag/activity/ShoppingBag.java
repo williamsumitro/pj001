@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
@@ -43,6 +45,11 @@ public class ShoppingBag extends AppCompatActivity {
     @BindView(R.id.bag_toolbar) Toolbar toolbar;
     @BindView(R.id.bag_tvTotalPembayaran) TextView totalpembayaran;
     @BindView(R.id.bag_tvTotal) TextView total;
+    @BindView(R.id.bag_nestedscrollview) NestedScrollView nestedScrollView;
+    @BindView(R.id.bag_ln_top) LinearLayout top;
+    @BindView(R.id.bag_ln_buttom) LinearLayout bottom;
+    @BindView(R.id.bag_btn_continue) Button btn_continue;
+
 //    @BindView(R.id.bag_tvpoint) TextView point;
     private ShoppingBagRVAdapter adapter;
     private Context context;
@@ -79,6 +86,14 @@ public class ShoppingBag extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+        btn_continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
+                finish();
+            }
+        });
     }
 
     private void api_viewshoppingbag() {
@@ -88,6 +103,14 @@ public class ShoppingBag extends AppCompatActivity {
             public void onResponse(Call<BagResponse> call, Response<BagResponse> response) {
                 if (response.code()==200){
                     bagArrayList = response.body().getBagDetail();
+                    if (bagArrayList.size() == 0){
+                        btn_continue.setVisibility(View.VISIBLE);
+                        top.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        bottom.setVisibility(View.VISIBLE);
+                        nestedScrollView.setVisibility(View.VISIBLE);
+                    }
                     total_price = response.body().getTotalPrice();
                     total_qty = response.body().getTotalQty();
                     initData();

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.example.williamsumitro.dress.view.model.Checkout_Courier;
 import com.example.williamsumitro.dress.view.model.Checkout_CourierArrayList;
+import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.google.gson.Gson;
 
@@ -21,6 +22,8 @@ public class SessionManagement {
     Context context;
 
     int PRIVATE_MODE = 0;
+
+    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
     private static final String PREF_NAME = "DressB2B";
     private static final String IS_LOGIN = "IsLogggedIn";
@@ -174,6 +177,18 @@ public class SessionManagement {
             context.startActivity(i);
         }
     }
+    public boolean getcheckLogin(){
+        if(!this.isLoggedIn()){
+            Intent i = new Intent(context, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(i);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
@@ -201,5 +216,12 @@ public class SessionManagement {
 
         // Staring Login Activity
         context.startActivity(i);
+    }
+    public void setIsFirstTimeLaunch(boolean isFirstTimeLaunch){
+        editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTimeLaunch);
+        editor.commit();
+    }
+    public boolean isFirstTimeLaunch(){
+        return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
 }

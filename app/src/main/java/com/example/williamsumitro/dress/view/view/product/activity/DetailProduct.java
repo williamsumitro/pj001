@@ -1,5 +1,8 @@
 package com.example.williamsumitro.dress.view.view.product.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,6 +17,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,16 +31,22 @@ import com.example.williamsumitro.dress.view.model.PriceDetails;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.StoreInfo;
+import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -86,7 +96,7 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_img_star2) ImageView star2;
     @BindView(R.id.detailproduct_img_star1) ImageView star1;
     @BindView(R.id.detailproduct_lnstore) LinearLayout container_store;
-
+    @BindView(R.id.detailproduct_btnAddtowishlist) Button addtowishlist;
     private final static String NAMAPRODUCT = "NAMAPRODUCT";
     private final static String QTYMINORDER = "QTYMINORDER";
     private final static String GAMBARPRODUCT = "GAMBARPRODUCT";
@@ -111,6 +121,10 @@ public class DetailProduct extends AppCompatActivity {
     private Boolean detailclick = false;
     private ArrayList<model_CourierService> courierServiceList;
     private String extra_productid;
+    private String token;
+    private SessionManagement sessionManagement;
+    private ProgressDialog progressDialog;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,16 +244,61 @@ public class DetailProduct extends AppCompatActivity {
         intent.putStringArrayListExtra(SIZELIST, availablesizelist);
     }
     private void initClick(){
+        addtowishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.setMessage("Loading ...");
+                progressDialog.show();
+                service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.code()==200){
+                            progressDialog.dismiss();
+                        }
+                        else {
+                            progressDialog.dismiss();
+                            initDialog(1);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        initDialog(3);
+                        progressDialog.dismiss();
+                    }
+                });
+
+            }
+        });
         addtobag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (int i = 0; i <priceList.size(); i++){
-                    priceminlist.add(String.valueOf(priceList.get(i).getPrice()));
-                    qtyminlist.add(String.valueOf(priceList.get(i).getQtyMin()));
-                }
-                Intent intent = new Intent(context, Buy.class);
-                initSendData(intent);
-                initanim(intent);
+                progressDialog.setMessage("Loading ...");
+                progressDialog.show();
+                service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.code()==200){
+                            for (int i = 0; i <priceList.size(); i++){
+                                priceminlist.add(String.valueOf(priceList.get(i).getPrice()));
+                                qtyminlist.add(String.valueOf(priceList.get(i).getQtyMin()));
+                            }
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(context, Buy.class);
+                            initSendData(intent);
+                            initanim(intent);
+                        }
+                        else {
+                            progressDialog.dismiss();
+                            initDialog(1);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        initDialog(3);
+                        progressDialog.dismiss();
+                    }
+                });
+
             }
         });
         container_product.setOnClickListener(new View.OnClickListener() {
@@ -320,6 +379,10 @@ public class DetailProduct extends AppCompatActivity {
         priceminlist = new ArrayList<>();
         qtyminlist = new ArrayList<>();
         availablesizelist = new ArrayList<>();
+        sessionManagement = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
+        progressDialog = new ProgressDialog(context);
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -358,30 +421,7 @@ public class DetailProduct extends AppCompatActivity {
             }
         });
     }
-//    private void init() {
-//        for(int i=0;i<XMEN.length;i++)
-//            XMENArray.add(XMEN[i]);
-//        viewPager.setAdapter(new DetailProductSlideImagesAdapter(context,XMENArray));
-//        circleIndicator.setViewPager(viewPager);
-//
-//        // Auto start of viewpager
-//        final Handler handler = new Handler();
-//        final Runnable Update = new Runnable() {
-//            public void run() {
-//                if (currentPage == XMEN.length) {
-//                    currentPage = 0;
-//                }
-//                viewPager.setCurrentItem(currentPage++, true);
-//            }
-//        };
-//        Timer swipeTimer = new Timer();
-//        swipeTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                handler.post(Update);
-//            }
-//        }, 5000, 5000);
-//    }
+
     private void setupRV(){
         pricedetailsadapter = new BuyRVAdapter(priceList, context);
         RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -389,16 +429,7 @@ public class DetailProduct extends AppCompatActivity {
         pricedetails.setItemAnimator(new DefaultItemAnimator());
         pricedetails.setAdapter(pricedetailsadapter);
     }
-//    private void initData(){
-//        PriceDetails priceDetails = new PriceDetails(5, 5);
-//        priceDetailsList.add(priceDetails);
-//        priceDetails = new PriceDetails(15, 15);
-//        priceDetailsList.add(priceDetails);
-//        priceDetails = new PriceDetails(25, 25);
-//        priceDetailsList.add(priceDetails);
-//        priceDetails = new PriceDetails(35, 35);
-//        priceDetailsList.add(priceDetails);
-//    }
+
     private void api_getdetailproduct(){
         service = apiUtils.getAPIService();
         service.req_get_product_detail(extra_productid).enqueue(new Callback<ProductDetail>() {
@@ -421,5 +452,66 @@ public class DetailProduct extends AppCompatActivity {
 
             }
         });
+    }
+    private void initDialog(int stats){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
+        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
+        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
+        if (stats == 1){
+            status.setText("Uh Oh!");
+            detail.setText("You need to login first !");
+            bg.setBackgroundResource(R.color.red7);
+//            imageView.setImageResource(R.drawable.emoji_cry);
+            buttonok.setBackgroundResource(R.drawable.button1_green);
+            buttoncancel.setBackgroundResource(R.drawable.button1_1);
+            buttonok.setText("Login");
+            buttoncancel.setText("Cancel");
+            buttoncancel.setVisibility(View.VISIBLE);
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(context, Login.class);
+                    initanim(intent);
+                }
+            });
+            buttoncancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            if(!((Activity) context).isFinishing())
+            {
+                dialog.show();
+            }
+        }
+        if (stats == 3){
+            status.setText("Uh Oh!");
+            detail.setText("There is a problem with internet connection or the server");
+            bg.setBackgroundResource(R.color.red7);
+//            imageView.setImageResource(R.drawable.emoji_cry);
+            buttonok.setBackgroundResource(R.drawable.button1_red);
+            buttonok.setText("Try Again");
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent restart = new Intent(context, MainActivity.class);
+                    initanim(restart);
+                }
+            });
+            if(!((Activity) context).isFinishing())
+            {
+                dialog.show();
+            }
+        }
     }
 }

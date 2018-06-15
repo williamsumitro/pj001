@@ -59,6 +59,7 @@ import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatch
 import com.example.williamsumitro.dress.view.presenter.helper.PermissionActivity;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.filter.FilterRVAdapter;
+import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;
 import com.example.williamsumitro.dress.view.view.sellerpanel.product.adapter.Decoration_Spinner_Adapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.product.adapter.Fabrictype_Spinner_Adapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.product.adapter.Material_Spinner_Adapter;
@@ -800,6 +801,8 @@ public class AddProduct extends AppCompatActivity {
                         if(jsonResults.getString("message").equals("Product Registered Successfully")){
                             String message = jsonResults.getString("message");
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context, SellerPanel.class);
+                            initanim(intent);
                             finish();
                         }else{
                             String message = jsonResults.getString("message");

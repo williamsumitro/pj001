@@ -11,7 +11,31 @@
         android:id="@+id/bag_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/bag_ln_top"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/bag_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:src="@drawable/emptybag"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="It's empty, go check other products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <android.support.v4.widget.NestedScrollView
+        android:visibility="gone"
+        android:id="@+id/bag_nestedscrollview"
         android:scrollbars="vertical"
         android:layout_below="@+id/bag_toolbar"
         android:layout_width="match_parent"
@@ -30,6 +54,8 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/bag_ln_buttom"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,5 +99,16 @@
                 android:layout_height="40dp" />
         </LinearLayout>
     </LinearLayout>
+    <Button
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:id="@+id/bag_btn_continue"
+        android:textColor="@color/white"
+        android:text="Continue Shopping"
+        android:textAllCaps="false"
+        android:background="@drawable/button1_3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
 </RelativeLayout>
 

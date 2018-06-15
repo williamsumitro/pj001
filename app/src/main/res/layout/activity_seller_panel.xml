@@ -20,15 +20,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <ImageView
+                    android:layout_marginTop="100dp"
+                    android:id="@+id/sellerpanel_img_status"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
                 <TextView
-                    android:layout_marginTop="10dp"
-                    android:textSize="30sp"
-                    android:textColor="@color/black"
-                    android:text="Store Status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
                     android:id="@+id/sellerpanel_tv_status"
                     android:textAlignment="center"
                     android:textSize="30sp"
@@ -36,21 +35,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <LinearLayout
+                    android:layout_margin="10dp"
                     android:id="@+id/sellerpanel_ln_top_bottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:text="Reject Comment : "
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
                         android:id="@+id/sellerpanel_tv_comment"
                         android:textSize="20sp"
                         android:text="Waiting for admin approval heheheheh"

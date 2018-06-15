@@ -57,6 +57,7 @@ public class SellerPanel extends AppCompatActivity {
     @BindView(R.id.sellerpanel_ln_top_bottom) LinearLayout top_bottom;
     @BindView(R.id.sellerpanel_ln_bottom) LinearLayout bottom;
     @BindView(R.id.sellerpanel_ln_top) LinearLayout top;
+    @BindView(R.id.sellerpanel_img_status) ImageView img_status;
 
     private final static String STATUS = "STATUS";
     private final static String COMMENT = "COMMENT";
@@ -96,6 +97,7 @@ public class SellerPanel extends AppCompatActivity {
                             status.setText("Waiting for admin approval");
                             top_bottom.setVisibility(View.GONE);
                             bottom.setVisibility(View.GONE);
+                            img_status.setImageResource(R.drawable.pending);
                             break;
                         case "1":
                             top.setVisibility(View.GONE);
@@ -104,10 +106,11 @@ public class SellerPanel extends AppCompatActivity {
                             break;
                         default:
                             top.setVisibility(View.VISIBLE);
-                            status.setText("Waiting for admin approval");
+                            status.setText("Rejected");
                             top_bottom.setVisibility(View.VISIBLE);
                             bottom.setVisibility(View.GONE);
-                            comment.setText(extra_comment);
+                            comment.setText(response.body().getStore().getRejectComment().toString());
+                            img_status.setImageResource(R.drawable.reject);
                             break;
                     }
                 }

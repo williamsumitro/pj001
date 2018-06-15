@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
     }
     private void api_getauthuser(){
-        progressDialog.setMessage("Uploading, please wait ....");
+        progressDialog.setMessage("Loading ...");
         progressDialog.show();
         service = apiUtils.getAPIService();
         service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
@@ -395,8 +395,6 @@ public class MainActivity extends AppCompatActivity {
 }
     private Fragment getHomeFragment() {
         switch (navIndex) {
-            case 0:
-
             case 1:
                 MyStoreFragment mystoreFragment = new MyStoreFragment();
                 return mystoreFragment;

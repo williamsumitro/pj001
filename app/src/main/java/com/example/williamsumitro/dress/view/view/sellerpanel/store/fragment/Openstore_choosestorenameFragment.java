@@ -191,79 +191,7 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
         else return false;
     }
     public void api_registerstorename(){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-        status.setText("Register your store ?");
-        detail.setText("After your press ok, your store name will automatically save and can't be change Are you Sure ?");
-        bg.setBackgroundResource(R.color.green7);
-        cancel.setVisibility(View.VISIBLE);
-        cancel.setText("Cancel");
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nama_toko = edittext_storename.getText().toString();
-                progressDialog.setMessage("Wait a sec..");
-                progressDialog.show();
-                service = apiUtils.getAPIService();
-                service.req_register_store_name(token, nama_toko)
-                        .enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if(response.code()==200){
-                                    try {
-                                        JSONObject jsonResults = new JSONObject(response.body().string());
-                                        String status = jsonResults.getString("status").toLowerCase();
-                                        if(status.equals("true")){
-                                            String message = jsonResults.getString("message");
-                                            initDialog(message,1);
-                                            sessionManagement.keepStoreName(edittext_storename.getText().toString());
-                                            progressDialog.dismiss();
-                                            success = true;
-                                            edittext_storename.setEnabled(false);
-                                            button_checkstore.setEnabled(false);
-                                            button_checkstore.setClickable(false);
-                                            button_registerstore.setEnabled(false);
-                                            button_registerstore.setClickable(false);
-                                        }
-                                        else if(status.equals("false")) {
-                                            String message = jsonResults.getString("message");
-                                            initDialog(message,0);
-                                            progressDialog.dismiss();
-                                            success = false;
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-                                progressDialog.dismiss();
-                                initDialog(t.getMessage(), 3);
-                                success = false;
-                            }
-                        });
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+        initDialog("",4);
     }
     @Override
     public void onAttach(Context context) {
@@ -364,7 +292,71 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
             dialog.show();
         }
         else if (stats==4){
+            status.setText("Register your store ?");
+            detail.setText("After your press ok, your store name will automatically save and can't be change Are you Sure ?");
+            bg.setBackgroundResource(R.color.green7);
+            cancel.setVisibility(View.VISIBLE);
+            cancel.setText("Cancel");
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nama_toko = edittext_storename.getText().toString();
+                    progressDialog.setMessage("Wait a sec..");
+                    progressDialog.show();
+                    service = apiUtils.getAPIService();
+                    service.req_register_store_name(token, nama_toko)
+                            .enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if(response.code()==200){
+                                        try {
+                                            JSONObject jsonResults = new JSONObject(response.body().string());
+                                            String status = jsonResults.getString("status").toLowerCase();
+                                            if(status.equals("true")){
+                                                String message = jsonResults.getString("message");
+                                                initDialog(message,1);
+                                                sessionManagement.keepStoreName(edittext_storename.getText().toString());
+                                                progressDialog.dismiss();
+                                                success = true;
+                                                edittext_storename.setEnabled(false);
+                                                button_checkstore.setEnabled(false);
+                                                button_checkstore.setClickable(false);
+                                                button_registerstore.setEnabled(false);
+                                                button_registerstore.setClickable(false);
+                                                tv_status.setText("Please click the next button");
+                                            }
+                                            else if(status.equals("false")) {
+                                                String message = jsonResults.getString("message");
+                                                initDialog(message,0);
+                                                progressDialog.dismiss();
+                                                success = false;
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
 
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                                    progressDialog.dismiss();
+                                    initDialog(t.getMessage(), 3);
+                                    success = false;
+                                }
+                            });
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
         }
     }
 

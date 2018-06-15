@@ -2,6 +2,8 @@ package com.example.williamsumitro.dress.view.view.sellerpanel.store.fragment;
 
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +50,10 @@ import com.example.williamsumitro.dress.view.view.sellerpanel.store.adapter.Open
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,6 +63,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,7 +90,9 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     @BindView(R.id.openstore_storeinformation_yearestbalished) TextInputEditText since;
     @BindView(R.id.openstore_storeinformation_rv_courier) RecyclerView rv_courier;
     private apiService service;
+    private Dialog dialog;
     private Context context;
+    private ProgressDialog progressDialog;
     private List<ProvinceDetails> provinceDetailsList;
     private List<CityDetails> cityDetailsList;
     private SpinProvinceAdapter spinProvinceAdapter;
@@ -276,6 +286,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     rv_courier.setItemAnimator(new DefaultItemAnimator());
                     rv_courier.setAdapter(adapter);
                 }
+
             }
 
             @Override
@@ -341,7 +352,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
 
             @Override
             public void onFailure(Call<ProvinceResponse> call, Throwable t) {
-
+                initDialog(3);
             }
         });
 
@@ -350,6 +361,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
         ButterKnife.bind(this,view);
         context = getContext();
         sessionManagement = new SessionManagement(context);
+        progressDialog = new ProgressDialog(context);
     }
     @Nullable
     @Override
@@ -398,5 +410,33 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
             return true;
         }
         else return false;
+    }
+    private void initDialog(int stats){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
+        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+        Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
+        Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
+
+        if (stats == 3){
+            status.setText("Uh Oh!");
+            bg.setBackgroundResource(R.color.red7);
+            detail.setText("There is a problem with internet connection or the server");
+//            imageView.setImageResource(R.drawable.emoji_cry);
+            ok.setBackgroundResource(R.drawable.button1_red);
+            ok.setText("Try Again");
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
     }
 }
