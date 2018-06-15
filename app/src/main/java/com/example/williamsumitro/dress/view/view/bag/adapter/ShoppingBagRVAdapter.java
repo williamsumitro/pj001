@@ -39,6 +39,7 @@ public class ShoppingBagRVAdapter extends RecyclerView.Adapter<ShoppingBagRVAdap
     private DecimalFormat formatter;
     private boolean open = false;
     private ShoppingBagProductRVAdapter adapter;
+
     public ShoppingBagRVAdapter(ArrayList<Bag> bagList, Context context){
         this.context = context;
         this.bagList = bagList;

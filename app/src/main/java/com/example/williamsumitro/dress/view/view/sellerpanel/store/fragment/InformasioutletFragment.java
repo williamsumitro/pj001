@@ -50,8 +50,8 @@ public class InformasioutletFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_informasioutlet, container, false);
         initObject(view);
-        initData();
-        setupRV();
+//        initData();
+//        setupRV();
         return view;
     }
     private void initObject(View view){
@@ -59,35 +59,35 @@ public class InformasioutletFragment extends Fragment {
         bankList = new ArrayList<>();
         courierList = new ArrayList<>();
     }
-    private void setupRV(){
-        bankRVAdapter = new BankRVAdapter(bankList, getContext());
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rv_bank.setLayoutManager(layoutManager);
-        rv_bank.setItemAnimator(new DefaultItemAnimator());
-        rv_bank.setAdapter(bankRVAdapter);
-
-        courierRVAdapter = new CourierRVAdapter(courierList, getContext());
-        RecyclerView.LayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rv_shipment.setLayoutManager(layoutManager1);
-        rv_shipment.setItemAnimator(new DefaultItemAnimator());
-        rv_shipment.setAdapter(courierRVAdapter);
-    }
-    private void initData(){
-        Bank bank = new Bank("bca", "Tek Kin Lung", "1563016616");
-        bankList.add(bank);
-        bank = new Bank("mandiri", "Tek Kin Lung", "1300000109473");
-        bankList.add(bank);
-        bank = new Bank("ocbc", "Tek Kin Lung", "084800005252");
-        bankList.add(bank);
-
-        Courier courier = new Courier("tiki");
-        courierList.add(courier);
-        courier = new Courier("jne");
-        courierList.add(courier);
-        courier = new Courier("sicepat");
-        courierList.add(courier);
-        courier = new Courier("pos");
-        courierList.add(courier);
-    }
+//    private void setupRV(){
+//        bankRVAdapter = new BankRVAdapter(bankList, getContext());
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        rv_bank.setLayoutManager(layoutManager);
+//        rv_bank.setItemAnimator(new DefaultItemAnimator());
+//        rv_bank.setAdapter(bankRVAdapter);
+//
+//        courierRVAdapter = new CourierRVAdapter(courierList, getContext());
+//        RecyclerView.LayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        rv_shipment.setLayoutManager(layoutManager1);
+//        rv_shipment.setItemAnimator(new DefaultItemAnimator());
+//        rv_shipment.setAdapter(courierRVAdapter);
+//    }
+//    private void initData(){
+//        Bank bank = new Bank("bca", "Tek Kin Lung", "1563016616");
+//        bankList.add(bank);
+//        bank = new Bank("mandiri", "Tek Kin Lung", "1300000109473");
+//        bankList.add(bank);
+//        bank = new Bank("ocbc", "Tek Kin Lung", "084800005252");
+//        bankList.add(bank);
+//
+//        Courier courier = new Courier("tiki");
+//        courierList.add(courier);
+//        courier = new Courier("jne");
+//        courierList.add(courier);
+//        courier = new Courier("sicepat");
+//        courierList.add(courier);
+//        courier = new Courier("pos");
+//        courierList.add(courier);
+//    }
 
 }

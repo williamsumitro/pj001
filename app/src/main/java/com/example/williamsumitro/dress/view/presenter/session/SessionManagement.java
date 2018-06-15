@@ -3,9 +3,11 @@ package com.example.williamsumitro.dress.view.presenter.session;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
+import com.example.williamsumitro.dress.view.model.Checkout_Courier;
+import com.example.williamsumitro.dress.view.model.Checkout_CourierArrayList;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 
@@ -36,12 +38,18 @@ public class SessionManagement {
     public static final String STORE_CONTACT_PERSON_PHONE_NUMBER = "STORE_CONTACT_PERSON_PHONE_NUMBER";
     public static final String STORE_ID_PROVINCE = "STORE_ID_PROVINCE";
     public static final String STORE_ID_CITY = "STORE_ID_CITY";
-    public static final String STORE_BANK_NAME = "STORE_BANK_NAME";
-    public static final String STORE_BRANCH = "STORE_BRANCH";
-    public static final String STORE_BANK_ACCOUNT_NUMBER = "STORE_BANK_ACCOUNT_NUMBER";
-    public static final String STORE_NAME_IN_BANK_ACCOUNT = "STORE_NAME_IN_BANK_ACCOUNT";
     public static final String STORE_COURIER = "STORE_COURIER";
 
+    public static final String CHECKOUT_RECEIVER_NAME = "CHECKOUT_RECEIVER_NAME";
+    public static final String CHECKOUT_ADDRESS = "CHECKOUT_ADDRESS";
+    public static final String CHECKOUT_IDPROVINCE = "CHECKOUT_IDPROVINCE";
+    public static final String CHECKOUT_IDCITY = "CHECKOUT_IDCITY";
+    public static final String CHECKOUT_PHONE_NUMBER = "CHECKOUT_PHONE_NUMBER";
+    public static final String CHECKOUT_POSTAL_CODE = "CHECKOUT_POSTAL_CODE";
+    public static final String CHECKOUT_COURIER = "CHECKOUT_COURIER";
+    public static final String CHECKOUT_TOTAL_PRICE = "CHECKOUT_TOTAL_PRICE";
+    public static final String CHECKOUT_TOTAL_QTY = "CHECKOUT_TOTAL_QTY";
+    public static final String CHECKOUT_POINT = "CHECKOUT_POINT";
     public SessionManagement(Context context){
         this.context = context;
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -69,6 +77,56 @@ public class SessionManagement {
         editor.putString(STORE_CITY, city);
         editor.putString(STORE_BUSINESS_TYPE, businesstype);
         editor.commit();
+    }
+    public void keepCheckoutAddress(String receivername, String address, String phonenumber,
+                                     String id_province, String id_city, String postalcode){
+        editor.putString(CHECKOUT_RECEIVER_NAME, receivername);
+        editor.putString(CHECKOUT_ADDRESS, address);
+        editor.putString(CHECKOUT_PHONE_NUMBER, phonenumber);
+        editor.putString(CHECKOUT_IDPROVINCE, id_province);
+        editor.putString(CHECKOUT_IDCITY, id_city);
+        editor.putString(CHECKOUT_POSTAL_CODE, postalcode);
+        editor.commit();
+    }
+    public HashMap<String, String> getCheckoutAddress(){
+        HashMap<String, String> address = new HashMap<>();
+        address.put(CHECKOUT_RECEIVER_NAME, pref.getString(CHECKOUT_RECEIVER_NAME, null));
+        address.put(CHECKOUT_ADDRESS, pref.getString(CHECKOUT_ADDRESS, null));
+        address.put(CHECKOUT_PHONE_NUMBER, pref.getString(CHECKOUT_PHONE_NUMBER, null));
+        address.put(CHECKOUT_IDPROVINCE, pref.getString(CHECKOUT_IDPROVINCE, null));
+        address.put(CHECKOUT_IDCITY, pref.getString(CHECKOUT_IDCITY, null));
+        address.put(CHECKOUT_POSTAL_CODE, pref.getString(CHECKOUT_POSTAL_CODE, null));
+        return address;
+    }
+    public void keepCheckoutCourier(String total_price, String total_qty, String point){
+        editor.putString(CHECKOUT_TOTAL_PRICE, total_price);
+        editor.putString(CHECKOUT_TOTAL_QTY, total_qty);
+        editor.putString(CHECKOUT_POINT, point);
+        editor.commit();
+    }
+    public void keepCheckoutCourierService(Checkout_CourierArrayList checkout_courier){
+        Gson gson = new Gson();
+        String json = gson.toJson(checkout_courier);
+        editor.putString(CHECKOUT_COURIER, json);
+        editor.commit();
+    }
+    public Checkout_CourierArrayList getcheckoutcourierService(){
+        Gson gson = new Gson();
+        String json = pref.getString(CHECKOUT_COURIER, "");
+        Checkout_CourierArrayList obj = gson.fromJson(json, Checkout_CourierArrayList.class);
+        return obj;
+    }
+    public HashMap<String, String> getcheckoutcourier(){
+        HashMap<String, String> courier = new HashMap<>();
+        courier.put(CHECKOUT_TOTAL_PRICE, pref.getString(CHECKOUT_TOTAL_PRICE, null));
+        courier.put(CHECKOUT_TOTAL_QTY, pref.getString(CHECKOUT_TOTAL_QTY, null));
+        courier.put(CHECKOUT_POINT, pref.getString(CHECKOUT_POINT, null));
+        return courier;
+    }
+    public HashMap<String, String> getCheckoutIdCity(){
+        HashMap<String, String> id_city = new HashMap<>();
+        id_city.put(CHECKOUT_IDCITY, pref.getString(CHECKOUT_IDCITY, null));
+        return id_city;
     }
     public HashMap<String , String> getStoreInformation(){
         HashMap<String, String> store = new HashMap<String, String>();

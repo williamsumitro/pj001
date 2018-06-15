@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
     <android.support.v4.widget.NestedScrollView
+        android:scrollbars="vertical"
         android:layout_below="@+id/bag_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="130dp">
+        android:layout_marginBottom="80dp">
         <LinearLayout
             android:focusableInTouchMode="true"
             android:layout_width="match_parent"
@@ -32,49 +34,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
-                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/bag_tvTotal"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:text="Total "
-                        android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/bag_tvTotalPembayaran"
-                        android:gravity="right"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:text="IDR XXX"
-                        android:textSize="18sp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <Button
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/bag_btncheckout"
-                    android:textColor="@color/white"
-                    android:text="Checkout"
-                    android:background="@color/green1"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/bag_tvTotal"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="Total "
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/bag_tvTotalPembayaran"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="IDR XXX"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-        <Button
-            android:id="@+id/bag_btncontinue"
-            android:textColor="@color/black"
-            android:text="Continue Shopping"
-            android:background="@color/gray1"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            <Button
+                android:layout_marginTop="5dp"
+                android:id="@+id/bag_btncheckout"
+                android:textColor="@color/white"
+                android:text="Checkout"
+                android:background="@color/green1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
+

@@ -60,12 +60,12 @@ public class PaymentDetail extends AppCompatActivity {
         setContentView(R.layout.activity_payment_detail);
         initView();
         setuptoolbar();
-        setupRV();
-        initData();
-        int size = bankList.size();
-        for(int i = 0; i<size; i++){
-            namabank.add(bankList.get(i).getBankname());
-        }
+//        setupRV();
+//        initData();
+//        int size = bankList.size();
+//        for(int i = 0; i<size; i++){
+////            namabank.add(bankList.get(i).getBankname());
+//        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, namabank);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -96,19 +96,19 @@ public class PaymentDetail extends AppCompatActivity {
             }
         });
     }
-    private void setupRV(){
-        adapter = new BankRVAdapter(bankList, context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-    }
-    private void initData(){
-        Bank bank = new Bank("bca", "Tek Kin Lung", "1563016616");
-        bankList.add(bank);
-        bank = new Bank("mandiri", "Tek Kin Lung", "1300000109473");
-        bankList.add(bank);
-        bank = new Bank("ocbc", "Tek Kin Lung", "084800005252");
-        bankList.add(bank);
-    }
+//    private void setupRV(){
+//        adapter = new BankRVAdapter(bankList, context);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(adapter);
+//    }
+//    private void initData(){
+//        Bank bank = new Bank("bca", "Tek Kin Lung", "1563016616");
+//        bankList.add(bank);
+//        bank = new Bank("mandiri", "Tek Kin Lung", "1300000109473");
+//        bankList.add(bank);
+//        bank = new Bank("ocbc", "Tek Kin Lung", "084800005252");
+//        bankList.add(bank);
+//    }
 }

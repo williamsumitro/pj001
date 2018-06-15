@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String STATUS = "STATUS";
     private final static String COMMENT = "COMMENT";
     private TextView itemcount;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,13 +119,13 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initSession();
 //        api_checkauthuser();
+        loadNavBar();
         setupNavigationView();
         if (savedInstanceState == null) {
             navIndex = 2;
             CURRENT = HOME;
             loadHomeFragment();
         }
-        loadNavBar();
         initTransition(savedInstanceState);
     }
     private void initView(){
@@ -135,12 +137,15 @@ public class MainActivity extends AppCompatActivity {
         activityTitles = getResources().getStringArray(R.array.nav_titles);
         fragmentManager = getSupportFragmentManager();
         sessionManagement = new SessionManagement(getApplicationContext());
+        progressDialog = new ProgressDialog(context);
     }
     private void initSession(){
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
     }
     private void api_getauthuser(){
+        progressDialog.setMessage("Uploading, please wait ....");
+        progressDialog.show();
         service = apiUtils.getAPIService();
         service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
             @Override
@@ -155,8 +160,10 @@ public class MainActivity extends AppCompatActivity {
                         Picasso.with(context).load(userDetails.getAvatar()).placeholder(R.drawable.man).into(image);
                     else
                         Picasso.with(context).load(userDetails.getAvatar()).placeholder(R.drawable.woman1).into(image);
+                    progressDialog.dismiss();
                 }
                 else if (response.code()==500){
+                    progressDialog.dismiss();
                     Intent intent = new Intent(context, Unauthorized.class);
                     initanim(intent);
                     finish();
@@ -166,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 initDialog(3);
+                progressDialog.dismiss();
             }
         });
     }
@@ -450,8 +458,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void setupBadge(){
-        int qtytot = Integer.parseInt(total_qty);
-        Toast.makeText(context, String.valueOf(qtytot), Toast.LENGTH_SHORT).show();
+        int qtytot = 0;
+        if (total_qty!=null)
+            qtytot = Integer.parseInt(total_qty);
         if (qtytot==0){
             if (itemcount.getVisibility() != View.GONE)
                 itemcount.setVisibility(View.GONE);

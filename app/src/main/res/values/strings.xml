@@ -33,6 +33,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="rate_amp_review_store_and_product"><![CDATA[Rate & Review]]></string>
     <string name="arrowleft"><![CDATA[<<]]></string>
+    <string name="you_have_1_x_24_hours_to_complete_your_order_please_transfer_the_amount_of_payment_as_shown_below">You have 1 x 24 hours to complete your order. Please transfer the amount of payment as shown below.</string>
 
     <string-array name="month">
         <item>January</item>

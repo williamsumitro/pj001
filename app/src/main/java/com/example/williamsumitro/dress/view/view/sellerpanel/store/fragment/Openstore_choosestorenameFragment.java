@@ -185,17 +185,6 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
     }
 
     private boolean isStoreValid(){
-//        if (trigger)
-//            if (check){
-//                initDialog("",4);
-//                if (sure)
-//                    if (api_registerstorename())
-//                        return true;
-//                    else return false;
-//                else return false;
-//            }
-//            else return false;
-//        else return false;
         if (trigger && check && success) {
             return true;
         }

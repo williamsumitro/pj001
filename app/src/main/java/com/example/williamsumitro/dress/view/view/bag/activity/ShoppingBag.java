@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -37,7 +38,7 @@ import retrofit2.Response;
 
 public class ShoppingBag extends AppCompatActivity {
     @BindView(R.id.bag_btncheckout) Button checkout;
-    @BindView(R.id.bag_btncontinue) Button continues;
+//    @BindView(R.id.bag_btncontinue) Button continues;
     @BindView(R.id.bag_rvshoppingbag) RecyclerView recyclerView;
     @BindView(R.id.bag_toolbar) Toolbar toolbar;
     @BindView(R.id.bag_tvTotalPembayaran) TextView totalpembayaran;
@@ -70,14 +71,14 @@ public class ShoppingBag extends AppCompatActivity {
     }
 
     private void initonClick() {
-        continues.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
-                finish();
-            }
-        });
+//        continues.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
+//                finish();
+//            }
+//        });
     }
 
     private void api_viewshoppingbag() {

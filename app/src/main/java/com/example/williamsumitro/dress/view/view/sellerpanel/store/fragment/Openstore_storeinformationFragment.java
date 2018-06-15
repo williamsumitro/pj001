@@ -93,8 +93,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     private List<String> bisnis = new ArrayList<>();
     private List<CourierDetails> courierDetailsList;
     private OpenStore_CourierAdapter adapter;
-    private ArrayList<String> courier_name;
-    private ArrayList<String> courier_id;
 
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
@@ -358,8 +356,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
         if (isInformationValid()) {
-            Toast.makeText(context, idcity, Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, idprovince, Toast.LENGTH_SHORT).show();
             sessionManagement.keepStoreInformation(since.getText().toString(), idprovince, idcity, name.getText().toString(),
                     jobtitle.getText().toString(), phonenumber.getText().toString(), detail.getText().toString(), choosen_province, choosen_city, chosen_businesstype);
         }

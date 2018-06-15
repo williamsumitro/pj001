@@ -68,7 +68,9 @@
         <activity android:name=".view.view.sellerpanel.sales.activity.OCDetail" />
         <activity android:name=".view.view.sellerpanel.sales.activity.SCDetail" />
         <activity android:name=".view.view.sellerpanel.product.activity.AddProduct" />
-        <activity android:name=".view.view.sellerpanel.store.activity.Openstrore_Fileupload"></activity>
+        <activity android:name=".view.view.sellerpanel.store.activity.Openstrore_Fileupload" />
+        <activity android:name=".view.view.checkout.activity.Payment" />
+        <activity android:name=".view.view.checkout.activity.CheckoutSuccess"></activity>
     </application>
 
 </manifest>

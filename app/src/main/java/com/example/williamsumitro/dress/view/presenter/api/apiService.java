@@ -2,8 +2,12 @@ package com.example.williamsumitro.dress.view.presenter.api;
 
 import com.example.williamsumitro.dress.view.model.AddToBag;
 import com.example.williamsumitro.dress.view.model.BagResponse;
+import com.example.williamsumitro.dress.view.model.Checkout;
+import com.example.williamsumitro.dress.view.model.CheckoutResponse;
+import com.example.williamsumitro.dress.view.model.Checkout_Courier;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
+import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
@@ -132,4 +136,18 @@ public interface apiService {
     @FormUrlEncoded
     @POST("view_shopping_bag")
     Call<BagResponse> req_view_shopping_bag(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("delete_product_from_bag")
+    Call<ResponseBody> req_delete_product(@Field("token") String token,
+                                          @Field("product_id") String product_id);
+
+
+    @FormUrlEncoded
+    @POST("get_checkout_info")
+    Call<CheckoutResponse> req_get_checkout_info(@Field("token") String token,
+                                              @Field("destination_city") String destination_city);
+
+    @POST("checkout")
+    Call<PaymentResponse> req_checkout(@Body Checkout checkout_courier);
 }

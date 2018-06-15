@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     android:layout_margin="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="250dp"
-    android:layout_height="130dp">
+    android:id="@+id/itembank1_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="130dp"
+    app:cardCornerRadius="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/itembank1_container"
-        android:background="#e57373"
-        android:padding="10dp"
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,45 +18,23 @@
             android:src="@drawable/logo_bca"
             android:layout_width="wrap_content"
             android:layout_height="30dp" />
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:textColor="@color/grey1"
-                android:textSize="10sp"
-                android:text="Holder name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:text="Sum ting wong"
-                android:id="@+id/itembank1_accountholder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
         <TextView
-            android:layout_gravity="center"
-            android:textColor="@color/grey1"
             android:layout_marginTop="10dp"
-            android:textSize="10sp"
-            android:text="Account Number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="3132123113213123121"
             android:id="@+id/itembank1_accountnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:text="Sum ting wong"
+            android:id="@+id/itembank1_accountholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

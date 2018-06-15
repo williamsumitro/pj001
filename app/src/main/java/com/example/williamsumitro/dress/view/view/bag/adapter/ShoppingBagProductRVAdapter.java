@@ -1,24 +1,48 @@
 package com.example.williamsumitro.dress.view.view.bag.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by WilliamSumitro on 11/06/2018.
@@ -30,9 +54,16 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     private DecimalFormat formatter;
     private List<String> sizelist;
     private Boolean detailclick = false;
+    private String token;
+    SessionManagement sessionManagement;
+    private apiService service;
+    private Dialog dialog;
     public ShoppingBagProductRVAdapter(ArrayList<Product> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
+        sessionManagement = new SessionManagement(context);
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +75,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         sizelist = new ArrayList<>();
-        Product product = productArrayList.get(position);
+        final Product product = productArrayList.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
@@ -91,8 +122,48 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                 }
             }
         });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initDialog(1, product);
+            }
+        });
     }
+    private void api_deleteproduct(final Product product){
+        service = apiUtils.getAPIService();
+        service.req_delete_product(token, String.valueOf(product.getProductId())).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code()==200){
+                    try {
+                        JSONObject jsonResults = new JSONObject(response.body().string());
+                        if (jsonResults.getBoolean("status")){
+                            String message = jsonResults.getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context, ShoppingBag.class);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                initanim(intent);
+                            }
+                            ((Activity) context).finish();
+                        }
+                        else{
+                            String message = jsonResults.getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                initDialog(3, product);
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         return productArrayList.size();
@@ -122,6 +193,68 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+    private void initDialog(int stats, final Product product){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
+        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
+        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
+//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
+        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
+        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
+        if(stats == 1){
+            status.setText("Delete ?");
+            detail.setText("Are you sure you want to delete ?");
+            bg.setBackgroundResource(R.color.red7);
+//            imageView.setImageResource(R.drawable.emoji_oops);
+            buttoncancel.setVisibility(View.VISIBLE);
+            buttonok.setBackgroundResource(R.drawable.button1_red);
+            buttoncancel.setBackgroundResource(R.drawable.button1_1);
+            buttonok.setText("Yes");
+            buttoncancel.setText("No");
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    api_deleteproduct(product);
+                    dialog.dismiss();
+                }
+            });
+            buttoncancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+        else if (stats == 0){
+            status.setText("Uh Oh!");
+            detail.setText("There is a problem with internet connection or the server");
+            bg.setBackgroundResource(R.color.red7);
+//            imageView.setImageResource(R.drawable.emoji_cry);
+            buttonok.setBackgroundResource(R.drawable.button1_red);
+            buttonok.setText("Try Again");
+            buttonok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            if(!((Activity) context).isFinishing())
+            {
+                dialog.show();
+            }
+        }
+    }
+    private void initanim(Intent intent){
+        Bundle bundle = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
+            context.startActivity(intent,bundle);
         }
     }
 }

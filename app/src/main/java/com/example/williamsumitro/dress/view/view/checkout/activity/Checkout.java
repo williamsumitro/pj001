@@ -1,6 +1,7 @@
 package com.example.williamsumitro.dress.view.view.checkout.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +14,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bagz;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Shipping;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
+import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutStepAdapter;
+import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
+import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.Openstrore_Fileupload;
+import com.example.williamsumitro.dress.view.view.sellerpanel.store.adapter.StepAdapter;
+import com.stepstone.stepper.StepperLayout;
+import com.stepstone.stepper.VerificationError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,41 +34,27 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Checkout extends AppCompatActivity {
-    @BindView(R.id.checkout_tvTotalPembayaran) TextView totalpembayaran;
-    @BindView(R.id.checkout_tvSubtotal) TextView subtotal;
-    @BindView(R.id.checkout_tvShippingprice) TextView shippingprice;
-    @BindView(R.id.checkout_tvpoint) TextView yourpoint;
-    @BindView(R.id.checkout_tvDiscPoint) TextView discpoint;
-    @BindView(R.id.checkout_tvaddressname) TextView addressname;
-    @BindView(R.id.checkout_tvaddressdetail) TextView addressdetail;
+public class Checkout extends AppCompatActivity implements StepperLayout.StepperListener, OnNavigationBarListener {
+    private static final String CURRENT_STEP_POSITION_KEY = "position";
+
     @BindView(R.id.checkout_toolbar) Toolbar toolbar;
-    @BindView(R.id.checkout_rvshoppingcheckout) RecyclerView recyclerView;
-    @BindView(R.id.checkout_etyourpoint) EditText yourtextpoint;
-    @BindView(R.id.checkout_btnusepoint) Button usepoint;
-    @BindView(R.id.checkout_btnFinish) Button finish;
-    @BindView(R.id.checkout_btnchooseanotheraddress) Button chooseanotherdress;
+    @BindView(R.id.checkout_stepperLayout) StepperLayout stepperLayout;
     private Context context;
-    private CheckoutRVAdapter adapter;
-    private List<Bagz> bagList;
-    private List<Shipping> shippingList;
-    private List<Bank> bankList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         initView();
-        initData();
-        setupRV();
         setuptoolbar();
+        int startingStepPosition = savedInstanceState != null ? savedInstanceState.getInt(CURRENT_STEP_POSITION_KEY) : 0;
+        stepperLayout.setAdapter(new CheckoutStepAdapter(getSupportFragmentManager(), this), startingStepPosition);
+        stepperLayout.setListener(this);
     }
     private void initView(){
         ButterKnife.bind(this);
         context = this;
-        bagList = new ArrayList<>();
-        shippingList = new ArrayList<>();
-        bankList = new ArrayList<>();
+
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -79,27 +73,52 @@ public class Checkout extends AppCompatActivity {
             }
         });
     }
-    private void setupRV(){
-        adapter = new CheckoutRVAdapter(bagList, context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CURRENT_STEP_POSITION_KEY, stepperLayout.getCurrentStepPosition());
+        super.onSaveInstanceState(outState);
     }
-    private void initData(){
-        Bank bank = new Bank("BCA", "Tek Kin Lung", "127541116365");
-        bankList.add(bank);
-        bank = new Bank("Mandiri", "Tek Kin Lung", "11005566884");
-        bankList.add(bank);
-        Shipping shipping = new Shipping("JNE", 5000);
-        shippingList.add(shipping);
-        shipping = new Shipping("TIKI", 2000);
-        shippingList.add(shipping);
-        shipping = new Shipping("Lite", 8000);
-        shippingList.add(shipping);
-        shipping = new Shipping("THH", 10000);
-        shippingList.add(shipping);
-        Bagz bag = new Bagz("ABC Store", "Baju Renang", R.drawable.image, 60000, 10, 20, 30 ,10, 70, 35, 500000, 8000000, 7500000, 600000, 1200000, 1800000, 600000, shippingList, bankList);
-        bagList.add(bag);
+
+    @Override
+    public void onBackPressed() {
+        final int currentStepPosition = stepperLayout.getCurrentStepPosition();
+        if (currentStepPosition > 0) {
+            stepperLayout.onBackClicked();
+        } else {
+            finish();
+        }
+    }
+    @Override
+    public void onCompleted(View completeButton) {
+        Intent intent = new Intent(this, Payment.class);
+        initanim(intent);
+        finish();
+    }
+
+    @Override
+    public void onError(VerificationError verificationError) {
+        Toast.makeText(this, verificationError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStepSelected(int newStepPosition) {
+//        Toast.makeText(this, "onStepSelected! -> " + newStepPosition, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onReturn() {
+        finish();
+    }
+
+    @Override
+    public void onChangeEndButtonsEnabled(boolean enabled) {
+        stepperLayout.setNextButtonVerificationFailed(!enabled);
+        stepperLayout.setCompleteButtonVerificationFailed(!enabled);
+    }
+    private void initanim(Intent intent){
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+        context.startActivity(intent);
     }
 }
