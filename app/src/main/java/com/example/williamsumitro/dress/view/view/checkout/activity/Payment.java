@@ -21,6 +21,7 @@ import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
@@ -94,6 +95,10 @@ public class Payment extends AppCompatActivity {
                         initData();
                     }
                 }
+                else {
+                    tv_usepoint.setText("Use Point : IDR " + formatter.format(Double.parseDouble("0")));
+                    initData();
+                }
             }
         });
     }
@@ -142,11 +147,11 @@ public class Payment extends AppCompatActivity {
         }
         if (!et_point.getText().toString().equals("")){
             usepoint = Double.parseDouble(et_point.getText().toString());
-            y = x + Double.parseDouble(subtotal) - usepoint;
         }
         else {
-            y = x + Double.parseDouble(subtotal);
+            usepoint = 0.0;
         }
+        y = x + Double.parseDouble(subtotal) - usepoint;
         tv_point.setText("Your Points : IDR " +formatter.format(Double.parseDouble(point)));
         tv_subtotalprice.setText("Subtotal Price : IDR " +formatter.format(Double.parseDouble(subtotal)));
 

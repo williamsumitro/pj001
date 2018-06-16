@@ -1,11 +1,9 @@
 package com.example.williamsumitro.dress.view.view.checkout.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +20,8 @@ import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
-import com.example.williamsumitro.dress.view.view.order.adapter.BankRVAdapter;
+import com.example.williamsumitro.dress.view.view.purchase.activity.PurchasePayment;
+import com.example.williamsumitro.dress.view.view.purchase.adapter.BankRVAdapter;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
@@ -37,6 +36,7 @@ public class CheckoutSuccess extends AppCompatActivity {
     @BindView(R.id.checkout_success_tv_total) TextView tv_total;
     @BindView(R.id.checkout_success_tv_invoicenumber) TextView tv_invoicenumber;
     @BindView(R.id.checkout_success_rv) RecyclerView recyclerView;
+    @BindView(R.id.checkout_success_btn_confirmpayment) Button confirmpayment;
 
     private Context context;
     private apiService service;
@@ -58,6 +58,14 @@ public class CheckoutSuccess extends AppCompatActivity {
         setuptoolbar();
         initGetIntent();
         initData();
+        confirmpayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PurchasePayment.class);
+                initanim(intent);
+                finish();
+            }
+        });
     }
 
     private void initData() {
@@ -115,5 +123,11 @@ public class CheckoutSuccess extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private void initanim(Intent intent){
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
 }

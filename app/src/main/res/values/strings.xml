@@ -20,10 +20,10 @@
         <item>My Wallet</item>
         <item>Seller Panel</item>
         <item>@string/app_name</item>
-        <item>Order</item>
+        <item>Opening Request</item>
+        <item>Purchase</item>
         <item>Wishlist</item>
         <item>Favorite Store</item>
-        <item>Product Discussion</item>
         <item>Settings</item>
         <item>Help</item>
         <item>Logout</item>

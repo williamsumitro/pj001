@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
-import android.provider.Telephony;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +27,6 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +34,6 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.BagResponse;
-import com.example.williamsumitro.dress.view.model.StoreDetails;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.UserDetails;
@@ -49,13 +46,13 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.OpenStore;
+import com.example.williamsumitro.dress.view.view.openstore.activity.NoStore;
+import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
 import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
-import com.example.williamsumitro.dress.view.view.order.fragment.OrderFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.OrderFragment;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.fragment.MyStoreFragment;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 import com.squareup.picasso.Picasso;
 
@@ -118,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initSession();
-//        api_checkauthuser();
         loadNavBar();
         setupNavigationView();
         if (savedInstanceState == null) {
@@ -248,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                         initanim(intent);
 
                     }else {
-                        Intent intent = new Intent(context, OpenStore.class);
+                        Intent intent = new Intent(context, NoStore.class);
                         initanim(intent);
                     }
                 }
@@ -281,9 +277,9 @@ public class MainActivity extends AppCompatActivity {
                             CURRENT = OPENINGREQUEST;
                             break;
                         case R.id.drawer_order:
-                            navIndex = 4;
-                            CURRENT = ORDER;
-                            break;
+                            Intent intent1 = new Intent(MainActivity.this, Purchase.class);
+                            initanim(intent1);
+                            return true;
                         case R.id.drawer_wishlist:
                             navIndex = 5;
                             CURRENT = WISHLIST;
@@ -395,23 +391,21 @@ public class MainActivity extends AppCompatActivity {
 }
     private Fragment getHomeFragment() {
         switch (navIndex) {
-            case 1:
-                MyStoreFragment mystoreFragment = new MyStoreFragment();
-                return mystoreFragment;
+            case 1 :
+
             case 2:
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 3:
-                OrderFragment orderFragment = new OrderFragment();
-                return orderFragment;
+
             case 4:
+
+            case 5:
                 WishlistFragment wishlistFragment = new WishlistFragment();
                 return wishlistFragment;
-            case 5:
+            case 6:
                 FavoriteStoreFragment favoriteStoreFragment = new FavoriteStoreFragment();
                 return favoriteStoreFragment;
-            case 6:
-
             case 7:
                 Intent intent = new Intent(context, Help.class);
                 initanim(intent);

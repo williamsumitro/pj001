@@ -16,7 +16,7 @@
         android:theme="@style/noactionbar">
         <activity android:name=".view.view.main.MainActivity" />
         <activity android:name=".view.view.product.activity.DetailProduct" />
-        <activity android:name=".view.view.sellerpanel.store.activity.DetailOutlet" />
+        <activity android:name=".view.view.openstore.activity.DetailOutlet" />
         <activity android:name=".view.view.authentication.Login" />
         <activity android:name=".view.view.authentication.Register" />
         <activity android:name=".view.view.product.activity.DetailProduct_details" />
@@ -33,24 +33,24 @@
         <activity android:name=".view.view.bag.activity.Buy" />
         <activity android:name=".view.view.bag.activity.ShoppingBag" />
         <activity android:name=".view.view.checkout.activity.Checkout" />
-        <activity android:name=".view.view.order.activity.PaymentDetail" />
-        <activity android:name=".view.view.order.activity.OrderDetail" />
-        <activity android:name=".view.view.order.activity.ReviewandrateDetail" />
+        <activity android:name=".view.view.purchase.activity.PaymentDetail" />
+        <activity android:name=".view.view.purchase.activity.OrderDetail" />
+        <activity android:name=".view.view.purchase.activity.ReviewandrateDetail" />
         <activity android:name=".view.view.filter.Filter" />
         <activity android:name=".view.view.search.activity.Search" />
         <activity android:name=".view.view.search.activity.SearchResult" />
         <activity android:name=".view.view.category.activity.CategoryDetail" />
-        <activity android:name=".view.view.sellerpanel.store.activity.PreviewStore" />
+        <activity android:name=".view.view.mystore.activity.PreviewStore" />
         <activity android:name=".view.view.bid.activity.BidDetail" />
         <activity android:name=".view.view.profile.activity.Profile" />
         <activity android:name=".view.view.profile.activity.EditProfile" />
         <activity android:name=".view.view.profile.activity.ChangePassword" />
         <activity android:name=".view.view.profile.activity.ChangeProfilePicture" />
-        <activity android:name=".view.view.sellerpanel.store.activity.StoreSettings" />
-        <activity android:name=".view.view.sellerpanel.store.activity.StoreEditInformation" />
-        <activity android:name=".view.view.sellerpanel.store.activity.StoreEditBank" />
-        <activity android:name=".view.view.sellerpanel.store.activity.StoreEditCourier" />
-        <activity android:name=".view.view.sellerpanel.store.activity.OpenStore" />
+        <activity android:name=".view.view.mystore.activity.StoreSettings" />
+        <activity android:name=".view.view.mystore.activity.StoreEditInformation" />
+        <activity android:name=".view.view.mystore.activity.StoreEditBank" />
+        <activity android:name=".view.view.mystore.activity.StoreEditCourier" />
+        <activity android:name=".view.view.openstore.activity.OpenStore" />
         <activity android:name=".view.view.authentication.Unauthorized" />
         <activity android:name=".view.view.wallet.activity.Mywallet" />
         <activity android:name=".view.view.wallet.activity.Withdraw" />
@@ -59,10 +59,11 @@
         <activity android:name=".view.view.sellerpanel.sales.activity.OCDetail" />
         <activity android:name=".view.view.sellerpanel.sales.activity.SCDetail" />
         <activity android:name=".view.view.sellerpanel.product.activity.AddProduct" />
-        <activity android:name=".view.view.sellerpanel.store.activity.Openstrore_Fileupload" />
+        <activity android:name=".view.view.openstore.activity.Openstrore_Fileupload" />
         <activity android:name=".view.view.checkout.activity.Payment" />
         <activity android:name=".view.view.checkout.activity.CheckoutSuccess" />
-        <activity android:name=".view.view.authentication.Splashscreen"
+        <activity
+            android:name=".view.view.authentication.Splashscreen"
             android:theme="@style/Splashtheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,6 +71,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.view.openstore.activity.NoStore" />
+        <activity android:name=".view.view.purchase.activity.Purchase" />
+        <activity android:name=".view.view.purchase.activity.PurchasePayment" />
+        <activity android:name=".view.view.purchase.activity.PurchaseOrderStatus" />
+        <activity android:name=".view.view.purchase.activity.PurchaseReceiptConfirmation" />
+        <activity android:name=".view.view.purchase.activity.PurchaseReviewRating" />
+        <activity android:name=".view.view.purchase.activity.PurchaseHistory" />
+        <activity android:name=".view.view.purchase.activity.PP_InvoiceDetail"></activity>
     </application>
 
 </manifest>

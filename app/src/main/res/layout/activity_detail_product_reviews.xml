@@ -67,66 +67,6 @@
                 android:textSize="12sp"
                 android:text="Score 4.4"/>
         </LinearLayout>
-        <LinearLayout
-            android:padding="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Did the item fit well ?"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="small"/>
-                <ProgressBar
-                    android:id="@+id/detailproductreview_pgsmall"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="True Size"/>
-                <ProgressBar
-                    android:id="@+id/detailproductreview_pgtruesize"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Large"/>
-                <ProgressBar
-                    android:id="@+id/detailproductreview_pglarge"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"/>
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_marginLeft="5dp"

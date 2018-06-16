@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.view.home.adapter.TabHomeAdapter;
 import com.example.williamsumitro.dress.view.view.category.fragment.CategoryFragment;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.fragment.StoreFragment;
+import com.example.williamsumitro.dress.view.view.openstore.fragment.StoreFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

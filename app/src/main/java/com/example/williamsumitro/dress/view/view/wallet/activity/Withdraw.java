@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+
+import java.text.DecimalFormat;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +41,10 @@ public class Withdraw extends AppCompatActivity {
     @BindView(R.id.withdraw_btn_submit) Button submit;
 
     private Context context;
+    private apiService service;
+    private String token;
+    private SessionManagement sessionManagement;
+    private DecimalFormat formatter;
 
 
     @Override
@@ -44,7 +53,13 @@ public class Withdraw extends AppCompatActivity {
         setContentView(R.layout.activity_withdraw);
         initView();
         setupToolbar();
+        initData();
     }
+
+    private void initData() {
+        balance.setText("Balance : IDR " + formatter.format(Double.parseDouble("1000000")));
+    }
+
     private void initView() {
         ButterKnife.bind(this);
         supportPostponeEnterTransition();
@@ -52,6 +67,10 @@ public class Withdraw extends AppCompatActivity {
         if (getResources().getBoolean(R.bool.portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        formatter = new DecimalFormat("#,###,###");
+        sessionManagement = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);

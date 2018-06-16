@@ -104,7 +104,7 @@
             android:textSize="20sp"
             android:text="0"
             android:textColor="@color/white"
-            android:background="@drawable/circle_blue"
+            android:background="@drawable/circle_white"
             android:gravity="center"
             android:layout_width="30dp"
             android:layout_height="30dp"/>

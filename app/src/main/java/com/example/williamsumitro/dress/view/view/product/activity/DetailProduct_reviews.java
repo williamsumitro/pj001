@@ -28,9 +28,6 @@ public class DetailProduct_reviews extends AppCompatActivity {
     @BindView(R.id.detailproductreview_recyclerview) RecyclerView recyclerView;
     @BindView(R.id.detailproductreview_tvscore) TextView score;
     @BindView(R.id.detailproductreview_toolbar) Toolbar toolbar;
-    @BindView(R.id.detailproductreview_pgtruesize) ProgressBar truesize;
-    @BindView(R.id.detailproductreview_pgsmall) ProgressBar small;
-    @BindView(R.id.detailproductreview_pglarge) ProgressBar large;
     @BindView(R.id.detailproductreview_imgstar5) ImageView five;
     @BindView(R.id.detailproductreview_imgstar4) ImageView four;
     @BindView(R.id.detailproductreview_imgstar3) ImageView three;
@@ -47,9 +44,6 @@ public class DetailProduct_reviews extends AppCompatActivity {
         setuptoolbar();
         initdata();
         setuprecyclerview();
-        small.setProgress(10);
-        large.setProgress(20);
-        truesize.setProgress(70);
     }
     private void initView(){
         ButterKnife.bind(this);

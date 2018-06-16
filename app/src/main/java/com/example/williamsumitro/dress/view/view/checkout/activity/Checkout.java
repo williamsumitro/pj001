@@ -6,30 +6,15 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bagz;
-import com.example.williamsumitro.dress.view.model.Bank;
-import com.example.williamsumitro.dress.view.model.Shipping;
-import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutStepAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.Openstrore_Fileupload;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.adapter.StepAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

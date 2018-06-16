@@ -15,19 +15,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:textSize="16sp"
-            android:text="Balance : "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:text="IDR "
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
+            android:gravity="center"
             android:id="@+id/withdraw_tv_balance"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:text="12.000.000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -35,7 +27,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/withdraw_layout_withdrawammount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

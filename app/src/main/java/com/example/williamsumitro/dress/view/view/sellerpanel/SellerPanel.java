@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
@@ -28,7 +27,6 @@ import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.sellerpanel.product.activity.AddProduct;
 import com.example.williamsumitro.dress.view.view.sellerpanel.sales.activity.ManageSales;
-import com.example.williamsumitro.dress.view.view.sellerpanel.store.activity.OpenStore;
 
 import java.util.HashMap;
 

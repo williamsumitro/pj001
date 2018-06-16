@@ -10,16 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.view.order.adapter.TabOrderAdapter;
-import com.example.williamsumitro.dress.view.view.order.fragment.OrderorderFragment;
-import com.example.williamsumitro.dress.view.view.order.fragment.OrderstatusFragment;
-import com.example.williamsumitro.dress.view.view.order.fragment.PaymentstatusFragment;
-import com.example.williamsumitro.dress.view.view.order.fragment.ReviewandratingFragment;
-import com.example.williamsumitro.dress.view.view.order.fragment.ShippingconfirmationFragment;
-import com.example.williamsumitro.dress.view.view.order.fragment.TransactionhistoryFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.OrderorderFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.OrderstatusFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.PaymentstatusFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.ReviewandratingFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.ShippingconfirmationFragment;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.TransactionhistoryFragment;
 import com.example.williamsumitro.dress.view.view.sellerpanel.sales.adapter.TabManageSalesAdapter;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

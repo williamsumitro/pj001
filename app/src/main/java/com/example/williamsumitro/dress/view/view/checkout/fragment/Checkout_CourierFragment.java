@@ -214,6 +214,7 @@ public class Checkout_CourierFragment extends Fragment implements Step {
                 public void onClick(View view) {
                     checked = true;
                     tv_status.setText("Please click complete to proceed");
+                    tv_status.setTextColor(getResources().getColor(R.color.green));
                     dialog.dismiss();
                 }
             });

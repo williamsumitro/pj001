@@ -11,6 +11,7 @@ import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
+import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.dress_attribute.DressAttribute;
@@ -150,4 +151,19 @@ public interface apiService {
 
     @POST("checkout")
     Call<PaymentResponse> req_checkout(@Body Checkout checkout_courier);
+
+    @FormUrlEncoded
+    @POST("get_purchase_payment")
+    Call<Purchase_PaymentResponse> req_get_purchase_payment(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("confirm_payment")
+    Call<ResponseBody> req_confirm_payment(@Field("token") String token,
+                                           @Field("transaction_id") String transaction_id,
+                                           @Field("company_bank_id") String company_bank_id,
+                                           @Field("amount") String amount,
+                                           @Field("sender_bank") String sender_bank,
+                                           @Field("sender_account_number") String sender_account_number,
+                                           @Field("sender_name") String sender_name,
+                                           @Field("note") String note);
 }
