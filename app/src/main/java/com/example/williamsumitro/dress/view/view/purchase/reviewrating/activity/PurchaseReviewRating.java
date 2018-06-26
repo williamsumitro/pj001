@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.activity;
+package com.example.williamsumitro.dress.view.view.purchase.reviewrating.activity;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -18,8 +18,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PurchaseOrderStatus extends AppCompatActivity {
-    @BindView(R.id.purchaseorderstatus_toolbar) Toolbar toolbar;
+public class PurchaseReviewRating extends AppCompatActivity {
+    @BindView(R.id.purchasereviewrating_toolbar) Toolbar toolbar;
 
     private Context context;
     private apiService service;
@@ -29,7 +29,7 @@ public class PurchaseOrderStatus extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_purchase_order_status);
+        setContentView(R.layout.activity_purchase_review_rating);
         initView();
         setuptoolbar();
     }
@@ -48,7 +48,7 @@ public class PurchaseOrderStatus extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Purchase Order Status");
+        getSupportActionBar().setTitle("Purchase Review Rating");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

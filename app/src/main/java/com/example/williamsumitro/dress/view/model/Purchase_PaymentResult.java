@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by WilliamSumitro on 16/06/2018.
  */
 
-public class Result {
+public class Purchase_PaymentResult {
     @SerializedName("transaction_id")
     @Expose
     private Integer transactionId;

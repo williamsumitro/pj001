@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.activity;
+package com.example.williamsumitro.dress.view.view.purchase.payment.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,11 +17,12 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.OrderStore;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
-import com.example.williamsumitro.dress.view.model.Result;
+import com.example.williamsumitro.dress.view.model.Purchase_PaymentResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.PurchasePaymentRVInvoice;
+import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
+import com.example.williamsumitro.dress.view.view.purchase.payment.adapter.PurchasePaymentRVInvoice;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class PurchasePayment extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private DecimalFormat formatter;
     private PurchasePaymentRVInvoice adapter;
-    private ArrayList<Result> resultArrayList;
+    private ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList;
     private ArrayList<Bank> bankArrayList;
     private ArrayList<OrderStore> orderStoreArrayList;
 
@@ -65,9 +66,9 @@ public class PurchasePayment extends AppCompatActivity {
             public void onResponse(Call<Purchase_PaymentResponse> call, Response<Purchase_PaymentResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
-                        if (response.body().getResult().size()>0){
+                        if (response.body().getPurchasePaymentResult().size()>0){
                             container_bottom.setVisibility(View.VISIBLE);
-                            resultArrayList = response.body().getResult();
+                            purchasePaymentResultArrayList = response.body().getPurchasePaymentResult();
                             bankArrayList = response.body().getBank();
                             setupRV();
                         }
@@ -85,7 +86,7 @@ public class PurchasePayment extends AppCompatActivity {
         });
     }
     private void setupRV(){
-        adapter = new PurchasePaymentRVInvoice(context, resultArrayList, bankArrayList);
+        adapter = new PurchasePaymentRVInvoice(context, purchasePaymentResultArrayList, bankArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -98,7 +99,7 @@ public class PurchasePayment extends AppCompatActivity {
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
-        resultArrayList = new ArrayList<>();
+        purchasePaymentResultArrayList = new ArrayList<>();
         bankArrayList = new ArrayList<>();
         orderStoreArrayList = new ArrayList<>();
     }

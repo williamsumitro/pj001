@@ -192,6 +192,37 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/itemcheckoutproduct_ln_acceptreject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioGroup
+                android:id="@+id/itemcheckoutproduct_radiogroup"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/itemcheckoutproduct_rbAccept"
+                    android:textSize="14sp"
+                    android:buttonTint="@color/green4"
+                    android:textColor="@color/green4"
+                    android:text="Accept"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/itemcheckoutproduct_rbReject"
+                    android:textSize="14sp"
+                    android:buttonTint="@color/red3"
+                    android:textColor="@color/red3"
+                    android:text="Reject"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

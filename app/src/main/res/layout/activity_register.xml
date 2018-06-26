@@ -60,11 +60,12 @@
             android:textColorHint="@color/black"
             android:id="@+id/register_layoutpassword"
             android:layout_width="match_parent"
+            app:passwordToggleEnabled="true"
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputEditText
                 android:drawablePadding="10dp"
-                android:drawableStart="@drawable/password"
-                android:drawableLeft="@drawable/password"
+                android:drawableStart="@drawable/password1"
+                android:drawableLeft="@drawable/password1"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:textColorHint="@color/black"

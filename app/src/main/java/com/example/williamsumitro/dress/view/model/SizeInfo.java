@@ -22,7 +22,12 @@ public class SizeInfo implements Serializable {
     @SerializedName("product_qty")
     @Expose
     private Integer productQty;
-
+    public SizeInfo(Integer productId, Integer productSizeId, String sizeName, Integer productQty){
+        this.productId = productId;
+        this.productSizeId = productSizeId;
+        this.sizeName = sizeName;
+        this.productQty = productQty;
+    }
     public Integer getProductId() {
         return productId;
     }

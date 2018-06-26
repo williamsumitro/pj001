@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by WilliamSumitro on 16/06/2018.
@@ -16,7 +15,7 @@ public class Purchase_PaymentResponse {
     private Boolean status;
     @SerializedName("result")
     @Expose
-    private ArrayList<Result> result = null;
+    private ArrayList<Purchase_PaymentResult> purchasePaymentResult = null;
     @SerializedName("bank")
     @Expose
     private ArrayList<Bank> bank = null;
@@ -29,12 +28,12 @@ public class Purchase_PaymentResponse {
         this.status = status;
     }
 
-    public ArrayList<Result> getResult() {
-        return result;
+    public ArrayList<Purchase_PaymentResult> getPurchasePaymentResult() {
+        return purchasePaymentResult;
     }
 
-    public void setResult(ArrayList<Result> result) {
-        this.result = result;
+    public void setPurchasePaymentResult(ArrayList<Purchase_PaymentResult> purchasePaymentResult) {
+        this.purchasePaymentResult = purchasePaymentResult;
     }
 
     public ArrayList<Bank> getBank() {

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/itempayment_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/item_purchaseorderstatus_ln_top"
+            android:background="@color/orange2"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/item_purchaseorderstatus_tv_ordernumber"
+                android:layout_gravity="center_vertical"
+                android:text="order number"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/item_purchaseorderstatus_view"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/item_purchaseorderstatus_tv_storename"
+                android:textColor="@color/white"
+                android:text="Store Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:textColor="@color/orange2"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/item_purchaseorderstatus_tv_status"
+            android:layout_marginTop="5dp"
+            android:text="Status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/item_purchaseorderstatus_rv"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/item_purchasepayment_ln_mid_accepted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:id="@+id/item_purchaseorderstatus_ln_acceptedproduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/green4"
+                    android:text="Accepted Product"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/item_purchaseorderstatus_img_acceptedcaret"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/caret"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                android:id="@+id/item_purchaseorderstatus_ln_acceptedproductdetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:background="@color/green7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_purchaseorderstatus_rv_acceptedproduct"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <View
+                android:layout_margin="5dp"
+                android:background="@color/green7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/item_purchasepayment_ln_mid_rejected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:id="@+id/item_purchaseorderstatus_ln_rejectedproduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/red4"
+                    android:text="Rejected Product"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/item_purchaseorderstatus_img_rejectedcaret"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/caret"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                android:id="@+id/item_purchaseorderstatus_ln_rejectedproductdetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:background="@color/red7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_purchaseorderstatus_rv_rejectedproduct"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <View
+                android:layout_margin="5dp"
+                android:background="@color/red7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/item_purchaseorderstatus_tv_subtotal"
+            android:textColor="@color/black"
+            android:text="IDR xxxx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/item_purchaseorderstatus_tv_shipping"
+            android:text="IDR xxxx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/item_purchaseorderstatus_tv_total"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="IDR xxxx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/item_purchaseorderstatus_btn_viewdetails"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:text="View Details"
+                android:background="@drawable/button1_3"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

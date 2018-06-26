@@ -20,7 +20,7 @@ import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.purchase.activity.PurchasePayment;
+import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
 import com.example.williamsumitro.dress.view.view.purchase.adapter.BankRVAdapter;
 import com.google.gson.Gson;
 

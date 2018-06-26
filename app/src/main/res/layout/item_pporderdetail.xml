@@ -8,7 +8,6 @@
     android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -43,12 +42,16 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/item_pporderdetail_tv_shippingaddress"
             android:layout_marginTop="5dp"
             android:text="Shipping Address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/item_pporderdetail_tv_note"
             android:layout_marginTop="5dp"
             android:text="Note"
@@ -56,11 +59,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/item_pporderdetail_rv"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:id="@+id/item_pporderdetail_tv_subtotal"
             android:textColor="@color/black"
@@ -68,12 +75,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:id="@+id/item_pporderdetail_tv_shipping"
             android:text="IDR xxxx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:id="@+id/item_pporderdetail_tv_total"
             android:textStyle="bold"

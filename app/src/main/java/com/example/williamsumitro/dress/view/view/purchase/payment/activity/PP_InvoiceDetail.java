@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.activity;
+package com.example.williamsumitro.dress.view.view.purchase.payment.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,13 +16,9 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.OrderStore;
-import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutProductRVAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.PurchasePaymentRVInvoice;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.PurchasePaymentRVOrder;
-import com.google.gson.Gson;
+import com.example.williamsumitro.dress.view.view.purchase.payment.adapter.PurchasePaymentRVOrder;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

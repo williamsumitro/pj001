@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.activity;
+package com.example.williamsumitro.dress.view.view.purchase.history.activity;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

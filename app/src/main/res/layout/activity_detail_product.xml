@@ -115,7 +115,8 @@
                     android:background="@color/blue1"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="add to WishList"
+                    android:textAllCaps="false"
+                    android:text="Add to Wishlist"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
             </LinearLayout>

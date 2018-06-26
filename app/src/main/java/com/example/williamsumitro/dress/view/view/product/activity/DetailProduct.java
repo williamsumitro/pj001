@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,6 +45,10 @@ import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +56,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,7 +124,7 @@ public class DetailProduct extends AppCompatActivity {
     private ArrayList<Size> sizeList;
     private ArrayList<Price> priceList;
     private ArrayList<String> qtyminlist, priceminlist, availablesizelist;
-    private Boolean detailclick = false;
+    private Boolean detailclick = false, wishliststatus= false;
     private ArrayList<model_CourierService> courierServiceList;
     private String extra_productid;
     private String token;
@@ -253,7 +259,66 @@ public class DetailProduct extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                         if (response.code()==200){
-                            progressDialog.dismiss();
+                            if (wishliststatus){
+                                service.req_delete_from_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.code()==200){
+                                            try{
+                                                JSONObject jsonResults = new JSONObject(response.body().string());
+                                                if(jsonResults.getBoolean("status")){
+                                                    String message = jsonResults.getString("message");
+                                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
+                                                    addtowishlist.setText("Add to Wishlist");
+                                                    wishliststatus = false;
+                                                    progressDialog.dismiss();
+                                                }
+                                            }catch (JSONException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        progressDialog.dismiss();
+                                        initDialog(3);
+                                    }
+                                });
+                            }
+                            else {
+                                service.req_add_to_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.code()==200){
+                                            try{
+                                                JSONObject jsonResults = new JSONObject(response.body().string());
+                                                if(jsonResults.getBoolean("status")){
+                                                    String message = jsonResults.getString("message");
+                                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
+                                                    addtowishlist.setText("Delete from Wishlist");
+                                                    wishliststatus = true;
+                                                    progressDialog.dismiss();
+                                                }
+                                            }catch (JSONException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        progressDialog.dismiss();
+                                        initDialog(3);
+                                    }
+                                });
+                            }
                         }
                         else {
                             progressDialog.dismiss();
@@ -432,26 +497,69 @@ public class DetailProduct extends AppCompatActivity {
 
     private void api_getdetailproduct(){
         service = apiUtils.getAPIService();
-        service.req_get_product_detail(extra_productid).enqueue(new Callback<ProductDetail>() {
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code()==200){
-                    productInfo = response.body().getProductInfo();
-                    storeInfo = response.body().getStoreInfo();
-                    priceList = productInfo.getPrice();
-                    sizeList = productInfo.getSize();
-                    courierServiceList = storeInfo.getCourierService();
-                    setupRV();
-                    initProductDetails();
-                    initClick();
+                    service.req_get_product_detail(token, extra_productid).enqueue(new Callback<ProductDetail>() {
+                        @Override
+                        public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                            if (response.code()==200){
+                                productInfo = response.body().getProductInfo();
+                                storeInfo = response.body().getStoreInfo();
+                                priceList = productInfo.getPrice();
+                                sizeList = productInfo.getSize();
+                                courierServiceList = storeInfo.getCourierService();
+                                wishliststatus = response.body().getWishlistStatus();
+                                if (wishliststatus){
+                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
+                                    addtowishlist.setText("Delete from Wishlist");
+                                }
+                                else {
+                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
+                                    addtowishlist.setText("Add to Wishlist");
+                                }
+                                setupRV();
+                                initProductDetails();
+                                initClick();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+                        }
+                    });
+                }
+                else {
+                    service.req_get_product_detail(extra_productid).enqueue(new Callback<ProductDetail>() {
+                        @Override
+                        public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                            if (response.code()==200){
+                                productInfo = response.body().getProductInfo();
+                                storeInfo = response.body().getStoreInfo();
+                                priceList = productInfo.getPrice();
+                                sizeList = productInfo.getSize();
+                                courierServiceList = storeInfo.getCourierService();
+                                wishliststatus = response.body().getWishlistStatus();
+                                setupRV();
+                                initProductDetails();
+                                initClick();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onFailure(Call<ProductDetail> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
 
             }
         });
+
     }
     private void initDialog(int stats){
         dialog = new Dialog(context);

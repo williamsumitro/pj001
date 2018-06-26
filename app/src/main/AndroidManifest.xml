@@ -73,12 +73,14 @@
         </activity>
         <activity android:name=".view.view.openstore.activity.NoStore" />
         <activity android:name=".view.view.purchase.activity.Purchase" />
-        <activity android:name=".view.view.purchase.activity.PurchasePayment" />
-        <activity android:name=".view.view.purchase.activity.PurchaseOrderStatus" />
-        <activity android:name=".view.view.purchase.activity.PurchaseReceiptConfirmation" />
-        <activity android:name=".view.view.purchase.activity.PurchaseReviewRating" />
-        <activity android:name=".view.view.purchase.activity.PurchaseHistory" />
-        <activity android:name=".view.view.purchase.activity.PP_InvoiceDetail"></activity>
+        <activity android:name=".view.view.purchase.payment.activity.PurchasePayment" />
+        <activity android:name=".view.view.purchase.order.activity.PurchaseOrderStatus" />
+        <activity android:name=".view.view.purchase.receipt.activity.PurchaseReceiptConfirmation" />
+        <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRating" />
+        <activity android:name=".view.view.purchase.history.activity.PurchaseHistory" />
+        <activity android:name=".view.view.purchase.payment.activity.PP_InvoiceDetail" />
+        <activity android:name=".view.view.sellerpanel.sales.orderconfirmation.activity.OrderConfirmation" />
+        <activity android:name=".view.view.sellerpanel.sales.shippingconfirmation.activity.ShippingConfirmation"></activity>
     </application>
 
 </manifest>

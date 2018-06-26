@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +35,15 @@ public class Product implements Serializable{
     @Expose
     private List<SizeInfo> sizeInfo = null;
 
+    public Product(Integer productId, String productName, String productPhoto, Integer priceUnit, String totalQty, String priceTotal, List<SizeInfo> sizeInfo){
+        this.productId = productId;
+        this.productName = productName;
+        this.productPhoto = productPhoto;
+        this.priceUnit = priceUnit;
+        this.totalQty = totalQty;
+        this.priceTotal = priceTotal;
+        this.sizeInfo = sizeInfo;
+    }
     public Integer getProductId() {
         return productId;
     }

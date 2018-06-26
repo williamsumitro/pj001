@@ -17,6 +17,10 @@ public class ProductDetail {
     @SerializedName("store_info")
     @Expose
     private StoreInfo storeInfo;
+    @SerializedName("wishlist_status")
+    @Expose
+    private Boolean wishlistStatus;
+
 
     public Boolean getStatus() {
         return status;
@@ -40,5 +44,13 @@ public class ProductDetail {
 
     public void setStoreInfo(StoreInfo storeInfo) {
         this.storeInfo = storeInfo;
+    }
+
+    public Boolean getWishlistStatus() {
+        return wishlistStatus;
+    }
+
+    public void setWishlistStatus(Boolean wishlistStatus) {
+        this.wishlistStatus = wishlistStatus;
     }
 }

@@ -4,20 +4,18 @@ import com.example.williamsumitro.dress.view.model.AddToBag;
 import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.model.CheckoutResponse;
-import com.example.williamsumitro.dress.view.model.Checkout_Courier;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
-import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
+import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
+import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
+import com.example.williamsumitro.dress.view.model.WishlistResponse;
 import com.example.williamsumitro.dress.view.model.dress_attribute.DressAttribute;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -29,7 +27,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Query;
 
 /**
  * Created by WilliamSumitro on 05/04/2018.
@@ -130,6 +127,11 @@ public interface apiService {
     @POST("get_product_detail")
     Call<ProductDetail> req_get_product_detail(@Field("product_id") String product_id);
 
+    @FormUrlEncoded
+    @POST("get_product_detail")
+    Call<ProductDetail> req_get_product_detail(@Field("token") String token,
+                                               @Field("product_id") String product_id);
+
     @POST("add_to_bag")
     Call<ResponseBody> req_add_to_bag(@Body AddToBag addToBag);
 
@@ -157,6 +159,10 @@ public interface apiService {
     Call<Purchase_PaymentResponse> req_get_purchase_payment(@Field("token") String token);
 
     @FormUrlEncoded
+    @POST("get_order_status")
+    Call<Purchase_OrderResponse> req_get_purchase_orderstatu(@Field("token") String token);
+
+    @FormUrlEncoded
     @POST("confirm_payment")
     Call<ResponseBody> req_confirm_payment(@Field("token") String token,
                                            @Field("transaction_id") String transaction_id,
@@ -166,4 +172,63 @@ public interface apiService {
                                            @Field("sender_account_number") String sender_account_number,
                                            @Field("sender_name") String sender_name,
                                            @Field("note") String note);
+
+
+    @FormUrlEncoded
+    @POST("seller_get_shipping_confirmation")
+    Call<Sales_OrderResponse> req_seller_get_shipping(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("seller_get_order")
+    Call<Sales_OrderResponse> req_seller_get_order(@Field("token") String token);
+
+    @POST("approve_order_product")
+    Call<ResponseBody> req_approve_order_product(@Body Checkout checkout_courier);
+
+    @FormUrlEncoded
+    @POST("input_receipt_number")
+    Call<ResponseBody> req_input_receipt_number(@Field("token") String token,
+                                                @Field("transaction_id") String transaction_id,
+                                                @Field("store_id") String store_id,
+                                                @Field("receipt_number") String receipt_number);
+
+    @FormUrlEncoded
+    @POST("finish_shipping")
+    Call<ResponseBody> req_finish_shippin(@Field("token") String token,
+                                                @Field("transaction_id") String transaction_id,
+                                                @Field("store_id") String store_id);
+
+    @FormUrlEncoded
+    @POST("get_receipt_confirmation")
+    Call<Sales_OrderResponse> req_get_receipt_confirmation(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("confirm_receipt")
+    Call<ResponseBody> req_confirm_receipt(@Field("token") String token,
+                                          @Field("transaction_id") String transaction_id,
+                                          @Field("store_id") String store_id);
+
+    @FormUrlEncoded
+    @POST("add_to_wishlist")
+    Call<ResponseBody> req_add_to_wishlist(@Field("token") String token,
+                                           @Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("delete_from_wishlist")
+    Call<ResponseBody> req_delete_from_wishlist(@Field("token") String token,
+                                                @Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("my_wishlist")
+    Call<WishlistResponse> req_get_my_wishlist(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("withdraw")
+    Call<ResponseBody> req_withdraw(@Field("token") String token,
+                                    @Field("amount") String amount,
+                                    @Field("bank_name") String bank_name,
+                                    @Field("branch") String branch,
+                                    @Field("account_number") String account_number,
+                                    @Field("name_in_account") String name_in_account,
+                                    @Field("password") String password);
 }

@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.adapter;
+package com.example.williamsumitro.dress.view.view.purchase.payment.adapter;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
@@ -18,23 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.OrderStore;
-import com.example.williamsumitro.dress.view.model.Result;
+import com.example.williamsumitro.dress.view.model.Purchase_PaymentResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.purchase.activity.PP_InvoiceDetail;
-import com.example.williamsumitro.dress.view.view.purchase.activity.PurchasePayment;
-import com.google.gson.Gson;
+import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
+import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PP_InvoiceDetail;
+import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +54,7 @@ import retrofit2.Response;
 
 public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePaymentRVInvoice.ViewHolder> {
     private Context context;
-    private ArrayList<Result> resultArrayList;
+    private ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList;
     private DecimalFormat formatter;
     private Dialog dialog;
     private ArrayList<Bank> bankArrayList;
@@ -73,9 +70,9 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
     private final static String INVOICENUMBER = "INVOICENUMBER";
     private final static String GRANDTOTAL = "GRANDTOTAL";
 
-    public PurchasePaymentRVInvoice(Context context, ArrayList<Result> resultArrayList, ArrayList<Bank> bankArrayList){
+    public PurchasePaymentRVInvoice(Context context, ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList, ArrayList<Bank> bankArrayList){
         this.context = context;
-        this.resultArrayList = resultArrayList;
+        this.purchasePaymentResultArrayList = purchasePaymentResultArrayList;
         this.bankArrayList = bankArrayList;
         orderStoreArrayList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
@@ -92,7 +89,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Result purchase_paymentResponse = resultArrayList.get(position);
+        final Purchase_PaymentResult purchase_paymentResponse = purchasePaymentResultArrayList.get(position);
         holder.status.setText("Status : " + purchase_paymentResponse.getPaymentStatus());
         holder.invoicenumber.setText("Invoice Number : " + String.valueOf(purchase_paymentResponse.getTransactionId()));
         holder.date.setText(purchase_paymentResponse.getInvoiceDate());
@@ -121,7 +118,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
 
     @Override
     public int getItemCount() {
-        return resultArrayList.size();
+        return purchasePaymentResultArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -211,7 +208,8 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
                 }
 
                 service = apiUtils.getAPIService();
-                service.req_confirm_payment(grand_total, invoice_number, company_bank_id, amount.getText().toString(), bankname.getText().toString(), bankaccount.getText().toString(),
+                String amounts = FinancialTextWatcher.trimCommaOfString(amount.getText().toString());
+                service.req_confirm_payment(grand_total, invoice_number, company_bank_id, amounts, bankname.getText().toString(), bankaccount.getText().toString(),
                         name.getText().toString(), note.getText().toString()).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

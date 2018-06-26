@@ -46,7 +46,7 @@ public class SpinBankAdapter extends ArrayAdapter<Bank> {
         label.setTextColor(Color.BLACK);
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (UserResponse class)
-        label.setText(bankArrayList.get(position).getBankName());
+        label.setText(bankArrayList.get(position).getBankName() + " " + bankArrayList.get(position).getAccountNumber());
 
         // And finally return your dynamic (or custom) view for each spinner item
         return label;
@@ -59,7 +59,7 @@ public class SpinBankAdapter extends ArrayAdapter<Bank> {
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setText(bankArrayList.get(position).getBankName());
+        label.setText(bankArrayList.get(position).getBankName() + " " + bankArrayList.get(position).getAccountNumber());
         return label;
     }
 }

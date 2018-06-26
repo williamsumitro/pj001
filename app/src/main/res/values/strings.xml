@@ -5,7 +5,7 @@
     <string name="Profile">Profile</string>
     <string name="Categories">Categories</string>
     <string name="Logout">Logout</string>
-    <string name="login_sign">Log In / Sign Up</string>
+    <string name="login_sign">Log In / Register</string>
     <string name="Wishlist">Wishlist</string>
     <string name="Settings">Settings</string>
     <string name="Search">Search</string>

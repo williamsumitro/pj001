@@ -7,22 +7,26 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
+import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.purchase.history.activity.PurchaseHistory;
+import com.example.williamsumitro.dress.view.view.purchase.order.activity.PurchaseOrderStatus;
+import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
+import com.example.williamsumitro.dress.view.view.purchase.receipt.activity.PurchaseReceiptConfirmation;
+import com.example.williamsumitro.dress.view.view.purchase.reviewrating.activity.PurchaseReviewRating;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeoutException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,8 +113,8 @@ public class Purchase extends AppCompatActivity {
             public void onResponse(Call<Purchase_PaymentResponse> call, Response<Purchase_PaymentResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
-                        if (response.body().getResult().size()>0){
-                            tv_payment.setText(String.valueOf(response.body().getResult().size()));
+                        if (response.body().getPurchasePaymentResult().size()>0){
+                            tv_payment.setText(String.valueOf(response.body().getPurchasePaymentResult().size()));
                             tv_payment.setTextColor(getResources().getColor(R.color.red));
                             ex_payment.setVisibility(View.VISIBLE);
                             container_payment.setBackgroundColor(getResources().getColor(R.color.red9));
@@ -125,9 +129,57 @@ public class Purchase extends AppCompatActivity {
             }
         });
     }
+    private void api_getorder(){
+        service = apiUtils.getAPIService();
+        service.req_get_purchase_orderstatu(token).enqueue(new Callback<Purchase_OrderResponse>() {
+            @Override
+            public void onResponse(Call<Purchase_OrderResponse> call, Response<Purchase_OrderResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getStatus()){
+                        if (response.body().getPurchase_OrderResult().size()>0){
+                            tv_orderstatus.setText(String.valueOf(response.body().getPurchase_OrderResult().size()));
+                            tv_orderstatus.setTextColor(getResources().getColor(R.color.red));
+                            ex_orderstatus.setVisibility(View.VISIBLE);
+                            container_orderstatus.setBackgroundColor(getResources().getColor(R.color.red9));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Purchase_OrderResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    private void api_getreceiptconfirmation() {
+        service = apiUtils.getAPIService();
+        service.req_get_receipt_confirmation(token).enqueue(new Callback<Sales_OrderResponse>() {
+            @Override
+            public void onResponse(Call<Sales_OrderResponse> call, Response<Sales_OrderResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getStatus()){
+                        if (response.body().getSales_OrderResult().size()>0){
+                            tv_receiptconfirmation.setText(String.valueOf(response.body().getSales_OrderResult().size()));
+                            tv_receiptconfirmation.setTextColor(getResources().getColor(R.color.red));
+                            ex_receiptconfirmation.setVisibility(View.VISIBLE);
+                            container_receiptconfirmation.setBackgroundColor(getResources().getColor(R.color.red9));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Sales_OrderResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void initData() {
         api_getpayment();
+        api_getorder();
+        api_getreceiptconfirmation();
     }
 
     private void initView(){

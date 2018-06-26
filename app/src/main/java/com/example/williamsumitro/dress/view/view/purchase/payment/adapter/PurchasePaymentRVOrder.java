@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.adapter;
+package com.example.williamsumitro.dress.view.view.purchase.payment.adapter;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
