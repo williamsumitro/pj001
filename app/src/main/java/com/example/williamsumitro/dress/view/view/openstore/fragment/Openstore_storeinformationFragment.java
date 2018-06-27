@@ -229,28 +229,34 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     layout_name.setErrorEnabled(true);
                     layout_name.setError("Name of contact person is required");
                     checked = false;
+                    return;
                 }if (TextUtils.isEmpty(jobtitle.getText().toString())){
                     layout_jobtitle.setErrorEnabled(true);
                     layout_jobtitle.setError("Job title is required");
                     checked = false;
+                    return;
                 }if (TextUtils.isEmpty(phonenumber.getText().toString())){
                     layout_phonenumber.setErrorEnabled(true);
                     layout_phonenumber.setError("Phone number is required");
                     checked = false;
+                    return;
                 }if (TextUtils.isEmpty(since.getText().toString())){
                     layout_since.setErrorEnabled(true);
                     layout_since.setError("Year Established is required");
                     checked = false;
+                    return;
                 }if (TextUtils.isEmpty(detail.getText().toString())){
                     layout_detail.setErrorEnabled(true);
                     layout_detail.setError("Description is required");
                     checked = false;
+                    return;
                 }if (!ischecked()){
                     Snackbar.make(container, "Please pick any courier", Snackbar.LENGTH_SHORT).show();
                     checked = false;
+                    return;
                 }
                 if (checked) {
-                    status.setText("Store Information Checked");
+                    status.setText("Please click complete");
                     status.setTextColor(getResources().getColor(R.color.green));
                 }
                 else {

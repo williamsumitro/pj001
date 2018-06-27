@@ -42,6 +42,7 @@ public class NoStore extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(context, OpenStore.class);
                 initanim(intent);
+                finish();
             }
         });
     }

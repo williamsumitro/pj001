@@ -44,13 +44,14 @@ public interface apiService {
     @POST("login")
     Call<ResponseBody> req_login(@Field("email") String email,
                                  @Field("password") String password);
-    @FormUrlEncoded
-    @POST("check_store_name")
-    Call<ResponseBody> req_check_store(@Field("store_name") String store_name);
 
     @FormUrlEncoded
     @POST("get_auth_user")
     Call<UserResponse> req_get_auth_user(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("check_store_name")
+    Call<ResponseBody> req_check_store(@Field("store_name") String store_name);
 
     @FormUrlEncoded
     @POST("register_store_name")

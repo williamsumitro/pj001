@@ -137,10 +137,10 @@ public class DetailProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
         initObject();
-        initCollapToolbar();
-        setupToolbar();
         initGetIntent();
         api_getdetailproduct();
+        initCollapToolbar();
+        setupToolbar();
     }
     private void initGetIntent(){
         Intent getintent = getIntent();
@@ -487,6 +487,7 @@ public class DetailProduct extends AppCompatActivity {
         });
     }
 
+
     private void setupRV(){
         pricedetailsadapter = new BuyRVAdapter(priceList, context);
         RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -526,7 +527,8 @@ public class DetailProduct extends AppCompatActivity {
                         }
                         @Override
                         public void onFailure(Call<ProductDetail> call, Throwable t) {
-
+                            progressDialog.dismiss();
+                            initDialog(3);
                         }
                     });
                 }
@@ -548,7 +550,8 @@ public class DetailProduct extends AppCompatActivity {
                         }
                         @Override
                         public void onFailure(Call<ProductDetail> call, Throwable t) {
-
+                            progressDialog.dismiss();
+                            initDialog(3);
                         }
                     });
                 }
@@ -556,7 +559,8 @@ public class DetailProduct extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
+                initDialog(3);
             }
         });
 
@@ -569,14 +573,12 @@ public class DetailProduct extends AppCompatActivity {
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
         Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
         Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if (stats == 1){
             status.setText("Uh Oh!");
             detail.setText("You need to login first !");
             bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_cry);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttoncancel.setBackgroundResource(R.drawable.button1_1);
             buttonok.setText("Login");
@@ -605,7 +607,6 @@ public class DetailProduct extends AppCompatActivity {
             status.setText("Uh Oh!");
             detail.setText("There is a problem with internet connection or the server");
             bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_cry);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
             buttonok.setOnClickListener(new View.OnClickListener() {

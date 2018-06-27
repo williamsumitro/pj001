@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Courier;
+import com.example.williamsumitro.dress.view.model.model_CourierService;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,10 +24,10 @@ import butterknife.ButterKnife;
  */
 
 public class DetailProductCourierRVAdapter extends RecyclerView.Adapter<DetailProductCourierRVAdapter.ViewHolder> {
-    private List<Courier> courierList;
+    private ArrayList<model_CourierService> courierArrayList;
     private Context context;
-    public DetailProductCourierRVAdapter(List<Courier> courierList, Context context){
-        this.courierList = courierList;
+    public DetailProductCourierRVAdapter(ArrayList<model_CourierService> courierArrayList, Context context){
+        this.courierArrayList = courierArrayList;
         this.context = context;
     }
     @Override
@@ -36,14 +39,17 @@ public class DetailProductCourierRVAdapter extends RecyclerView.Adapter<DetailPr
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Courier courier = courierList.get(position);
-        holder.name.setText(courier.getName());
-        holder.image.setImageResource(courier.getImage());
+        model_CourierService courier = courierArrayList.get(position);
+        holder.name.setText(courier.getCourierName());
+        Picasso.with(context)
+                .load(courier.getLogo())
+                .placeholder(R.drawable.logo404)
+                .into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return courierList.size();
+        return courierArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

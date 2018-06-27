@@ -346,16 +346,6 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         store_courier = store.get(SessionManagement.STORE_COURIER);
         store_businesstype = store.get(SessionManagement.STORE_BUSINESS_TYPE);
 
-        Toast.makeText(this,
-                store_name + "\n" +
-                        store_contact_person_name + "\n" +
-                        store_contact_person_job_title + "\n" +
-                        store_contact_person_phone_number + "\n" +
-                        store_established_year + "\n" +
-                        store_province + "\n" +
-                        store_city + "\n" +
-                        store_description + "\n" +
-                        store_courier, Toast.LENGTH_LONG).show();
 
         progressDialog = new ProgressDialog(this);
     }
@@ -484,7 +474,6 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         String result[] = store_courier.split(",");
         MultipartBody.Part[] couriers = new MultipartBody.Part[result.length];
         for(int i = 0; i<(result.length);i++){
-            Toast.makeText(context, result[i].toString(), Toast.LENGTH_SHORT).show();
             couriers[i] = MultipartBody.Part.createFormData("courier["+i+"]",result[i].toString());
         }
 

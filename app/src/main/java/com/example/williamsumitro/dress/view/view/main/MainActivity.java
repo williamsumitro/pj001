@@ -256,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setupNavigationView(){
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -479,6 +480,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initTransition(Bundle savedInstanceState){
         final Intent intent = getIntent();
         if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&

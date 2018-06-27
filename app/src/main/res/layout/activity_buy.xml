@@ -59,7 +59,7 @@
                         android:id="@+id/buy_lns"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
@@ -67,7 +67,7 @@
                             android:textSize="20sp"
                             android:textColor="@color/black"
                             android:layout_width="0dp"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.3"
                             android:layout_height="wrap_content" />
                         <LinearLayout
                             android:layout_weight="1"
@@ -100,14 +100,14 @@
                         android:id="@+id/buy_lnm"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_gravity="center_vertical"
                             android:text="M : "
                             android:layout_width="0dp"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.3"
                             android:textSize="20sp"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content" />
@@ -144,7 +144,7 @@
                         android:id="@+id/buy_lnl"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
@@ -153,7 +153,7 @@
                             android:textSize="20sp"
                             android:textColor="@color/black"
                             android:layout_width="0dp"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.3"
                             android:layout_height="wrap_content" />
                         <LinearLayout
                             android:layout_weight="1"
@@ -186,7 +186,7 @@
                         android:id="@+id/buy_lnxl"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
@@ -195,7 +195,7 @@
                             android:textSize="20sp"
                             android:textColor="@color/black"
                             android:layout_width="0dp"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.3"
                             android:layout_height="wrap_content" />
                         <LinearLayout
                             android:layout_weight="1"
@@ -229,7 +229,7 @@
                         android:id="@+id/buy_lnfree"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
@@ -238,7 +238,7 @@
                             android:textSize="20sp"
                             android:textColor="@color/black"
                             android:layout_width="0dp"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.3"
                             android:layout_height="wrap_content" />
                         <LinearLayout
                             android:layout_weight="1"

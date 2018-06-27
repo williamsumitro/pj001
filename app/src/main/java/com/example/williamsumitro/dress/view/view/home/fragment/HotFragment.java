@@ -82,7 +82,7 @@ public class HotFragment extends Fragment {
     }
     private void initData(){
         service = apiUtils.getAPIService();
-        service.req_get_product_detail("23").enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail("8").enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
                 if (response.code()==200){
@@ -97,7 +97,7 @@ public class HotFragment extends Fragment {
 
             }
         });
-        service.req_get_product_detail("25").enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail("9").enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
                 if (response.code()==200){
@@ -112,7 +112,7 @@ public class HotFragment extends Fragment {
 
             }
         });
-        service.req_get_product_detail("26").enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail("10").enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
                 if (response.code()==200){
@@ -127,7 +127,7 @@ public class HotFragment extends Fragment {
 
             }
         });
-        service.req_get_product_detail("27").enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail("11").enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
                 if (response.code()==200){
@@ -142,7 +142,96 @@ public class HotFragment extends Fragment {
 
             }
         });
+        service.req_get_product_detail("12").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("13").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("14").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("15").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("16").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
+        service.req_get_product_detail("17").enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.code()==200){
+                    productInfo = response.body().getProductInfo();
+                    addProductInfo(productInfo);
+                    setupRV();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+
+            }
+        });
 
 //        Cloth cloth = new Cloth(productInfo.getProductName(), R.drawable.fake_dress1, "50.000");
 //        ListList.add(cloth);

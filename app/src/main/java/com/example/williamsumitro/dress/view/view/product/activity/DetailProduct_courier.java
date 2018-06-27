@@ -34,8 +34,6 @@ public class DetailProduct_courier extends AppCompatActivity {
         setContentView(R.layout.activity_detail_product_courier);
         initView();
         setuptoolbar();
-        initdata();
-        setuprecyclerview();
     }
 
     private void initView(){
@@ -58,18 +56,5 @@ public class DetailProduct_courier extends AppCompatActivity {
                 finish();
             }
         });
-    }
-    private void setuprecyclerview(){
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-    private void initdata(){
-        adapter = new DetailProductCourierRVAdapter(courierList, context);
-        Courier courier = new Courier(R.drawable.image, "JNE");
-        courierList.add(courier);
-        courier = new Courier(R.drawable.image, "INDAH");
-        courierList.add(courier);
     }
 }

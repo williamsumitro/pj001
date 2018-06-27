@@ -232,7 +232,7 @@ public class AddProduct extends AppCompatActivity {
                 firstChildLinearLayout.setLayoutParams(firstChildParams);
 
                 LinearLayout.LayoutParams etParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                etParams.width = 200;
+                etParams.width = 150;
 
                 TextView row = new TextView(context);
                 LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -798,7 +798,7 @@ public class AddProduct extends AppCompatActivity {
                     Log.i("debug", "onResponse: SUCCESS");
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
-                        if(jsonResults.getString("message").equals("Product Registered Successfully")){
+                        if(jsonResults.getString("message").toLowerCase().equals("product registered successfully ")){
                             String message = jsonResults.getString("message");
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(context, SellerPanel.class);
