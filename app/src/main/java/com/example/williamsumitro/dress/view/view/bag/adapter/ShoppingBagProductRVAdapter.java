@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.bag.adapter;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -58,12 +59,14 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     SessionManagement sessionManagement;
     private apiService service;
     private Dialog dialog;
+    private ProgressDialog progressDialog;
     public ShoppingBagProductRVAdapter(ArrayList<Product> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        progressDialog = new ProgressDialog(context);
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -130,6 +133,10 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
         });
     }
     private void api_deleteproduct(final Product product){
+        progressDialog.setMessage("Loading ...");
+        progressDialog.show();
+        progressDialog.setCancelable(true);
+        progressDialog.setCanceledOnTouchOutside(true);
         service = apiUtils.getAPIService();
         service.req_delete_product(token, String.valueOf(product.getProductId())).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -140,6 +147,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                         if (jsonResults.getBoolean("status")){
                             String message = jsonResults.getString("message");
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                             Intent intent = new Intent(context, ShoppingBag.class);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                 initanim(intent);
@@ -149,6 +157,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                         else{
                             String message = jsonResults.getString("message");
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -161,6 +170,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 initDialog(3, product);
+                progressDialog.dismiss();
             }
         });
     }

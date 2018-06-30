@@ -6,16 +6,21 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     android:orientation="vertical">
-    <android.support.v7.widget.Toolbar
-        android:background="@color/white"
-        android:id="@+id/bag_toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/bag_appbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"/>
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/white"
+            android:id="@+id/bag_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/bag_ln_top"
         android:layout_marginTop="100dp"
-        android:layout_below="@+id/bag_toolbar"
+        android:layout_below="@+id/bag_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -37,7 +42,7 @@
         android:visibility="gone"
         android:id="@+id/bag_nestedscrollview"
         android:scrollbars="vertical"
-        android:layout_below="@+id/bag_toolbar"
+        android:layout_below="@+id/bag_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp">

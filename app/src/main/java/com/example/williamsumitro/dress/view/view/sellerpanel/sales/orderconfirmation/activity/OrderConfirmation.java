@@ -1,9 +1,11 @@
 package com.example.williamsumitro.dress.view.view.sellerpanel.sales.orderconfirmation.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResult;
@@ -37,6 +40,9 @@ public class OrderConfirmation extends AppCompatActivity {
     @BindView(R.id.orderconfirmation_ln_bottom) LinearLayout bottom;
     @BindView(R.id.orderconfirmation_ln_top) LinearLayout top;
     @BindView(R.id.orderconfirmation_toolbar) Toolbar toolbar;
+    @BindView(R.id.orderconfirmation_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+
+    public static Activity ORDERCONFIRMATION;
     private Context context;
     private apiService service;
     private String token;
@@ -50,9 +56,20 @@ public class OrderConfirmation extends AppCompatActivity {
         setContentView(R.layout.activity_order_confirmation);
         initView();
         setuptoolbar();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
+    }
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
         api_getorderconfirmation();
     }
     private void initView(){
+        ORDERCONFIRMATION = this;
         ButterKnife.bind(this);
         context = this;
         formatter = new DecimalFormat("#,###,###");
@@ -102,9 +119,11 @@ public class OrderConfirmation extends AppCompatActivity {
                             bottom.setVisibility(View.VISIBLE);
                             orderResultArrayList = response.body().getSales_OrderResult();
                             setupRV();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
                             top.setVisibility(View.VISIBLE);
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -112,7 +131,8 @@ public class OrderConfirmation extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Sales_OrderResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

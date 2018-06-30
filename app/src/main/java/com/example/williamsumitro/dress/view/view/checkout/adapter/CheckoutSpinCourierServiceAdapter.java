@@ -50,7 +50,7 @@ public class CheckoutSpinCourierServiceAdapter extends ArrayAdapter<CourierSpinn
         // I created a dynamic TextView here, but you can reference your own  custom layout for each spinner item
         TextView label = (TextView) super.getView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setTextSize(10);
+        label.setTextSize(12);
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (UserResponse class)
         label.setText(courierspinnerlist.get(position).getCourier_name() + " " +
@@ -68,7 +68,7 @@ public class CheckoutSpinCourierServiceAdapter extends ArrayAdapter<CourierSpinn
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setTextSize(10);
+        label.setTextSize(12);
         label.setText(courierspinnerlist.get(position).getCourier_name() + " " +
                 courierspinnerlist.get(position).getCourier_service() + " : IDR " +
                 formatter.format(Double.parseDouble(String.valueOf(courierspinnerlist.get(position).getFee()))) + " (Estimated " +

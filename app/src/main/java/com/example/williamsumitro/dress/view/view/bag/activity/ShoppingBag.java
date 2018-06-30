@@ -1,5 +1,6 @@
 package com.example.williamsumitro.dress.view.view.bag.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -12,6 +13,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,6 +29,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.ShoppingBagRVAdapter;
 import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -60,6 +64,7 @@ public class ShoppingBag extends AppCompatActivity {
     private ArrayList<Bag> bagArrayList;
     private String total_qty, total_price;
     private DecimalFormat formatter;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +102,10 @@ public class ShoppingBag extends AppCompatActivity {
     }
 
     private void api_viewshoppingbag() {
+        progressDialog.setMessage("Please wait ....");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         service = apiUtils.getAPIService();
         service.req_view_shopping_bag(token).enqueue(new Callback<BagResponse>() {
             @Override
@@ -115,16 +124,14 @@ public class ShoppingBag extends AppCompatActivity {
                     total_qty = response.body().getTotalQty();
                     initData();
                     setupRV();
+                    progressDialog.dismiss();
                 }
             }
             @Override
             public void onFailure(Call<BagResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
-    }
-    private void initStore(){
-
     }
     private void initView(){
         ButterKnife.bind(this);
@@ -134,6 +141,7 @@ public class ShoppingBag extends AppCompatActivity {
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        progressDialog = new ProgressDialog(context);
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -169,5 +177,24 @@ public class ShoppingBag extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
         context.startActivity(intent);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -29,7 +29,6 @@
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/checkout_address_address"
-                android:inputType="textEmailAddress"
                 android:hint="Address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

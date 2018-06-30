@@ -23,6 +23,12 @@ public class ApproveOrder {
     @Expose
     private ArrayList<ApproveOrderProduct> product;
 
+    public ApproveOrder(String token, String transaction_id, String store_id, ArrayList<ApproveOrderProduct> product){
+        this.token = token;
+        this.transaction_id = transaction_id;
+        this.store_id = store_id;
+        this.product = product;
+    }
     public String getToken() {
         return token;
     }

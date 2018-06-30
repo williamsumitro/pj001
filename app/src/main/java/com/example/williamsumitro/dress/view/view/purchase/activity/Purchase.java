@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
@@ -51,6 +53,7 @@ public class Purchase extends AppCompatActivity {
     @BindView(R.id.purchase_img_exclmationreceiptconfirmation) ImageView ex_receiptconfirmation;
     @BindView(R.id.purchase_img_exclmationpayment) ImageView ex_payment;
     @BindView(R.id.purchase_img_exclmationorderstatus) ImageView ex_orderstatus;
+    @BindView(R.id.purchase_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private Context context;
     private apiService service;
@@ -64,10 +67,19 @@ public class Purchase extends AppCompatActivity {
         setContentView(R.layout.activity_purchase);
         initView();
         setuptoolbar();
-        initData();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
         initonClick();
     }
-
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
+        initData();
+    }
     private void initonClick() {
         container_payment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +130,7 @@ public class Purchase extends AppCompatActivity {
                             tv_payment.setTextColor(getResources().getColor(R.color.red));
                             ex_payment.setVisibility(View.VISIBLE);
                             container_payment.setBackgroundColor(getResources().getColor(R.color.red9));
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -125,7 +138,8 @@ public class Purchase extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Purchase_PaymentResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -141,6 +155,7 @@ public class Purchase extends AppCompatActivity {
                             tv_orderstatus.setTextColor(getResources().getColor(R.color.red));
                             ex_orderstatus.setVisibility(View.VISIBLE);
                             container_orderstatus.setBackgroundColor(getResources().getColor(R.color.red9));
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -148,7 +163,8 @@ public class Purchase extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Purchase_OrderResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -164,6 +180,7 @@ public class Purchase extends AppCompatActivity {
                             tv_receiptconfirmation.setTextColor(getResources().getColor(R.color.red));
                             ex_receiptconfirmation.setVisibility(View.VISIBLE);
                             container_receiptconfirmation.setBackgroundColor(getResources().getColor(R.color.red9));
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -171,7 +188,8 @@ public class Purchase extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Sales_OrderResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

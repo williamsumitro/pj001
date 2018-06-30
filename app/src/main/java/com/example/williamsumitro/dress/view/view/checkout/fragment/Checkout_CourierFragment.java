@@ -105,42 +105,6 @@ public class Checkout_CourierFragment extends Fragment implements Step {
         return view;
     }
 
-    private void api_getcheckoutinfo() {
-        progressDialog.setMessage("Please wait ....");
-        progressDialog.show();
-
-        service = apiUtils.getAPIService();
-        service.req_get_checkout_info(token, id_city).enqueue(new Callback<CheckoutResponse>() {
-            @Override
-            public void onResponse(Call<CheckoutResponse> call, Response<CheckoutResponse> response) {
-                if (response.code()==200){
-                        if (response.body().getStatus()){
-                            checkoutInfoArrayList = response.body().getCheckoutInfo();
-                            total_price = response.body().getTotalPrice();
-                            total_qty = response.body().getTotalQty();
-                            available_points = String.valueOf(response.body().getAvailablePoints());
-                            adapter = new CheckoutRVAdapter(checkoutInfoArrayList, context);
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                            recyclerView.setLayoutManager(layoutManager);
-                            recyclerView.setItemAnimator(new DefaultItemAnimator());
-                            recyclerView.setAdapter(adapter);
-                            progressDialog.dismiss();
-                            sessionManagement.keepCheckoutCourier(total_price, total_qty, available_points);
-                        }
-                        else {
-                            String message = response.body().getMessage();
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                            progressDialog.dismiss();
-                        }
-                    }
-            }
-
-            @Override
-            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
-
-            }
-        });
-    }
 
     private void initView(View view){
         ButterKnife.bind(this,view);
@@ -183,6 +147,7 @@ public class Checkout_CourierFragment extends Fragment implements Step {
     private boolean isRefresh(){
         return checked;
     }
+
     private void initDialog(final int stats){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_dialog);

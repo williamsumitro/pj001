@@ -1,9 +1,11 @@
 package com.example.williamsumitro.dress.view.view.purchase.payment.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
@@ -39,6 +42,7 @@ public class PurchasePayment extends AppCompatActivity {
     @BindView(R.id.purchasepayment_ln_top) LinearLayout container_top;
     @BindView(R.id.purchasepayment_ln_bottom) LinearLayout container_bottom;
     @BindView(R.id.purchasepayment_rv) RecyclerView recyclerView;
+    @BindView(R.id.purchasepayment_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private Context context;
     private apiService service;
@@ -49,6 +53,7 @@ public class PurchasePayment extends AppCompatActivity {
     private ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList;
     private ArrayList<Bank> bankArrayList;
     private ArrayList<OrderStore> orderStoreArrayList;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +61,18 @@ public class PurchasePayment extends AppCompatActivity {
         setContentView(R.layout.activity_purchase_payment);
         initView();
         setuptoolbar();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
+    }
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
         api_getpayment();
     }
-
     private void api_getpayment() {
         service = apiUtils.getAPIService();
         service.req_get_purchase_payment(token).enqueue(new Callback<Purchase_PaymentResponse>() {
@@ -71,9 +85,11 @@ public class PurchasePayment extends AppCompatActivity {
                             purchasePaymentResultArrayList = response.body().getPurchasePaymentResult();
                             bankArrayList = response.body().getBank();
                             setupRV();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
                             container_top.setVisibility(View.VISIBLE);
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -81,7 +97,8 @@ public class PurchasePayment extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Purchase_PaymentResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -102,6 +119,7 @@ public class PurchasePayment extends AppCompatActivity {
         purchasePaymentResultArrayList = new ArrayList<>();
         bankArrayList = new ArrayList<>();
         orderStoreArrayList = new ArrayList<>();
+        progressDialog = new ProgressDialog(this);
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

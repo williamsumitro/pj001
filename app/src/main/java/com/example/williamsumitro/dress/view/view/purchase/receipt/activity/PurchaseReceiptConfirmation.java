@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.purchase.receipt.activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
@@ -38,6 +40,7 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
     @BindView(R.id.purchasereceiptconfirmation_ln_top) LinearLayout container_top;
     @BindView(R.id.purchasereceiptconfirmation_ln_bottom) LinearLayout container_bottom;
     @BindView(R.id.purchasereceiptconfirmation_rv) RecyclerView recyclerView;
+    @BindView(R.id.purchasereceiptconfirmation_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private Context context;
     private apiService service;
@@ -52,6 +55,16 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
         setContentView(R.layout.activity_purchase_receipt_confirmation);
         initView();
         setuptoolbar();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
+    }
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
         api_getreceiptconfirmation();
     }
     private void initView(){
@@ -90,9 +103,11 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
                             container_bottom.setVisibility(View.VISIBLE);
                             orderResultArrayList = response.body().getSales_OrderResult();
                             setupRV();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
                             container_top.setVisibility(View.VISIBLE);
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -100,7 +115,8 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Sales_OrderResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

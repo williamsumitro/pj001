@@ -1,6 +1,7 @@
 package com.example.williamsumitro.dress.view.view.sellerpanel.sales.orderconfirmation.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,21 +58,18 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
 //        HashMap<String, String> user = sessionManagement.getUserDetails();
 //        token = user.get(SessionManagement.TOKEN);
 //    }
-    public OC_ProductRVAdapter(String transactionid,ArrayList<ApproveOrderProduct> approveOrderProductArrayList, ArrayList<CheckApproveOrderProduct> checkApproveOrderProductArrayList, ArrayList<Product> productArrayList, Context context){
+    public OC_ProductRVAdapter(String transactionid,ArrayList<Product> productArrayList, Context context){
         this.context = context;
-        this.checkApproveOrderProductArrayList = checkApproveOrderProductArrayList;
         this.productArrayList = productArrayList;
-        this.approveOrderProductArrayList = approveOrderProductArrayList;
         this.transactionid = transactionid;
+        approveOrderProductArrayList = new ArrayList<>();
+        checkApproveOrderProductArrayList = new ArrayList<>();
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
     }
-    public ArrayList<CheckApproveOrderProduct> retrivedata(){
-        return checkApproveOrderProductArrayList;
-    }
-    public String getTransactionid(){
-        return transactionid;
+    public ArrayList<ApproveOrderProduct> retrivedata(){
+        return approveOrderProductArrayList;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -80,148 +78,108 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
         return new ViewHolder(itemView);
     }
     private void checkstat(String status, String product_id){
-        int size_transaction = checkApproveOrderProductArrayList.size();
-        int size_order;
-        int temp_j = 0, temp_i = 0;
-        CheckApproveOrderProduct checkApproveOrderProduct;
-        ApproveOrderProduct approveOrderProduct;
-        String temp_transactionid = null, temp_productid = null;
-        boolean check_transaction = false, check_order = false;
-        Toast.makeText(context, "Transaction id yang berhasil masuk : " + transactionid, Toast.LENGTH_LONG).show();
-        if (size_transaction>0){
-            Toast.makeText(context, "Panjang transaction : " + size_transaction, Toast.LENGTH_LONG).show();
-            for (int i = 0; i<size_transaction;i++){
-                temp_transactionid = checkApproveOrderProductArrayList.get(i).getTransaction_id();
-                if (temp_transactionid.equals(transactionid)){
-                    Toast.makeText(context, "Transaction id yang berhasil masuk : " + temp_transactionid, Toast.LENGTH_LONG).show();
-                    size_order = checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().size();
-                    Toast.makeText(context, "Panjang order : " + size_order, Toast.LENGTH_LONG).show();
-                    for (int j = 0; j<size_order;j++){
-                        temp_productid = checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().get(j).getProduct_id();
-                        if (temp_productid.equals(product_id)){
-                            Toast.makeText(context, "Product id yang berhasil masuk : " + temp_productid, Toast.LENGTH_LONG).show();
-                            check_order = true;
-                            temp_j = j;
-                            break;
-                        }
-                        else {
-                            check_order = false;
-                        }
-                    }
-                    temp_i = i;
-                    check_transaction = true;
+        int size_approveproduct = approveOrderProductArrayList.size();
+        boolean ketemu = false;
+        int posisi = -1;
+        if (size_approveproduct>0){
+            for (int i = 0; i<approveOrderProductArrayList.size();i ++){
+                if (approveOrderProductArrayList.get(i).getProduct_id().equals(product_id)){
+                    ketemu = true;
+                    posisi = i;
                     break;
-                }else {
-                    check_transaction = false;
                 }
             }
-            if (check_transaction){
-                approveOrderProduct = new ApproveOrderProduct(product_id, status);
-                if (check_order){
-                    Toast.makeText(context, "Transaction id yang dua2nya di set : " + transactionid, Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, "Product id yang dua2nya di set : " + product_id, Toast.LENGTH_LONG).show();
-                    approveOrderProductArrayList.set(temp_j, approveOrderProduct);
-                    checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-                    checkApproveOrderProductArrayList.set(temp_i, checkApproveOrderProduct);
-                }
-                else {
-                    Toast.makeText(context, "Transaction id yang satu di set : " + transactionid, Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, "Product id yang satu di set : " + product_id, Toast.LENGTH_LONG).show();
-                    approveOrderProductArrayList.add(approveOrderProduct);
-                    checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-                    checkApproveOrderProductArrayList.set(temp_i, checkApproveOrderProduct);
-                }
-            }else {
-                Toast.makeText(context, "Transaction id yang dua2nya di add : " + transactionid, Toast.LENGTH_LONG).show();
-                Toast.makeText(context, "Product id yang dua2nya di add : " + product_id, Toast.LENGTH_LONG).show();
-                approveOrderProductArrayList = new ArrayList<>();
-                approveOrderProduct = new ApproveOrderProduct(product_id, status);
+            if (ketemu){
+                ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
+                approveOrderProductArrayList.set(posisi, approveOrderProduct);
+            }
+            else {
+                ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
                 approveOrderProductArrayList.add(approveOrderProduct);
-                checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-                checkApproveOrderProductArrayList.add(checkApproveOrderProduct);
             }
-        }else {
-            approveOrderProductArrayList = new ArrayList<>();
-            Toast.makeText(context, "Masuk duluan", Toast.LENGTH_LONG).show();
-            approveOrderProduct = new ApproveOrderProduct(product_id, status);
-            approveOrderProductArrayList.add(approveOrderProduct);
-            checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-            checkApproveOrderProductArrayList.add(checkApproveOrderProduct);
         }
-//        Boolean check = false;
-//        Boolean checkluar = false;
-//        int k = -1;
+        else {
+            ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
+            approveOrderProductArrayList.add(approveOrderProduct);
+        }
+
+//        int size_transaction = checkApproveOrderProductArrayList.size();
+//        int size_order;
+//        int temp_j = 0, temp_i = 0;
 //        CheckApproveOrderProduct checkApproveOrderProduct;
-//        Toast.makeText(context, "Giliran  Transation id : " + transactionid+
-//                "\nproductid : " + product_id +
-//                "\npanjang transaction :" + String.valueOf(checkApproveOrderProductArrayList.size()), Toast.LENGTH_LONG).show();
-//        if (checkApproveOrderProductArrayList.size()>0){
-//            for (int i = 0; i<checkApproveOrderProductArrayList.size();i++){
-//                Toast.makeText(context, "Transcation id activity : " + transactionid + "\nTransaction id array : " +  checkApproveOrderProductArrayList.get(i).getTransaction_id(), Toast.LENGTH_LONG).show();
-//                if (transactionid.equals(checkApproveOrderProductArrayList.get(i).getTransaction_id())){
-//                    Toast.makeText(context, "productid : " + product_id + " dengan product status " + status, Toast.LENGTH_LONG).show();
-//                    Toast.makeText(context, "Panjang product " + String.valueOf(checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().size()), Toast.LENGTH_LONG).show();
-//                    for (int j = 0; j<checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().size();j++){
-//                        if (product_id.equals(checkApproveOrderProductArrayList.get(j).getApproveOrderProductArrayList().get(j).getProduct_id())){
-//                            k = j;
-//                            check = true;
+//        ApproveOrderProduct approveOrderProduct;
+//        String temp_transactionid = null, temp_productid = null;
+//        boolean check_transaction = false, check_order = false;
+//        Toast.makeText(context, "Transaction id yang berhasil masuk : " + transactionid, Toast.LENGTH_LONG).show();
+//        if (size_transaction>0){
+//            Toast.makeText(context, "Panjang transaction : " + size_transaction, Toast.LENGTH_LONG).show();
+//            for (int i = 0; i<size_transaction;i++){
+//                temp_transactionid = checkApproveOrderProductArrayList.get(i).getTransaction_id();
+//                if (temp_transactionid.equals(transactionid)){
+//                    Toast.makeText(context, "Transaction id yang berhasil masuk : " + temp_transactionid, Toast.LENGTH_LONG).show();
+//                    size_order = checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().size();
+//                    Toast.makeText(context, "Panjang order : " + size_order, Toast.LENGTH_LONG).show();
+//                    for (int j = 0; j<size_order;j++){
+//                        temp_productid = checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().get(j).getProduct_id();
+//                        if (temp_productid.equals(product_id)){
+//                            Toast.makeText(context, "Product id yang berhasil masuk : " + temp_productid, Toast.LENGTH_LONG).show();
+//                            check_order = true;
+//                            temp_j = j;
 //                            break;
 //                        }
 //                        else {
-//                            check = false;
+//                            check_order = false;
 //                        }
 //                    }
-//                    checkluar = true;
-//                }
-//                else{
-//                    checkluar = false;
-//                }
-//                if (checkluar) {
-//                    if (check){
-//                        Toast.makeText(context, "Product nya sama", Toast.LENGTH_LONG).show();
-//                        ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
-//                        approveOrderProductArrayList.set(k,approveOrderProduct);
-//                        checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-//                        checkApproveOrderProductArrayList.set(i, checkApproveOrderProduct);
-//                        Toast.makeText(context,"Selesai ditambah : \npanjang transaction :" + String.valueOf(checkApproveOrderProductArrayList.size())+
-//                                "\npanjang product" + String.valueOf(checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().size()), Toast.LENGTH_LONG).show();
-//                        break;
-//                    }else {
-//                        Toast.makeText(context, "Product nya beda", Toast.LENGTH_LONG).show();
-//                        ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
-//                        approveOrderProductArrayList.add(approveOrderProduct);
-//                        checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-//                        checkApproveOrderProductArrayList.set(i, checkApproveOrderProduct);
-//                        Toast.makeText(context,"Selesai ditambah : \npanjang transaction :" + String.valueOf(checkApproveOrderProductArrayList.size())+
-//                                "\npanjang product" + String.valueOf(checkApproveOrderProductArrayList.get(i).getApproveOrderProductArrayList().size()), Toast.LENGTH_LONG).show();
-//                        break;
-//                    }
-//                }
-//                else {
-//                    Toast.makeText(context, "Transcation Baru id activity : " + transactionid, Toast.LENGTH_LONG).show();
-//                    ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
-//                    approveOrderProductArrayList.add(approveOrderProduct);
-//                    checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
-//                    checkApproveOrderProductArrayList.add(checkApproveOrderProduct);
-//                    Toast.makeText(context,"Selesai ditambah : \npanjang transaction :" + String.valueOf(checkApproveOrderProductArrayList.size()), Toast.LENGTH_LONG).show();
+//                    temp_i = i;
+//                    check_transaction = true;
+//                    break;
+//                }else {
+//                    check_transaction = false;
 //                }
 //            }
-//        }
-//        else {
-//            Toast.makeText(context,"Masuk duluan yah \nTranscation id activity : " + transactionid, Toast.LENGTH_LONG).show();
-//            ApproveOrderProduct approveOrderProduct = new ApproveOrderProduct(product_id, status);
+//            if (check_transaction){
+//                approveOrderProduct = new ApproveOrderProduct(product_id, status);
+//                if (check_order){
+//                    Toast.makeText(context, "Transaction id yang dua2nya di set : " + transactionid, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "Product id yang dua2nya di set : " + product_id, Toast.LENGTH_LONG).show();
+//                    approveOrderProductArrayList.set(temp_j, approveOrderProduct);
+//                    checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
+//                    checkApproveOrderProductArrayList.set(temp_i, checkApproveOrderProduct);
+//                }
+//                else {
+//                    Toast.makeText(context, "Transaction id yang satu di set : " + transactionid, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "Product id yang satu di set : " + product_id, Toast.LENGTH_LONG).show();
+//                    approveOrderProductArrayList.add(approveOrderProduct);
+//                    checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
+//                    checkApproveOrderProductArrayList.set(temp_i, checkApproveOrderProduct);
+//                }
+//            }else {
+//                Toast.makeText(context, "Transaction id yang dua2nya di add : " + transactionid, Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Product id yang dua2nya di add : " + product_id, Toast.LENGTH_LONG).show();
+//                approveOrderProductArrayList = new ArrayList<>();
+//                approveOrderProduct = new ApproveOrderProduct(product_id, status);
+//                approveOrderProductArrayList.add(approveOrderProduct);
+//                checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
+//                checkApproveOrderProductArrayList.add(checkApproveOrderProduct);
+//            }
+//        }else {
+//            approveOrderProductArrayList = new ArrayList<>();
+//            Toast.makeText(context, "Masuk duluan", Toast.LENGTH_LONG).show();
+//            approveOrderProduct = new ApproveOrderProduct(product_id, status);
 //            approveOrderProductArrayList.add(approveOrderProduct);
 //            checkApproveOrderProduct = new CheckApproveOrderProduct(transactionid, approveOrderProductArrayList);
 //            checkApproveOrderProductArrayList.add(checkApproveOrderProduct);
-//            Toast.makeText(context,"Selesai ditambah : \npanjang transaction :" + String.valueOf(checkApproveOrderProductArrayList.size()), Toast.LENGTH_LONG).show();
 //        }
-
-
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         sizelist = new ArrayList<>();
         final Product product = productArrayList.get(position);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(10,5,10,5);
+        holder.cardView.setLayoutParams(lp);
         formatter = new DecimalFormat("#,###,###");
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
@@ -234,6 +192,7 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
         holder.subtotal.setText("IDR " + formatter.format(Double.parseDouble(product.getPriceTotal())));
         holder.accept.setChecked(true);
         if (holder.accept.isChecked()){
+            status = "1";
             product_id = String.valueOf(product.getProductId());
             checkstat(status, product_id);
         }
@@ -342,6 +301,7 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
         @BindView(R.id.itemcheckoutproduct_rbAccept)
         RadioButton accept;
         @BindView(R.id.itemcheckoutproduct_rbReject) RadioButton reject;
+        @BindView(R.id.itemcheckoutproduct_cardview) CardView cardView;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

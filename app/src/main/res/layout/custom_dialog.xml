@@ -44,6 +44,7 @@
             android:background="@drawable/button1"
             android:id="@+id/customdialog_btnok"
             android:text="Ok"
+            android:textAllCaps="false"
             android:layout_width="80dp"
             android:layout_height="40dp" />
         <Button
@@ -54,6 +55,7 @@
             android:background="@drawable/button1_red"
             android:id="@+id/customdialog_btncancel"
             android:text="Ok"
+            android:textAllCaps="false"
             android:layout_width="80dp"
             android:layout_height="40dp" />
     </LinearLayout>

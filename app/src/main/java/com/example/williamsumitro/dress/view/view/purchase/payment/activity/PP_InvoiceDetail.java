@@ -103,7 +103,6 @@ public class PP_InvoiceDetail extends AppCompatActivity {
             orderStoreArrayList = (ArrayList<OrderStore>) getintent.getSerializableExtra(ORDERSTORELIST);
             invoice_number = getintent.getStringExtra(INVOICENUMBER);
             grand_total = getintent.getStringExtra(GRANDTOTAL);
-            Toast.makeText(context, String.valueOf(orderStoreArrayList.size()), Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();

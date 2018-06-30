@@ -293,6 +293,9 @@ public class Checkout_AddressFragment extends Fragment implements Step {
     private void api_getcheckoutinfo() {
         progressDialog.setMessage("Please wait ....");
         progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        service = apiUtils.getAPIService();
 
         service = apiUtils.getAPIService();
         service.req_get_checkout_info(token, idcity).enqueue(new Callback<CheckoutResponse>() {
@@ -323,7 +326,8 @@ public class Checkout_AddressFragment extends Fragment implements Step {
 
             @Override
             public void onFailure(Call<CheckoutResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please press back then next again", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
             }
         });
     }

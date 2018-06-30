@@ -94,6 +94,8 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
     private void api_getwishlist(){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         service = apiUtils.getAPIService();
         service.req_get_my_wishlist(token).enqueue(new Callback<WishlistResponse>() {
             @Override

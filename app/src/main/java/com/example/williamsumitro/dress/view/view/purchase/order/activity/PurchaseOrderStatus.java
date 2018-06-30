@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.purchase.order.activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
@@ -35,6 +37,7 @@ public class PurchaseOrderStatus extends AppCompatActivity {
     @BindView(R.id.purchaseorderstatus_rv) RecyclerView recyclerView;
     @BindView(R.id.purchaseorderstatus_ln_bottom) LinearLayout container_bottom;
     @BindView(R.id.purchaseorderstatus_ln_top) LinearLayout container_top;
+    @BindView(R.id.purchaseorderstatus_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private Context context;
     private apiService service;
@@ -49,6 +52,16 @@ public class PurchaseOrderStatus extends AppCompatActivity {
         setContentView(R.layout.activity_purchase_order_status);
         initView();
         setuptoolbar();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
+    }
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
         api_getorder();
     }
     private void api_getorder(){
@@ -62,17 +75,20 @@ public class PurchaseOrderStatus extends AppCompatActivity {
                             container_bottom.setVisibility(View.VISIBLE);
                             orderResultArrayList = response.body().getPurchase_OrderResult();
                             setupRV();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                     else {
                         container_top.setVisibility(View.VISIBLE);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Purchase_OrderResponse> call, Throwable t) {
-
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

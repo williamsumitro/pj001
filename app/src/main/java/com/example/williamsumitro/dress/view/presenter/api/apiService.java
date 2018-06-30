@@ -1,6 +1,7 @@
 package com.example.williamsumitro.dress.view.presenter.api;
 
 import com.example.williamsumitro.dress.view.model.AddToBag;
+import com.example.williamsumitro.dress.view.model.ApproveOrder;
 import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.model.CheckoutResponse;
@@ -184,7 +185,7 @@ public interface apiService {
     Call<Sales_OrderResponse> req_seller_get_order(@Field("token") String token);
 
     @POST("approve_order_product")
-    Call<ResponseBody> req_approve_order_product(@Body Checkout checkout_courier);
+    Call<ResponseBody> req_approve_order_product(@Body ApproveOrder approveOrder);
 
     @FormUrlEncoded
     @POST("input_receipt_number")

@@ -156,6 +156,8 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
             public void onClick(View v) {
                 progressDialog.setMessage("Loading ...");
                 progressDialog.show();
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
                 service.req_get_product_detail(token, String.valueOf(wishlist.getProductId())).enqueue(new Callback<ProductDetail>() {
                     @Override
                     public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
