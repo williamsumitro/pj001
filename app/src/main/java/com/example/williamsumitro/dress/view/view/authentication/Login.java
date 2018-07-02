@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity{
     @BindView(R.id.login_layoutemail) TextInputLayout layoutemail;
     @BindView(R.id.login_etpassword) TextInputEditText password;
     @BindView(R.id.login_container) RelativeLayout container;
-    @BindView(R.id.login_lnskip) LinearLayout skip;
+    @BindView(R.id.login_btnskip) Button skip;
     private Context context;
     private apiService service;
     private String token;
@@ -107,6 +107,10 @@ public class Login extends AppCompatActivity{
         if (TextUtils.isEmpty(email.getText())) {
             layoutemail.setErrorEnabled(true);
             layoutemail.setError("Email is required");
+            return;
+        }else if (!AuthActivity.isemailvalid(email.getText().toString())) {
+            layoutemail.setErrorEnabled(true);
+            layoutemail.setError("Email is not valid");
             return;
         }else if (TextUtils.isEmpty(password.getText())) {
             layoutpassword.setErrorEnabled(true);

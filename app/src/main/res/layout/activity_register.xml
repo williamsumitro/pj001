@@ -17,130 +17,158 @@
         <ImageView
             android:src="@drawable/logo"
             android:layout_gravity="center"
-            android:layout_width="75dp"
-            android:layout_height="75dp" />
-        <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/black"
-            android:id="@+id/register_layoutfullname"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <RelativeLayout
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputEditText
-                android:drawablePadding="10dp"
-                android:drawableStart="@drawable/user2"
-                android:drawableLeft="@drawable/user2"
-                android:textSize="14sp"
-                android:textColorHint="@color/black"
-                android:backgroundTint="@color/black"
-                android:textColor="@color/black"
-                android:id="@+id/register_etfullname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Full Name"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/black"
-            android:id="@+id/register_layoutemail"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputEditText
-                android:drawablePadding="10dp"
-                android:drawableStart="@drawable/email1"
-                android:drawableLeft="@drawable/email1"
-                android:inputType="textEmailAddress"
-                android:textSize="14sp"
-                android:textColorHint="@color/black"
-                android:backgroundTint="@color/black"
-                android:textColor="@color/black"
-                android:id="@+id/register_etemail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email Address"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/black"
-            android:id="@+id/register_layoutpassword"
-            android:layout_width="match_parent"
-            app:passwordToggleEnabled="true"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputEditText
-                android:drawablePadding="10dp"
-                android:drawableStart="@drawable/password1"
-                android:drawableLeft="@drawable/password1"
-                android:inputType="textPassword"
-                android:textSize="14sp"
-                android:textColorHint="@color/black"
-                android:backgroundTint="@color/black"
-                android:textColor="@color/black"
-                android:id="@+id/register_etpassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"/>
-        </android.support.design.widget.TextInputLayout>
-        <TextView
-            android:textSize="16sp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/black"
-            android:text="Gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RadioGroup
-            android:id="@+id/register_radiogroup"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-                <RadioButton
-                    android:id="@+id/register_rbmale"
-                    android:textSize="14sp"
-                    android:buttonTint="@color/black"
-                    android:textColor="@color/black"
-                    android:text="Male"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <RadioButton
-                    android:id="@+id/register_rbfemale"
-                    android:textSize="14sp"
-                    android:buttonTint="@color/black"
-                    android:textColor="@color/black"
-                    android:text="Female"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-        </RadioGroup>
-        <android.support.design.widget.TextInputLayout
-            android:textColorHint="@color/black"
-            android:id="@+id/register_layoutphonenumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputEditText
-                android:drawablePadding="10dp"
-                android:drawableStart="@drawable/phone"
-                android:drawableLeft="@drawable/phone"
-                android:inputType="phone"
-                android:textSize="14sp"
-                android:textColorHint="@color/black"
-                android:backgroundTint="@color/black"
-                android:textColor="@color/black"
-                android:id="@+id/register_etphonenumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Phone Number"/>
-        </android.support.design.widget.TextInputLayout>
-        <Button
-            android:layout_gravity="center"
-            android:background="@drawable/button1_2"
-            android:textColor="@color/white"
-            android:id="@+id/register_btnRegister"
-            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Register"/>
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="5dp"
+            android:id="@+id/cardView">
+            <LinearLayout
+                android:background="@color/yellow9"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="@color/black"
+                    android:id="@+id/register_layoutfullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/user2"
+                        android:drawableLeft="@drawable/user2"
+                        android:textSize="14sp"
+                        android:textColorHint="@color/black"
+                        android:backgroundTint="@color/black"
+                        android:textColor="@color/black"
+                        android:id="@+id/register_etfullname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Full Name"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="@color/black"
+                    android:id="@+id/register_layoutemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/email1"
+                        android:drawableLeft="@drawable/email1"
+                        android:inputType="textEmailAddress"
+                        android:textSize="14sp"
+                        android:textColorHint="@color/black"
+                        android:backgroundTint="@color/black"
+                        android:textColor="@color/black"
+                        android:id="@+id/register_etemail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email Address"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="@color/black"
+                    android:id="@+id/register_layoutpassword"
+                    android:layout_width="match_parent"
+                    app:passwordToggleEnabled="true"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/password1"
+                        android:drawableLeft="@drawable/password1"
+                        android:inputType="textPassword"
+                        android:textSize="14sp"
+                        android:textColorHint="@color/black"
+                        android:backgroundTint="@color/black"
+                        android:textColor="@color/black"
+                        android:id="@+id/register_etpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="15"
+                        android:hint="Password"/>
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:text="Gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioGroup
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/register_radiogroup"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:id="@+id/register_rbmale"
+                        android:textSize="14sp"
+                        android:buttonTint="@color/black"
+                        android:textColor="@color/black"
+                        android:text="Male"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/register_rbfemale"
+                        android:textSize="14sp"
+                        android:buttonTint="@color/black"
+                        android:textColor="@color/black"
+                        android:text="Female"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="@color/black"
+                    android:id="@+id/register_layoutphonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/phone"
+                        android:drawableLeft="@drawable/phone"
+                        android:inputType="phone"
+                        android:textSize="14sp"
+                        android:textColorHint="@color/black"
+                        android:backgroundTint="@color/black"
+                        android:textColor="@color/black"
+                        android:id="@+id/register_etphonenumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        android:maxLength="16"/>
+                </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button1_2"
+                    android:textColor="@color/white"
+                    android:id="@+id/register_btnRegister"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="Register"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:clickable="true"
         android:id="@+id/register_lnLogin"
         android:layout_marginBottom="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/register_lnskip"
+        android:layout_alignBottom="@+id/register_btnskip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -159,46 +187,12 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-
-    <LinearLayout
-        android:paddingRight="100dp"
-        android:paddingLeft="100dp"
-        android:id="@+id/register_lnskip"
-        android:clickable="true"
-        android:layout_marginBottom="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <View
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/grey"/>
-            <TextView
-                android:textSize="20sp"
-                android:text="~"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <View
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/grey"/>
-        </LinearLayout>
-        <TextView
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:text="Continue"
-            android:textColor="@color/black"
+        <Button
+            android:layout_alignParentBottom="true"
+            android:id="@+id/register_btnskip"
+            android:textAllCaps="false"
+            android:text="Continue to Home"
+            android:background="@drawable/button1_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 </RelativeLayout>

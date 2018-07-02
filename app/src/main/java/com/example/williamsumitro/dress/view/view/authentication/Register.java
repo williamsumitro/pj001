@@ -55,7 +55,7 @@ public class Register extends AppCompatActivity {
     @BindView(R.id.register_lnLogin) LinearLayout login;
     @BindView(R.id.register_radiogroup) RadioGroup radioGroup;
     @BindView(R.id.register_container) RelativeLayout container;
-    @BindView(R.id.register_lnskip) LinearLayout skip;
+    @BindView(R.id.register_btnskip) Button skip;
     private RadioButton sexbutton;
     private Context context;
     private apiService service;
@@ -129,7 +129,7 @@ public class Register extends AppCompatActivity {
             return;
         } else if (!AuthActivity.ispasswordvalid(password.getText().toString())) {
             layoutpassword.setErrorEnabled(true);
-            layoutpassword.setError("Password is not valid. Password minimum 8 characters");
+            layoutpassword.setError("Password must minimum 8 characters");
             return;
         } else if (TextUtils.isEmpty(phonenumber.getText())) {
             layoutphonenumber.setErrorEnabled(true);
@@ -176,7 +176,8 @@ public class Register extends AppCompatActivity {
                             }
                         }
                         else {
-                            Log.i("debug", "onResponse: FAILED");
+                            progressDialog.dismiss();
+                            initDialog(response.message(), 0);
                         }
                     }
                     @Override
