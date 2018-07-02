@@ -41,9 +41,9 @@ public class RatingReviewProductRVAdapter extends RecyclerView.Adapter<RatingRev
     public void onBindViewHolder(final ViewHolder holder, int position) {
         ProductRating productRating = productRatingList.get(position);
         formatter = new DecimalFormat("#,###,###");
-        holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(productRating.getPrice()))));
-        holder.productname.setText(productRating.getName());
-        holder.imageproduct.setImageResource(productRating.getImage());
+//        holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(productRating.getPrice()))));
+//        holder.productname.setText(productRating.getName());
+//        holder.imageproduct.setImageResource(productRating.getImage());
         holder.star5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

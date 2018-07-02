@@ -1,33 +1,44 @@
 package com.example.williamsumitro.dress.view.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by WilliamSumitro on 01/04/2018.
  */
 
 public class ProductRating {
-    private int image, price;
-    private Double rate;
-    private String name, review;
-    public ProductRating(int image, String name, int price){
-        this.image = image;
-        this.price = price;
-        this.name = name;
+    @SerializedName("product_id")
+    @Expose
+    private String product_id;
+
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+
+    @SerializedName("review")
+    @Expose
+    private String review;
+    public ProductRating(String product_id, String rating, String review){
+        this.product_id = product_id;
+        this.review = review;
+        this.rating = rating;
     }
 
-    public int getImage() {
-        return image;
+    public String getProduct_id() {
+        return product_id;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
     }
 
-    public Double getRate() {
-        return rate;
+    public String getRating() {
+        return rating;
     }
 
-    public void setRate(Double rate) {
-        this.rate = rate;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getReview() {
@@ -36,21 +47,5 @@ public class ProductRating {
 
     public void setReview(String review) {
         this.review = review;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

@@ -41,14 +41,13 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
     private DecimalFormat formatter;
     private List<String> sizelist;
     private Boolean detailclick = false;
-    private String token, status;
-    SessionManagement sessionManagement;
+    private String status;
     private apiService service;
     private ArrayList<ApproveOrderProduct> approveOrderProductArrayList;
     private ArrayList<CheckApproveOrderProduct> checkApproveOrderProductArrayList;
     private RadioButton acceptreject;
     private RadioButton lastCheckedRB = null;
-    private String product_id, transactionid;
+    private String product_id;
 
 //    public OC_ProductRVAdapter(ArrayList<ApproveOrderProduct> approveOrderProductArrayList, ArrayList<Product> productArrayList, Context context){
 //        this.context = context;
@@ -58,15 +57,11 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
 //        HashMap<String, String> user = sessionManagement.getUserDetails();
 //        token = user.get(SessionManagement.TOKEN);
 //    }
-    public OC_ProductRVAdapter(String transactionid,ArrayList<Product> productArrayList, Context context){
+    public OC_ProductRVAdapter(ArrayList<Product> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
-        this.transactionid = transactionid;
         approveOrderProductArrayList = new ArrayList<>();
         checkApproveOrderProductArrayList = new ArrayList<>();
-        sessionManagement = new SessionManagement(context);
-        HashMap<String, String> user = sessionManagement.getUserDetails();
-        token = user.get(SessionManagement.TOKEN);
     }
     public ArrayList<ApproveOrderProduct> retrivedata(){
         return approveOrderProductArrayList;

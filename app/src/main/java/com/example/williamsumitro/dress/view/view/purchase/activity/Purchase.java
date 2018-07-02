@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
+import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -193,11 +194,35 @@ public class Purchase extends AppCompatActivity {
             }
         });
     }
-
+    private void api_getreviewrating() {
+        service = apiUtils.getAPIService();
+        service.req_get_review_rating(token).enqueue(new Callback<Purchase_ReviewRatingResponse>() {
+            @Override
+            public void onResponse(Call<Purchase_ReviewRatingResponse> call, Response<Purchase_ReviewRatingResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getStatus()){
+                        if (response.body().getResult().size()>0){
+                            tv_reviewandrating.setText(String.valueOf(response.body().getResult().size()));
+                            tv_reviewandrating.setTextColor(getResources().getColor(R.color.red));
+                            ex_reviewandrating.setVisibility(View.VISIBLE);
+                            container_reviewandrating.setBackgroundColor(getResources().getColor(R.color.red9));
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<Purchase_ReviewRatingResponse> call, Throwable t) {
+                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
     private void initData() {
         api_getpayment();
         api_getorder();
         api_getreceiptconfirmation();
+        api_getreviewrating();
     }
 
     private void initView(){

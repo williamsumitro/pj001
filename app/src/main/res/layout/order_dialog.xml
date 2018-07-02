@@ -26,17 +26,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/calendar1"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Invoice Date : "
+                android:text="Invoice Date"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/orderdialog_tv_invoicedate"
                 android:layout_gravity="center"
@@ -46,17 +50,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/receiver"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Receiver Name : "
+                android:text="Receiver Name"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_receivername"
                 android:layout_gravity="center"
@@ -66,17 +74,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/address"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
                 android:layout_gravity="center"
-                android:text="Shipping Address : "
+                android:layout_marginLeft="10dp"
+                android:text="Shipping Address"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_shippingaddress"
                 android:layout_gravity="center"
@@ -86,17 +98,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/location3"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Province : "
+                android:text="Province"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_province"
                 android:layout_gravity="center"
@@ -106,17 +122,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/location2"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="City : "
+                android:text="City"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_city"
                 android:layout_gravity="center"
@@ -126,17 +146,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/phonenumber1"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Phone Number : "
+                android:text="Phone Number"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_phonenumber"
                 android:layout_gravity="center"
@@ -146,17 +170,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/postalcode"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Postal Code : "
+                android:text="Postal Code"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_postalcode"
                 android:layout_gravity="center"
@@ -166,17 +194,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/courier5"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Courier : "
+                android:text="Courier"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_courier"
                 android:layout_gravity="center"
@@ -186,17 +218,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/note"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Note : "
+                android:text="Note"
                 android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/orderdialog_tv_note"
                 android:layout_gravity="center"

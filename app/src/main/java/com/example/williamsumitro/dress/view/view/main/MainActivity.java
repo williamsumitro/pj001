@@ -49,7 +49,6 @@ import com.example.williamsumitro.dress.view.view.favoritestore.fragment.Favorit
 import com.example.williamsumitro.dress.view.view.openstore.activity.NoStore;
 import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
 import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
-import com.example.williamsumitro.dress.view.view.purchase.fragment.OrderFragment;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;

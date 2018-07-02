@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:stateListAnimator="@null"
+        android:id="@+id/purchasehistorydetail_appbar">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:id="@+id/purchasehistorydetail_collapstoolbar"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleEnabled="false">
+            <LinearLayout
+                android:gravity="center"
+                android:background="@color/brown4"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/purchasehistorydetail_tv_ordernumber"
+                    android:textSize="20sp"
+                    android:text="Order Number"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:text="Subtotal : "
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/purchasehistorydetail_tv_subtotal"
+                        android:textSize="16sp"
+                        android:text="IDR 50.000.000"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:text="Shipping Fee : "
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/purchasehistorydetail_tv_shippingfee"
+                        android:textSize="16sp"
+                        android:text="IDR 50.000.000"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:text="Total : "
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/purchasehistorydetail_tv_total"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="IDR 50.000.000"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/purchasehistorydetail_btn_vieworderdetails"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button1"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:text="View Order Details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/purchasehistorydetail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_above="@+id/shadow"
+                android:layout_gravity="top"
+                app:layout_collapseMode="pin" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:clipToPadding="false">
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:padding="5dp"
+                android:id="@+id/purchasehistorydetail_ln_acceptedproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/green4"
+                        android:text="Accepted Product"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/purchasehistorydetail_img_acceptedcaret"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/caret"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp" />
+                </LinearLayout>
+                <View
+                    android:background="@color/green7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_margin="5dp"
+                    android:id="@+id/purchasehistorydetail_ln_acceptedproductdetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <android.support.v7.widget.RecyclerView
+                        android:visibility="gone"
+                        android:id="@+id/purchasehistorydetail_rv_acceptedproduct"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/purchasehistorydetail_tv_acceptedproduct"
+                        android:visibility="gone"
+                        android:textColor="@color/red"
+                        android:text="No Product Rejected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/purchasehistorydetail_ln_rejectedproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/red4"
+                        android:text="Rejected Product"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/purchasehistorydetail_img_rejectedcaret"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/caret"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp" />
+                </LinearLayout>
+                <View
+                    android:background="@color/red7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_margin="5dp"
+                    android:id="@+id/purchasehistorydetail_ln_rejectedproductdetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <android.support.v7.widget.RecyclerView
+                        android:visibility="gone"
+                        android:id="@+id/purchasehistorydetail_rv_rejectedproduct"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/purchasehistorydetail_tv_rejectedproduct"
+                        android:visibility="gone"
+                        android:textColor="@color/red"
+                        android:text="No Product Accepted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

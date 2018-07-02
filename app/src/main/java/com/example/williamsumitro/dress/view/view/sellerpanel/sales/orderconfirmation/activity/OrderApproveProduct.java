@@ -120,7 +120,7 @@ public class OrderApproveProduct extends AppCompatActivity {
     }
 
     private void setupRV(){
-        rvadapter = new OC_ProductRVAdapter(transactionid, productArrayList,  context);
+        rvadapter = new OC_ProductRVAdapter(productArrayList,  context);
         SnapHelper snapHelper = new LinearSnapHelper();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

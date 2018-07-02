@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by WilliamSumitro on 18/06/2018.
  */
 
-public class ProductRejected {
+public class ProductRejected implements Serializable {
     @SerializedName("product_id")
     @Expose
     private Integer productId;

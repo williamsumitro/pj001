@@ -51,8 +51,6 @@ public class ReviewandrateDetail extends AppCompatActivity {
         setContentView(R.layout.activity_reviewandrate_detail);
         initView();
         setuptoolbar();
-        initData();
-        setupRV();
         initOnClick();
     }
     private void initOnClick(){
@@ -130,29 +128,5 @@ public class ReviewandrateDetail extends AppCompatActivity {
                 finish();
             }
         });
-    }
-    private void setupRV(){
-        adapter = new RatingReviewProductRVAdapter(productRatingList, context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-    }
-    private void initData(){
-        storename.setText("ABC Store");
-        rejected.setText("1");
-        accepted.setText("2");
-        reason.setText("Not enough stock, it will ready after 15 May 2018");
-        ordernumber.setText("ODR/2018/III/0001");
-        orderdate.setText("12 March 2018");
-        receivedate.setText("1 April 2018");
-        imagestore.setImageResource(R.drawable.image);
-
-        ProductRating productRating = new ProductRating(R.drawable.image, "Short", 250000);
-        productRatingList.add(productRating);
-        productRating = new ProductRating(R.drawable.image, "Pants", 210000);
-        productRatingList.add(productRating);
-        productRating = new ProductRating(R.drawable.image, "Jeans", 150000);
-        productRatingList.add(productRating);
     }
 }

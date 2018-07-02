@@ -12,8 +12,11 @@ import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
+import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResponse;
+import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
+import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.WishlistResponse;
 import com.example.williamsumitro.dress.view.model.dress_attribute.DressAttribute;
@@ -233,4 +236,15 @@ public interface apiService {
                                     @Field("account_number") String account_number,
                                     @Field("name_in_account") String name_in_account,
                                     @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("get_review_rating")
+    Call<Purchase_ReviewRatingResponse> req_get_review_rating(@Field("token") String token);
+
+    @POST("submit_review_rating")
+    Call<ResponseBody> req_submit_review_rating(@Body SubmitReviewRating submitReviewRating);
+
+    @FormUrlEncoded
+    @POST("transaction_history")
+    Call<Purchase_TransactionHistoryResponse> req_transaction_history(@Field("token") String token);
 }
