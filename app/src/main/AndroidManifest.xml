@@ -55,7 +55,6 @@
         <activity android:name=".view.view.wallet.activity.Mywallet" />
         <activity android:name=".view.view.wallet.activity.Withdraw" />
         <activity android:name=".view.view.sellerpanel.SellerPanel" />
-        <activity android:name=".view.view.sellerpanel.sales.activity.ManageSales" />
         <activity android:name=".view.view.sellerpanel.sales.activity.OCDetail" />
         <activity android:name=".view.view.sellerpanel.sales.activity.SCDetail" />
         <activity android:name=".view.view.sellerpanel.product.activity.AddProduct" />
@@ -84,7 +83,8 @@
         <activity android:name=".view.view.sellerpanel.sales.orderconfirmation.activity.OrderApproveProduct" />
         <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRatingDetail" />
         <activity android:name=".view.view.purchase.history.activity.PurchaseHistoryDetail" />
-        <activity android:name=".view.view.sellerpanel.partnership.activity.UplinePartnership"></activity>
+        <activity android:name=".view.view.sellerpanel.partnership.activity.UplinePartnership" />
+        <activity android:name=".view.view.sellerpanel.partnership.activity.DownlinePartnership"></activity>
     </application>
 
 </manifest>

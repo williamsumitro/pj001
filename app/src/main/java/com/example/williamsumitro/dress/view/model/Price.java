@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Price {
+    @SerializedName("product_id_partner")
+    @Expose
+    private Integer productIdPartner;
     @SerializedName("product_id")
     @Expose
     private Integer productId;
@@ -26,6 +29,14 @@ public class Price {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+
+    public Integer getProductIdPartner() {
+        return productIdPartner;
+    }
+
+    public void setProductIdPartner(Integer productIdPartner) {
+        this.productIdPartner = productIdPartner;
+    }
 
     public Integer getProductId() {
         return productId;

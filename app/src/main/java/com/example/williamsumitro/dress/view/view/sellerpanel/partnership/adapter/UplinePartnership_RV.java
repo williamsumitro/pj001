@@ -1,9 +1,13 @@
 package com.example.williamsumitro.dress.view.view.sellerpanel.partnership.adapter;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -14,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,15 +38,28 @@ import com.example.williamsumitro.dress.view.model.UplinePartnershipItem;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;
+import com.example.williamsumitro.dress.view.view.sellerpanel.partnership.activity.UplinePartnership;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,12 +77,17 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
     private ArrayList<Price> priceList;
     private List<Addproduct_Price> container_price;
     private DecimalFormat formatter;
-    private int index=0;
+    private int index;
+    private ProgressDialog progressDialog;
+    private SessionManagement sessionManagement;
+    private String token;
 
     public UplinePartnership_RV(Context context, ArrayList<UplinePartnershipItem> itemArrayList){
         this.context = context;
         this.itemArrayList = itemArrayList;
         priceList = new ArrayList<>();
+        progressDialog = new ProgressDialog(context);
+        sessionManagement = new SessionManagement(context);
     }
 
     @Override
@@ -84,6 +107,17 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                 .placeholder(R.drawable.logo404)
                 .into(holder.image);
         holder.storename.setText(item.getStorename());
+        if (item.getHaspartnership()){
+            holder.status.setText("Waiting Approval");
+            holder.status.setTextColor(context.getResources().getColor(R.color.grey3));
+            holder.partnership.setEnabled(false);
+            holder.partnership.setImageResource(0);
+            holder.partnership.setImageResource(R.drawable.partnership1);
+        }
+        else {
+            holder.partnership.setImageResource(0);
+            holder.partnership.setImageResource(R.drawable.partnership);
+        }
         holder.partnership.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +137,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         @BindView(R.id.item_reqpartnership_tv_ordernumber) TextView ordernumber;
         @BindView(R.id.item_reqpartnership_tv_oderdate) TextView orderdate;
         @BindView(R.id.item_reqpartnership_tv_storename) TextView storename;
+        @BindView(R.id.item_reqpartnership_tv_status) TextView status;
         @BindView(R.id.item_reqpartnership_img_product) ImageView image;
         @BindView(R.id.item_reqpartnership_img_partnership) ImageView partnership;
         public ViewHolder(View itemView) {
@@ -111,6 +146,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         }
     }
     private void initDialog(final String store_name, final String prodcut_id){
+        index = 0;
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.requestpartnership_dialog);
 
@@ -163,7 +199,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                 firstChildLinearLayout.setLayoutParams(firstChildParams);
 
                 LinearLayout.LayoutParams etParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                etParams.width = 150;
+                etParams.width = 100;
 
                 TextView row = new TextView(context);
                 LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -319,6 +355,77 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                         return;
                     }
                 }
+
+                progressDialog.setMessage("Uploading, please wait ....");
+                progressDialog.show();
+
+                MediaType text = MediaType.parse("text/plain");
+
+                HashMap<String, String> user = sessionManagement.getUserDetails();
+                token = user.get(SessionManagement.TOKEN);
+
+                RequestBody request_token = RequestBody.create(text, token);
+                RequestBody request_productid = RequestBody.create(text, prodcut_id);
+                RequestBody request_minorder = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(minorder.getText().toString()));
+                int panjang = container_price.size() * 3;
+                int k = 0;
+                MultipartBody.Part[] prices = new MultipartBody.Part[panjang];
+                for(int i = 0; i<(panjang);i++){
+                    if(i%3==0){
+                        prices[i] = MultipartBody.Part.createFormData("price[" + k + "]" + "[qty_min]", container_price.get(k).getQty_min());
+                    }
+                    else if (i%3==1){
+                        prices[i] = MultipartBody.Part.createFormData("price[" + k + "]" + "[qty_max]", container_price.get(k).getQty_max());
+                    }
+                    else {
+                        prices[i] = MultipartBody.Part.createFormData("price[" + k + "]" + "[price]", container_price.get(k).getprice());
+                    }
+                    if(i%3==2){
+                        k++;
+                    }
+
+                }
+                service = apiUtils.getAPIService();
+                service.req_submit_request_partnership(request_token, request_productid, request_minorder, prices).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            Log.i("debug", "onResponse: SUCCESS");
+                            try{
+                                JSONObject jsonResults = new JSONObject(response.body().string());
+                                if(jsonResults.getString("message").toLowerCase().equals("request partnership submitted successfully")){
+                                    String message = jsonResults.getString("message");
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    Bundle bundle = null;
+                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                        Intent intent = new Intent(context, UplinePartnership.class);
+                                        bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
+                                        context.startActivity(intent, bundle);
+                                        UplinePartnership.UPLINEPARTNERSHIP.finish();
+                                    }
+                                }else{
+                                    String message = jsonResults.getString("message");
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                }
+                                //"message": "Nama Franchise sudah didaftarkan"
+                                //"message": "Franchise registered successfully",
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            Log.i("debug", "onResponse: FAILED");
+                        }
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
             }
         });
         close.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,5 @@
 package com.example.williamsumitro.dress.view.view.sellerpanel.partnership.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -17,15 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
+import com.example.williamsumitro.dress.view.model.DownlinePartnershipItem;
+import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
+import com.example.williamsumitro.dress.view.model.DownlinePartnershipResult;
 import com.example.williamsumitro.dress.view.model.UplinePartnershipItem;
 import com.example.williamsumitro.dress.view.model.UplinePartnershipResponse;
 import com.example.williamsumitro.dress.view.model.UplinePartnershipResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.sellerpanel.partnership.adapter.DownlinePartnership_RV;
 import com.example.williamsumitro.dress.view.view.sellerpanel.partnership.adapter.UplinePartnership_RV;
-import com.example.williamsumitro.dress.view.view.sellerpanel.sales.orderconfirmation.adapter.OC_RVAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,27 +38,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UplinePartnership extends AppCompatActivity {
-    @BindView(R.id.upline_partnership_rv) RecyclerView recyclerView;
-    @BindView(R.id.upline_partnership_ln_bottom) LinearLayout bottom;
-    @BindView(R.id.upline_partnership_ln_top) LinearLayout top;
-    @BindView(R.id.upline_partnership_toolbar) Toolbar toolbar;
-    @BindView(R.id.upline_partnership_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+public class DownlinePartnership extends AppCompatActivity {
+    @BindView(R.id.downline_partnership_rv) RecyclerView recyclerView;
+    @BindView(R.id.downline_partnership_ln_bottom) LinearLayout bottom;
+    @BindView(R.id.downline_partnership_ln_top) LinearLayout top;
+    @BindView(R.id.downline_partnership_toolbar) Toolbar toolbar;
+    @BindView(R.id.downline_partnership_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
-    public static UplinePartnership UPLINEPARTNERSHIP;
+    public static DownlinePartnership DOWNLINEPARTNERSHIP;
     private Context context;
     private apiService service;
     private String token;
     private SessionManagement sessionManagement;
     private DecimalFormat formatter;
-    private ArrayList<UplinePartnershipResult> resultArrayList;
-    private ArrayList<UplinePartnershipItem> itemArrayList;
-    private UplinePartnership_RV adapter;
+    private DownlinePartnership_RV adapter;
+    private ArrayList<DownlinePartnershipItem> itemArrayList;
+    private ArrayList<DownlinePartnershipResult> resultArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upline_partnership);
+        setContentView(R.layout.activity_downline_partnership);
         initView();
         setuptoolbar();
         initRefresh();
@@ -73,15 +74,15 @@ public class UplinePartnership extends AppCompatActivity {
         api_getorderconfirmation();
     }
     private void initView(){
-        UPLINEPARTNERSHIP = this;
+        DOWNLINEPARTNERSHIP = this;
         ButterKnife.bind(this);
         context = this;
         formatter = new DecimalFormat("#,###,###");
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
-        resultArrayList = new ArrayList<>();
         itemArrayList = new ArrayList<>();
+        resultArrayList = new ArrayList<>();
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -90,7 +91,7 @@ public class UplinePartnership extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Upline Partner");
+        getSupportActionBar().setTitle("Downline Partner");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +108,7 @@ public class UplinePartnership extends AppCompatActivity {
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
     private void setupRV(){
-        adapter = new UplinePartnership_RV(context, itemArrayList);
+        adapter = new DownlinePartnership_RV(context, itemArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -115,23 +116,18 @@ public class UplinePartnership extends AppCompatActivity {
     }
     private void api_getorderconfirmation() {
         service = apiUtils.getAPIService();
-        service.req_get_request_partnership(token).enqueue(new Callback<UplinePartnershipResponse>() {
+        service.req_upline_get_request_partnership(token).enqueue(new Callback<DownlinePartnershipResponse>() {
             @Override
-            public void onResponse(Call<UplinePartnershipResponse> call, Response<UplinePartnershipResponse> response) {
+            public void onResponse(Call<DownlinePartnershipResponse> call, Response<DownlinePartnershipResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
                         if (response.body().getResult().size()>0){
                             bottom.setVisibility(View.VISIBLE);
                             resultArrayList = response.body().getResult();
                             for (int i = 0; i<resultArrayList.size(); i++){
-                                String ordernumber = resultArrayList.get(i).getOrderNumber();
-                                String orderdate = resultArrayList.get(i).getInvoiceDate();
-                                String storename = resultArrayList.get(i).getStoreName();
-                                for (int j = 0; j<resultArrayList.get(i).getProduct().size(); j++){
-                                    UplinePartnershipItem item = new UplinePartnershipItem(ordernumber, orderdate, resultArrayList.get(i).getProduct().get(j).getProductName(), storename,
-                                            resultArrayList.get(i).getProduct().get(j).getProductPhoto(),
-                                            resultArrayList.get(i).getProduct().get(j).getProductId().toString(),
-                                            resultArrayList.get(i).getProduct().get(j).getHasPartnership());
+                                for (int j = 0; j<resultArrayList.get(i).getProduct().size();j++){
+                                    DownlinePartnershipItem item = new DownlinePartnershipItem(resultArrayList.get(i).getStoreNamePartner(),
+                                            resultArrayList.get(i).getProduct().get(j));
                                     itemArrayList.add(item);
                                 }
                             }
@@ -147,7 +143,7 @@ public class UplinePartnership extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UplinePartnershipResponse> call, Throwable t) {
+            public void onFailure(Call<DownlinePartnershipResponse> call, Throwable t) {
                 Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }

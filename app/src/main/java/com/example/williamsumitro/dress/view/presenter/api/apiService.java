@@ -7,6 +7,7 @@ import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
+import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
@@ -102,8 +103,6 @@ public interface apiService {
             @Part("patterntype_id") RequestBody patterntype_id,
             @Part MultipartBody.Part[] size,
             @Part MultipartBody.Part[] price,
-//            @Query("size[]") ArrayList<String> size,
-//            @Query("price[]") List<Price> priceList,
             @Part MultipartBody.Part photo
     );
     @Multipart
@@ -252,4 +251,28 @@ public interface apiService {
     @FormUrlEncoded
     @POST("get_request_partnership")
     Call<UplinePartnershipResponse> req_get_request_partnership(@Field("token") String token);
+
+    @Multipart
+    @POST("submit_request_partnership")
+    Call<ResponseBody> req_submit_request_partnership(
+            @Part("token") RequestBody token,
+            @Part("product_id") RequestBody product_id,
+            @Part("min_order") RequestBody min_order,
+            @Part MultipartBody.Part[] price
+    );
+
+    @FormUrlEncoded
+    @POST("upline_get_request_partnership")
+    Call<DownlinePartnershipResponse> req_upline_get_request_partnership(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("accept_partnership")
+    Call<ResponseBody> req_accept_partnership(@Field("token") String token,
+                                              @Field("partnership_id") String partnership_id);
+
+    @FormUrlEncoded
+    @POST("reject_partnership")
+    Call<ResponseBody> req_reject_partnership(@Field("token") String token,
+                                              @Field("partnership_id") String partnership_id);
+
 }

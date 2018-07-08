@@ -2,16 +2,12 @@ package com.example.williamsumitro.dress.view.view.bag.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bank;
-import com.example.williamsumitro.dress.view.model.Courier;
 import com.example.williamsumitro.dress.view.model.Price;
 
 import java.text.DecimalFormat;
@@ -41,6 +37,7 @@ public class BuyRVAdapter extends RecyclerView.Adapter<BuyRVAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
+        if (priceList.size()>0){
             Price price = priceList.get(position);
             if (price.getQtyMax().toLowerCase().equals("max")){
                 holder.qty_min.setText(formatter.format(Double.parseDouble(String.valueOf(price.getQtyMin()))));
@@ -53,6 +50,8 @@ public class BuyRVAdapter extends RecyclerView.Adapter<BuyRVAdapter.ViewHolder> 
                 holder.semicolon.setText("Qty : ");
             }
             holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(price.getPrice()))));
+        }
+
     }
 
     @Override

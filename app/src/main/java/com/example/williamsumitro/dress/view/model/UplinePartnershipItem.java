@@ -8,13 +8,16 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 
 public class UplinePartnershipItem {
     private String ordernumber, orderdate, productname, storename, image, product_id;
-    public UplinePartnershipItem(String ordernumber, String orderdate, String productname, String storename, String image, String product_id){
+    private Boolean haspartnership;
+    public UplinePartnershipItem(String ordernumber, String orderdate, String productname, String storename, String image, String product_id,
+    Boolean haspartnership){
         this.ordernumber = ordernumber;
         this.orderdate = orderdate;
         this.productname = productname;
         this.storename = storename;
         this.image = image;
         this.product_id = product_id;
+        this.haspartnership =haspartnership;
     }
     public String getOrdernumber() {
         return ordernumber;
@@ -62,5 +65,13 @@ public class UplinePartnershipItem {
 
     public void setProduct_id(String product_id) {
         this.product_id = product_id;
+    }
+
+    public Boolean getHaspartnership() {
+        return haspartnership;
+    }
+
+    public void setHaspartnership(Boolean haspartnership) {
+        this.haspartnership = haspartnership;
     }
 }

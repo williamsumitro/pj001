@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +24,11 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
+import com.example.williamsumitro.dress.view.view.sellerpanel.partnership.activity.DownlinePartnership;
 import com.example.williamsumitro.dress.view.view.sellerpanel.partnership.activity.UplinePartnership;
 import com.example.williamsumitro.dress.view.view.sellerpanel.product.activity.AddProduct;
-import com.example.williamsumitro.dress.view.view.sellerpanel.sales.activity.ManageSales;
+import com.example.williamsumitro.dress.view.view.sellerpanel.sales.orderconfirmation.activity.OrderConfirmation;
+import com.example.williamsumitro.dress.view.view.sellerpanel.sales.shippingconfirmation.activity.ShippingConfirmation;
 
 import java.util.HashMap;
 
@@ -43,20 +44,22 @@ public class SellerPanel extends AppCompatActivity {
     @BindView(R.id.sellerpanel_tv_balance) TextView balance;
     @BindView(R.id.sellerpanel_toolbar) Toolbar toolbar;
     @BindView(R.id.sellerpanel_spinner) Spinner spinner;
-    @BindView(R.id.sellerpanel_cv_partnership) CardView layout_partnership;
-    @BindView(R.id.sellerpanel_cv_openrequest) CardView layout_openrequest;
-    @BindView(R.id.sellerpanel_cv_managesales) CardView layout_managesales;
-    @BindView(R.id.sellerpanel_ing_viewstore) ImageView viewstore;
-    @BindView(R.id.sellerpanel_img_viewproduct) ImageView viewproduct;
-    @BindView(R.id.sellerpanel_img_legaldoc) ImageView legaldoc;
-    @BindView(R.id.sellerpanel_img_editprofilephoto) ImageView editprofilephoto;
-    @BindView(R.id.sellerpanel_img_addproduct) ImageView addproduct;
     @BindView(R.id.sellerpanel_tv_status) TextView status;
     @BindView(R.id.sellerpanel_tv_comment) TextView comment;
     @BindView(R.id.sellerpanel_ln_top_bottom) LinearLayout top_bottom;
     @BindView(R.id.sellerpanel_ln_bottom) LinearLayout bottom;
     @BindView(R.id.sellerpanel_ln_top) LinearLayout top;
     @BindView(R.id.sellerpanel_img_status) ImageView img_status;
+    @BindView(R.id.sellerpanel_ln_legaldoc) LinearLayout legaldoc;
+    @BindView(R.id.sellerpanel_ln_addproduct) LinearLayout addproduct;
+    @BindView(R.id.sellerpanel_ln_changestoreimage) LinearLayout changestoreimage;
+    @BindView(R.id.sellerpanel_ln_downlinepartner) LinearLayout downlinepartner;
+    @BindView(R.id.sellerpanel_ln_editstore) LinearLayout editstore;
+    @BindView(R.id.sellerpanel_ln_orderconfirmation) LinearLayout orderconfirmation;
+    @BindView(R.id.sellerpanel_ln_shippingconfirmation) LinearLayout shippingconfirmation;
+    @BindView(R.id.sellerpanel_ln_uplinepartner) LinearLayout uplinepartner;
+    @BindView(R.id.sellerpanel_ln_viewstore) LinearLayout viewstore;
+    @BindView(R.id.sellerpanel_ln_viewproduct) LinearLayout viewproduct;
 
     private final static String STATUS = "STATUS";
     private final static String COMMENT = "COMMENT";
@@ -152,17 +155,31 @@ public class SellerPanel extends AppCompatActivity {
                 initanim(intent);
             }
         });
-        layout_managesales.setOnClickListener(new View.OnClickListener() {
+        orderconfirmation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ManageSales.class);
+                Intent intent = new Intent(context, OrderConfirmation.class);
                 initanim(intent);
             }
         });
-        layout_partnership.setOnClickListener(new View.OnClickListener() {
+        shippingconfirmation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShippingConfirmation.class);
+                initanim(intent);
+            }
+        });
+        uplinepartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, UplinePartnership.class);
+                initanim(intent);
+            }
+        });
+        downlinepartner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DownlinePartnership.class);
                 initanim(intent);
             }
         });
