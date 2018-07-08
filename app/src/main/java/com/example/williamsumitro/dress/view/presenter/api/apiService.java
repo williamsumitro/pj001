@@ -17,6 +17,7 @@ import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryRe
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
+import com.example.williamsumitro.dress.view.model.UplinePartnershipResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.WishlistResponse;
 import com.example.williamsumitro.dress.view.model.dress_attribute.DressAttribute;
@@ -247,4 +248,8 @@ public interface apiService {
     @FormUrlEncoded
     @POST("transaction_history")
     Call<Purchase_TransactionHistoryResponse> req_transaction_history(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("get_request_partnership")
+    Call<UplinePartnershipResponse> req_get_request_partnership(@Field("token") String token);
 }

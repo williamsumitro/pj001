@@ -31,6 +31,9 @@ public class Product implements Serializable{
     @SerializedName("price_total")
     @Expose
     private String priceTotal;
+    @SerializedName("has_partnership")
+    @Expose
+    private Boolean hasPartnership;
     @SerializedName("size_info")
     @Expose
     private List<SizeInfo> sizeInfo = null;

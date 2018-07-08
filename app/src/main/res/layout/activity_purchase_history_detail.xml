@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:stateListAnimator="@null"
         android:id="@+id/purchasehistorydetail_appbar">
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
+        <android.support.v7.widget.Toolbar
             android:background="@color/white"
-            android:layout_height="wrap_content"
-            android:id="@+id/purchasehistorydetail_collapstoolbar"
-            android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:titleEnabled="false">
+            android:id="@+id/purchasehistorydetail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
+            app:layout_collapseMode="pin" />
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:clipToPadding="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <LinearLayout
                 android:gravity="center"
-                android:background="@color/brown4"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:layout_marginTop="10dp"
                     android:id="@+id/purchasehistorydetail_tv_ordernumber"
                     android:textSize="20sp"
                     android:text="Order Number"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <LinearLayout
@@ -38,7 +48,7 @@
                     android:orientation="horizontal">
                     <TextView
                         android:textSize="16sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:text="Subtotal : "
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -47,7 +57,7 @@
                         android:id="@+id/purchasehistorydetail_tv_subtotal"
                         android:textSize="16sp"
                         android:text="IDR 50.000.000"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -58,7 +68,7 @@
                     android:orientation="horizontal">
                     <TextView
                         android:textSize="16sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:text="Shipping Fee : "
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -67,7 +77,7 @@
                         android:id="@+id/purchasehistorydetail_tv_shippingfee"
                         android:textSize="16sp"
                         android:text="IDR 50.000.000"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -79,7 +89,7 @@
                     <TextView
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:text="Total : "
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -89,7 +99,7 @@
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:text="IDR 50.000.000"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -100,28 +110,10 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:text="View Order Details"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/purchasehistorydetail_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_above="@+id/shadow"
-                android:layout_gravity="top"
-                app:layout_collapseMode="pin" />
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:clipToPadding="false">
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
             <LinearLayout
                 android:padding="5dp"
                 android:id="@+id/purchasehistorydetail_ln_acceptedproduct"
@@ -229,4 +221,4 @@
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

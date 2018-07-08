@@ -41,223 +41,89 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-        <LinearLayout
+        <TextView
             android:layout_margin="5dp"
+            android:id="@+id/item_purchasereceipt_tv_receiptnumber"
+            android:layout_gravity="center"
+            android:text="2018-06-16"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/item_purchasereceipt_ln_receipt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Invoice Date : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:id="@+id/item_purchasereceipt_ln_receiptproduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/blue4"
+                    android:text="View Products"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/item_purchasereceipt_img_receiptcaret"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/caret"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                android:id="@+id/item_purchasereceipt_ln_receiptproductdetail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_invoicedate"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:orientation="vertical">
+                <View
+                    android:background="@color/blue7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_purchasereceipt_rv"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <View
+                android:layout_margin="5dp"
+                android:background="@color/blue7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Receiver Name : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_receivername"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Shipping Address : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_shippingaddress"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Province : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_province"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="City : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_city"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Phone Number : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_phonenumber"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Postal Code : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_postalcode"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Courier : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_courier"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Note : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_note"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center"
-                android:text="Receipt Number : "
-                android:layout_width="0dp"
-                android:layout_weight="1.3"
-                android:layout_height="wrap_content"
-                android:gravity="end" />
-            <TextView
-                android:id="@+id/item_purchasereceipt_tv_receiptnumber"
-                android:layout_gravity="center"
-                android:text="2018-06-16"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/item_purchasereceipt_rv"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <Button
+            android:gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:id="@+id/item_purchasereceipt_btn_submit"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:text="I have received"
-            android:textAllCaps="false"
-            android:background="@color/blue1"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/item_purchasereceipt_btn_submit"
+                android:textColor="@color/white"
+                android:text="I have received"
+                android:textAllCaps="false"
+                android:background="@drawable/button1"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/item_purchasereceipt_btn_viewdetails"
+                android:textColor="@color/white"
+                android:text="View Details"
+                android:textAllCaps="false"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/button1_3"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

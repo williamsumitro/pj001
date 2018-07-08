@@ -70,7 +70,7 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
     private CheckoutProductRVAdapter rvadapter;
     private ArrayList<Product> productArrayList;
     private SnapHelper snapHelper;
-    private Boolean click_accepted =false, click_rejected = false;
+    private Boolean click_accepted =false, click_rejected = false, click_pending = false;
     String note;
 
     public PurchaseOrderRV(Context context, ArrayList<Purchase_OrderResult> orderresultArrayList){
@@ -140,7 +140,7 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
             }
         }
         else {
-            holder.recyclerView.setVisibility(View.VISIBLE);
+            holder.pending.setVisibility(View.VISIBLE);
             rvadapter = new CheckoutProductRVAdapter(orderResult.getProduct(), context);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             holder.recyclerView.setLayoutManager(layoutManager);
@@ -198,6 +198,21 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
                 }
             }
         });
+        holder.container_pending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!click_pending){
+                    holder.container_pendingdetail.setVisibility(View.VISIBLE);
+                    click_pending = true;
+                    holder.caret_pending.setImageResource(R.drawable.caret1);
+                }
+                else {
+                    holder.container_pendingdetail.setVisibility(View.GONE);
+                    click_pending = false;
+                    holder.caret_pending.setImageResource(R.drawable.caret);
+                }
+            }
+        });
     }
 
     @Override
@@ -223,8 +238,12 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
         @BindView(R.id.item_purchaseorderstatus_ln_rejectedproductdetail) LinearLayout container_rejecteddetail;
         @BindView(R.id.item_purchaseorderstatus_rv_rejectedproduct) RecyclerView rv_rejected;
         @BindView(R.id.item_purchaseorderstatus_ln_top) LinearLayout top;
-        @BindView(R.id.item_purchasepayment_ln_mid_accepted) LinearLayout accepted;
-        @BindView(R.id.item_purchasepayment_ln_mid_rejected) LinearLayout rejected;
+        @BindView(R.id.item_purchaseorderstatus_ln_mid_accepted) LinearLayout accepted;
+        @BindView(R.id.item_purchaseorderstatus_ln_mid_rejected) LinearLayout rejected;
+        @BindView(R.id.item_purchaseorderstatus_img_pendingcaret) ImageView caret_pending;
+        @BindView(R.id.item_purchaseorderstatus_ln_pendingproductdetail) LinearLayout container_pendingdetail;
+        @BindView(R.id.item_purchaseorderstatus_ln_pendingproduct) LinearLayout container_pending;
+        @BindView(R.id.item_purchaseorderstatus_ln_pending) LinearLayout pending;
 
         public ViewHolder(View itemView) {
             super(itemView);

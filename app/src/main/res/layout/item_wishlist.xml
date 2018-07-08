@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/item_wishlist_rl_background"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="145dp"
         android:background="@color/red5">
         <ImageView
             android:id="@+id/item_wishlist_img_delete"
@@ -34,7 +34,7 @@
         android:background="@color/white"
         android:id="@+id/item_wishlist_rl_container"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="145dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -50,37 +50,6 @@
                     android:layout_width="115dp"
                     android:layout_height="135dp"
                     android:src="@drawable/image"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/item_wishlist_img_star1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical" />
-                    <ImageView
-                        android:id="@+id/item_wishlist_img_star2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical" />
-                    <ImageView
-                        android:id="@+id/item_wishlist_img_star3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical" />
-                    <ImageView
-                        android:id="@+id/item_wishlist_img_star4"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical" />
-                    <ImageView
-                        android:id="@+id/item_wishlist_img_star5"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical" />
-                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_weight="1"
@@ -124,30 +93,39 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="40dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:id="@+id/item_wishlist_lnaddtobag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:orientation="vertical">
-                <ImageView
-                    android:src="@drawable/addtobag"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
-                <TextView
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Add to Bag"
-                    android:textColor="@color/green2"
-                    android:textSize="12sp" />
+                    android:layout_height="30dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/item_wishlist_img_star1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical" />
+                    <ImageView
+                        android:id="@+id/item_wishlist_img_star2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical" />
+                    <ImageView
+                        android:id="@+id/item_wishlist_img_star3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical" />
+                    <ImageView
+                        android:id="@+id/item_wishlist_img_star4"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical" />
+                    <ImageView
+                        android:id="@+id/item_wishlist_img_star5"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

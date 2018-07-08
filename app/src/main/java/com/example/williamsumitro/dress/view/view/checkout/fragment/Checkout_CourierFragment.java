@@ -116,7 +116,6 @@ public class Checkout_CourierFragment extends Fragment implements Step {
         token = user.get(SessionManagement.TOKEN);
         HashMap<String, String> idcity = sessionManagement.getCheckoutIdCity();
         id_city = idcity.get(SessionManagement.CHECKOUT_IDCITY);
-
     }
     @Nullable
     @Override
@@ -145,6 +144,7 @@ public class Checkout_CourierFragment extends Fragment implements Step {
         }
     }
     private boolean isRefresh(){
+        checked = adapter.getCheckout();
         return checked;
     }
 

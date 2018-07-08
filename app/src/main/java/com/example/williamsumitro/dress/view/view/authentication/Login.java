@@ -191,6 +191,7 @@ public class Login extends AppCompatActivity{
                     dialog.dismiss();
                     sessionManagement.createLoginSession(message);
                     MainActivity.mainactivity.finish();
+                    finish();
                     presentActivity(view);
                 }
             });

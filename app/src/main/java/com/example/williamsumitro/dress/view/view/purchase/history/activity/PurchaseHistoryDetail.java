@@ -54,7 +54,6 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
     @BindView(R.id.purchasehistorydetail_ln_acceptedproductdetail) LinearLayout container_accepteddetail;
     @BindView(R.id.purchasehistorydetail_img_rejectedcaret) ImageView caret_rejected;
     @BindView(R.id.purchasehistorydetail_img_acceptedcaret) ImageView caret_accepted;
-    @BindView(R.id.purchasehistorydetail_collapstoolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.purchasehistorydetail_btn_vieworderdetails) Button viewdetails;
     @BindView(R.id.purchasehistorydetail_tv_acceptedproduct) TextView acceptedproduct;
     @BindView(R.id.purchasehistorydetail_tv_rejectedproduct) TextView rejectedproduct;
@@ -80,7 +79,6 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
         setContentView(R.layout.activity_purchase_history_detail);
         initview();
         setupToolbar();
-        initCollapToolbar();
         initGetIntent();
         initObject();
         initOnClick();
@@ -116,33 +114,13 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Transaction Detail");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
                 overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
                 finish();
-            }
-        });
-    }
-    private void initCollapToolbar(){
-        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollrange = -1;
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if(scrollrange == -1){
-                    scrollrange = appBarLayout.getTotalScrollRange();
-                }
-                if(scrollrange + verticalOffset == 0){
-                    toolbar.setTitle("Purchase History Detail");
-                    isShow = true;
-                } else if (isShow) {
-                    toolbar.setTitle(" ");
-                    isShow = false;
-                }
             }
         });
     }
@@ -160,7 +138,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
         total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getTotalPrice()))));
         subtotal.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getSubtotalPrice()))));
         shippingfee.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getShippingPrice()))));
-        ordernumber.setText(result.getOrderNumber());
+        ordernumber.setText("Order number : " + result.getOrderNumber());
         snapHelper = new LinearSnapHelper();
         if (result.getProductAccepted().size()>0){
             rv_accepted.setVisibility(View.VISIBLE);

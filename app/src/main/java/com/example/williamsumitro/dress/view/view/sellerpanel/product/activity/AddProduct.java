@@ -680,8 +680,8 @@ public class AddProduct extends AppCompatActivity {
             layout_name.setError("Name of product is required");
             return;
         } else if (TextUtils.isEmpty(minorder.getText())) {
-            layout_name.setErrorEnabled(true);
-            layout_name.setError("Minimum order is required");
+            layout_minorder.setErrorEnabled(true);
+            layout_minorder.setError("Minimum order is required");
             return;
         } else if (TextUtils.isEmpty(weight.getText())) {
             layout_weight.setErrorEnabled(true);

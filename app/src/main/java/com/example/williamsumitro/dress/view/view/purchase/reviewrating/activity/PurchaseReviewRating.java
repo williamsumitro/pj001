@@ -13,6 +13,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
 import com.example.williamsumitro.dress.view.view.purchase.reviewrating.adapter.PurchaseReviewRating_RV;
 
@@ -153,5 +156,24 @@ public class PurchaseReviewRating extends AppCompatActivity {
         Intent intent = new Intent(context, Purchase.class);
         initanim(intent);
 //        super.onBackPressed();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            finish();
+            Purchase.PURCHASE.finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

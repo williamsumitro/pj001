@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
     private String note;
     private SnapHelper snapHelper;
     private CheckoutProductRVAdapter rvadapter;
+    private Boolean click_receipt = false;
     public PurchaseReceiptRV(Context context, ArrayList<Sales_OrderResult> orderresultArrayList){
         this.orderresultArrayList = orderresultArrayList;
         this.context = context;
@@ -79,23 +81,23 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Sales_OrderResult orderResult = orderresultArrayList.get(position);
         if (orderResult.getNote()== null)
             note = "";
         else
             note = ("Note : " + orderResult.getNote());
+
+        holder.viewdetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initDialog(orderResult.getInvoiceDate(), orderResult.getReceiverName(), orderResult.getAddress(),
+                        orderResult.getProvinceName(), orderResult.getCityName(), orderResult.getPhoneNumber(),
+                        orderResult.getPostalCode(), orderResult.getCourierName(), note);
+            }
+        });
         holder.ordernumber.setText(orderResult.getOrderNumber());
-        holder.tv_invoicedate.setText(orderResult.getInvoiceDate());
-        holder.tv_receivername.setText(orderResult.getReceiverName());
-        holder.tv_shippingaddress.setText(orderResult.getAddress());
-        holder.tv_province.setText(orderResult.getProvinceName());
-        holder.tv_city.setText(orderResult.getCityName());
-        holder.tv_phonenumber.setText(orderResult.getPhoneNumber());
-        holder.tv_postalcode.setText(orderResult.getPostalCode());
-        holder.tv_courier.setText(orderResult.getCourierName());
-        holder.tv_note.setText(note);
-        holder.receiptnumber.setText(orderResult.getReceiptNumber());
+        holder.receiptnumber.setText("Receipt Number : " + orderResult.getReceiptNumber());
 
         holder.submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +127,22 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
                 });
             }
         });
+
+        holder.container_receipt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!click_receipt){
+                    holder.container_receiptdetail.setVisibility(View.VISIBLE);
+                    click_receipt = true;
+                    holder.caret_receipt.setImageResource(R.drawable.caret1);
+                }
+                else {
+                    holder.container_receiptdetail.setVisibility(View.GONE);
+                    click_receipt = false;
+                    holder.caret_receipt.setImageResource(R.drawable.caret);
+                }
+            }
+        });
         rvadapter = new CheckoutProductRVAdapter(orderResult.getProduct(), context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.recyclerView.setLayoutManager(layoutManager);
@@ -142,16 +160,12 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
         @BindView(R.id.item_purchasereceipt_tv_ordernumber) TextView ordernumber;
         @BindView(R.id.item_purchasereceipt_rv) RecyclerView recyclerView;
         @BindView(R.id.item_purchasereceipt_btn_submit) Button submit;
-        @BindView(R.id.item_purchasereceipt_tv_invoicedate) TextView tv_invoicedate;
-        @BindView(R.id.item_purchasereceipt_tv_receivername) TextView tv_receivername;
-        @BindView(R.id.item_purchasereceipt_tv_shippingaddress) TextView tv_shippingaddress;
-        @BindView(R.id.item_purchasereceipt_tv_province) TextView tv_province;
-        @BindView(R.id.item_purchasereceipt_tv_city) TextView tv_city;
-        @BindView(R.id.item_purchasereceipt_tv_phonenumber) TextView tv_phonenumber;
-        @BindView(R.id.item_purchasereceipt_tv_postalcode) TextView tv_postalcode;
-        @BindView(R.id.item_purchasereceipt_tv_courier) TextView tv_courier;
-        @BindView(R.id.item_purchasereceipt_tv_note) TextView tv_note;
         @BindView(R.id.item_purchasereceipt_tv_receiptnumber) TextView receiptnumber;
+        @BindView(R.id.item_purchasereceipt_btn_viewdetails) Button viewdetails;
+        @BindView(R.id.item_purchasereceipt_img_receiptcaret) ImageView caret_receipt;
+        @BindView(R.id.item_purchasereceipt_ln_receiptproductdetail) LinearLayout container_receiptdetail;
+        @BindView(R.id.item_purchasereceipt_ln_receiptproduct) LinearLayout container_receipt;
+        @BindView(R.id.item_purchasereceipt_ln_receipt) LinearLayout receipt;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -209,4 +223,42 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
             dialog.show();
         }
     }
+    private void initDialog(final String invoicedate, final String receivername, final String shippingaddress,
+                            final String province, final String city, final String phonenumber,
+                            final String postalcode, final String courier, final String note){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.order_dialog);
+
+        final TextView tv_invoicedate = (TextView) dialog.findViewById(R.id.orderdialog_tv_invoicedate);
+        final TextView tv_receivername = (TextView) dialog.findViewById(R.id.orderdialog_tv_receivername);
+        final TextView tv_shippingaddress = (TextView) dialog.findViewById(R.id.orderdialog_tv_shippingaddress);
+        final TextView tv_province = (TextView) dialog.findViewById(R.id.orderdialog_tv_province);
+        final TextView tv_city = (TextView) dialog.findViewById(R.id.orderdialog_tv_city);
+        final TextView tv_phonenumber = (TextView) dialog.findViewById(R.id.orderdialog_tv_phonenumber);
+        final TextView tv_postalcode = (TextView) dialog.findViewById(R.id.orderdialog_tv_postalcode);
+        final TextView tv_courier = (TextView) dialog.findViewById(R.id.orderdialog_tv_courier);
+        final TextView tv_note = (TextView) dialog.findViewById(R.id.orderdialog_tv_note);
+        final Button buttonok = (Button) dialog.findViewById(R.id.orderdialog_btnok);
+
+        tv_invoicedate.setText(invoicedate);
+        tv_receivername.setText(receivername);
+        tv_shippingaddress.setText(shippingaddress);
+        tv_province.setText(province);
+        tv_city.setText(city);
+        tv_phonenumber.setText(phonenumber);
+        tv_postalcode.setText(postalcode);
+        tv_courier.setText(courier);
+        tv_note.setText(note);
+
+        buttonok.setText("Yes");
+        buttonok.setBackgroundResource(R.drawable.button1_green);
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 }

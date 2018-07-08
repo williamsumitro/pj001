@@ -25,6 +25,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
+import com.example.williamsumitro.dress.view.view.sellerpanel.partnership.activity.UplinePartnership;
 import com.example.williamsumitro.dress.view.view.sellerpanel.product.activity.AddProduct;
 import com.example.williamsumitro.dress.view.view.sellerpanel.sales.activity.ManageSales;
 
@@ -155,6 +156,13 @@ public class SellerPanel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ManageSales.class);
+                initanim(intent);
+            }
+        });
+        layout_partnership.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, UplinePartnership.class);
                 initanim(intent);
             }
         });

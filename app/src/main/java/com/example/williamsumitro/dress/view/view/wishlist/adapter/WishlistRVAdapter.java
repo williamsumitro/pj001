@@ -113,24 +113,18 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
             holder.container1.setBackgroundResource(R.color.blue9);
         }
         else if (position%10==3){
-            holder.container1.setBackgroundResource(R.color.orange9);
-        }
-        else if (position%10==4){
             holder.container1.setBackgroundResource(R.color.green9);
         }
-        else if (position%10==5){
+        else if (position%10==4){
             holder.container1.setBackgroundResource(R.color.indigo9);
         }
-        else if (position%10==6){
+        else if (position%10==5){
             holder.container1.setBackgroundResource(R.color.pink9);
         }
-        else if (position%10==7){
-            holder.container1.setBackgroundResource(R.color.lightblue8);
-        }
-        else if (position%10==8){
+        else if (position%10==6){
             holder.container1.setBackgroundResource(R.color.yellow9);
         }
-        else if (position%10==9){
+        else if (position%10==7){
             holder.container1.setBackgroundResource(R.color.purple9);
         }
         holder.name.setText(wishlist.getProductName());
@@ -151,53 +145,7 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
         holder.minorder.setText(String.valueOf(wishlist.getMinOrder()));
         getRating(wishlist, holder);
         initProductDetails(wishlist, holder);
-        holder.container_addtobag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressDialog.setMessage("Loading ...");
-                progressDialog.show();
-                progressDialog.setCancelable(false);
-                progressDialog.setCanceledOnTouchOutside(false);
-                service.req_get_product_detail(token, String.valueOf(wishlist.getProductId())).enqueue(new Callback<ProductDetail>() {
-                    @Override
-                    public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
-                        if (response.code()==200){
-                            priceList = response.body().getProductInfo().getPrice();
-                            for (int i = 0; i <priceList.size(); i++){
-                                priceminlist.add(String.valueOf(priceList.get(i).getPrice()));
-                                qtyminlist.add(String.valueOf(priceList.get(i).getQtyMin()));
-                            }
-                            progressDialog.dismiss();
-                            Intent intent = new Intent(context, Buy.class);
-                            intent.putExtra(PRODUCT_ID, wishlist.getProductId().toString());
-                            intent.putExtra(NAMAPRODUCT, response.body().getProductInfo().getProductName());
-                            intent.putExtra(GAMBARPRODUCT, response.body().getProductInfo().getPhoto());
-                            intent.putExtra(MINORDER, String.valueOf(response.body().getProductInfo().getMinOrder()));
-                            intent.putStringArrayListExtra(PRICELIST, priceminlist);
-                            intent.putStringArrayListExtra(QTYMINORDER, qtyminlist);
-                            sizeList = response.body().getProductInfo().getSize();
-                            StringBuilder availablesize = new StringBuilder();
-                            for (int i = 0; i<sizeList.size();i++) {
-                                availablesizelist.add(String.valueOf(sizeList.get(i).getSizeId()));
-                                availablesize.append(sizeList.get(i).getSizeName());
-                                if (i<sizeList.size()-1)
-                                    availablesize.append(", ");
-                            }
-                            intent.putStringArrayListExtra(SIZELIST, availablesizelist);
-                            Bundle bundle = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                                context.startActivity(intent, bundle);
-                            }
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ProductDetail> call, Throwable t) {
-                        progressDialog.dismiss();
-                    }
-                });
-            }
-        });
+
         holder.container_courier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,7 +185,6 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
         @BindView(R.id.item_wishlist_tvMinOrder) TextView minorder;
         @BindView(R.id.item_wishlist_tv_courier) TextView courier;
         @BindView(R.id.item_wishlist_lncourier) LinearLayout container_courier;
-        @BindView(R.id.item_wishlist_lnaddtobag) LinearLayout container_addtobag;
         @BindView(R.id.item_wishlist_lnstore) LinearLayout container_store;
         public ViewHolder(View itemView) {
             super(itemView);

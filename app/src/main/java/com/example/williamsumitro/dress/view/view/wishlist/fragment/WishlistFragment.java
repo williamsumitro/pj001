@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Cloth;
@@ -31,12 +32,17 @@ import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.wishlist.adapter.WishlistRVAdapter;
 import com.example.williamsumitro.dress.view.view.wishlist.adapter.WishlistRVTouch;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,10 +98,6 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
         progressDialog = new ProgressDialog(context);
     }
     private void api_getwishlist(){
-        progressDialog.setMessage("Loading ...");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
         service = apiUtils.getAPIService();
         service.req_get_my_wishlist(token).enqueue(new Callback<WishlistResponse>() {
             @Override
@@ -105,7 +107,6 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
                         recyclerView.setVisibility(View.VISIBLE);
                         wishlistResultArrayList = response.body().getWishlistResult();
                         setuprv();
-                        progressDialog.dismiss();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                     else {
@@ -123,6 +124,7 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
             }
         });
     }
+
     private void setuprv() {
         adapter = new WishlistRVAdapter(wishlistResultArrayList, context);
 //        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
@@ -135,33 +137,19 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+    public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof WishlistRVAdapter.ViewHolder) {
-            // get the removed item name to display it in snack bar
-            String name = wishlistResultArrayList.get(viewHolder.getAdapterPosition()).getProductName();
+            final int index = viewHolder.getAdapterPosition();
+            final String name = wishlistResultArrayList.get(index).getProductName();
+            final WishlistResult wishlistresult = wishlistResultArrayList.get(index);
 
-            // backup of removed item for undo purpose
-            final WishlistResult wishlistresult = wishlistResultArrayList.get(viewHolder.getAdapterPosition());
-            final int deletedIndex = viewHolder.getAdapterPosition();
-
-            // remove the item from recycler view
-            adapter.removeItem(viewHolder.getAdapterPosition());
-
-            // showing snack bar with Undo option
+            adapter.removeItem(index);
             Snackbar snackbar = Snackbar
                     .make(container, name + " removed from wishlist!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // undo is selected, restore the deleted item
-                    adapter.restoreItem(wishlistresult, deletedIndex);
-                }
-            });
-            snackbar.setActionTextColor(getResources().getColor(R.color.gold));
             snackbar.show();
         }
     }
+
     private void initDialog(final String message, int stats){
         dialog = new Dialog(context);
         dialog.setCancelable(false);
@@ -200,5 +188,4 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
             dialog.show();
         }
     }
-
 }

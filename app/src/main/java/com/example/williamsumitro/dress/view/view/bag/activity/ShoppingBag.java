@@ -43,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ShoppingBag extends AppCompatActivity {
+    public static ShoppingBag SHOPPINGBAG;
     @BindView(R.id.bag_btncheckout) Button checkout;
 //    @BindView(R.id.bag_btncontinue) Button continues;
     @BindView(R.id.bag_rvshoppingbag) RecyclerView recyclerView;
@@ -136,6 +137,7 @@ public class ShoppingBag extends AppCompatActivity {
     private void initView(){
         ButterKnife.bind(this);
         context = this;
+        SHOPPINGBAG = this;
         bagList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
         sessionManagement = new SessionManagement(getApplicationContext());

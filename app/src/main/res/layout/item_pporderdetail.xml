@@ -70,7 +70,6 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:id="@+id/item_pporderdetail_tv_subtotal"
-            android:textColor="@color/black"
             android:text="IDR xxxx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -89,7 +88,7 @@
             android:layout_marginBottom="10dp"
             android:id="@+id/item_pporderdetail_tv_total"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textColor="@color/black"
             android:text="IDR xxxx"
             android:layout_width="wrap_content"

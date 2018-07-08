@@ -65,7 +65,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    public static  MainActivity mainactivity;
+    public static MainActivity mainactivity;
     public static final String EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X";
     public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
     private int revealX;
@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
     private void api_getauthuser(){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         service = apiUtils.getAPIService();
         service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
             @Override
@@ -527,7 +529,6 @@ public class MainActivity extends AppCompatActivity {
             float finalRadius = (float) (Math.max(frameLayout.getWidth(), frameLayout.getHeight()) * 1.1);
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(
                     frameLayout, revealX, revealY, finalRadius, 0);
-
             circularReveal.setDuration(400);
             circularReveal.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -536,8 +537,6 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
             });
-
-
             circularReveal.start();
         }
     }
@@ -549,7 +548,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
         Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
         Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if(stats == 0){
@@ -580,7 +578,6 @@ public class MainActivity extends AppCompatActivity {
             status.setText("Oops!");
             detail.setText("");
             bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_oops);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
             buttonok.setOnClickListener(new View.OnClickListener() {
@@ -595,7 +592,6 @@ public class MainActivity extends AppCompatActivity {
             status.setText("Registered Success!");
             detail.setText("");
             bg.setBackgroundResource(R.color.green7);
-//            imageView.setImageResource(R.drawable.emoji_success);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttonok.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -611,7 +607,6 @@ public class MainActivity extends AppCompatActivity {
             status.setText("Uh Oh!");
             detail.setText("There is a problem with internet connection or the server");
             bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_cry);
             buttonok.setBackgroundResource(R.drawable.button1_red);
             buttonok.setText("Try Again");
             buttonok.setOnClickListener(new View.OnClickListener() {
@@ -631,7 +626,6 @@ public class MainActivity extends AppCompatActivity {
             buttoncancel.setVisibility(View.VISIBLE);
             status.setText("Are you sure want to logout ?");
             detail.setText("");
-//            imageView.setImageResource(R.drawable.emoji_smile);
             bg.setBackgroundResource(R.color.blue7);
             buttonok.setBackgroundResource(R.drawable.button1_green);
             buttoncancel.setBackgroundResource(R.drawable.button1_red);

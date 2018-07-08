@@ -36,6 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Payment extends AppCompatActivity {
+    public static Payment PAYMENT;
     @BindView(R.id.payment_btn_submit) Button submit;
     @BindView(R.id.payment_et_point) EditText et_point;
     @BindView(R.id.payment_toolbar) Toolbar toolbar;
@@ -67,7 +68,10 @@ public class Payment extends AppCompatActivity {
     }
 
     private void initEt() {
-        if (Double.parseDouble(point)==0){
+        if (Double.parseDouble(point)<0){
+            et_point.setEnabled(false);
+        }
+        else if (Double.parseDouble(point)==0){
             et_point.setEnabled(false);
         }
         et_point.addTextChangedListener(new TextWatcher() {
@@ -86,6 +90,10 @@ public class Payment extends AppCompatActivity {
                 if (!et_point.getText().toString().equals("")){
                     if ((Double.parseDouble(et_point.getText().toString()) > Double.parseDouble(point))){
                         et_point.setError("You can't insert above your point");
+                        submit.setEnabled(false);
+                    }
+                    else if ((Double.parseDouble(et_point.getText().toString()) > Double.parseDouble(totalprice.getText().toString()))){
+                        et_point.setError("Your point must below or equal to total price");
                         submit.setEnabled(false);
                     }
                     else{
@@ -166,6 +174,7 @@ public class Payment extends AppCompatActivity {
         ButterKnife.bind(this);
         context = this;
         formatter = new DecimalFormat("#,###,###");
+        PAYMENT = this;
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);

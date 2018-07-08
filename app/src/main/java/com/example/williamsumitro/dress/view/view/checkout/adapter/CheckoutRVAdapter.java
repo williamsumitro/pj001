@@ -54,7 +54,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
     private ArrayList<CheckoutInfo> checkoutInfoArrayList;
     private Context context;
     private DecimalFormat formatter;
-    private boolean open = false;
+    private boolean checking = true;
     private apiService service;
     private ArrayList<CourierSpinner> courierSpinners;
     CourierSpinner courierSpinner;
@@ -70,7 +70,9 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
         checkout_courierArrayList = new ArrayList<>();
         sessionManagement = new SessionManagement(context);
     }
-
+    public boolean getCheckout(){
+        return checking;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_checkout, parent, false);
@@ -130,6 +132,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
 
             @Override
             public void afterTextChanged(Editable s) {
+                checking = false;
                 boolean check = false;
                 int j = -1;
                 for (int i = 0; i<checkout_courierArrayList.size();i++){
@@ -146,7 +149,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
                             courierSpinner.getCourier_id(),
                             courierSpinner.getCourier_service(),
                             courierSpinner.getFee(),
-                            holder.note.getText().toString());
+                            s.toString());
                     checkout_courierArrayList.set(j, checkout_courier);
                     sessionManagement.keepCheckoutCourierService(new Checkout_CourierArrayList(checkout_courierArrayList));
                 }else {
@@ -154,7 +157,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
                             courierSpinner.getCourier_id(),
                             courierSpinner.getCourier_service(),
                             courierSpinner.getFee(),
-                            holder.note.getText().toString());
+                            s.toString());
                     checkout_courierArrayList.add(checkout_courier);
                     sessionManagement.keepCheckoutCourierService(new Checkout_CourierArrayList(checkout_courierArrayList));
                 }
@@ -164,6 +167,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
         holder.courierservice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                checking = false;
                 CourierSpinner courierSpinner = (CourierSpinner) parent.getItemAtPosition(position);
                 idcourier = courierSpinner.getCourier_id();
                 boolean check = false;

@@ -83,7 +83,8 @@
         <activity android:name=".view.view.sellerpanel.sales.shippingconfirmation.activity.ShippingConfirmation" />
         <activity android:name=".view.view.sellerpanel.sales.orderconfirmation.activity.OrderApproveProduct" />
         <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRatingDetail" />
-        <activity android:name=".view.view.purchase.history.activity.PurchaseHistoryDetail"></activity>
+        <activity android:name=".view.view.purchase.history.activity.PurchaseHistoryDetail" />
+        <activity android:name=".view.view.sellerpanel.partnership.activity.UplinePartnership"></activity>
     </application>
 
 </manifest>
