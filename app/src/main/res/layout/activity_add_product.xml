@@ -10,10 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/addproduct_toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/addproduct_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"/>
+        </android.support.design.widget.AppBarLayout>
         <TextView
             android:layout_marginTop="10dp"
             android:textAlignment="center"
@@ -51,6 +55,7 @@
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputEditText
                 android:inputType="number"
+                android:maxLength="11"
                 android:id="@+id/addproduct_et_MinOrder"
                 android:hint="Minimum Order"
                 android:layout_width="match_parent"
@@ -66,6 +71,7 @@
             <android.support.design.widget.TextInputEditText
                 android:inputType="numberDecimal"
                 android:id="@+id/addproduct_et_weight"
+                android:maxLength="11"
                 android:hint="Weight (gr)"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

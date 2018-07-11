@@ -54,8 +54,8 @@
         <activity android:name=".view.view.authentication.Unauthorized" />
         <activity android:name=".view.view.wallet.activity.Mywallet" />
         <activity android:name=".view.view.wallet.activity.Withdraw" />
-        <activity android:name=".view.view.sellerpanel.SellerPanel" />
-        <activity android:name=".view.view.sellerpanel.product.activity.AddProduct" />
+        <activity android:name=".view.view.sellerpanel.activity.SellerPanel" />
+        <activity android:name=".view.view.product.activity.AddProduct" />
         <activity android:name=".view.view.openstore.activity.Openstrore_Fileupload" />
         <activity android:name=".view.view.checkout.activity.Payment" />
         <activity android:name=".view.view.checkout.activity.CheckoutSuccess" />
@@ -76,15 +76,16 @@
         <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRating" />
         <activity android:name=".view.view.purchase.history.activity.PurchaseHistory" />
         <activity android:name=".view.view.purchase.payment.activity.PP_InvoiceDetail" />
-        <activity android:name=".view.view.sellerpanel.sales.orderconfirmation.activity.OrderConfirmation" />
-        <activity android:name=".view.view.sellerpanel.sales.shippingconfirmation.activity.ShippingConfirmation" />
-        <activity android:name=".view.view.sellerpanel.sales.orderconfirmation.activity.OrderApproveProduct" />
+        <activity android:name=".view.view.sales.orderconfirmation.activity.OrderConfirmation" />
+        <activity android:name=".view.view.sales.shippingconfirmation.activity.ShippingConfirmation" />
+        <activity android:name=".view.view.sales.orderconfirmation.activity.OrderApproveProduct" />
         <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRatingDetail" />
         <activity android:name=".view.view.purchase.history.activity.PurchaseHistoryDetail" />
-        <activity android:name=".view.view.sellerpanel.partnership.activity.UplinePartnership" />
-        <activity android:name=".view.view.sellerpanel.partnership.activity.DownlinePartnership" />
-        <activity android:name=".view.view.sellerpanel.partnership.activity.MyUplinePartnership" />
-        <activity android:name=".view.view.sellerpanel.partnership.activity.MyDownlinePartnership"></activity>
+        <activity android:name=".view.view.partnership.activity.UplinePartnership" />
+        <activity android:name=".view.view.partnership.activity.DownlinePartnership" />
+        <activity android:name=".view.view.partnership.activity.MyUplinePartnership" />
+        <activity android:name=".view.view.partnership.activity.MyDownlinePartnership" />
+        <activity android:name=".view.view.mystore.activity.EditStore"></activity>
     </application>
 
 </manifest>

@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.view.mystore.activity.PreviewStore;
-import com.example.williamsumitro.dress.view.view.mystore.activity.StoreEditInformation;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,20 +47,6 @@ public class MyStoreFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-            }
-        });
-        container_previewstore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PreviewStore.class);
-                initanim(intent);
-            }
-        });
-        container_editinformation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), StoreEditInformation.class);
-                initanim(intent);
             }
         });
         container_editcourier.setOnClickListener(new View.OnClickListener() {

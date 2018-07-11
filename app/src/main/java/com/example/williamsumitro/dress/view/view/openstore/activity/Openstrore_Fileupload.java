@@ -29,7 +29,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;
+import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -356,7 +356,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Add Product");
+        getSupportActionBar().setTitle("File Upload");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -378,44 +378,11 @@ public class Openstrore_Fileupload extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save) {
-            showDialog();
+            initDialog(1);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public void showDialog(){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-
-        status.setText("Save");
-        detail.setText("Are you sure want to save ?");
-        bg.setBackgroundResource(R.color.green7);
-        buttonok.setBackgroundResource(R.drawable.button1_green);
-        buttoncancel.setBackgroundResource(R.drawable.button1_1);
-        buttonok.setText("Yes");
-        buttoncancel.setVisibility(View.VISIBLE);
-        buttoncancel.setText("No");
-        buttoncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        buttonok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            api_registerstore();
-            }
-        });
-        dialog.show();
     }
     private void api_registerstore(){
         progressDialog.setMessage("Uploading, please wait ....");
@@ -542,7 +509,30 @@ public class Openstrore_Fileupload extends AppCompatActivity {
 //        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
         Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
         Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-
+        if (stats==1){
+            status.setText("Save");
+            detail.setText("Are you sure want to save ?");
+            bg.setBackgroundResource(R.color.green7);
+            ok.setBackgroundResource(R.drawable.button1_green);
+            cancel.setBackgroundResource(R.drawable.button1_1);
+            ok.setText("Yes");
+            cancel.setVisibility(View.VISIBLE);
+            cancel.setText("No");
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    api_registerstore();
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
         if (stats == 3){
             status.setText("Uh Oh!");
             bg.setBackgroundResource(R.color.red7);

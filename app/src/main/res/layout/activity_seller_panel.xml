@@ -14,548 +14,562 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:id="@+id/sellerpanel_swiperefreshlayout">
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
             <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/sellerpanel_ln_top"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_marginTop="100dp"
-                    android:id="@+id/sellerpanel_img_status"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-                <TextView
-                    android:gravity="center"
-                    android:layout_margin="10dp"
-                    android:id="@+id/sellerpanel_tv_status"
-                    android:textAlignment="center"
-                    android:textSize="30sp"
-                    android:text="Waiting for admin approval heheheheh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <LinearLayout
-                    android:layout_margin="10dp"
-                    android:id="@+id/sellerpanel_ln_top_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:textSize="20sp"
-                        android:textColor="@color/black"
-                        android:text="Reject Comment : "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:layout_marginLeft="5dp"
-                        android:id="@+id/sellerpanel_tv_comment"
-                        android:textSize="20sp"
-                        android:text="Waiting for admin approval heheheheh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/sellerpanel_ln_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:textColor="@color/grey"
-                    android:text="Total Sales"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <Spinner
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/sellerpanel_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
                 <LinearLayout
-                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/sellerpanel_ln_top"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_marginTop="100dp"
+                        android:id="@+id/sellerpanel_img_status"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
                     <TextView
-                        android:id="@+id/sellerpanel_tv_dashboardstatus"
-                        android:text="Year To Date : "
+                        android:gravity="center"
+                        android:layout_margin="10dp"
+                        android:id="@+id/sellerpanel_tv_status"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        android:text="Waiting for admin approval heheheheh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/sellerpanel_tv_dashboarddate"
-                        android:text="(2018-11-11 - 2018-2-1)"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:id="@+id/sellerpanel_ln_top_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:text="Reject Comment : "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/sellerpanel_tv_comment"
+                            android:textSize="20sp"
+                            android:text="Waiting for admin approval heheheheh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColor="@color/black"
-                        android:text="IDR "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:id="@+id/sellerpanel_tv_balance"
-                        android:textColor="@color/black"
-                        android:text="50.000.000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@color/gray"
+                    android:id="@+id/sellerpanel_ln_bottom"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <android.support.v7.widget.CardView
-                        android:layout_margin="5dp"
+                    <TextView
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/grey"
+                        android:text="Total Sales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <Spinner
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/sellerpanel_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_gravity="center"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <ImageView
-                                    android:layout_gravity="center"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:src="@drawable/store1" />
-                                <TextView
-                                    android:layout_marginTop="10dp"
-                                    android:textAlignment="center"
-                                    android:textSize="20sp"
-                                    android:textColor="@color/black"
-                                    android:text="Store Settings"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:id="@+id/sellerpanel_ln_editstore"
-                                    android:background="@color/green7"
-                                    android:padding="5dp"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/editprofile"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Edit Store"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_viewstore"
-                                    android:background="@color/blue8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/view"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="View Store"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_changestoreimage"
-                                    android:background="@color/brown7"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/pictures"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Change Store Image"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_legaldoc"
-                                    android:background="@color/orange8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/uploadlegaldoc"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Upload Documents"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                    <android.support.v7.widget.CardView
-                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/sellerpanel_tv_dashboardstatus"
+                            android:text="Year To Date : "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/black"
+                            android:id="@+id/sellerpanel_tv_dashboarddate"
+                            android:text="(2018-11-11 - 2018-2-1)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_gravity="center"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <ImageView
-                                    android:layout_gravity="center"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:src="@drawable/product" />
-                                <TextView
-                                    android:layout_marginTop="10dp"
-                                    android:textAlignment="center"
-                                    android:textSize="20sp"
-                                    android:textColor="@color/black"
-                                    android:text="Product Settings"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_addproduct"
-                                    android:background="@color/purple8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/addclothes"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Add Clothes"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_viewproduct"
-                                    android:background="@color/blue8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/view"/>
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="View Product"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                    <android.support.v7.widget.CardView
-                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:text="IDR "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:id="@+id/sellerpanel_tv_balance"
+                            android:textColor="@color/black"
+                            android:text="50.000.000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="@color/gray"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.CardView
+                            android:layout_margin="5dp"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content">
                             <LinearLayout
-                                android:layout_gravity="center"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal">
+                                <LinearLayout
                                     android:layout_gravity="center"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:src="@drawable/sales" />
-                                <TextView
-                                    android:layout_marginTop="10dp"
-                                    android:textAlignment="center"
-                                    android:textSize="20sp"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Sales"
-                                    android:textColor="@color/black" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_orderconfirmation"
-                                    android:background="@color/indigo8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:orientation="vertical">
                                     <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/orderconfirmation"/>
+                                        android:layout_gravity="center"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:src="@drawable/store1" />
                                     <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Order Confirmation"
+                                        android:layout_marginTop="10dp"
+                                        android:textAlignment="center"
+                                        android:textSize="20sp"
                                         android:textColor="@color/black"
-                                        android:textAlignment="center"/>
+                                        android:text="Store Settings"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
                                 </LinearLayout>
                                 <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_shippingconfirmation"
-                                    android:background="@color/pink9"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:id="@+id/sellerpanel_ln_editstore"
+                                        android:background="@color/green7"
+                                        android:padding="5dp"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:gravity="center">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/editprofile"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Edit Store"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_viewstore"
+                                        android:background="@color/blue8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:orientation="vertical"
+                                        android:gravity="center"
+                                        android:layout_weight="1">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/view"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="View Store"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_changestoreimage"
+                                        android:background="@color/brown7"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:orientation="vertical"
+                                        android:gravity="center"
+                                        android:layout_weight="1">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/pictures"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Change Store Image"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_legaldoc"
+                                        android:background="@color/orange8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:gravity="center">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/uploadlegaldoc"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Upload Documents"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+                        <android.support.v7.widget.CardView
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
                                     <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:src="@drawable/shippingconfirmation"/>
+                                        android:layout_gravity="center"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:src="@drawable/product" />
                                     <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Shipping Confirmation"
+                                        android:layout_marginTop="10dp"
+                                        android:textAlignment="center"
+                                        android:textSize="20sp"
                                         android:textColor="@color/black"
-                                        android:textAlignment="center"/>
+                                        android:text="Product Settings"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_addproduct"
+                                        android:background="@color/purple8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:gravity="center">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/addclothes"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Add Clothes"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_viewproduct"
+                                        android:background="@color/blue8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:orientation="vertical"
+                                        android:gravity="center"
+                                        android:layout_weight="1">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/view"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="View Product"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                    <android.support.v7.widget.CardView
-                        android:layout_margin="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
+                        </android.support.v7.widget.CardView>
+                        <android.support.v7.widget.CardView
+                            android:layout_margin="5dp"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content">
                             <LinearLayout
-                                android:layout_gravity="center"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal">
+                                <LinearLayout
                                     android:layout_gravity="center"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:src="@drawable/request" />
-                                <TextView
-                                    android:layout_marginTop="10dp"
-                                    android:textAlignment="center"
-                                    android:textSize="20sp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Request"
-                                    android:textColor="@color/black" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:background="@color/indigo8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
+                                    android:layout_width="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_gravity="center"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:src="@drawable/sales" />
                                     <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
+                                        android:layout_marginTop="10dp"
+                                        android:textAlignment="center"
+                                        android:textSize="20sp"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Upline Partner"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
+                                        android:text="Sales"
+                                        android:textColor="@color/black" />
                                 </LinearLayout>
                                 <LinearLayout
-                                    android:padding="5dp"
-                                    android:background="@color/pink9"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Downline Partner"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_orderconfirmation"
+                                        android:background="@color/indigo8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:gravity="center">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/orderconfirmation"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Order Confirmation"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_shippingconfirmation"
+                                        android:background="@color/pink9"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:orientation="vertical"
+                                        android:gravity="center"
+                                        android:layout_weight="1">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/shippingconfirmation"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Shipping Confirmation"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                    <android.support.v7.widget.CardView
-                        android:layout_margin="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
+                        </android.support.v7.widget.CardView>
+                        <android.support.v7.widget.CardView
+                            android:layout_margin="5dp"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content">
                             <LinearLayout
-                                android:layout_gravity="center"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal">
+                                <LinearLayout
                                     android:layout_gravity="center"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:src="@drawable/partnership3" />
-                                <TextView
-                                    android:layout_marginTop="10dp"
-                                    android:textAlignment="center"
-                                    android:textSize="20sp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Partnership"
-                                    android:textColor="@color/black" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_uplinepartner"
-                                    android:background="@color/indigo8"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
+                                    android:layout_width="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_gravity="center"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:src="@drawable/request" />
                                     <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
+                                        android:layout_marginTop="10dp"
+                                        android:textAlignment="center"
+                                        android:textSize="20sp"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Upline Partner"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
+                                        android:text="Request"
+                                        android:textColor="@color/black" />
                                 </LinearLayout>
                                 <LinearLayout
-                                    android:padding="5dp"
-                                    android:id="@+id/sellerpanel_ln_downlinepartner"
-                                    android:background="@color/pink9"
-                                    android:layout_width="100dp"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:layout_weight="1">
-                                    <TextView
-                                        android:textSize="12sp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Downline Partner"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"/>
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:background="@color/indigo8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:gravity="center">
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Upline Partner"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:background="@color/pink9"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:orientation="vertical"
+                                        android:gravity="center"
+                                        android:layout_weight="1">
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Downline Partner"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                        </android.support.v7.widget.CardView>
+                        <android.support.v7.widget.CardView
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_gravity="center"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:src="@drawable/partnership3" />
+                                    <TextView
+                                        android:layout_marginTop="10dp"
+                                        android:textAlignment="center"
+                                        android:textSize="20sp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Partnership"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_uplinepartner"
+                                        android:background="@color/indigo8"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:gravity="center">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/upline"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Upline Partner"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:padding="5dp"
+                                        android:id="@+id/sellerpanel_ln_downlinepartner"
+                                        android:background="@color/pink9"
+                                        android:layout_width="100dp"
+                                        android:layout_height="0dp"
+                                        android:orientation="vertical"
+                                        android:gravity="center"
+                                        android:layout_weight="1">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/downline"/>
+                                        <TextView
+                                            android:textSize="12sp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Downline Partner"
+                                            android:textColor="@color/black"
+                                            android:textAlignment="center"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

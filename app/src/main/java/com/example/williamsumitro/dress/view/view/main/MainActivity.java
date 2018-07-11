@@ -1,13 +1,10 @@
 package com.example.williamsumitro.dress.view.view.main;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,9 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -51,7 +45,7 @@ import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
 import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
-import com.example.williamsumitro.dress.view.view.sellerpanel.SellerPanel;
+import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 import com.squareup.picasso.Picasso;
 

@@ -22,8 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.ApproveOrder;
-import com.example.williamsumitro.dress.view.model.ApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.ProductRating;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
@@ -31,8 +29,6 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.purchase.reviewrating.adapter.PurchaseReviewRatingDetail_RV;
-import com.example.williamsumitro.dress.view.view.sellerpanel.sales.orderconfirmation.activity.OrderConfirmation;
-import com.example.williamsumitro.dress.view.view.sellerpanel.sales.orderconfirmation.adapter.OC_ProductRVAdapter;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;

@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.CityDetails;
@@ -256,7 +257,8 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     return;
                 }
                 if (checked) {
-                    status.setText("Please click complete");
+                    status.setText("Successful");
+                    Toast.makeText(context, "Please click the complete button to continue", Toast.LENGTH_LONG).show();
                     status.setTextColor(getResources().getColor(R.color.green));
                 }
                 else {

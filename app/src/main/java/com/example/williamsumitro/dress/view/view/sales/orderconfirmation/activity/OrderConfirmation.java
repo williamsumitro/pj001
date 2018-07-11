@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.purchase.receipt.activity;
+package com.example.williamsumitro.dress.view.view.sales.orderconfirmation.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,9 +21,7 @@ import com.example.williamsumitro.dress.view.model.Sales_OrderResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
-import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
-import com.example.williamsumitro.dress.view.view.purchase.receipt.adapter.PurchaseReceiptRV;
+import com.example.williamsumitro.dress.view.view.sales.orderconfirmation.adapter.OC_RVAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,24 +33,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PurchaseReceiptConfirmation extends AppCompatActivity {
-    @BindView(R.id.purchasereceiptconfirmation_toolbar) Toolbar toolbar;
-    @BindView(R.id.purchasereceiptconfirmation_ln_top) LinearLayout container_top;
-    @BindView(R.id.purchasereceiptconfirmation_ln_bottom) LinearLayout container_bottom;
-    @BindView(R.id.purchasereceiptconfirmation_rv) RecyclerView recyclerView;
-    @BindView(R.id.purchasereceiptconfirmation_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+public class OrderConfirmation extends AppCompatActivity {
+    @BindView(R.id.orderconfirmation_rv) RecyclerView recyclerView;
+    @BindView(R.id.orderconfirmation_ln_bottom) LinearLayout bottom;
+    @BindView(R.id.orderconfirmation_ln_top) LinearLayout top;
+    @BindView(R.id.orderconfirmation_toolbar) Toolbar toolbar;
+    @BindView(R.id.orderconfirmation_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
+    public static OrderConfirmation ORDERCONFIRMATION;
     private Context context;
     private apiService service;
     private String token;
     private SessionManagement sessionManagement;
-    private ArrayList<Sales_OrderResult> orderResultArrayList;
     private DecimalFormat formatter;
-    private PurchaseReceiptRV adapter;
+    private ArrayList<Sales_OrderResult> orderResultArrayList;
+    private OC_RVAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_purchase_receipt_confirmation);
+        setContentView(R.layout.activity_order_confirmation);
         initView();
         setuptoolbar();
         initRefresh();
@@ -67,15 +64,17 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
-        api_getreceiptconfirmation();
+        api_getorderconfirmation();
     }
     private void initView(){
+        ORDERCONFIRMATION = this;
         ButterKnife.bind(this);
         context = this;
         formatter = new DecimalFormat("#,###,###");
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        orderResultArrayList = new ArrayList<>();
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -84,7 +83,7 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Purchase Receipt Confirmation");
+        getSupportActionBar().setTitle("Order Confirmation");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,21 +93,34 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
             }
         });
     }
-    private void api_getreceiptconfirmation() {
+    private void initanim(Intent intent){
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+    }
+    private void setupRV(){
+        adapter = new OC_RVAdapter(context, orderResultArrayList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+    }
+    private void api_getorderconfirmation() {
         service = apiUtils.getAPIService();
-        service.req_get_receipt_confirmation(token).enqueue(new Callback<Sales_OrderResponse>() {
+        service.req_seller_get_order(token).enqueue(new Callback<Sales_OrderResponse>() {
             @Override
             public void onResponse(Call<Sales_OrderResponse> call, Response<Sales_OrderResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
                         if (response.body().getSales_OrderResult().size()>0){
-                            container_bottom.setVisibility(View.VISIBLE);
+                            bottom.setVisibility(View.VISIBLE);
                             orderResultArrayList = response.body().getSales_OrderResult();
                             setupRV();
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
-                            container_top.setVisibility(View.VISIBLE);
+                            top.setVisibility(View.VISIBLE);
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }
@@ -121,44 +133,5 @@ public class PurchaseReceiptConfirmation extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-    private void setupRV(){
-        adapter = new PurchaseReceiptRV(context, orderResultArrayList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(context, Purchase.class);
-        initanim(intent);
-//        super.onBackPressed();
-    }
-    private void initanim(Intent intent){
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.toolbarhome) {
-            Intent intent = new Intent(context, MainActivity.class);
-            initanim(intent);
-            finish();
-            Purchase.PURCHASE.finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -252,6 +252,7 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                    Toast.makeText(context, "Please click the next button to continue", Toast.LENGTH_LONG).show();
                 }
             });
             dialog.show();
@@ -324,7 +325,7 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
                                                 button_checkstore.setClickable(false);
                                                 button_registerstore.setEnabled(false);
                                                 button_registerstore.setClickable(false);
-                                                tv_status.setText("Please click the next button");
+                                                tv_status.setText("Successful");
                                             }
                                             else if(status.equals("false")) {
                                                 String message = jsonResults.getString("message");
