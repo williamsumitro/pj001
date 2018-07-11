@@ -89,18 +89,6 @@ public class Login extends AppCompatActivity{
             }
         });
     }
-    private void presentActivity(View view){
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "transition");
-        int revealX = (int) (view.getX() + view.getWidth() / 2);
-        int revealY = (int) (view.getY() + view.getHeight() / 2);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(MainActivity.EXTRA_CIRCULAR_REVEAL_X, revealX);
-        intent.putExtra(MainActivity.EXTRA_CIRCULAR_REVEAL_Y, revealY);
-
-        ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
-        finish();
-    }
     private void postDataToAPI(View view){
         layoutemail.setErrorEnabled(false);
         layoutpassword.setErrorEnabled(false);
@@ -119,6 +107,8 @@ public class Login extends AppCompatActivity{
         }
         progressDialog.setMessage("Wait a sec..");
         progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         api_login(view);
     }
     private void initView(){
@@ -192,7 +182,8 @@ public class Login extends AppCompatActivity{
                     sessionManagement.createLoginSession(message);
                     MainActivity.mainactivity.finish();
                     finish();
-                    presentActivity(view);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    initanim(intent);
                 }
             });
             dialog.show();

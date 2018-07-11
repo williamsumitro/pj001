@@ -8,6 +8,7 @@ import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
+import com.example.williamsumitro.dress.view.model.PartnershipResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
@@ -275,4 +276,13 @@ public interface apiService {
     Call<ResponseBody> req_reject_partnership(@Field("token") String token,
                                               @Field("partnership_id") String partnership_id);
 
+
+    @FormUrlEncoded
+    @POST("upline_partner_list")
+    Call<PartnershipResponse> req_upline_partner_list(@Field("token") String token);
+
+
+    @FormUrlEncoded
+    @POST("downline_partner_list")
+    Call<PartnershipResponse> req_downline_partner_list(@Field("token") String token);
 }

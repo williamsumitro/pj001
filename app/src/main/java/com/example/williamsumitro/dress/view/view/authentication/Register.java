@@ -150,6 +150,8 @@ public class Register extends AppCompatActivity {
 
         progressDialog.setMessage("Wait a sec..");
         progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
 
         service = apiUtils.getAPIService();
         service.req_register(email.getText().toString(), password.getText().toString(), name.getText().toString(), sex, phonenumber.getText().toString()).

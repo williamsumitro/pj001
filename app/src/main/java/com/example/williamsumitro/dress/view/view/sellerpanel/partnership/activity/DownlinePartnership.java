@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class DownlinePartnership extends AppCompatActivity {
     @BindView(R.id.downline_partnership_ln_top) LinearLayout top;
     @BindView(R.id.downline_partnership_toolbar) Toolbar toolbar;
     @BindView(R.id.downline_partnership_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.downline_partnership_btn_mydownlinepartners) Button mydownlinepartnership;
 
     public static DownlinePartnership DOWNLINEPARTNERSHIP;
     private Context context;
@@ -66,6 +68,16 @@ public class DownlinePartnership extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 initRefresh();
+            }
+        });
+        initClick();
+    }
+    private void initClick() {
+        mydownlinepartnership.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MyDownlinePartnership.class);
+                initanim(intent);
             }
         });
     }
@@ -124,6 +136,7 @@ public class DownlinePartnership extends AppCompatActivity {
                         if (response.body().getResult().size()>0){
                             bottom.setVisibility(View.VISIBLE);
                             resultArrayList = response.body().getResult();
+                            itemArrayList = new ArrayList<>();
                             for (int i = 0; i<resultArrayList.size(); i++){
                                 for (int j = 0; j<resultArrayList.get(i).getProduct().size();j++){
                                     DownlinePartnershipItem item = new DownlinePartnershipItem(resultArrayList.get(i).getStoreNamePartner(),

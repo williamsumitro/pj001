@@ -61,8 +61,6 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
     private int favoriteclick = 0;
     private Context context;
     private DecimalFormat formatter;
-    private apiService service;
-    private String token;
     private SessionManagement sessionManagement;
     private List<Price> priceList = new ArrayList<>();
     private final static String PRODUCT_ID = "PRODUCT_ID";
@@ -74,9 +72,6 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
     public HotRVAdapter (List<ProductInfo> productInfoList, Context context){
         this.productInfoList = productInfoList;
         this.context = context;
-        sessionManagement = new SessionManagement(context);
-        HashMap<String, String> user = sessionManagement.getUserDetails();
-        token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(context);
     }
 

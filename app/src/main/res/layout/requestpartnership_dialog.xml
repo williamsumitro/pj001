@@ -51,6 +51,7 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/requestpartnershipdialog_et_minorder"
                 android:textSize="14sp"
+                android:inputType="number"
                 android:hint="Min Order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

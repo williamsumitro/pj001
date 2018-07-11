@@ -144,7 +144,6 @@ public class Checkout_CourierFragment extends Fragment implements Step {
         }
     }
     private boolean isRefresh(){
-        checked = adapter.getCheckout();
         return checked;
     }
 

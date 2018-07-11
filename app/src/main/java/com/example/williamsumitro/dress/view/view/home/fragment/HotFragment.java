@@ -74,8 +74,8 @@ public class HotFragment extends Fragment {
         productInfoList.add(productInfo);
     }
     private void setupRV(){
-        adapterList = new HotRVAdapter(productInfoList, getContext());
-        RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getContext(), 2);
+        adapterList = new HotRVAdapter(productInfoList, getActivity());
+        RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getActivity(), 2);
         rvList.setLayoutManager(grid_layoutmanager);
         rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setAdapter(adapterList);

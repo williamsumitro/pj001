@@ -133,10 +133,9 @@ public class Purchase extends AppCompatActivity {
                             tv_payment.setTextColor(getResources().getColor(R.color.red));
                             ex_payment.setVisibility(View.VISIBLE);
                             container_payment.setBackgroundColor(getResources().getColor(R.color.red9));
-                            api_getorder();
                         }
                         else {
-                            progressDialog.dismiss();
+
                         }
                     }
                 }
@@ -148,6 +147,8 @@ public class Purchase extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+
+        api_getorder();
     }
     private void api_getorder(){
         service = apiUtils.getAPIService();
@@ -161,10 +162,9 @@ public class Purchase extends AppCompatActivity {
                             tv_orderstatus.setTextColor(getResources().getColor(R.color.red));
                             ex_orderstatus.setVisibility(View.VISIBLE);
                             container_orderstatus.setBackgroundColor(getResources().getColor(R.color.red9));
-                            api_getreceiptconfirmation();
                         }
                         else {
-                            progressDialog.dismiss();
+
                         }
                     }
                 }
@@ -176,6 +176,7 @@ public class Purchase extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+        api_getreceiptconfirmation();
     }
     private void api_getreceiptconfirmation() {
         service = apiUtils.getAPIService();
@@ -189,11 +190,8 @@ public class Purchase extends AppCompatActivity {
                             tv_receiptconfirmation.setTextColor(getResources().getColor(R.color.red));
                             ex_receiptconfirmation.setVisibility(View.VISIBLE);
                             container_receiptconfirmation.setBackgroundColor(getResources().getColor(R.color.red9));
-                            api_getreviewrating();
-                            progressDialog.dismiss();
                         }
                         else {
-                            progressDialog.dismiss();
                         }
                     }
                 }
@@ -205,6 +203,7 @@ public class Purchase extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+        api_getreviewrating();
     }
     private void api_getreviewrating() {
         service = apiUtils.getAPIService();
@@ -218,6 +217,7 @@ public class Purchase extends AppCompatActivity {
                             tv_reviewandrating.setTextColor(getResources().getColor(R.color.red));
                             ex_reviewandrating.setVisibility(View.VISIBLE);
                             container_reviewandrating.setBackgroundColor(getResources().getColor(R.color.red9));
+                            progressDialog.dismiss();
                         }
                         else {
                             progressDialog.dismiss();

@@ -9,32 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/upline_partnership_toolbar"
+            android:id="@+id/myupline_partnership_toolbar"
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/upline_partnership_swiperefreshlayout"
+        android:id="@+id/myupline_partnership_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <Button
-                android:id="@+id/upline_partnership_btn_myuplinepartners"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button1_3"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:text="My Upline Partners"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/upline_partnership_ln_top"
+                android:id="@+id/myupline_partnership_ln_top"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -50,14 +40,13 @@
                     android:layout_gravity="center"
                     android:textSize="20sp"
                     android:textColor="@color/black"
-                    android:text="You need to buy products from another store to use this feature"
+                    android:text="You need to request partnership"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/upline_partnership_ln_bottom"
-                android:gravity="center"
+                android:id="@+id/myupline_partnership_ln_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -70,7 +59,7 @@
                         android:orientation="vertical">
                         <android.support.v7.widget.RecyclerView
                             android:layout_gravity="center"
-                            android:id="@+id/upline_partnership_rv"
+                            android:id="@+id/myupline_partnership_rv"
                             android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>

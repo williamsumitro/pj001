@@ -66,10 +66,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity mainactivity;
-    public static final String EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X";
-    public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
-    private int revealX;
-    private int revealY;
 
     @BindView(R.id.main_nav) NavigationView navigationView;
     @BindView(R.id.main_drawerlayout) DrawerLayout drawerLayout;
@@ -77,43 +73,31 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_appbar_frame) FrameLayout frameLayout;
 
     public static int navIndex = 2;
-    private static final String MYSTORE = "MYSTORE";
-    private static final String ORDER = "ORDER";
     private static final String HOME = "HOME";
     private static final String FAVORITESTORE = "FAVORITESTORE";
-    private static final String LOGOUT = "LOGOUT";
     private static final String WISHLIST = "WISHLIST";
     private static final String HELP = "HELP";
     private static final String OPENINGREQUEST = "OPENINGREQUEST";
     public static String CURRENT = HOME;
 
-    private boolean FragOnBackPress = true;
     private String[] activityTitles;
-    private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler handler;
     private View headerLayout;
-    private int CurrentSelectedPosition, coba;
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     private Context context;
-    private MenuItem activeMenuItem;
     private SessionManagement sessionManagement;
-    private String token ="", name, email, total_qty="0";
+    private String token ="", total_qty="0";
     private Dialog dialog;
-    private BadgeNavDrawer badgeNavDrawer;
-    private int count_bag = 0, count_notification = 100;
     private apiService service;
     private Boolean status = false;
-    private final static String STATUS = "STATUS";
-    private final static String COMMENT = "COMMENT";
     private TextView itemcount;
     private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initSession();
         loadNavBar();
         setupNavigationView();
         if (savedInstanceState == null) {
@@ -121,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             CURRENT = HOME;
             loadHomeFragment();
         }
-        initTransition(savedInstanceState);
     }
     private void initView(){
         mainactivity = this;
@@ -133,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         sessionManagement = new SessionManagement(getApplicationContext());
         progressDialog = new ProgressDialog(context);
-    }
-    private void initSession(){
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
     }
@@ -300,13 +281,6 @@ public class MainActivity extends AppCompatActivity {
                         default:
                             navIndex = 2;
                     }
-                    //Checking if the item is in checked state or not, if not make it in checked state
-                    if (menuItem.isChecked()) {
-                        menuItem.setChecked(false);
-                    } else {
-                        menuItem.setChecked(true);
-                    }
-                    menuItem.setChecked(true);
                     loadHomeFragment();
                     return true;
                 }
@@ -349,48 +323,37 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(navIndex).setChecked(true);
     }
     private void loadHomeFragment() {
-    // selecting appropriate nav menu item
-    selectNavMenu();
-
-    // set toolbar title
-    setToolbarTitle();
-
-    // if user select the current navigation menu again, don't do anything
-    // just close the navigation drawer
-    if (getSupportFragmentManager().findFragmentByTag(CURRENT) != null) {
-        drawerLayout.closeDrawers();
-        return;
-    }
-
-    // Sometimes, when fragment has huge data, screen seems hanging
-    // when switching between navigation menus
-    // So using runnable, the fragment is loaded with cross fade effect
-    // This effect can be seen in GMail app
-    Runnable mPendingRunnable = new Runnable() {
-        @Override
-        public void run() {
-            // update the main content by replacing fragments
-            Fragment fragment = getHomeFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.main_appbar_frame, fragment, CURRENT);
-            fragmentTransaction.commitAllowingStateLoss();
+        selectNavMenu();
+        setToolbarTitle();
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT) != null) {
+            drawerLayout.closeDrawers();
+            return;
         }
-    };
 
-    // If mPendingRunnable is not null, then add1 to the message queue
-    if (mPendingRunnable != null) {
-        handler.post(mPendingRunnable);
+        // Sometimes, when fragment has huge data, screen seems hanging
+        // when switching between navigation menus
+        // So using runnable, the fragment is loaded with cross fade effect
+        // This effect can be seen in GMail app
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // update the main content by replacing fragments
+                Fragment fragment = getHomeFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_appbar_frame, fragment, CURRENT);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+        // If mPendingRunnable is not null, then add1 to the message queue
+        if (mPendingRunnable != null) {
+            handler.post(mPendingRunnable);
+        }
+        drawerLayout.closeDrawers();
+        invalidateOptionsMenu();
     }
-
-
-    //Closing drawer on item click
-    drawerLayout.closeDrawers();
-
-    // refresh toolbar menu
-    invalidateOptionsMenu();
-}
     private Fragment getHomeFragment() {
         switch (navIndex) {
             case 1 :
@@ -480,65 +443,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void initTransition(Bundle savedInstanceState){
-        final Intent intent = getIntent();
-        if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
-                intent.hasExtra(EXTRA_CIRCULAR_REVEAL_X) &&
-                intent.hasExtra(EXTRA_CIRCULAR_REVEAL_Y)) {
-            revealX = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_X, 0);
-            revealY = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_Y, 0);
-            ViewTreeObserver viewTreeObserver = frameLayout.getViewTreeObserver();
-            if (viewTreeObserver.isAlive()) {
-                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        revealActivity(revealX, revealY);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            frameLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        }
-                    }
-                });
-            }else {
-                frameLayout.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-    protected void revealActivity(int x, int y) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            float finalRadius = (float) (Math.max(frameLayout.getWidth(), frameLayout.getHeight()) * 1.1);
-
-            // create the animator for this view (the start radius is zero)
-            Animator circularReveal = ViewAnimationUtils.createCircularReveal(frameLayout, x, y, 0, finalRadius);
-            circularReveal.setDuration(400);
-            circularReveal.setInterpolator(new AccelerateInterpolator());
-
-            // make the view visible and start the animation
-            frameLayout.setVisibility(View.VISIBLE);
-            circularReveal.start();
-        } else {
-            finish();
-        }
-    }
-
-    protected void unRevealActivity() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            finish();
-        } else {
-            float finalRadius = (float) (Math.max(frameLayout.getWidth(), frameLayout.getHeight()) * 1.1);
-            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
-                    frameLayout, revealX, revealY, finalRadius, 0);
-            circularReveal.setDuration(400);
-            circularReveal.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    frameLayout.setVisibility(View.INVISIBLE);
-                    finish();
-                }
-            });
-            circularReveal.start();
-        }
     }
     private void initDialog(int stats){
         dialog = new Dialog(context);
