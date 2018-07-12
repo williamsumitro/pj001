@@ -43,7 +43,7 @@ public class MyUplinePartnership_RV extends RecyclerView.Adapter<MyUplinePartner
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         PartnershipResult result = resultArrayList.get(position);
-        holder.storename.setText(result.getStoreNamePartner());
+        holder.storename.setText(result.getStoreName());
         holder.rvproduct.setVisibility(View.VISIBLE);
         rvadapter = new MyPartnershipDetail_RV(context, result.getProduct());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);

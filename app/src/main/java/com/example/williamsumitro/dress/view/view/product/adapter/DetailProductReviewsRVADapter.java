@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Review;
+import com.example.williamsumitro.dress.view.model.ReviewRating;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,12 +25,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class DetailProductReviewsRVADapter extends RecyclerView.Adapter<DetailProductReviewsRVADapter.ViewHolder> {
-    private List<Review> reviewList;
+    private ArrayList<ReviewRating> reviewArrayList;
     private Context context;
 
-    public DetailProductReviewsRVADapter(List<Review> reviewList, Context context){
+    public DetailProductReviewsRVADapter(ArrayList<ReviewRating> reviewArrayList, Context context){
         this.context = context;
-        this.reviewList = reviewList;
+        this.reviewArrayList = reviewArrayList;
     }
     @Override
     public DetailProductReviewsRVADapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,62 +41,65 @@ public class DetailProductReviewsRVADapter extends RecyclerView.Adapter<DetailPr
 
     @Override
     public void onBindViewHolder(DetailProductReviewsRVADapter.ViewHolder holder, int position) {
-        Review review = reviewList.get(position);
-        holder.user.setImageResource(review.getGambaruser());
-        holder.username.setText(review.getNamauser());
-        holder.date.setText(review.getTanggal());
-        holder.comment.setText(review.getReview());
-        if (review.getRating() == 0){
+        ReviewRating reviewRating = reviewArrayList.get(position);
+        Picasso.with(context)
+                .load(reviewRating.getAvatar())
+                .placeholder(R.drawable.logo404)
+                .into(holder.user);
+        holder.username.setText(reviewRating.getFullName());
+        holder.date.setText(reviewRating.getUpdatedAt());
+        holder.comment.setText(reviewRating.getReview());
+        if (reviewRating.getRating() == null){
             holder.one.setImageResource(R.drawable.star0);
             holder.two.setImageResource(R.drawable.star0);
             holder.three.setImageResource(R.drawable.star0);
             holder.four.setImageResource(R.drawable.star0);
             holder.five.setImageResource(R.drawable.star0);
         }
-        else if(review.getRating()>0 && review.getRating()<1){
+        else if(reviewRating.getRating()>0 && reviewRating.getRating()<1){
             holder.one.setImageResource(R.drawable.star1);
         }
-        else if (review.getRating() == 1){
+        else if (reviewRating.getRating() == 1){
             holder.one.setImageResource(R.drawable.star);
         }
-        else if(review.getRating()>1 && review.getRating()<2){
+        else if(reviewRating.getRating()>1 && reviewRating.getRating()<2){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star1);
         }
-        else if (review.getRating() == 2){
+        else if (reviewRating.getRating() == 2){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
         }
-        else if(review.getRating()>2 && review.getRating()<3){
+        else if(reviewRating.getRating()>2 && reviewRating.getRating()<3){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
             holder.three.setImageResource(R.drawable.star1);
         }
-        else if (review.getRating() == 3){
+        else if (reviewRating.getRating() == 3){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
             holder.three.setImageResource(R.drawable.star);
         }
-        else if(review.getRating()>3 && review.getRating()<4){
+        else if(reviewRating.getRating()>3 && reviewRating.getRating()<4){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
             holder.three.setImageResource(R.drawable.star);
             holder.four.setImageResource(R.drawable.star1);
         }
-        else if (review.getRating() == 4){
+        else if (reviewRating.getRating() == 4){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
             holder.three.setImageResource(R.drawable.star);
             holder.four.setImageResource(R.drawable.star);
         }
-        else if(review.getRating()>4 && review.getRating()<5){
+        else if(reviewRating.getRating()>4 && reviewRating.getRating()<5){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
             holder.three.setImageResource(R.drawable.star);
             holder.four.setImageResource(R.drawable.star);
             holder.five.setImageResource(R.drawable.star1);
         }
-        else if (review.getRating() == 5){
+        else if (reviewRating.getRating() == 5){
             holder.one.setImageResource(R.drawable.star);
             holder.two.setImageResource(R.drawable.star);
             holder.three.setImageResource(R.drawable.star);
@@ -104,7 +110,7 @@ public class DetailProductReviewsRVADapter extends RecyclerView.Adapter<DetailPr
 
     @Override
     public int getItemCount() {
-        return reviewList.size();
+        return reviewArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

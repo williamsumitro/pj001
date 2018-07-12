@@ -265,7 +265,8 @@ public class Checkout_AddressFragment extends Fragment implements Step {
                     checked = false;
                 }
                 if (checked) {
-                    status.setText("Please click next button");
+                    status.setText("Checked");
+                    Toast.makeText(context, "Please click the next button to continue", Toast.LENGTH_LONG).show();
                     status.setTextColor(getResources().getColor(R.color.green));
                 }
                 else {

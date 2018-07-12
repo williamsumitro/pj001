@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Store;
-import com.example.williamsumitro.dress.view.view.openstore.activity.DetailOutlet;
+import com.example.williamsumitro.dress.view.view.store.activity.DetailStore;
 
 import java.util.List;
 
@@ -148,7 +148,7 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailOutlet.class);
+                    Intent intent = new Intent(context, DetailStore.class);
                     Bundle bundle = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();

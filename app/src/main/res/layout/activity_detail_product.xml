@@ -121,6 +121,8 @@
                     android:textStyle="bold"/>
             </LinearLayout>
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/detailproduct_ln_downlinepartnership"
                 android:background="@color/white"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -128,19 +130,18 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_margin="10dp"
-                    android:id="@+id/detailproduct_ln_partnership"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:text="Partnership store which sell below qty order"
+                        android:text="Need cheaper price or below the min order ? Check our partnership store"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content" />
                     <ImageView
-                        android:id="@+id/detailproduct_imgcaret"
+                        android:id="@+id/detailproduct_caret_downlinepartnership"
                         android:layout_marginTop="5dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/caret"
@@ -149,7 +150,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:visibility="gone"
-                    android:id="@+id/detailproduct_ln_detailpartnership"
+                    android:id="@+id/detailproduct_ln_detaildownlinepartnership"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -159,10 +160,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"/>
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/detailproduct_rv_partnership"
+                        android:id="@+id/detailproduct_rv_downlinepartnership"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/detailproduct_ln_uplinepartnership"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:text="This product is Affliate to : "
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/detailproduct_img_uplinepartnership"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/logo404"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textSize="18sp"
+                        android:id="@+id/detailproduct_tv_uplinepartnership"
+                        android:text="Store Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/detailproduct_btn_uplinepartnership"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/button1_3"
+                        android:textColor="@color/white"
+                        android:text="View Product"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"

@@ -78,6 +78,12 @@ public class StoreInfo {
     @SerializedName("tdp")
     @Expose
     private String tdp;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+    @SerializedName("sold_product")
+    @Expose
+    private String soldProduct;
     @SerializedName("sold")
     @Expose
     private Integer sold;
@@ -272,6 +278,21 @@ public class StoreInfo {
         this.sold = sold;
     }
 
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getSoldProduct() {
+        return soldProduct;
+    }
+
+    public void setSoldProduct(String soldProduct) {
+        this.soldProduct = soldProduct;
+    }
     public Integer getTransaction() {
         return transaction;
     }

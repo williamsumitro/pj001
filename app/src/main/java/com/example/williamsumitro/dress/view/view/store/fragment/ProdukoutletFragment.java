@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.sellerpanel.fragment;
+package com.example.williamsumitro.dress.view.view.store.fragment;
 
 
 import android.content.Context;
@@ -56,7 +56,7 @@ public class ProdukoutletFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_produkoutlet, container, false);
         initObject(view);
         initData();
-        initRefresh();
+//        initRefresh();
         initSearch();
         initonClick();
         return view;
@@ -105,12 +105,12 @@ public class ProdukoutletFragment extends Fragment {
         ButterKnife.bind(this, view);
         context = getActivity();
     }
-    private void initRefresh(){
-        recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapternew);
-        adapternew.notifyDataSetChanged();
-    }
+//    private void initRefresh(){
+//        recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(adapternew);
+//        adapternew.notifyDataSetChanged();
+//    }
     private void initSearch(){
         searchView.setQueryHint("Search your product here");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

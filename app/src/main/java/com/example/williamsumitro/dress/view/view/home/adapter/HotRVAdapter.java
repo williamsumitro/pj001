@@ -112,57 +112,57 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
         return productInfoList.size();
     }
     private void get_rating(ProductInfo productInfo, ViewHolder holder){
-        if (productInfo.getRating() == 0){
+        if (Double.parseDouble(productInfo.getRating()) == 0){
             holder.star1.setImageResource(R.drawable.star0);
             holder.star2.setImageResource(R.drawable.star0);
             holder.star3.setImageResource(R.drawable.star0);
             holder.star4.setImageResource(R.drawable.star0);
             holder.star5.setImageResource(R.drawable.star0);
         }
-        else if(productInfo.getRating()>0 && productInfo.getRating()<1){
+        else if(Double.parseDouble(productInfo.getRating())>0 && Double.parseDouble(productInfo.getRating())<1){
             holder.star1.setImageResource(R.drawable.star1);
         }
-        else if (productInfo.getRating() == 1){
+        else if (Double.parseDouble(productInfo.getRating()) == 1){
             holder.star1.setImageResource(R.drawable.star);
         }
-        else if(productInfo.getRating()>1 && productInfo.getRating()<2){
+        else if(Double.parseDouble(productInfo.getRating())>1 && Double.parseDouble(productInfo.getRating())<2){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star1);
         }
-        else if (productInfo.getRating() == 2){
+        else if (Double.parseDouble(productInfo.getRating()) == 2){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
         }
-        else if(productInfo.getRating()>2 && productInfo.getRating()<3){
+        else if(Double.parseDouble(productInfo.getRating())>2 && Double.parseDouble(productInfo.getRating())<3){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star1);
         }
-        else if (productInfo.getRating() == 3){
+        else if (Double.parseDouble(productInfo.getRating()) == 3){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
         }
-        else if(productInfo.getRating()>3 && productInfo.getRating()<4){
+        else if(Double.parseDouble(productInfo.getRating())>3 && Double.parseDouble(productInfo.getRating())<4){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star1);
         }
-        else if (productInfo.getRating() == 4){
+        else if (Double.parseDouble(productInfo.getRating()) == 4){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star);
         }
-        else if(productInfo.getRating()>4 && productInfo.getRating()<5){
+        else if(Double.parseDouble(productInfo.getRating())>4 && Double.parseDouble(productInfo.getRating())<5){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star);
             holder.star5.setImageResource(R.drawable.star1);
         }
-        else if (productInfo.getRating() == 5){
+        else if (Double.parseDouble(productInfo.getRating()) == 5){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);

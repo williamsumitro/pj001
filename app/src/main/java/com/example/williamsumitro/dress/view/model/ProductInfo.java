@@ -106,18 +106,33 @@ public class ProductInfo {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("rating")
+    @SerializedName("average_rating")
     @Expose
-    private Integer rating;
+    private String averageRating;
     @SerializedName("sold")
     @Expose
-    private Integer sold;
+    private String sold;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
     @SerializedName("size")
     @Expose
     private ArrayList<Size> size = null;
     @SerializedName("price")
     @Expose
     private ArrayList<Price> price = null;
+    @SerializedName("downline_partner")
+    @Expose
+    private ArrayList<DownlinePartner> downlinePartner = null;
+    @SerializedName("is_partnership")
+    @Expose
+    private Boolean isPartnership;
+    @SerializedName("upline_partner")
+    @Expose
+    private UplinePartner uplinePartner;
+    @SerializedName("review_rating")
+    @Expose
+    private ArrayList<ReviewRating> reviewRating = null;
 
     public Integer getProductId() {
         return productId;
@@ -367,19 +382,19 @@ public class ProductInfo {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
-    public Integer getSold() {
+    public String getSold() {
         return sold;
     }
 
-    public void setSold(Integer sold) {
+    public void setSold(String sold) {
         this.sold = sold;
     }
 
@@ -397,5 +412,36 @@ public class ProductInfo {
 
     public void setPrice(ArrayList<Price> price) {
         this.price = price;
+    }
+    public ArrayList<DownlinePartner> getDownlinePartner() {
+        return downlinePartner;
+    }
+
+    public void setDownlinePartner(ArrayList<DownlinePartner> downlinePartner) {
+        this.downlinePartner = downlinePartner;
+    }
+
+    public Boolean getIsPartnership() {
+        return isPartnership;
+    }
+
+    public void setIsPartnership(Boolean isPartnership) {
+        this.isPartnership = isPartnership;
+    }
+
+    public UplinePartner getUplinePartner() {
+        return uplinePartner;
+    }
+
+    public void setUplinePartner(UplinePartner uplinePartner) {
+        this.uplinePartner = uplinePartner;
+    }
+
+    public ArrayList<ReviewRating> getReviewRating() {
+        return reviewRating;
+    }
+
+    public void setReviewRating(ArrayList<ReviewRating> reviewRating) {
+        this.reviewRating = reviewRating;
     }
 }

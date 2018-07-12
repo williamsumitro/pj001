@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.openstore.fragment;
+package com.example.williamsumitro.dress.view.view.store.fragment;
 
 
 import android.os.Bundle;

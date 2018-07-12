@@ -14,6 +14,9 @@ public class PartnershipResult {
     @SerializedName("store_id_partner")
     @Expose
     private Integer storeIdPartner;
+    @SerializedName("store_name")
+    @Expose
+    private String storeName;
     @SerializedName("store_name_partner")
     @Expose
     private String storeNamePartner;
@@ -35,6 +38,13 @@ public class PartnershipResult {
 
     public void setStoreNamePartner(String storeNamePartner) {
         this.storeNamePartner = storeNamePartner;
+    }
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
     public ArrayList<Product> getProduct() {

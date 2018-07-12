@@ -5,13 +5,18 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     android:orientation="vertical">
-    <android.support.v7.widget.Toolbar
-        android:background="@color/white"
-        android:id="@+id/buy_toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/buy_appbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"/>
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/white"
+            android:id="@+id/buy_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
-        android:layout_below="@+id/buy_toolbar"
+        android:layout_below="@+id/buy_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="125dp">
@@ -37,7 +42,6 @@
                     android:id="@+id/buy_tvnameproduct"
                     android:textColor="@color/black"
                     android:text="Nama Product"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -45,7 +49,6 @@
                     android:id="@+id/buy_tvpriceproduct"
                     android:textColor="@color/black"
                     android:text="Price Product"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -272,6 +275,7 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
     <LinearLayout
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

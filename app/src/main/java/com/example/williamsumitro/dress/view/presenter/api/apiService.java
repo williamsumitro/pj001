@@ -17,6 +17,7 @@ import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
+import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
 import com.example.williamsumitro.dress.view.model.UplinePartnershipResponse;
@@ -285,4 +286,8 @@ public interface apiService {
     @FormUrlEncoded
     @POST("downline_partner_list")
     Call<PartnershipResponse> req_downline_partner_list(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("get_store_detail")
+    Call<StoreDetailResponse> req_get_store_detail(@Field("store_id") String store_id);
 }

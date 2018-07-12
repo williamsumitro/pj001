@@ -141,7 +141,7 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
             public void onClick(View v) {
                 progressDialog.setMessage("Uploading, please wait ....");
                 progressDialog.show();
-                service.req_accept_partnership(token, item.getProduct().getPartnershipId().toString()).enqueue(new Callback<ResponseBody>() {
+                service.req_reject_partnership(token, item.getProduct().getPartnershipId().toString()).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(response.isSuccessful()){

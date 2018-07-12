@@ -15,8 +15,10 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -249,6 +251,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                     }
                 });
 
+
                 LinearLayout.LayoutParams etprice = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 etprice.weight = 1;
                 EditText price = new EditText(context);
@@ -313,6 +316,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                     Boolean check = true;
                     int k = 0;
                     String error = null;
+                    String regexStr = "^[0-9]*$";
                     for (int i = 0; i < container_price.size() * 3; i++) {
                         String qty_min = container_price.get(k).getQty_min(), qty_max = container_price.get(k).getQty_max(), price = container_price.get(k).getprice();
                         int min, max, pric;
@@ -324,6 +328,11 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                         if (qty_max.equals("")) {
                             check = false;
                             error = "Please insert the qty maximum at row " + String.valueOf(k + 1);
+                            break;
+                        }
+                        if (!qty_max.trim().matches(regexStr) && !qty_max.equals("max")){
+                            check = false;
+                            error = "Qty maximum at row " + String.valueOf(k+1) + " can only be input as number or max";
                             break;
                         }
                         if (price.equals("")) {
