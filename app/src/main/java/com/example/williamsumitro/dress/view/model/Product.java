@@ -85,6 +85,9 @@ public class Product implements Serializable{
     @SerializedName("size_info")
     @Expose
     private List<SizeInfo> sizeInfo = null;
+    @SerializedName("average_rating")
+    @Expose
+    private String averageRating;
 
     public Product(Integer productId, String productName, String productPhoto, Integer priceUnit, String totalQty, String priceTotal, List<SizeInfo> sizeInfo){
         this.productId = productId;
@@ -261,5 +264,12 @@ public class Product implements Serializable{
 
     public void setRequestPrice(ArrayList<Price> requestPrice) {
         this.requestPrice = requestPrice;
+    }
+    public String getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(String averageRating) {
+        this.averageRating = averageRating;
     }
 }

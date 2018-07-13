@@ -3,13 +3,14 @@ package com.example.williamsumitro.dress.view.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by WilliamSumitro on 13/06/2018.
  */
 
-public class Cost {
+public class Cost implements Serializable{
     @SerializedName("service")
     @Expose
     private String service;

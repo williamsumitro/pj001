@@ -1,144 +1,213 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clipToPadding="false"
-    android:background="@color/gray"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_width="match_parent"
+    android:layout_gravity="center">
     <LinearLayout
-        android:id="@+id/informasioutlet_lnContainer"
+        android:background="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white">
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/calendar"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Contact us"/>
-            <LinearLayout
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/whatsapp"/>
-                    <TextView
-                        android:id="@+id/informasioutlet_tvWA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="0823-7096-2323"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/line"/>
-                    <TextView
-                        android:id="@+id/informasioutlet_tvLine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="'@jualpakaianwanite"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/instagram"/>
-                    <TextView
-                        android:id="@+id/informasioutlet_tvIG"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="'@jualpakaianwanita"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/facebook"/>
-                    <TextView
-                        android:id="@+id/informasioutlet_tvFB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="'@jualpakaianwanite"/>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white">
-            <TextView
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Supported Shipment"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/informasioutlet_rv_shipment"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white">
-            <TextView
-                android:padding="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:text="Supported Bank"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Established Year"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content" />
-            <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="5dp"
-                android:id="@+id/informasioutlet_rv_bank"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/informasioutlet_tv_establishedyear"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/address"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="Province"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_province"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/location3"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="City"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_city"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/businessidea"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Business Type"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_businesstype"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/note"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Description"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_description"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/user2"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Contact Person Name"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_contactpersonname"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/jobtitle"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Contact Person Job Title"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_contactpersonjobtitle"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/phonenumber1"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Contact Person Phone Number"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/informasioutlet_tv_contactpersonphonenumber"
+                android:layout_gravity="center"
+                android:text="2018-06-16"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

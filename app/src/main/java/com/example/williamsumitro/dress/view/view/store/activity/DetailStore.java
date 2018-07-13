@@ -14,24 +14,32 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.CourierService;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
+import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.store.adapter.StoreDetailVPAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -59,9 +67,11 @@ public class DetailStore extends AppCompatActivity {
     @BindView(R.id.detailstore_soldout) TextView soldout;
     @BindView(R.id.detailstore_transaction) TextView transaction;
     @BindView(R.id.detailstore_btn_favorite) Button favorite;
-    @BindView(R.id.detailstore_tv_rating) TextView rating;
+    @BindView(R.id.detailstore_tv_courier) TextView courier;
+    @BindView(R.id.detailstore_ln_courier) LinearLayout container_courier;
 
     private final static String STORE_ID = "STORE_ID";
+    private final static String STORE_RESULT = "STORE_RESULT";
 
     private String storeid, token;
     private Context context;
@@ -71,6 +81,8 @@ public class DetailStore extends AppCompatActivity {
     private apiService service;
     private StoreDetails storeDetails;
     private DecimalFormat df;
+    private ArrayList<model_CourierService> courierServiceList;
+    private DetailProductCourierRVAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +90,9 @@ public class DetailStore extends AppCompatActivity {
         setContentView(R.layout.activity_store_detail);
         iniView();
         initGetIntent();
+        get_detailstore();
         setupToolbar();
         initCollapToolbar();
-        setupViewPager();
-        get_detailstore();
     }
 
     private void get_detailstore() {
@@ -95,7 +106,9 @@ public class DetailStore extends AppCompatActivity {
             public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
                 if (response.code()==200){
                     storeDetails = response.body().getResult();
+                    courierServiceList = storeDetails.getCourierService();
                     initData();
+                    initClick();
                 }
             }
 
@@ -107,8 +120,17 @@ public class DetailStore extends AppCompatActivity {
         });
     }
 
+    private void initClick() {
+        container_courier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initDialog(courierServiceList);
+            }
+        });
+    }
+
     private void initData() {
-        namatoko.setText(storeDetails.getStoreName());
+        namatoko.setText(storeDetails.getName());
         product.setText(String.valueOf(storeDetails.getProduct().size()));
         soldout.setText(storeDetails.getSoldProduct());
         transaction.setText(storeDetails.getTransaction().toString());
@@ -177,8 +199,9 @@ public class DetailStore extends AppCompatActivity {
             four.setImageResource(R.drawable.star);
             five.setImageResource(R.drawable.star);
         }
-        rating.setText("Rating : " + df.format(Double.parseDouble(storeDetails.getRating())));
+        courier.setText(String.valueOf(storeDetails.getCourierService().size()));
         progressDialog.dismiss();
+        setupViewPager();
     }
 
     private void initGetIntent(){
@@ -202,6 +225,7 @@ public class DetailStore extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         df = new DecimalFormat("###.#");
+        courierServiceList = new ArrayList<>();
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -214,7 +238,7 @@ public class DetailStore extends AppCompatActivity {
                     scrollrange = appBarLayout.getTotalScrollRange();
                 }
                 if(scrollrange + verticalOffset == 0){
-                    toolbar.setTitle("Nama Toko");
+                    toolbar.setTitle(namatoko.getText().toString());
                     isShow = true;
                 } else if (isShow) {
                     toolbar.setTitle(" ");
@@ -241,7 +265,30 @@ public class DetailStore extends AppCompatActivity {
         });
     }
     private void setupViewPager(){
-        viewPager.setAdapter(new StoreDetailVPAdapter(getSupportFragmentManager()));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(STORE_RESULT, storeDetails);
+        viewPager.setAdapter(new StoreDetailVPAdapter(getSupportFragmentManager(),bundle));
         tabLayout.setupWithViewPager(viewPager);
+    }
+    private void initDialog(ArrayList<model_CourierService> courierServices){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.courier_dialog);
+
+        final RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.courierdialog_rv);
+        final Button buttonok = (Button) dialog.findViewById(R.id.courierdialog_btn_ok);
+        adapter = new DetailProductCourierRVAdapter(courierServices, context);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        buttonok.setText("Ok");
+        buttonok.setBackgroundResource(R.drawable.button1_green);
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

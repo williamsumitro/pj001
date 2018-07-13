@@ -21,8 +21,10 @@ import android.widget.SearchView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Cloth;
+import com.example.williamsumitro.dress.view.model.StoreDetails;
 import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.view.filter.Filter;
+import com.example.williamsumitro.dress.view.view.store.adapter.StoreProductRV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +44,11 @@ public class ProdukoutletFragment extends Fragment {
     @BindView(R.id.produkoutlet_lnfilter) LinearLayout filter;
     @BindView(R.id.produkoutlet_lnsort) LinearLayout sort;
     private List<Cloth> newList = new ArrayList<>();
-    private HotRVAdapter adapternew;
+    private StoreProductRV adapternew;
     private Context context;
+
+    private StoreDetails storeDetails;
+    private final static String STORE_RESULT = "STORE_RESULT";
 
     public ProdukoutletFragment() {
         // Required empty public constructor
@@ -54,9 +59,14 @@ public class ProdukoutletFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_produkoutlet, container, false);
-        initObject(view);
-        initData();
-//        initRefresh();
+        initView(view);
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
         initSearch();
         initonClick();
         return view;
@@ -101,17 +111,22 @@ public class ProdukoutletFragment extends Fragment {
         });
     }
 
-    private void initObject(View view){
+    private void initView(View view){
         ButterKnife.bind(this, view);
         context = getActivity();
+        Bundle args = getArguments();
+        storeDetails = (StoreDetails) args.getSerializable(STORE_RESULT);
     }
-//    private void initRefresh(){
-//        recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(adapternew);
-//        adapternew.notifyDataSetChanged();
-//    }
-    private void initSearch(){
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
+        adapternew = new StoreProductRV(storeDetails.getProduct(), context);
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapternew);
+        adapternew.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+    private void initSearch() {
         searchView.setQueryHint("Search your product here");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -121,27 +136,9 @@ public class ProdukoutletFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                adapternew.getFilter().filter(newText);
+                adapternew.getFilter().filter(newText);
                 return false;
             }
         });
-
-    }
-    private void initData(){
-//        adapternew = new HotRVAdapter(newList, 1, getContext());
-//        Cloth cloth = new Cloth("Sequin Tank Sheath Dress", R.drawable.image, "12.000.000");
-//        newList.add(cloth);
-//        cloth = new Cloth("Striped Wrap Midi Dress", R.drawable.image, "12.000.000");
-//        newList.add(cloth);
-//        cloth = new Cloth("Long Sleeve Pocket Shirt Dress", R.drawable.image, "10.000.000");
-//        newList.add(cloth);
-//        cloth = new Cloth("Off The Shoulder Lace Sheath Dress", R.drawable.image, "9.000.000");
-//        newList.add(cloth);
-//        cloth = new Cloth("Sweetheart Neckline Sheath Dress", R.drawable.image, "8.300.000");
-//        newList.add(cloth);
-//        cloth = new Cloth("SStrappy Back Lace Inset Sheath Dress", R.drawable.image, "14.000.000");
-//        newList.add(cloth);
-//        cloth = new Cloth("STie-Sleeve Shift Dress", R.drawable.image, "2.000.000");
-//        newList.add(cloth);
     }
 }

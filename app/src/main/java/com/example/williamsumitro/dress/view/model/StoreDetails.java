@@ -4,14 +4,14 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by WilliamSumitro on 01/06/2018.
  */
 
-public class StoreDetails {
-
+public class StoreDetails implements Serializable{
 
     @SerializedName("store_id")
     @Expose
@@ -111,7 +111,7 @@ public class StoreDetails {
     private Integer transaction;
     @SerializedName("courier_service")
     @Expose
-    private ArrayList<CourierService> courierService = null;
+    private ArrayList<model_CourierService> courierService = null;
     @SerializedName("product")
     @Expose
     private ArrayList<Product> product = null;
@@ -367,11 +367,11 @@ public class StoreDetails {
         this.transaction = transaction;
     }
 
-    public ArrayList<CourierService> getCourierService() {
+    public ArrayList<model_CourierService> getCourierService() {
         return courierService;
     }
 
-    public void setCourierService(ArrayList<CourierService> courierService) {
+    public void setCourierService(ArrayList<model_CourierService> courierService) {
         this.courierService = courierService;
     }
 

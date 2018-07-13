@@ -121,17 +121,76 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"/>
                     <LinearLayout
+                        android:id="@+id/detailstore_ln_courier"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+                        <TextView
+                            android:textColor="@color/blue"
+                            android:id="@+id/detailstore_tv_courier"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            android:text="10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/blue"
+                            android:text="Courier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/detailstore_btn_favorite"
+                    android:layout_width="100dp"
+                    android:layout_height="30sp"
+                    android:layout_alignTop="@+id/linearLayout2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="33dp"
+                    android:background="@drawable/button3_1"
+                    android:text="Favorite"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/detailstore_circleLogo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignBottom="@+id/detailstore_btn_favorite"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="33dp"
+                    android:src="@drawable/fake_store1" />
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/detailstore_tvNamaToko"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-5dp"
+                            android:text="Nama Toko"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
                         <LinearLayout
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignTop="@id/detailstore_btn_favorite"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:orientation="horizontal">
-
                             <ImageView
                                 android:id="@+id/detailstore_img_star1"
                                 android:layout_width="20dp"
@@ -162,55 +221,6 @@
                                 android:layout_height="20dp"
                                 android:layout_gravity="center_vertical" />
                         </LinearLayout>
-                        <TextView
-                            android:id="@+id/detailstore_tv_rating"
-                            android:text="Rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/detailstore_btn_favorite"
-                    android:layout_width="100dp"
-                    android:layout_height="30sp"
-                    android:layout_alignTop="@+id/linearLayout2"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="33dp"
-                    android:background="@drawable/button3_1"
-                    android:text="Favorite"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/detailstore_circleLogo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_alignBottom="@+id/detailstore_btn_favorite"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="33dp"
-                    android:src="@drawable/fake_store1" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="20dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/detailstore_tvNamaToko"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="-5dp"
-                            android:text="Nama Toko"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
