@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addnewrequest_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/addnewrequest_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="Item's Name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/addnewrequest_et_itemname"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:hint="Insert name of product here"
+                    android:layout_width="0dp"
+                    android:layout_weight="3.5"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="Description"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:gravity="top"
+                    android:id="@+id/addnewrequest_et_description"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:hint="Insert description of product here"
+                    android:layout_width="0dp"
+                    android:layout_weight="3.5"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="Quantity"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="11"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:id="@+id/addnewrequest_et_qty"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:hint="Insert quantity here"
+                    android:layout_width="0dp"
+                    android:layout_weight="3.5"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="Date Expired"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:padding="10dp"
+                    android:background="@color/grey6"
+                    android:id="@+id/addnewrequest_ln_dateexpired"
+                    android:layout_width="0dp"
+                    android:layout_weight="3.5"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/addnewrequest_tv_dateexpired"
+                        android:textSize="14sp"
+                        android:text="Click to choose your expired date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="Budget per unit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="11"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:id="@+id/addnewrequest_et_min"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:hint="min"
+                    android:layout_marginRight="55dp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="11"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:id="@+id/addnewrequest_et_max"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:hint="max"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:id="@+id/addnewrequest_img"
+                android:src="@drawable/picture"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Select Image"/>
+            <Button
+                android:id="@+id/addnewrequest_btn_save"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:text="Save"
+                android:background="@drawable/button1"
+                android:layout_width="100dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

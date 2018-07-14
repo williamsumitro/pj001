@@ -78,7 +78,9 @@
         <activity android:name=".view.view.partnership.activity.DownlinePartnership" />
         <activity android:name=".view.view.partnership.activity.MyUplinePartnership" />
         <activity android:name=".view.view.partnership.activity.MyDownlinePartnership" />
-        <activity android:name=".view.view.mystore.activity.EditStore"></activity>
+        <activity android:name=".view.view.mystore.activity.EditStore" />
+        <activity android:name=".view.view.request.activity.AddNewRequest" />
+        <activity android:name=".view.view.request.activity.RequetForQuotation"></activity>
     </application>
 
 </manifest>

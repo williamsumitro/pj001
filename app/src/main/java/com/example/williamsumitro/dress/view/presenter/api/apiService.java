@@ -290,4 +290,17 @@ public interface apiService {
     @FormUrlEncoded
     @POST("get_store_detail")
     Call<StoreDetailResponse> req_get_store_detail(@Field("store_id") String store_id);
+
+    @Multipart
+    @POST("add_rfq_request")
+    Call<ResponseBody> req_add_rfq_request(
+            @Part("token") RequestBody token,
+            @Part("item_name") RequestBody item_name,
+            @Part("description") RequestBody description,
+            @Part("qty") RequestBody qty,
+            @Part("request_expired") RequestBody request_expired,
+            @Part("budget_unit_min") RequestBody budget_unit_min,
+            @Part("budget_unit_max") RequestBody budget_unit_max,
+            @Part MultipartBody.Part photo
+    );
 }

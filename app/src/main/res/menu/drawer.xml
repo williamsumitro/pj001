@@ -18,8 +18,9 @@
             android:id="@+id/drawer_home"
             android:title="@string/Home"/>
         <item
+            android:checkable="false"
             android:id="@+id/drawer_openrequest"
-            android:title="Opening Request"/>
+            android:title="Request for Quotation"/>
         <item
             android:checkable="false"
             android:id="@+id/drawer_order"

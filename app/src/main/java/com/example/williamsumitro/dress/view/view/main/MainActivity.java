@@ -42,6 +42,8 @@ import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
 import com.example.williamsumitro.dress.view.view.openstore.activity.NoStore;
 import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
+import com.example.williamsumitro.dress.view.view.request.activity.AddNewRequest;
+import com.example.williamsumitro.dress.view.view.request.activity.RequetForQuotation;
 import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
@@ -250,9 +252,9 @@ public class MainActivity extends AppCompatActivity {
                             CURRENT = HOME;
                             break;
                         case R.id.drawer_openrequest:
-                            navIndex = 3;
-                            CURRENT = OPENINGREQUEST;
-                            break;
+                            Intent intent0 = new Intent(MainActivity.this, RequetForQuotation.class);
+                            initanim(intent0);
+                            return true;
                         case R.id.drawer_order:
                             Intent intent1 = new Intent(MainActivity.this, Purchase.class);
                             initanim(intent1);
