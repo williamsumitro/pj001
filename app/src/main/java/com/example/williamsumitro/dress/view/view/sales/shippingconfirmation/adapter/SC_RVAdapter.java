@@ -200,7 +200,7 @@ public class SC_RVAdapter extends RecyclerView.Adapter<SC_RVAdapter.ViewHolder> 
                             final String province, final String city, final String phonenumber,
                             final String postalcode, final String courier, final String note){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.order_dialog);
+        dialog.setContentView(R.layout.dialog_order);
 
         final TextView tv_invoicedate = (TextView) dialog.findViewById(R.id.orderdialog_tv_invoicedate);
         final TextView tv_receivername = (TextView) dialog.findViewById(R.id.orderdialog_tv_receivername);
@@ -235,7 +235,7 @@ public class SC_RVAdapter extends RecyclerView.Adapter<SC_RVAdapter.ViewHolder> 
     }
     private void initDialog(String message, int stats){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);

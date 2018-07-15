@@ -25,6 +25,8 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
+import com.example.williamsumitro.dress.view.view.offer.activity.OfferHistory;
+import com.example.williamsumitro.dress.view.view.offer.activity.RequestList;
 import com.example.williamsumitro.dress.view.view.partnership.activity.DownlinePartnership;
 import com.example.williamsumitro.dress.view.view.partnership.activity.UplinePartnership;
 import com.example.williamsumitro.dress.view.view.product.activity.AddProduct;
@@ -61,6 +63,8 @@ public class SellerPanel extends AppCompatActivity {
     @BindView(R.id.sellerpanel_ln_uplinepartner) LinearLayout uplinepartner;
     @BindView(R.id.sellerpanel_ln_viewstore) LinearLayout viewstore;
     @BindView(R.id.sellerpanel_ln_viewproduct) LinearLayout viewproduct;
+    @BindView(R.id.sellerpanel_ln_requestlist) LinearLayout requestlist;
+    @BindView(R.id.sellerpanel_ln_offerhistory) LinearLayout offerhistory;
     @BindView(R.id.sellerpanel_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private final static String STATUS = "STATUS";
@@ -193,6 +197,20 @@ public class SellerPanel extends AppCompatActivity {
                 initanim(intent);
             }
         });
+        requestlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RequestList.class);
+                initanim(intent);
+            }
+        });
+        offerhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OfferHistory.class);
+                initanim(intent);
+            }
+        });
     }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -202,7 +220,7 @@ public class SellerPanel extends AppCompatActivity {
     }
     private void initDialog(int stats) {
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);

@@ -444,7 +444,7 @@
                                         android:textSize="20sp"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Request"
+                                        android:text="Request for Quotation"
                                         android:textColor="@color/black" />
                                 </LinearLayout>
                                 <LinearLayout
@@ -452,6 +452,7 @@
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
                                     <LinearLayout
+                                        android:id="@+id/sellerpanel_ln_requestlist"
                                         android:padding="5dp"
                                         android:background="@color/indigo8"
                                         android:layout_width="100dp"
@@ -459,16 +460,21 @@
                                         android:layout_weight="1"
                                         android:orientation="vertical"
                                         android:gravity="center">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/list"/>
                                         <TextView
                                             android:textSize="12sp"
                                             android:layout_marginTop="5dp"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Upline Partner"
+                                            android:text="Request List"
                                             android:textColor="@color/black"
                                             android:textAlignment="center"/>
                                     </LinearLayout>
                                     <LinearLayout
+                                        android:id="@+id/sellerpanel_ln_offerhistory"
                                         android:padding="5dp"
                                         android:background="@color/pink9"
                                         android:layout_width="100dp"
@@ -476,12 +482,16 @@
                                         android:orientation="vertical"
                                         android:gravity="center"
                                         android:layout_weight="1">
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/history"/>
                                         <TextView
                                             android:textSize="12sp"
                                             android:layout_marginTop="5dp"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Downline Partner"
+                                            android:text="My Offer History"
                                             android:textColor="@color/black"
                                             android:textAlignment="center"/>
                                     </LinearLayout>

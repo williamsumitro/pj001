@@ -1,6 +1,5 @@
 package com.example.williamsumitro.dress.view.view.request.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -12,16 +11,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
-
-import java.text.DecimalFormat;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RequetForQuotation extends AppCompatActivity {
+public class RequestForQuotation extends AppCompatActivity {
+    public static RequestForQuotation REQUESTFORQUOTATION;
+
     @BindView(R.id.rfq_ln_activerequest) LinearLayout container_activerequest;
     @BindView(R.id.rfq_ln_requesthistory) LinearLayout container_requesthistory;
     @BindView(R.id.rfq_ln_addnewrequest) LinearLayout container_addnewrequest;
@@ -32,7 +28,7 @@ public class RequetForQuotation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requet_for_quotation);
+        setContentView(R.layout.activity_request_for_quotation);
         initView();
         setuptoolbar();
         initOnClick();
@@ -46,11 +42,19 @@ public class RequetForQuotation extends AppCompatActivity {
                 initanim(intent);
             }
         });
+        container_activerequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ActiveRequest.class);
+                initanim(intent);
+            }
+        });
     }
 
     private void initView(){
         ButterKnife.bind(this);
         context = this;
+        REQUESTFORQUOTATION = this;
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

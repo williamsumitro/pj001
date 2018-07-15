@@ -10,18 +10,13 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.DownlinePartner;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.PriceDetails;
@@ -46,9 +40,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
-import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
-import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
@@ -635,7 +627,7 @@ public class DetailProduct extends AppCompatActivity {
     }
     private void initDialog(int stats){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
@@ -693,7 +685,7 @@ public class DetailProduct extends AppCompatActivity {
     }
     private void initDialog(ArrayList<model_CourierService> courierServices){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.courier_dialog);
+        dialog.setContentView(R.layout.dialog_courier);
 
         final RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.courierdialog_rv);
         final Button buttonok = (Button) dialog.findViewById(R.id.courierdialog_btn_ok);
@@ -714,7 +706,7 @@ public class DetailProduct extends AppCompatActivity {
     }
     private void dialog_reviewrating(String average_rating, ArrayList<ReviewRating> reviewRatingArrayList){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.reviewrating_dialog);
+        dialog.setContentView(R.layout.dialog_reviewrating);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
@@ -803,7 +795,7 @@ public class DetailProduct extends AppCompatActivity {
     }
     private void dialog_store(final StoreInfo storeInfo){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.store_dialog);
+        dialog.setContentView(R.layout.dialog_store);
 
         final TextView tv_storename = (TextView) dialog.findViewById(R.id.storedialog_tv_storename);
         final TextView tv_soldproduct = (TextView) dialog.findViewById(R.id.storedialog_tv_soldproduct);

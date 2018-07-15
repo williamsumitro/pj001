@@ -211,7 +211,7 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
     private void initDialog(final String store_name, final String storerequest_name, final ArrayList<Price> priceList, final ArrayList<Price> requestPriceArrayList){
         index = 0;
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.approvepartnership_dialog);
+        dialog.setContentView(R.layout.dialog_pprovepartnership);
 
         final TextView storerequestname = (TextView) dialog.findViewById(R.id.approvepartnershipdialog_tv_storerequestname);
         final TextView storename = (TextView) dialog.findViewById(R.id.approvepartnershipdialog_tv_storename);

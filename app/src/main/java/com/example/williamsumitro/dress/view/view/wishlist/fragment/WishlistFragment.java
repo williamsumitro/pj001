@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -19,30 +18,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Cloth;
 import com.example.williamsumitro.dress.view.model.WishlistResponse;
 import com.example.williamsumitro.dress.view.model.WishlistResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.wishlist.adapter.WishlistRVAdapter;
 import com.example.williamsumitro.dress.view.view.wishlist.adapter.WishlistRVTouch;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -127,7 +117,6 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
 
     private void setuprv() {
         adapter = new WishlistRVAdapter(wishlistResultArrayList, context);
-//        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -154,7 +143,7 @@ public class WishlistFragment extends Fragment implements WishlistRVTouch.WishLi
         dialog = new Dialog(context);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
         TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
         TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);

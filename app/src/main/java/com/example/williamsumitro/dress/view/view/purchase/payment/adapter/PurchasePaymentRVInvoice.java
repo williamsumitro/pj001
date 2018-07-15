@@ -136,7 +136,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
 
     private void initDialog(final String invoice_number, final String grand_total){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.payment_dialog);
+        dialog.setContentView(R.layout.dialog_payment);
         TextView invoicenumber = (TextView) dialog.findViewById(R.id.paymentdialog_tv_invoicenumber);
         final TextView total = (TextView) dialog.findViewById(R.id.paymentdialog_tv_total);
         final TextInputLayout layout_amount = (TextInputLayout) dialog.findViewById(R.id.paymentdialog_layout_amount);

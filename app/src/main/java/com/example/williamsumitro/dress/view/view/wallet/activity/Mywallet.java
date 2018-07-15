@@ -30,9 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.TransactionDetails;
-import com.example.williamsumitro.dress.view.model.UserDetails;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -41,10 +39,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
 import com.example.williamsumitro.dress.view.view.wallet.adapter.Wallet_Transaction_RV_Adapter;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +52,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -216,7 +210,7 @@ public class Mywallet extends AppCompatActivity {
 
     private void initDialog(final String grand_total){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.withdraw_dialog);
+        dialog.setContentView(R.layout.dialog_withdraw);
         TextView tv_balance = (TextView) dialog.findViewById(R.id.withdrawdialog_tv_balance);
         final TextInputLayout layout_amount = (TextInputLayout) dialog.findViewById(R.id.withdrawdialog_layout_amount);
         final TextInputLayout layout_bankname = (TextInputLayout) dialog.findViewById(R.id.withdrawdialog_layout_bankname);
@@ -334,7 +328,7 @@ public class Mywallet extends AppCompatActivity {
     }
     private void initDialog(int stats){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);

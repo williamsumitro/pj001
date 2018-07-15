@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.request.activity;
+package com.example.williamsumitro.dress.view.view.offer.activity;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -12,7 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.StyleRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.OrderStore;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.request.activity.RequestForQuotation;
 import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.squareup.picasso.Picasso;
@@ -43,13 +44,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,20 +57,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddNewRequest extends AppCompatActivity {
-    @BindView(R.id.addnewrequest_toolbar) Toolbar toolbar;
-    @BindView(R.id.addnewrequest_img) ImageView image;
-    @BindView(R.id.addnewrequest_et_qty) EditText qty;
-    @BindView(R.id.addnewrequest_et_min) EditText min;
-    @BindView(R.id.addnewrequest_et_max) EditText max;
-    @BindView(R.id.addnewrequest_et_itemname) EditText itemname;
-    @BindView(R.id.addnewrequest_et_description) EditText description;
-    @BindView(R.id.addnewrequest_ln_dateexpired) LinearLayout container_datexpired;
-    @BindView(R.id.addnewrequest_tv_dateexpired) TextView datexpired;
-    @BindView(R.id.addnewrequest_btn_save) Button save;
-    @BindView(R.id.addnewrequest_container) LinearLayout container;
+public class AddMyOffer extends AppCompatActivity {
+    @BindView(R.id.addmyoffer_toolbar) Toolbar toolbar;
+    @BindView(R.id.addmyoffer_img) ImageView image;
+    @BindView(R.id.addmyoffer_et_price) EditText price;
+    @BindView(R.id.addmyoffer_et_description) EditText description;
+    @BindView(R.id.addmyoffer_btn_submit) Button submit;
+    @BindView(R.id.addmyoffer_container) LinearLayout container;
 
-    private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
     private static final int SELECT_PHOTO = 0;
     private Context context;
     private DecimalFormat formatter;
@@ -82,58 +72,72 @@ public class AddNewRequest extends AppCompatActivity {
     private Drawable picture;
     private SessionManagement sessionManagement;
     private ProgressDialog progressDialog;
-    private String mediapathPhoto, token;
-    private SwitchDateTimeDialogFragment dateTimeFragment;
+    private String mediapathPhoto, token, rfqid;
     private Dialog dialog;
+
+    private final static String RFQID = "RFQID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_request);
+        setContentView(R.layout.activity_add_my_offer);
         initView();
         setuptoolbar();
+        initGetIntent();
         initEdittext();
         initClick();
     }
-
+    private void initGetIntent() {
+        Intent getintent = getIntent();
+        if (getintent.hasExtra(RFQID)){
+            rfqid = getintent.getStringExtra(RFQID);
+        }
+        else{
+            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void initView(){
+        ButterKnife.bind(this);
+        context = this;
+        picture = getResources().getDrawable(R.drawable.picture);
+        image.setImageDrawable(picture);
+        sessionManagement = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
+        progressDialog = new ProgressDialog(this);
+        formatter = new DecimalFormat("#,###,###");
+    }
+    private void setuptoolbar(){
+        setSupportActionBar(toolbar);
+        final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(arrow);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Add My Offer");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
+                finish();
+            }
+        });
+    }
     private void initEdittext() {
-        min.addTextChangedListener(new FinancialTextWatcher(min));
-        max.addTextChangedListener(new FinancialTextWatcher(max));
-        qty.addTextChangedListener(new FinancialTextWatcher(qty));
+        price.addTextChangedListener(new FinancialTextWatcher(price));
     }
 
     private void initClick() {
-        container_datexpired.setOnClickListener(new View.OnClickListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DateTime();
-            }
-        });
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(itemname.getText())){
-                    itemname.setError("Item's name is required");
-                    return;
-                }
-                else if (TextUtils.isEmpty(description.getText())){
+                if (TextUtils.isEmpty(description.getText())){
                     description.setError("Description is required");
                     return;
                 }
-                else if (TextUtils.isEmpty(qty.getText())){
-                    qty.setError("Quantity is required");
-                    return;
-                }
-                else if (datexpired.getText().equals("Click to choose your expired date")){
-                    Snackbar.make(container, "Choose the expired date", Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-                else if (TextUtils.isEmpty(min.getText())){
-                    min.setError("Budget min is required");
-                    return;
-                }
-                else if (TextUtils.isEmpty(max.getText())){
-                    max.setError("Budget max is required");
+                else if (TextUtils.isEmpty(price.getText())){
+                    price.setError("Price per Unit is required");
                     return;
                 }else if(image.getDrawable().equals(picture)) {
                     Snackbar.make(container, "Please select your image", Snackbar.LENGTH_LONG).show();
@@ -149,14 +153,11 @@ public class AddNewRequest extends AppCompatActivity {
                 MultipartBody.Part body_photo = MultipartBody.Part.createFormData("photo", filephoto.getName(), requestFileLogo);
 
                 RequestBody request_token = RequestBody.create(text, token);
-                RequestBody request_itemname = RequestBody.create(text, itemname.getText().toString());
+                RequestBody request_rfqid = RequestBody.create(text, rfqid);
                 RequestBody request_description = RequestBody.create(text, description.getText().toString());
-                RequestBody request_qty = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(qty.getText().toString()));
-                RequestBody request_datexpired = RequestBody.create(text, datexpired.getText().toString());
-                RequestBody request_min = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(min.getText().toString()));
-                RequestBody request_max = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(max.getText().toString()));
+                RequestBody request_price = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(price.getText().toString()));
 
-                api_add_rfq(body_photo, request_token, request_itemname, request_description, request_qty, request_datexpired, request_min, request_max);
+                api_add_rfq(request_token, request_rfqid, request_description, request_price, body_photo);
             }
         });
         image.setOnClickListener(new View.OnClickListener() {
@@ -167,18 +168,19 @@ public class AddNewRequest extends AppCompatActivity {
         });
     }
 
-    private void api_add_rfq(MultipartBody.Part body_photo, RequestBody request_token, RequestBody request_itemname, RequestBody request_description, RequestBody request_qty, RequestBody request_datexpired, RequestBody request_min, RequestBody request_max) {
+    private void api_add_rfq(RequestBody request_token, RequestBody request_rfqid, RequestBody request_description, RequestBody request_price, MultipartBody.Part body_photo) {
         service = apiUtils.getAPIService();
-        service.req_add_rfq_request(request_token, request_itemname, request_description, request_qty, request_datexpired, request_min, request_max, body_photo).enqueue(new Callback<ResponseBody>() {
+        service.req_add_rfq_offer(request_token, request_rfqid, request_description, request_price, body_photo).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if(jsonResults.getString("message").toLowerCase().equals("submitted successfully")){
-                            Intent intent = new Intent(context, SellerPanel.class);
+                            Intent intent = new Intent(context, RequestList.class);
                             initanim(intent);
-                            RequestForQuotation.REQUESTFORQUOTATION.finish();
+                            Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show();
+                            RequestList.REQUESTLIST.finish();
                             finish();
                         }else{
                             String message = jsonResults.getString("message");
@@ -203,74 +205,6 @@ public class AddNewRequest extends AppCompatActivity {
         });
     }
 
-    private void DateTime(){
-        dateTimeFragment = (SwitchDateTimeDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DATETIME_FRAGMENT);
-        if(dateTimeFragment == null) {
-            dateTimeFragment = SwitchDateTimeDialogFragment.newInstance(
-                    getString(R.string.label_datetime_dialog),
-                    getString(android.R.string.ok),
-                    getString(android.R.string.cancel)
-            );
-        }
-        dateTimeFragment.setTimeZone(TimeZone.getDefault());
-
-        final SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault());
-        dateTimeFragment.set24HoursMode(true);
-        dateTimeFragment.setMinimumDateTime(new GregorianCalendar(2015, Calendar.JANUARY, 1).getTime());
-        dateTimeFragment.setMaximumDateTime(new GregorianCalendar(2050, Calendar.DECEMBER, 31).getTime());
-
-        try {
-            dateTimeFragment.setSimpleDateMonthAndDayFormat(new SimpleDateFormat("MMMM dd", Locale.getDefault()));
-        } catch (SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException e) {
-            Log.e("TAG", e.getMessage());
-        }
-
-        dateTimeFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonWithNeutralClickListener() {
-            @Override
-            public void onPositiveButtonClick(Date date) {
-                datexpired.setText(myDateFormat.format(date));
-            }
-
-            @Override
-            public void onNegativeButtonClick(Date date) {
-            }
-
-            @Override
-            public void onNeutralButtonClick(Date date) {
-            }
-        });
-        dateTimeFragment.startAtCalendarView();
-        dateTimeFragment.setDefaultDateTime(new GregorianCalendar(2020, Calendar.MARCH, 4, 15, 20).getTime());
-        dateTimeFragment.show(getSupportFragmentManager(), TAG_DATETIME_FRAGMENT);
-    }
-    private void initView(){
-        ButterKnife.bind(this);
-        context = this;
-        picture = getResources().getDrawable(R.drawable.picture);
-        image.setImageDrawable(picture);
-        sessionManagement = new SessionManagement(getApplicationContext());
-        HashMap<String, String> user = sessionManagement.getUserDetails();
-        token = user.get(SessionManagement.TOKEN);
-        progressDialog = new ProgressDialog(this);
-        formatter = new DecimalFormat("#,###,###");
-    }
-    private void setuptoolbar(){
-        setSupportActionBar(toolbar);
-        final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(arrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Add New Request");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
-                finish();
-            }
-        });
-    }
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)

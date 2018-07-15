@@ -42,8 +42,7 @@ import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
 import com.example.williamsumitro.dress.view.view.openstore.activity.NoStore;
 import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
-import com.example.williamsumitro.dress.view.view.request.activity.AddNewRequest;
-import com.example.williamsumitro.dress.view.view.request.activity.RequetForQuotation;
+import com.example.williamsumitro.dress.view.view.request.activity.RequestForQuotation;
 import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
@@ -252,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                             CURRENT = HOME;
                             break;
                         case R.id.drawer_openrequest:
-                            Intent intent0 = new Intent(MainActivity.this, RequetForQuotation.class);
+                            Intent intent0 = new Intent(MainActivity.this, RequestForQuotation.class);
                             initanim(intent0);
                             return true;
                         case R.id.drawer_order:
@@ -442,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initDialog(int stats){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);

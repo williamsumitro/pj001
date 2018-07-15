@@ -1,57 +1,35 @@
 package com.example.williamsumitro.dress.view.view.purchase.order.adapter;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bank;
-import com.example.williamsumitro.dress.view.model.OrderStore;
 import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
-import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
-import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutProductRVAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by WilliamSumitro on 17/06/2018.
@@ -254,7 +232,7 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
                             final String province, final String city, final String phonenumber,
                             final String postalcode, final String courier, final String note){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.order_dialog);
+        dialog.setContentView(R.layout.dialog_order);
 
         final TextView tv_invoicedate = (TextView) dialog.findViewById(R.id.orderdialog_tv_invoicedate);
         final TextView tv_receivername = (TextView) dialog.findViewById(R.id.orderdialog_tv_receivername);

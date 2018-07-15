@@ -16,6 +16,8 @@ import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResponse;
+import com.example.williamsumitro.dress.view.model.RFQResponse;
+import com.example.williamsumitro.dress.view.model.RFQ_ActiveResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
@@ -303,4 +305,22 @@ public interface apiService {
             @Part("budget_unit_max") RequestBody budget_unit_max,
             @Part MultipartBody.Part photo
     );
+
+    @FormUrlEncoded
+    @POST("seller_get_rfq_request")
+    Call<RFQResponse> req_get_rfq_request(@Field("token") String token);
+
+    @Multipart
+    @POST("add_rfq_offer")
+    Call<ResponseBody> req_add_rfq_offer(
+            @Part("token") RequestBody token,
+            @Part("rfq_request_id") RequestBody rfq_request_id,
+            @Part("description") RequestBody description,
+            @Part("price_unit") RequestBody price_unit,
+            @Part MultipartBody.Part photo
+    );
+
+    @FormUrlEncoded
+    @POST("view_active_rfq_request")
+    Call<RFQ_ActiveResponse> req_get_active_rfq_request(@Field("token") String token);
 }

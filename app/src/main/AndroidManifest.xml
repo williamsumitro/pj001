@@ -80,7 +80,11 @@
         <activity android:name=".view.view.partnership.activity.MyDownlinePartnership" />
         <activity android:name=".view.view.mystore.activity.EditStore" />
         <activity android:name=".view.view.request.activity.AddNewRequest" />
-        <activity android:name=".view.view.request.activity.RequetForQuotation"></activity>
+        <activity android:name=".view.view.request.activity.RequestForQuotation" />
+        <activity android:name=".view.view.offer.activity.RequestList" />
+        <activity android:name=".view.view.offer.activity.OfferHistory" />
+        <activity android:name=".view.view.offer.activity.AddMyOffer" />
+        <activity android:name=".view.view.request.activity.ActiveRequest"></activity>
     </application>
 
 </manifest>

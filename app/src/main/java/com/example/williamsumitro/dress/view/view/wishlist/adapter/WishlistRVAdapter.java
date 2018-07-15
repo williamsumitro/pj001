@@ -18,22 +18,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Cloth;
-import com.example.williamsumitro.dress.view.model.CourierService;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
-import com.example.williamsumitro.dress.view.model.Store;
-import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.WishlistResult;
 import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
@@ -45,7 +39,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -243,57 +236,57 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
     }
 
     private void getRating(WishlistResult wishlist, ViewHolder holder){
-        if (wishlist.getRating() == 0){
+        if (Double.parseDouble(wishlist.getRating()) == 0){
             holder.star1.setImageResource(R.drawable.star0);
             holder.star2.setImageResource(R.drawable.star0);
             holder.star3.setImageResource(R.drawable.star0);
             holder.star4.setImageResource(R.drawable.star0);
             holder.star5.setImageResource(R.drawable.star0);
         }
-        else if(wishlist.getRating()>0 && wishlist.getRating()<1){
+        else if(Double.parseDouble(wishlist.getRating())>0 && Double.parseDouble(wishlist.getRating())<1){
             holder.star1.setImageResource(R.drawable.star1);
         }
-        else if (wishlist.getRating() == 1){
+        else if (Double.parseDouble(wishlist.getRating()) == 1){
             holder.star1.setImageResource(R.drawable.star);
         }
-        else if(wishlist.getRating()>1 && wishlist.getRating()<2){
+        else if(Double.parseDouble(wishlist.getRating())>1 && Double.parseDouble(wishlist.getRating())<2){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star1);
         }
-        else if (wishlist.getRating() == 2){
+        else if (Double.parseDouble(wishlist.getRating()) == 2){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
         }
-        else if(wishlist.getRating()>2 && wishlist.getRating()<3){
+        else if(Double.parseDouble(wishlist.getRating())>2 && Double.parseDouble(wishlist.getRating())<3){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star1);
         }
-        else if (wishlist.getRating() == 3){
+        else if (Double.parseDouble(wishlist.getRating()) == 3){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
         }
-        else if(wishlist.getRating()>3 && wishlist.getRating()<4){
+        else if(Double.parseDouble(wishlist.getRating())>3 && Double.parseDouble(wishlist.getRating())<4){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star1);
         }
-        else if (wishlist.getRating() == 4){
+        else if (Double.parseDouble(wishlist.getRating()) == 4){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star);
         }
-        else if(wishlist.getRating()>4 && wishlist.getRating()<5){
+        else if(Double.parseDouble(wishlist.getRating())>4 && Double.parseDouble(wishlist.getRating())<5){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star);
             holder.star5.setImageResource(R.drawable.star1);
         }
-        else if (wishlist.getRating() == 5){
+        else if (Double.parseDouble(wishlist.getRating()) == 5){
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
@@ -319,7 +312,7 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
 
     private void initDialog(ArrayList<model_CourierService> courierServices){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.courier_dialog);
+        dialog.setContentView(R.layout.dialog_courier);
 
         final RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.courierdialog_rv);
         final Button buttonok = (Button) dialog.findViewById(R.id.courierdialog_btn_ok);

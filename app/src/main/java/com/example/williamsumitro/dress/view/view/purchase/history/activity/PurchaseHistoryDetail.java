@@ -8,8 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -221,7 +219,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
                             final String province, final String city, final String phonenumber,
                             final String postalcode, final String courier, final String note){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.order_dialog);
+        dialog.setContentView(R.layout.dialog_order);
 
         final TextView tv_invoicedate = (TextView) dialog.findViewById(R.id.orderdialog_tv_invoicedate);
         final TextView tv_receivername = (TextView) dialog.findViewById(R.id.orderdialog_tv_receivername);

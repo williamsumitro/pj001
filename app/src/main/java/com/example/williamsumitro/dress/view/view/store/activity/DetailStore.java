@@ -26,10 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.CourierService;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
-import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -272,7 +270,7 @@ public class DetailStore extends AppCompatActivity {
     }
     private void initDialog(ArrayList<model_CourierService> courierServices){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.courier_dialog);
+        dialog.setContentView(R.layout.dialog_courier);
 
         final RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.courierdialog_rv);
         final Button buttonok = (Button) dialog.findViewById(R.id.courierdialog_btn_ok);

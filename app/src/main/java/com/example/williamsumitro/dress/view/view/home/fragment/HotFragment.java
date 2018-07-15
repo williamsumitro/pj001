@@ -5,23 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bid;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
-import com.example.williamsumitro.dress.view.view.home.adapter.HotOpenBidRVAdapter;
 import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
-import com.example.williamsumitro.dress.view.model.Cloth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +34,6 @@ public class HotFragment extends Fragment {
     @BindView(R.id.hot_rvList) RecyclerView rvList;
 //    @BindView(R.id.hot_rv_OpenBid) RecyclerView rvOpenBid;
 //    @BindView(R.id.hot_btn_openbid) Button btnOpenBid;
-    private HotOpenBidRVAdapter openbid_adapter;
     private List<ProductInfo> productInfoList = new ArrayList<>();
 //    private List<Cloth> ListList = new ArrayList<>();
 //    private List<Bid> bidList = new ArrayList<>();
@@ -59,11 +52,6 @@ public class HotFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hot, container, false);
         initView(view);
         initData();
-//        openbid_adapter = new HotOpenBidRVAdapter(bidList, getContext());
-//        RecyclerView.LayoutManager horizontal_layoutmanager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        rvOpenBid.setLayoutManager(horizontal_layoutmanager);
-//        rvOpenBid.setItemAnimator(new DefaultItemAnimator());
-//        rvOpenBid.setAdapter(openbid_adapter);
 
         return view;
     }

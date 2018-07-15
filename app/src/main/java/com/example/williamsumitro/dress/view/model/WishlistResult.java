@@ -105,9 +105,15 @@ public class WishlistResult {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("average_rating")
+    @Expose
+    private String averageRating;
+    @SerializedName("sold")
+    @Expose
+    private String sold;
     @SerializedName("rating")
     @Expose
-    private Integer rating;
+    private String rating;
 
     public String getWishlistCreatedAt() {
         return wishlistCreatedAt;
@@ -174,7 +180,7 @@ public class WishlistResult {
     }
 
     public String getPhoto() {
-        return apiUtils.getUrlImage() +  photo;
+        return apiUtils.getUrlImage() + photo;
     }
 
     public void setPhoto(String photo) {
@@ -365,11 +371,27 @@ public class WishlistResult {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getRating() {
+    public String getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(String averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public String getSold() {
+        return sold;
+    }
+
+    public void setSold(String sold) {
+        this.sold = sold;
+    }
+
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 }

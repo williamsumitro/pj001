@@ -8,17 +8,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -147,7 +144,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
     private void initDialog(final String store_name, final String prodcut_id){
         index = 0;
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.requestpartnership_dialog);
+        dialog.setContentView(R.layout.dialog_requestpartnership);
 
         final Button addpricerange = (Button) dialog.findViewById(R.id.requestpartnershipdialog_btn_addpricerange);
         final TextView storename = (TextView) dialog.findViewById(R.id.requestpartnershipdialog_tv_storename);

@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +23,7 @@ import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -207,7 +204,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     }
     private void initDialog(int stats, final Product product){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_custom);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);

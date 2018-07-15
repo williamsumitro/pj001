@@ -155,7 +155,7 @@ public class OC_RVAdapter extends RecyclerView.Adapter<OC_RVAdapter.ViewHolder> 
                             final String province, final String city, final String phonenumber,
                             final String postalcode, final String courier, final String note){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.order_dialog);
+        dialog.setContentView(R.layout.dialog_order);
 
         final TextView tv_invoicedate = (TextView) dialog.findViewById(R.id.orderdialog_tv_invoicedate);
         final TextView tv_receivername = (TextView) dialog.findViewById(R.id.orderdialog_tv_receivername);
