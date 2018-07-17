@@ -61,12 +61,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/item_transaction_tv_IDR"
-                        android:layout_gravity="center"
-                        android:text="IDR "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
                         android:id="@+id/item_transaction_tv_nominal"
                         android:textAlignment="center"
                         android:layout_gravity="center"
@@ -96,11 +90,6 @@
             <TextView
                 android:layout_gravity="center"
                 android:text="Balance : "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_gravity="center"
-                android:text="IDR "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

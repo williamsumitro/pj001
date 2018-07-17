@@ -49,6 +49,13 @@ public class RequestForQuotation extends AppCompatActivity {
                 initanim(intent);
             }
         });
+        container_requesthistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MyRequestHistory.class);
+                initanim(intent);
+            }
+        });
     }
 
     private void initView(){

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    android:id="@+id/item_myrequesthistory_cv"
     android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -7,6 +8,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/item_myrequesthistory_tv_status"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:text="Status :"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/item_myrequesthistory_btn_accepted"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:text="View Accepted Offer"
+            android:background="@drawable/button1"
+            android:layout_width="160dp"
+            android:layout_height="30dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -14,7 +33,7 @@
             <ImageView
                 android:scaleType="fitXY"
                 android:layout_margin="10dp"
-                android:id="@+id/item_activerequest_img_product"
+                android:id="@+id/item_myrequesthistory_img_product"
                 android:layout_width="150dp"
                 android:layout_height="200dp"/>
             <LinearLayout
@@ -40,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/item_activerequest_tv_description"
+                        android:id="@+id/item_myrequesthistory_tv_description"
                         android:layout_gravity="center"
                         android:text="2018-06-16"
                         android:layout_weight="2"
@@ -64,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/item_activerequest_tv_qty"
+                        android:id="@+id/item_myrequesthistory_tv_qty"
                         android:layout_gravity="center"
                         android:text="2018-06-16"
                         android:layout_weight="2"
@@ -90,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/item_activerequest_tv_dateexpired"
+                        android:id="@+id/item_myrequesthistory_tv_dateexpired"
                         android:layout_gravity="center"
                         android:text="2018-06-16"
                         android:layout_weight="2"
@@ -115,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/item_activerequest_tv_budget"
+                        android:id="@+id/item_myrequesthistory_tv_budget"
                         android:layout_gravity="center"
                         android:text="2018-06-16"
                         android:layout_weight="2"
@@ -131,20 +150,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/item_activerequest_btn_viewoffer"
-                android:layout_marginRight="30dp"
+                android:id="@+id/item_myrequesthistory_btn_viewoffer"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:text="View Offer"
                 android:background="@drawable/button1_3"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/item_activerequest_btn_close"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:text="Close Request"
-                android:background="@drawable/button1_4"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>

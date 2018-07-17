@@ -444,4 +444,12 @@ public class ProductInfo {
     public void setReviewRating(ArrayList<ReviewRating> reviewRating) {
         this.reviewRating = reviewRating;
     }
+
+    public String getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(String averageRating) {
+        this.averageRating = averageRating;
+    }
 }

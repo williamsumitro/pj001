@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by William Sumitro on 7/15/2018.
+ * Created by William Sumitro on 7/16/2018.
  */
 
-public class RFQ_ActiveResult implements Serializable {
+public class RFQ_HistoryResult implements Serializable {
     @SerializedName("rfq_request_id")
     @Expose
     private Integer rfqRequestId;
@@ -47,12 +47,18 @@ public class RFQ_ActiveResult implements Serializable {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("rfq_status")
+    @Expose
+    private String rfqStatus;
     @SerializedName("photo")
     @Expose
     private Photo photo;
     @SerializedName("offer")
     @Expose
     private ArrayList<Offer> offer = null;
+    @SerializedName("accepted_offer")
+    @Expose
+    private Offer acceptedOffer;
 
     public Integer getRfqRequestId() {
         return rfqRequestId;
@@ -150,6 +156,14 @@ public class RFQ_ActiveResult implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String getRfqStatus() {
+        return rfqStatus;
+    }
+
+    public void setRfqStatus(String rfqStatus) {
+        this.rfqStatus = rfqStatus;
+    }
+
     public Photo getPhoto() {
         return photo;
     }
@@ -166,4 +180,11 @@ public class RFQ_ActiveResult implements Serializable {
         this.offer = offer;
     }
 
+    public Offer getAcceptedOffer() {
+        return acceptedOffer;
+    }
+
+    public void setAcceptedOffer(Offer acceptedOffer) {
+        this.acceptedOffer = acceptedOffer;
+    }
 }

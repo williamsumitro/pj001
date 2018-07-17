@@ -3,11 +3,14 @@ package com.example.williamsumitro.dress.view.presenter.api;
 import com.example.williamsumitro.dress.view.model.AddToBag;
 import com.example.williamsumitro.dress.view.model.ApproveOrder;
 import com.example.williamsumitro.dress.view.model.BagResponse;
+import com.example.williamsumitro.dress.view.model.BestResponse;
 import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
+import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
+import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
 import com.example.williamsumitro.dress.view.model.PartnershipResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
@@ -18,6 +21,7 @@ import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResponse
 import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResponse;
 import com.example.williamsumitro.dress.view.model.RFQResponse;
 import com.example.williamsumitro.dress.view.model.RFQ_ActiveResponse;
+import com.example.williamsumitro.dress.view.model.RFQ_HistoryResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
@@ -317,10 +321,45 @@ public interface apiService {
             @Part("rfq_request_id") RequestBody rfq_request_id,
             @Part("description") RequestBody description,
             @Part("price_unit") RequestBody price_unit,
+            @Part("weight_unit") RequestBody weight_unit,
             @Part MultipartBody.Part photo
     );
 
     @FormUrlEncoded
     @POST("view_active_rfq_request")
     Call<RFQ_ActiveResponse> req_get_active_rfq_request(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("accept_rfq_offer")
+    Call<ResponseBody> req_accept_rfq_offer(@Field("token") String token,
+                                            @Field("rfq_offer_id") String rfq_offer_id);
+
+    @FormUrlEncoded
+    @POST("close_rfq_request")
+    Call<ResponseBody> req_close_rfq_request(@Field("token") String token,
+                                             @Field("rfq_request_id") String rfq_request_id);
+
+    @FormUrlEncoded
+    @POST("rfq_request_history")
+    Call<RFQ_HistoryResponse> req_rfq_history(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("financial_history")
+    Call<FinancialHistoryResponse> req_financial_history(@Field("token") String token,
+                                                         @Field("year") String year,
+                                                         @Field("month") String month);
+
+    @FormUrlEncoded
+    @POST("rfq_offer_history")
+    Call<OfferHistoryResponse> req_offer_history(@Field("token") String token);
+
+    @POST("get_new_product_detail")
+    Call<BestResponse> req_get_new_product();
+
+    @POST("best_seller_product_detail")
+    Call<BestResponse> req_get_best_seller();
+
+    @FormUrlEncoded
+    @POST("search")
+    Call<BestResponse> req_search(@Field("product_name") String product_name);
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/gray"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/dialog_viewoffer_ln_nooffer"
+            android:padding="15dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@drawable/bid1"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+            <TextView
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:text="There are no offer"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dialog_viewoffer_ln_offer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/dialog_viewoffer_rv"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:id="@+id/dialog_viewoffer_btn_close"
+                android:background="@drawable/button1_1"
+                android:layout_width="150dp"
+                android:textColor="@color/black"
+                android:text="Close"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+</LinearLayout>

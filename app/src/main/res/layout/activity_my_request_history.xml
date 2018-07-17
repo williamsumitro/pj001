@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/offerhistory_toolbar"
+            android:id="@+id/myrequesthistory_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/offerhistory_swiperefreshlayout"
+        android:id="@+id/myrequesthistory_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -23,12 +23,12 @@
             android:orientation="vertical">
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/offerhistory_ln_top"
+                android:id="@+id/myrequesthistory_ln_top"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <ImageView
-                    android:src="@drawable/bid1"
+                    android:src="@drawable/request1"
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
                     android:layout_width="200dp"
@@ -45,7 +45,7 @@
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/offerhistory_ln_bottom"
+                android:id="@+id/myrequesthistory_ln_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/offerhistory_rv"
+                            android:id="@+id/myrequesthistory_rv"
                             android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>

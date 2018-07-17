@@ -34,6 +34,7 @@ import com.example.williamsumitro.dress.view.model.UserDetails;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.view.Help;
+import com.example.williamsumitro.dress.view.view.Test;
 import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.home.fragment.HomeFragment;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -367,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
                 FavoriteStoreFragment favoriteStoreFragment = new FavoriteStoreFragment();
                 return favoriteStoreFragment;
             case 7:
-                Intent intent = new Intent(context, Help.class);
+                Intent intent = new Intent(context, Test.class);
                 initanim(intent);
             default:
                 return new HomeFragment();

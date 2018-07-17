@@ -84,7 +84,10 @@
         <activity android:name=".view.view.offer.activity.RequestList" />
         <activity android:name=".view.view.offer.activity.OfferHistory" />
         <activity android:name=".view.view.offer.activity.AddMyOffer" />
-        <activity android:name=".view.view.request.activity.ActiveRequest"></activity>
+        <activity android:name=".view.view.request.activity.ActiveRequest" />
+        <activity android:name=".view.view.Test" />
+        <activity android:name=".view.FullScreenImage" />
+        <activity android:name=".view.view.request.activity.MyRequestHistory"></activity>
     </application>
 
 </manifest>

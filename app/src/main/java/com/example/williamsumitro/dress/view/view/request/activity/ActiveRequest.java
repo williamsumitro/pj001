@@ -42,7 +42,7 @@ public class ActiveRequest extends AppCompatActivity {
     @BindView(R.id.activerequest_ln_bottom) LinearLayout bottom;
     @BindView(R.id.activerequest_ln_top) LinearLayout top;
     @BindView(R.id.activerequest_toolbar) Toolbar toolbar;
-    @BindView(R.id.activerequest_swiperefreshlayout)     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.activerequest_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     public static ActiveRequest ACTIVEREQUEST;
     private Context context;
@@ -88,7 +88,7 @@ public class ActiveRequest extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Request List");
+        getSupportActionBar().setTitle("Active Request");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,6 +119,7 @@ public class ActiveRequest extends AppCompatActivity {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
                         if (response.body().getResult().size()>0){
+                            top.setVisibility(View.GONE);
                             bottom.setVisibility(View.VISIBLE);
                             resultArrayList = response.body().getResult();
                             setupRV();

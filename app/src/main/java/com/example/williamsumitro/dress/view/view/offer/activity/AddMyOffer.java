@@ -62,6 +62,7 @@ public class AddMyOffer extends AppCompatActivity {
     @BindView(R.id.addmyoffer_img) ImageView image;
     @BindView(R.id.addmyoffer_et_price) EditText price;
     @BindView(R.id.addmyoffer_et_description) EditText description;
+    @BindView(R.id.addmyoffer_et_weight) EditText weight;
     @BindView(R.id.addmyoffer_btn_submit) Button submit;
     @BindView(R.id.addmyoffer_container) LinearLayout container;
 
@@ -126,6 +127,7 @@ public class AddMyOffer extends AppCompatActivity {
     }
     private void initEdittext() {
         price.addTextChangedListener(new FinancialTextWatcher(price));
+        weight.addTextChangedListener(new FinancialTextWatcher(weight));
     }
 
     private void initClick() {
@@ -139,7 +141,12 @@ public class AddMyOffer extends AppCompatActivity {
                 else if (TextUtils.isEmpty(price.getText())){
                     price.setError("Price per Unit is required");
                     return;
-                }else if(image.getDrawable().equals(picture)) {
+                }
+                else if (TextUtils.isEmpty(weight.getText())){
+                    weight.setError("Weight per Unit is required");
+                    return;
+                }
+                else if(image.getDrawable().equals(picture)) {
                     Snackbar.make(container, "Please select your image", Snackbar.LENGTH_LONG).show();
                     return;
                 }
@@ -156,8 +163,9 @@ public class AddMyOffer extends AppCompatActivity {
                 RequestBody request_rfqid = RequestBody.create(text, rfqid);
                 RequestBody request_description = RequestBody.create(text, description.getText().toString());
                 RequestBody request_price = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(price.getText().toString()));
+                RequestBody request_weight = RequestBody.create(text, FinancialTextWatcher.trimCommaOfString(weight.getText().toString()));
 
-                api_add_rfq(request_token, request_rfqid, request_description, request_price, body_photo);
+                api_add_rfq(request_token, request_rfqid, request_description, request_price, request_weight, body_photo);
             }
         });
         image.setOnClickListener(new View.OnClickListener() {
@@ -168,9 +176,9 @@ public class AddMyOffer extends AppCompatActivity {
         });
     }
 
-    private void api_add_rfq(RequestBody request_token, RequestBody request_rfqid, RequestBody request_description, RequestBody request_price, MultipartBody.Part body_photo) {
+    private void api_add_rfq(RequestBody request_token, RequestBody request_rfqid, RequestBody request_description, RequestBody request_price, RequestBody request_weight, MultipartBody.Part body_photo) {
         service = apiUtils.getAPIService();
-        service.req_add_rfq_offer(request_token, request_rfqid, request_description, request_price, body_photo).enqueue(new Callback<ResponseBody>() {
+        service.req_add_rfq_offer(request_token, request_rfqid, request_description, request_price, request_weight, body_photo).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){

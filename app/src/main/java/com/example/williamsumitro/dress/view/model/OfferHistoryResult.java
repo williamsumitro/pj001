@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Created by William Sumitro on 7/15/2018.
+ * Created by William Sumitro on 7/16/2018.
  */
 
-public class Offer implements Serializable {
+public class OfferHistoryResult implements Serializable {
     @SerializedName("rfq_offer_id")
     @Expose
     private Integer rfqOfferId;
@@ -33,28 +33,34 @@ public class Offer implements Serializable {
     private String updatedAt;
     @SerializedName("weight_unit")
     @Expose
-    private Object weightUnit;
-    @SerializedName("store_name")
+    private Integer weightUnit;
+    @SerializedName("user_id")
     @Expose
-    private String storeName;
-    @SerializedName("store_photo")
+    private Integer userId;
+    @SerializedName("item_name")
     @Expose
-    private String storePhoto;
-    @SerializedName("province_name")
+    private String itemName;
+    @SerializedName("request_description")
     @Expose
-    private String provinceName;
-    @SerializedName("city_name")
-    @Expose
-    private String cityName;
+    private String requestDescription;
     @SerializedName("qty")
     @Expose
     private Integer qty;
-    @SerializedName("total_price")
+    @SerializedName("request_expired")
     @Expose
-    private Integer totalPrice;
-    @SerializedName("photo")
+    private String requestExpired;
+    @SerializedName("budget_unit_min")
     @Expose
-    private Photo photo;
+    private Integer budgetUnitMin;
+    @SerializedName("budget_unit_max")
+    @Expose
+    private Integer budgetUnitMax;
+    @SerializedName("request_photo")
+    @Expose
+    private Photo requestPhoto;
+    @SerializedName("offer_photo")
+    @Expose
+    private Photo offerPhoto;
 
     public Integer getRfqOfferId() {
         return rfqOfferId;
@@ -112,44 +118,36 @@ public class Offer implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public Object getWeightUnit() {
+    public Integer getWeightUnit() {
         return weightUnit;
     }
 
-    public void setWeightUnit(Object weightUnit) {
+    public void setWeightUnit(Integer weightUnit) {
         this.weightUnit = weightUnit;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getStorePhoto() {
-        return storePhoto;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setStorePhoto(String storePhoto) {
-        this.storePhoto = storePhoto;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public String getProvinceName() {
-        return provinceName;
+    public String getRequestDescription() {
+        return requestDescription;
     }
 
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setRequestDescription(String requestDescription) {
+        this.requestDescription = requestDescription;
     }
 
     public Integer getQty() {
@@ -160,19 +158,43 @@ public class Offer implements Serializable {
         this.qty = qty;
     }
 
-    public Integer getTotalPrice() {
-        return totalPrice;
+    public String getRequestExpired() {
+        return requestExpired;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setRequestExpired(String requestExpired) {
+        this.requestExpired = requestExpired;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public Integer getBudgetUnitMin() {
+        return budgetUnitMin;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setBudgetUnitMin(Integer budgetUnitMin) {
+        this.budgetUnitMin = budgetUnitMin;
+    }
+
+    public Integer getBudgetUnitMax() {
+        return budgetUnitMax;
+    }
+
+    public void setBudgetUnitMax(Integer budgetUnitMax) {
+        this.budgetUnitMax = budgetUnitMax;
+    }
+
+    public Photo getRequestPhoto() {
+        return requestPhoto;
+    }
+
+    public void setRequestPhoto(Photo requestPhoto) {
+        this.requestPhoto = requestPhoto;
+    }
+
+    public Photo getOfferPhoto() {
+        return offerPhoto;
+    }
+
+    public void setOfferPhoto(Photo offerPhoto) {
+        this.offerPhoto = offerPhoto;
     }
 }

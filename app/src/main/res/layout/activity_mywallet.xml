@@ -111,7 +111,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <View
+                android:layout_margin="10dp"
+                android:background="@color/grey5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/mywallet_tv_status"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="No Transaction"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <android.support.v7.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/mywallet_rv"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"

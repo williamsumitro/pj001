@@ -176,7 +176,7 @@ public class AddNewRequest extends AppCompatActivity {
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if(jsonResults.getString("message").toLowerCase().equals("submitted successfully")){
-                            Intent intent = new Intent(context, SellerPanel.class);
+                            Intent intent = new Intent(context, RequestForQuotation.class);
                             initanim(intent);
                             RequestForQuotation.REQUESTFORQUOTATION.finish();
                             finish();

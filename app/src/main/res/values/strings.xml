@@ -36,17 +36,9 @@
     <string name="you_have_1_x_24_hours_to_complete_your_order_please_transfer_the_amount_of_payment_as_shown_below">You have 1 x 24 hours to complete your order. Please transfer the amount of payment as shown below.</string>
 
     <string-array name="month">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
+        <item>August 2018</item>
+        <item>July 2018</item>
+        <item>June 2018</item>
+        <item>May 2018</item>
     </string-array>
 </resources>

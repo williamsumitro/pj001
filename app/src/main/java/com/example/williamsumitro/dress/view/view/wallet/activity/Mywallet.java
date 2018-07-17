@@ -30,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
+import com.example.williamsumitro.dress.view.model.FinancialHistoryResult;
 import com.example.williamsumitro.dress.view.model.TransactionDetails;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
@@ -39,7 +41,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
-import com.example.williamsumitro.dress.view.view.wallet.adapter.Wallet_Transaction_RV_Adapter;
+import com.example.williamsumitro.dress.view.view.wallet.adapter.FinancialHistoryRV;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,11 +68,12 @@ public class Mywallet extends AppCompatActivity {
     @BindView(R.id.mywallet_btn_showhistory) Button showhistory;
     @BindView(R.id.mywallet_btn_withdraw) Button withdraw;
     @BindView(R.id.mywallet_tv_balance) TextView balance;
+    @BindView(R.id.mywallet_tv_status) TextView status;
 
     private Context context;
     private ArrayAdapter<CharSequence> monthadapter;
     private String choosen_spinner;
-    private Wallet_Transaction_RV_Adapter adapter;
+    private FinancialHistoryRV adapter;
     private ProgressDialog progressDialog;
     private apiService service;
     private String token;
@@ -78,15 +81,16 @@ public class Mywallet extends AppCompatActivity {
     private DecimalFormat formatter;
     private List<TransactionDetails> transactionDetailsList = new ArrayList<>();
     private Dialog dialog;
+    private ArrayList<FinancialHistoryResult> results;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mywallet);
-        initObject();
+        initView();
         setupToolbar();
         initCollapToolbar();
         initspinner();
-        setuprv();
+        api_getfinancialhistoru();
         api_getauthuser();
     }
 
@@ -97,8 +101,67 @@ public class Mywallet extends AppCompatActivity {
                 initDialog(balances);
             }
         });
+        showhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                api_getfinancialhistoru();
+            }
+        });
     }
+    private void api_getfinancialhistoru(){
+        service = apiUtils.getAPIService();
+        String date = spinner.getSelectedItem().toString();
+        String[] split = date.split(" ");
+        String year, month = "00";
+        year = split[1];
+        if (split[0].toLowerCase().equals("january"))
+            month = "01";
+        else if (split[0].toLowerCase().equals("february"))
+            month = "02";
+        else if (split[0].toLowerCase().equals("march"))
+            month = "03";
+        else if (split[0].toLowerCase().equals("april"))
+            month = "04";
+        else if (split[0].toLowerCase().equals("may"))
+            month = "05";
+        else if (split[0].toLowerCase().equals("june"))
+            month = "06";
+        else if (split[0].toLowerCase().equals("july"))
+            month = "07";
+        else if (split[0].toLowerCase().equals("august"))
+            month = "08";
+        else if (split[0].toLowerCase().equals("september"))
+            month = "09";
+        else if (split[0].toLowerCase().equals("october"))
+            month = "10";
+        else if (split[0].toLowerCase().equals("november"))
+            month = "11";
+        else if (split[0].toLowerCase().equals("december"))
+            month = "12";
+        service.req_financial_history(token, year, month)
+                .enqueue(new Callback<FinancialHistoryResponse>() {
+                    @Override
+                    public void onResponse(Call<FinancialHistoryResponse> call, Response<FinancialHistoryResponse> response) {
+                        if (response.code()==200){
+                            results = response.body().getResult();
+                            if (results.size()>0){
+                                status.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                setuprv();
+                            }
+                            else{
+                                status.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<FinancialHistoryResponse> call, Throwable t) {
+
+                    }
+                });
+    }
     private void api_getauthuser(){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
@@ -127,15 +190,13 @@ public class Mywallet extends AppCompatActivity {
         });
     }
     private void setuprv() {
-        TransactionDetails transactionDetails = new TransactionDetails("20 May 2018", "Jual Beli Barang", "Jual beli barang di tokopedia, laaada, tah apa", 200000, 200000, 2000000);
-        transactionDetailsList.add(transactionDetails);
-        adapter = new Wallet_Transaction_RV_Adapter(context, transactionDetailsList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        adapter = new FinancialHistoryRV(context, results);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
 
-    private void initObject() {
+    private void initView() {
         ButterKnife.bind(this);
         supportPostponeEnterTransition();
         context = this;

@@ -76,6 +76,31 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="Weight per Unit (Gr)"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="11"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:id="@+id/addmyoffer_et_weight"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:hint="Insert weight (gr) here"
+                    android:layout_width="0dp"
+                    android:layout_weight="3.5"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
                     android:textColor="@color/black"

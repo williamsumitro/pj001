@@ -1,4 +1,4 @@
-package com.example.williamsumitro.dress.view.view.offer.activity;
+package com.example.williamsumitro.dress.view.view.request.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,15 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
-import com.example.williamsumitro.dress.view.model.OfferHistoryResult;
-import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
+import com.example.williamsumitro.dress.view.model.RFQ_ActiveResponse;
+import com.example.williamsumitro.dress.view.model.RFQ_ActiveResult;
+import com.example.williamsumitro.dress.view.model.RFQ_HistoryResponse;
 import com.example.williamsumitro.dress.view.model.RFQ_HistoryResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.offer.adapter.OfferHistoryRV;
-import com.example.williamsumitro.dress.view.view.request.activity.MyRequestHistory;
+import com.example.williamsumitro.dress.view.view.request.adapter.ActiveRequestRV;
 import com.example.williamsumitro.dress.view.view.request.adapter.MyRequestHistoryRV;
 
 import java.text.DecimalFormat;
@@ -37,26 +36,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OfferHistory extends AppCompatActivity {
-    @BindView(R.id.offerhistory_rv) RecyclerView recyclerView;
-    @BindView(R.id.offerhistory_ln_bottom) LinearLayout bottom;
-    @BindView(R.id.offerhistory_ln_top) LinearLayout top;
-    @BindView(R.id.offerhistory_toolbar) Toolbar toolbar;
-    @BindView(R.id.offerhistory_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+public class MyRequestHistory extends AppCompatActivity {
+    @BindView(R.id.myrequesthistory_rv) RecyclerView recyclerView;
+    @BindView(R.id.myrequesthistory_ln_bottom) LinearLayout bottom;
+    @BindView(R.id.myrequesthistory_ln_top) LinearLayout top;
+    @BindView(R.id.myrequesthistory_toolbar) Toolbar toolbar;
+    @BindView(R.id.myrequesthistory_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
-    public static OfferHistory OFFERHISTORY;
+    public static MyRequestHistory MYREQUESTHISTORY;
     private Context context;
     private apiService service;
     private String token;
     private SessionManagement sessionManagement;
     private DecimalFormat formatter;
-    private ArrayList<OfferHistoryResult> resultArrayList;
-    private OfferHistoryRV adapter;
+    private ArrayList<RFQ_HistoryResult> resultArrayList;
+    private MyRequestHistoryRV adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer_history);
+        setContentView(R.layout.activity_my_request_history);
         initView();
         setuptoolbar();
         initRefresh();
@@ -69,10 +68,10 @@ public class OfferHistory extends AppCompatActivity {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
-        api_getOfferHistory();
+        api_getRFQhistory();
     }
     private void initView(){
-        OFFERHISTORY = this;
+        MYREQUESTHISTORY = this;
         ButterKnife.bind(this);
         context = this;
         formatter = new DecimalFormat("#,###,###");
@@ -88,7 +87,7 @@ public class OfferHistory extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("My Offer History");
+        getSupportActionBar().setTitle("My Request History");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,17 +104,17 @@ public class OfferHistory extends AppCompatActivity {
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
     private void setupRV(){
-        adapter = new OfferHistoryRV(context, resultArrayList);
+        adapter = new MyRequestHistoryRV(context, resultArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
-    private void api_getOfferHistory() {
+    private void api_getRFQhistory() {
         service = apiUtils.getAPIService();
-        service.req_offer_history(token).enqueue(new Callback<OfferHistoryResponse>() {
+        service.req_rfq_history(token).enqueue(new Callback<RFQ_HistoryResponse>() {
             @Override
-            public void onResponse(Call<OfferHistoryResponse> call, Response<OfferHistoryResponse> response) {
+            public void onResponse(Call<RFQ_HistoryResponse> call, Response<RFQ_HistoryResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
                         if (response.body().getResult().size()>0){
@@ -135,7 +134,7 @@ public class OfferHistory extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<OfferHistoryResponse> call, Throwable t) {
+            public void onFailure(Call<RFQ_HistoryResponse> call, Throwable t) {
                 Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
