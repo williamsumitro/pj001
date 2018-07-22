@@ -19,13 +19,10 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.Offer;
-import com.example.williamsumitro.dress.view.model.RFQ_ActiveResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.offer.activity.AddMyOffer;
-import com.example.williamsumitro.dress.view.view.request.activity.ActiveRequest;
-import com.example.williamsumitro.dress.view.view.request.activity.RequestForQuotation;
+import com.example.williamsumitro.dress.view.view.request.fragment.ActiveRequestFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -38,6 +35,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,10 +55,14 @@ public class ActiveRequestOfferRV extends RecyclerView.Adapter<ActiveRequestOffe
     private String token;
     private SessionManagement sessionManagement;
     private apiService service;
+    private ActiveRequestFragment activeRequestFragment;
 
-    public ActiveRequestOfferRV(Context context, ArrayList<Offer> offers){
+
+    public ActiveRequestOfferRV(Context context, ArrayList<Offer> offers, ActiveRequestFragment activeRequestFragment, Dialog dialog){
         this.context = context;
         this.offers = offers;
+        this.dialog = dialog;
+        this.activeRequestFragment = activeRequestFragment;
         formatter = new DecimalFormat("#,###,###");
         progressDialog = new ProgressDialog(context);
         sessionManagement = new SessionManagement(context);
@@ -133,17 +135,13 @@ public class ActiveRequestOfferRV extends RecyclerView.Adapter<ActiveRequestOffe
                 if(response.isSuccessful()){
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
-                        if(jsonResults.getString("message").toLowerCase().equals("submitted successfully")){
-                            Bundle bundle = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                Intent intent = new Intent(context, ActiveRequest.class);
-                                bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                                ActiveRequest.ACTIVEREQUEST.finish();
-                                context.startActivity(intent, bundle);
-                            }
+                        String message = jsonResults.getString("message");
+                        if(message.toLowerCase().equals("submitted successfully")){
+                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                            activeRequestFragment.initRefresh();
+                            dialog.dismiss();
                         }else{
-                            String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                         }
                     }catch (JSONException e){
                         e.printStackTrace();

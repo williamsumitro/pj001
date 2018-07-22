@@ -1,6 +1,7 @@
 package com.example.williamsumitro.dress.view.presenter.api;
 
 import com.example.williamsumitro.dress.view.model.AddToBag;
+import com.example.williamsumitro.dress.view.model.AdvancedSearchResult;
 import com.example.williamsumitro.dress.view.model.ApproveOrder;
 import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.BestResponse;
@@ -9,11 +10,13 @@ import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
+import com.example.williamsumitro.dress.view.model.FavoriteResponse;
 import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
 import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
 import com.example.williamsumitro.dress.view.model.PartnershipResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
@@ -23,6 +26,7 @@ import com.example.williamsumitro.dress.view.model.RFQResponse;
 import com.example.williamsumitro.dress.view.model.RFQ_ActiveResponse;
 import com.example.williamsumitro.dress.view.model.RFQ_HistoryResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
+import com.example.williamsumitro.dress.view.model.SortByIdResult;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
@@ -297,6 +301,11 @@ public interface apiService {
     @POST("get_store_detail")
     Call<StoreDetailResponse> req_get_store_detail(@Field("store_id") String store_id);
 
+    @FormUrlEncoded
+    @POST("get_user_store_detail")
+    Call<StoreDetailResponse> req_get_user_store_detail(@Field("token") String token,
+                                                        @Field("store_id") String store_id);
+
     @Multipart
     @POST("add_rfq_request")
     Call<ResponseBody> req_add_rfq_request(
@@ -362,4 +371,35 @@ public interface apiService {
     @FormUrlEncoded
     @POST("search")
     Call<BestResponse> req_search(@Field("product_name") String product_name);
+
+
+    @FormUrlEncoded
+    @POST("add_to_favorite")
+    Call<ResponseBody> req_add_to_favorite(@Field("token") String token,
+                                           @Field("store_id") String store_id);
+
+
+    @FormUrlEncoded
+    @POST("delete_from_favorite")
+    Call<ResponseBody> req_delete_from_favorite(@Field("token") String token,
+                                           @Field("store_id") String store_id);
+
+    @FormUrlEncoded
+    @POST("my_favorite")
+    Call<FavoriteResponse> req_my_favorite(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("advance_search")
+    Call<AdvancedSearchResult> req_advance_search(@Field("min_order") String min_order,
+                                                  @Field("rating_min") String rating_min,
+                                                  @Field("rating_max") String rating_max,
+                                                  @Field("province") String province,
+                                                  @Field("city") String city,
+                                                  @Field("courier_id") String courier_id,
+                                                  @Field("price_min") String price_min,
+                                                  @Field("price_max") String price_max);
+
+    @FormUrlEncoded
+    @POST("get_sort_by_id")
+    Call<SortByIdResult> req_get_sort_by_id(@Field("sort_id") String sort_id);
 }

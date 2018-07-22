@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.williamsumitro.dress">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,41 +14,30 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/noactionbar">
+        android:theme="@style/noactionbar"
+        tools:replace="android:icon">
         <activity android:name=".view.view.main.MainActivity" />
         <activity android:name=".view.view.product.activity.DetailProduct" />
         <activity android:name=".view.view.store.activity.DetailStore" />
         <activity android:name=".view.view.authentication.Login" />
         <activity android:name=".view.view.authentication.Register" />
-        <activity android:name=".view.view.product.activity.DetailProduct_sizeguide" />
         <activity android:name=".view.view.product.activity.ManagePasswords" />
-        <activity android:name=".view.view.Aboutus" />
         <activity android:name=".view.view.Help" />
-        <activity android:name=".view.view.bag.activity.Buy" />
+        <activity android:name=".view.view.bag.activity.AddToBag" />
         <activity android:name=".view.view.bag.activity.ShoppingBag" />
         <activity android:name=".view.view.checkout.activity.Checkout" />
-        <activity android:name=".view.view.purchase.activity.PaymentDetail" />
-        <activity android:name=".view.view.purchase.activity.OrderDetail" />
-        <activity android:name=".view.view.purchase.activity.ReviewandrateDetail" />
         <activity android:name=".view.view.filter.Filter" />
         <activity android:name=".view.view.search.activity.Search" />
         <activity android:name=".view.view.search.activity.SearchResult" />
         <activity android:name=".view.view.category.activity.CategoryDetail" />
-        <activity android:name=".view.view.mystore.activity.PreviewStore" />
-        <activity android:name=".view.view.bid.activity.BidDetail" />
         <activity android:name=".view.view.profile.activity.Profile" />
         <activity android:name=".view.view.profile.activity.EditProfile" />
         <activity android:name=".view.view.profile.activity.ChangePassword" />
         <activity android:name=".view.view.profile.activity.ChangeProfilePicture" />
-        <activity android:name=".view.view.mystore.activity.StoreSettings" />
-        <activity android:name=".view.view.mystore.activity.StoreEditInformation" />
-        <activity android:name=".view.view.mystore.activity.StoreEditBank" />
-        <activity android:name=".view.view.mystore.activity.StoreEditCourier" />
         <activity android:name=".view.view.openstore.activity.OpenStore" />
         <activity android:name=".view.view.authentication.Unauthorized" />
         <activity android:name=".view.view.wallet.activity.Mywallet" />
         <activity android:name=".view.view.wallet.activity.Withdraw" />
-        <activity android:name=".view.view.sellerpanel.activity.SellerPanel" />
         <activity android:name=".view.view.product.activity.AddProduct" />
         <activity android:name=".view.view.openstore.activity.Openstrore_Fileupload" />
         <activity android:name=".view.view.checkout.activity.Payment" />
@@ -61,33 +51,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.view.openstore.activity.NoStore" />
-        <activity android:name=".view.view.purchase.activity.Purchase" />
-        <activity android:name=".view.view.purchase.payment.activity.PurchasePayment" />
-        <activity android:name=".view.view.purchase.order.activity.PurchaseOrderStatus" />
-        <activity android:name=".view.view.purchase.receipt.activity.PurchaseReceiptConfirmation" />
-        <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRating" />
-        <activity android:name=".view.view.purchase.history.activity.PurchaseHistory" />
+        <activity android:name=".view.view.sellerpanel.activity.NoStore" />
         <activity android:name=".view.view.purchase.payment.activity.PP_InvoiceDetail" />
-        <activity android:name=".view.view.sales.orderconfirmation.activity.OrderConfirmation" />
-        <activity android:name=".view.view.sales.shippingconfirmation.activity.ShippingConfirmation" />
-        <activity android:name=".view.view.sales.orderconfirmation.activity.OrderApproveProduct" />
+        <activity android:name=".view.view.sales.activity.OrderApproveProduct" />
         <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRatingDetail" />
         <activity android:name=".view.view.purchase.history.activity.PurchaseHistoryDetail" />
-        <activity android:name=".view.view.partnership.activity.UplinePartnership" />
-        <activity android:name=".view.view.partnership.activity.DownlinePartnership" />
         <activity android:name=".view.view.partnership.activity.MyUplinePartnership" />
         <activity android:name=".view.view.partnership.activity.MyDownlinePartnership" />
         <activity android:name=".view.view.mystore.activity.EditStore" />
         <activity android:name=".view.view.request.activity.AddNewRequest" />
-        <activity android:name=".view.view.request.activity.RequestForQuotation" />
-        <activity android:name=".view.view.offer.activity.RequestList" />
-        <activity android:name=".view.view.offer.activity.OfferHistory" />
         <activity android:name=".view.view.offer.activity.AddMyOffer" />
-        <activity android:name=".view.view.request.activity.ActiveRequest" />
         <activity android:name=".view.view.Test" />
         <activity android:name=".view.FullScreenImage" />
-        <activity android:name=".view.view.request.activity.MyRequestHistory"></activity>
+        <activity android:name=".view.view.sales.activity.SalesActivity" />
+        <activity android:name=".view.view.partnership.activity.Partnership" />
+        <activity android:name=".view.view.offer.activity.OfferActivity"></activity>
     </application>
 
 </manifest>

@@ -53,6 +53,7 @@ public class SessionManagement {
     public static final String CHECKOUT_TOTAL_PRICE = "CHECKOUT_TOTAL_PRICE";
     public static final String CHECKOUT_TOTAL_QTY = "CHECKOUT_TOTAL_QTY";
     public static final String CHECKOUT_POINT = "CHECKOUT_POINT";
+    private static final String CHECKOUT_NOTE = "CHECKOUT_NOTE";
     public SessionManagement(Context context){
         this.context = context;
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -118,6 +119,15 @@ public class SessionManagement {
         String json = pref.getString(CHECKOUT_COURIER, "");
         Checkout_CourierArrayList obj = gson.fromJson(json, Checkout_CourierArrayList.class);
         return obj;
+    }
+    public void keepCheckoutNote(String note){
+        editor.putString(CHECKOUT_NOTE, note);
+        editor.commit();
+    }
+    public HashMap<String, String> getCheckoutNote(){
+        HashMap<String, String> courier = new HashMap<>();
+        courier.put(CHECKOUT_NOTE, pref.getString(CHECKOUT_NOTE, null));
+        return courier;
     }
     public HashMap<String, String> getcheckoutcourier(){
         HashMap<String, String> courier = new HashMap<>();

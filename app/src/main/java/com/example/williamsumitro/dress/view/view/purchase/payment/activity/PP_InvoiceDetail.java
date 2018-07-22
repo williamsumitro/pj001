@@ -26,6 +26,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 public class PP_InvoiceDetail extends AppCompatActivity {
     @BindView(R.id.purchasepaymentdetail_rv) RecyclerView recyclerView;
@@ -105,7 +106,7 @@ public class PP_InvoiceDetail extends AppCompatActivity {
             grand_total = getintent.getStringExtra(GRANDTOTAL);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
 }

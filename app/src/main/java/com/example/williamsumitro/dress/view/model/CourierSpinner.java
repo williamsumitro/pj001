@@ -10,7 +10,13 @@ public class CourierSpinner {
     private String courier_service;
     private String fee;
     private String estd;
-
+    public CourierSpinner(CourierSpinner courierSpinner){
+        this.courier_id = courierSpinner.getCourier_id();
+        this.courier_name = courierSpinner.getCourier_name();
+        this.courier_service = courierSpinner.getCourier_service();
+        this.fee = courierSpinner.getFee();
+        this.estd = courierSpinner.getEstd();
+    }
     public CourierSpinner(String courier_id, String courier_name, String courier_service, String fee, String estd){
         this.courier_id = courier_id;
         this.courier_name = courier_name;

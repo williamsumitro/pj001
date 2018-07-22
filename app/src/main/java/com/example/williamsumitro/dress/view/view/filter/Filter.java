@@ -39,16 +39,24 @@ import retrofit2.Response;
 
 public class Filter extends AppCompatActivity {
     @BindView(R.id.filter_toolbar) Toolbar toolbar;
+
     @BindView(R.id.filter_crystalseekbar) CrystalSeekbar seekbar;
+
     @BindView(R.id.filter_tvminordervalue) TextView minordervalue;
     @BindView(R.id.filter_tvmaxordervalue) TextView maxordervalue;
+
     @BindView(R.id.filter_etminorder) EditText minorder;
+
     @BindView(R.id.filter_tvminpricerangevalue) TextView minpricerangevalue;
     @BindView(R.id.filter_tvmaxpricerangevalue) TextView maxpricerangevalue;
+
     @BindView(R.id.filter_rangeseekbar) CrystalRangeSeekbar rangeseekbar;
+
     @BindView(R.id.filter_etminpricerange) EditText minpricerange;
     @BindView(R.id.filter_etmaxpricerange) EditText maxpricerange;
+
     @BindView(R.id.filter_tvmaxpricerange) TextView maxprice;
+
     @BindView(R.id.filter_tvminpricerange) TextView minprice;
     @BindView(R.id.filter_spinner_shipping) Spinner shipping;
     @BindView(R.id.filter_spinner_province) Spinner province;

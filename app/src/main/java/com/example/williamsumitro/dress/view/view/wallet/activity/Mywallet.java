@@ -15,16 +15,17 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,15 +33,11 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
 import com.example.williamsumitro.dress.view.model.FinancialHistoryResult;
-import com.example.williamsumitro.dress.view.model.TransactionDetails;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.authentication.Login;
-import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.wallet.adapter.FinancialHistoryRV;
 
 import org.json.JSONException;
@@ -50,10 +47,12 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,19 +78,45 @@ public class Mywallet extends AppCompatActivity {
     private String token;
     private SessionManagement sessionManagement;
     private DecimalFormat formatter;
-    private List<TransactionDetails> transactionDetailsList = new ArrayList<>();
     private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private ArrayList<FinancialHistoryResult> results;
+    private SnapHelper snapHelper = new LinearSnapHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mywallet);
         initView();
+        initData();
         setupToolbar();
         initCollapToolbar();
         initspinner();
         api_getfinancialhistoru();
-        api_getauthuser();
+    }
+
+    private void initData() {
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code()==200){
+                    if (response.body().getStatus()){
+                        balance.setText(formatter.format(Double.parseDouble(String.valueOf(response.body().getUserDetails().getBalance()))));
+                        initOnClick(FinancialTextWatcher.trimCommaOfString(balance.getText().toString()));
+                    }
+                    else {
+                        initDialog("You need to re-login",0);
+                    }
+                }
+                else {
+                    initDialog("You need to re-login",0);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                initDialog("",3);
+            }
+        });
     }
 
     private void initOnClick(final String balances) {
@@ -109,7 +134,6 @@ public class Mywallet extends AppCompatActivity {
         });
     }
     private void api_getfinancialhistoru(){
-        service = apiUtils.getAPIService();
         String date = spinner.getSelectedItem().toString();
         String[] split = date.split(" ");
         String year, month = "00";
@@ -162,38 +186,15 @@ public class Mywallet extends AppCompatActivity {
                     }
                 });
     }
-    private void api_getauthuser(){
-        progressDialog.setMessage("Loading ...");
-        progressDialog.show();
-        service = apiUtils.getAPIService();
-        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, final Response<UserResponse> response) {
-                if(response.code()==200){
-                    progressDialog.dismiss();
-                    balance.setText(formatter.format(Double.parseDouble(String.valueOf(response.body().getUserDetails().getBalance()))));
-                    initOnClick(String.valueOf(response.body().getUserDetails().getBalance()));
-                }
-                else if (response.code()==500){
-                    progressDialog.dismiss();
-                    Intent intent = new Intent(context, Unauthorized.class);
-                    initanim(intent);
-                    finish();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                initDialog(3);
-            }
-        });
-    }
     private void setuprv() {
         adapter = new FinancialHistoryRV(context, results);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(alphaAdapter);
+        snapHelper.attachToRecyclerView(recyclerView);
     }
 
     private void initView() {
@@ -208,6 +209,7 @@ public class Mywallet extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(context);
+        service = apiUtils.getAPIService();
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);
@@ -350,7 +352,6 @@ public class Mywallet extends AppCompatActivity {
                     return;
                 }
 
-                service = apiUtils.getAPIService();
                 String amounts = FinancialTextWatcher.trimCommaOfString(amount.getText().toString());
                 service.req_withdraw(token, amounts, bankname.getText().toString(), bankbranch.getText().toString(), bankaccount.getText().toString(), name.getText().toString(), password.getText().toString())
                         .enqueue(new Callback<ResponseBody>() {
@@ -361,13 +362,13 @@ public class Mywallet extends AppCompatActivity {
                                         JSONObject jsonObject = new JSONObject(response.body().string());
                                         if (jsonObject.getBoolean("status")){
                                             String message = jsonObject.getString("message");
-                                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                                             progressDialog.dismiss();
                                             dialog.dismiss();
                                         }
                                         else {
                                             String message = jsonObject.getString("message");
-                                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                                             progressDialog.dismiss();
                                         }
                                     } catch (JSONException e) {
@@ -387,62 +388,34 @@ public class Mywallet extends AppCompatActivity {
         });
         dialog.show();
     }
-    private void initDialog(int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-        if (stats == 1){
-            status.setText("Uh Oh!");
-            detail.setText("You need to login first !");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_green);
-            buttoncancel.setBackgroundResource(R.drawable.button1_1);
-            buttonok.setText("Login");
-            buttoncancel.setText("Cancel");
-            buttoncancel.setVisibility(View.VISIBLE);
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(context, Login.class);
-                    initanim(intent);
-                }
-            });
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            if(!((Activity) context).isFinishing())
-            {
-                dialog.show();
-            }
+    private void initDialog(String message, int stats){
+        if(stats == 0){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Invalid")
+                    .setContentText(message)
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
-        if (stats == 3){
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Try Again");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Intent restart = new Intent(context, MainActivity.class);
-                    initanim(restart);
-                }
-            });
-            if(!((Activity) context).isFinishing())
-            {
-                dialog.show();
-            }
+        else if (stats == 3){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
 }

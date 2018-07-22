@@ -15,6 +15,9 @@ public class StoreDetailResponse {
     @SerializedName("result")
     @Expose
     private StoreDetails result;
+    @SerializedName("favorite_status")
+    @Expose
+    private Boolean favoriteStatus;
 
     public Boolean getStatus() {
         return status;
@@ -30,5 +33,12 @@ public class StoreDetailResponse {
 
     public void setResult(StoreDetails result) {
         this.result = result;
+    }
+    public Boolean getFavoriteStatus() {
+        return favoriteStatus;
+    }
+
+    public void setFavoriteStatus(Boolean favoriteStatus) {
+        this.favoriteStatus = favoriteStatus;
     }
 }

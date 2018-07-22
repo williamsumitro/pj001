@@ -19,17 +19,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -41,7 +38,9 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -69,6 +68,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
     private apiService service;
     private Context context;
     private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private String token = "", store_name = "", store_contact_person_name = "", store_contact_person_job_title = "", store_contact_person_phone_number = "",
     store_established_year = "", store_province = "", store_city = "", store_description = "", store_courier = "", store_businesstype = "",
             mediaPathLogo = "", mediaPathBanner = "", mediaPathKTP = "", mediaPathSKDP = "", mediaPathSIUP = "", mediaPathNPWP = "", mediaPathTDP = "";
@@ -81,6 +81,8 @@ public class Openstrore_Fileupload extends AppCompatActivity {
     private static final int SELECT_SIUP = 5;
     private static final int SELECT_NPWP = 6;
     private static final int SELECT_TDP = 7;
+
+    private final static String FILEUPLOAD = "FILEUPLOAD";
 
     private ProgressDialog progressDialog;
 
@@ -206,7 +208,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         try {
             if (requestCode == SELECT_LOGO && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -223,7 +225,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
             }
             if (requestCode == SELECT_BANNER && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -240,7 +242,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
             }
             if (requestCode == SELECT_KTP && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -257,7 +259,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
             }
             if (requestCode == SELECT_NPWP && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -274,7 +276,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
             }
             if (requestCode == SELECT_TDP && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -291,7 +293,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
             }
             if (requestCode == SELECT_SKDP && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -308,7 +310,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
             }
             if (requestCode == SELECT_SIUP && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -324,7 +326,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(this, "Please Try Again", Toast.LENGTH_LONG).show();
+                Toasty.error(context, "Please try again", Toast.LENGTH_LONG, true).show();
             }
         } catch (Exception e){}
     }
@@ -466,13 +468,15 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if(jsonResults.getString("message").equals("Store registered successfully ")){
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(context, SellerPanel.class);
+                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                            MainActivity.mainactivity.finish();
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.putExtra(FILEUPLOAD, "FILEUPLOAD");
                             initanim(intent);
                             finish();
                         }else{
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                         }
                     }catch (JSONException e){
                         e.printStackTrace();
@@ -499,54 +503,42 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
     private void initDialog(int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if (stats==1){
-            status.setText("Save");
-            detail.setText("Are you sure want to save ?");
-            bg.setBackgroundResource(R.color.green7);
-            ok.setBackgroundResource(R.drawable.button1_green);
-            cancel.setBackgroundResource(R.drawable.button1_1);
-            ok.setText("Yes");
-            cancel.setVisibility(View.VISIBLE);
-            cancel.setText("No");
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    api_registerstore();
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Save")
+                    .setContentText("Are you sure want to save ?")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            api_registerstore();
+                        }
+                    })
+                    .show();
         }
         if (stats == 3){
-            status.setText("Uh Oh!");
-            bg.setBackgroundResource(R.color.red7);
-            detail.setText("There is a problem with internet connection or the server");
-//            imageView.setImageResource(R.drawable.emoji_cry);
-            ok.setBackgroundResource(R.drawable.button1_red);
-            ok.setText("Try Again");
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
 }

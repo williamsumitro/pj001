@@ -1,33 +1,29 @@
 package com.example.williamsumitro.dress.view.view.bag.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bag;
-import com.example.williamsumitro.dress.view.model.Bagz;
-import com.example.williamsumitro.dress.view.model.Product;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.http.Body;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
 /**
  * Created by WilliamSumitro on 30/03/2018.
@@ -39,6 +35,7 @@ public class ShoppingBagRVAdapter extends RecyclerView.Adapter<ShoppingBagRVAdap
     private DecimalFormat formatter;
     private boolean open = false;
     private ShoppingBagProductRVAdapter adapter;
+    private SnapHelper snapHelper = new LinearSnapHelper();
 
     public ShoppingBagRVAdapter(ArrayList<Bag> bagList, Context context){
         this.context = context;
@@ -75,8 +72,11 @@ public class ShoppingBagRVAdapter extends RecyclerView.Adapter<ShoppingBagRVAdap
         adapter = new ShoppingBagProductRVAdapter(bagList.get(position).getProduct(), context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.rv.setLayoutManager(layoutManager);
-        holder.rv.setItemAnimator(new DefaultItemAnimator());
-        holder.rv.setAdapter(adapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        holder.rv.setAdapter(alphaAdapter);
+        snapHelper.attachToRecyclerView(holder.rv);
     }
 
     @Override

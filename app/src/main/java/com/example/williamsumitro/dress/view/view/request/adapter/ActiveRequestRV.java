@@ -1,47 +1,32 @@
 package com.example.williamsumitro.dress.view.view.request.adapter;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.FullScreenImage;
-import com.example.williamsumitro.dress.view.model.Bank;
 import com.example.williamsumitro.dress.view.model.Offer;
-import com.example.williamsumitro.dress.view.model.RFQResult;
 import com.example.williamsumitro.dress.view.model.RFQ_ActiveResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
-import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutProductRVAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
-import com.example.williamsumitro.dress.view.view.request.activity.ActiveRequest;
-import com.example.williamsumitro.dress.view.view.request.activity.RequestForQuotation;
+import com.example.williamsumitro.dress.view.view.request.fragment.ActiveRequestFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -54,6 +39,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +55,7 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
     private ArrayList<RFQ_ActiveResult> results;
     private DecimalFormat formatter;
     private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private ProgressDialog progressDialog;
     private Boolean click = false;
     private ActiveRequestOfferRV rvadapter;
@@ -75,10 +63,12 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
     private String token;
     private SessionManagement sessionManagement;
     private apiService service;
+    private ActiveRequestFragment activeRequestFragment;
 
-    public ActiveRequestRV(Context context, ArrayList<RFQ_ActiveResult> results){
+    public ActiveRequestRV(Context context, ArrayList<RFQ_ActiveResult> results, ActiveRequestFragment activeRequestFragment){
         this.context = context;
         this.results = results;
+        this.activeRequestFragment = activeRequestFragment;
         formatter = new DecimalFormat("#,###,###");
         progressDialog = new ProgressDialog(context);
         snapHelper = new LinearSnapHelper();
@@ -145,12 +135,13 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
 
         if (offers.size()>0){
             container_offer.setVisibility(View.VISIBLE);
-            rvadapter = new ActiveRequestOfferRV(context, offers);
+            rvadapter = new ActiveRequestOfferRV(context, offers, activeRequestFragment, dialog);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             rv.setLayoutManager(layoutManager);
             rv.setItemAnimator(new DefaultItemAnimator());
             rv.setAdapter(rvadapter);
             snapHelper.attachToRecyclerView(rv);
+            dialog.dismiss();
 
         }else {
             container_nooffer.setVisibility(View.VISIBLE);
@@ -165,35 +156,23 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
         dialog.show();
     }
     private void initDialog1(final String token, final String rfq_request_id){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-        buttoncancel.setVisibility(View.VISIBLE);
-        status.setText("Close Request");
-        detail.setText("Are you sure you want to close this request ? Once you close, you can't reopen again");
-        bg.setBackgroundResource(R.color.red7);
-        buttonok.setBackgroundResource(R.drawable.button1_green);
-        buttoncancel.setBackgroundResource(R.drawable.button1_red);
-        buttonok.setText("Yes");
-        buttoncancel.setText("No");
-        buttonok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                api_close_request(token, rfq_request_id);
-            }
-        });
-        buttoncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+
+        sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.setTitleText("Close Request")
+                .setContentText("Are you sure you want to close this request ?")
+                .setContentText("Once you close, you can't reopen again")
+                .setConfirmText("Yes")
+                .setCancelText("No")
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        api_close_request(token, rfq_request_id);
+                    }
+                })
+                .show();
     }
     private void api_close_request(String token, String rfq_request_id){
         service = apiUtils.getAPIService();
@@ -204,16 +183,11 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if(jsonResults.getString("message").toLowerCase().equals("submitted successfully")){
-                            Bundle bundle = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                Intent intent = new Intent(context, ActiveRequest.class);
-                                bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                                ActiveRequest.ACTIVEREQUEST.finish();
-                                context.startActivity(intent, bundle);
-                            }
+                            sweetAlertDialog.dismiss();
+                            activeRequestFragment.initRefresh();
                         }else{
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                         }
                     }catch (JSONException e){
                         e.printStackTrace();

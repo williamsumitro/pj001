@@ -3,10 +3,13 @@ package com.example.williamsumitro.dress.view.view.partnership.adapter;
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
 /**
  * Created by William Sumitro on 7/9/2018.
@@ -28,6 +32,7 @@ public class MyDownlinePartnership_RV extends RecyclerView.Adapter<MyDownlinePar
     private ArrayList<PartnershipResult> resultArrayList;
     private Boolean click = false;
     private MyPartnershipDetail_RV rvadapter;
+    private SnapHelper snapHelper = new LinearSnapHelper();
 
     public MyDownlinePartnership_RV(Context context, ArrayList<PartnershipResult> resultArrayList){
         this.context = context;
@@ -48,8 +53,11 @@ public class MyDownlinePartnership_RV extends RecyclerView.Adapter<MyDownlinePar
         rvadapter = new MyPartnershipDetail_RV(context, result.getProduct());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.rvproduct.setLayoutManager(layoutManager);
-        holder.rvproduct.setItemAnimator(new DefaultItemAnimator());
-        holder.rvproduct.setAdapter(rvadapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(rvadapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        holder.rvproduct.setAdapter(alphaAdapter);
+        snapHelper.attachToRecyclerView(holder.rvproduct);
         holder.container_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

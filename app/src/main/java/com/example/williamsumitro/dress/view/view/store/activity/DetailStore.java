@@ -26,23 +26,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
+import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.store.adapter.StoreDetailVPAdapter;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +91,8 @@ public class DetailStore extends AppCompatActivity {
     private DecimalFormat df;
     private ArrayList<model_CourierService> courierServiceList;
     private DetailProductCourierRVAdapter adapter;
+    private Boolean favoritestatus =false;
+    private SweetAlertDialog sweetAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,23 +111,65 @@ public class DetailStore extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
         service = apiUtils.getAPIService();
-        service.req_get_store_detail(storeid).enqueue(new Callback<StoreDetailResponse>() {
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code()==200){
-                    storeDetails = response.body().getResult();
-                    courierServiceList = storeDetails.getCourierService();
-                    initData();
-                    initClick();
+                    service.req_get_user_store_detail(token, storeid).enqueue(new Callback<StoreDetailResponse>() {
+                        @Override
+                        public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+                            if (response.code()==200){
+                                storeDetails = response.body().getResult();
+                                courierServiceList = storeDetails.getCourierService();
+                                favoritestatus = response.body().getFavoriteStatus();
+                                if (favoritestatus){
+                                    favorite.setBackgroundResource(R.drawable.button3_2);
+                                    favorite.setText("Unfavorite");
+                                }
+                                else {
+                                    favorite.setBackgroundResource(R.drawable.button3_1);
+                                    favorite.setText("Favorite");
+                                }
+                                initData();
+                                initClick();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toasty.error(context, "Please try again", Toast.LENGTH_LONG, true).show();
+                        }
+                    });
+                }
+                else {
+                    service.req_get_store_detail(storeid).enqueue(new Callback<StoreDetailResponse>() {
+                        @Override
+                        public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+                            if (response.code()==200){
+                                storeDetails = response.body().getResult();
+                                courierServiceList = storeDetails.getCourierService();
+                                initData();
+                                initClick();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toasty.error(context, "Please try again", Toast.LENGTH_LONG, true).show();
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show();
+                initDialog(3);
             }
         });
+
     }
 
     private void initClick() {
@@ -123,6 +177,12 @@ public class DetailStore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 initDialog(courierServiceList);
+            }
+        });
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                api_favorite();
             }
         });
     }
@@ -208,7 +268,7 @@ public class DetailStore extends AppCompatActivity {
             storeid = getintent.getExtras().getString(STORE_ID);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
     private void iniView() {
@@ -288,5 +348,134 @@ public class DetailStore extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+    private void api_favorite(){
+        progressDialog.setMessage("Loading ...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code()==200){
+                    if (favoritestatus){
+                        service.req_delete_from_favorite(token, String.valueOf(storeDetails.getStoreId())).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code()==200){
+                                    try{
+                                        JSONObject jsonResults = new JSONObject(response.body().string());
+                                        if(jsonResults.getBoolean("status")){
+                                            String message = jsonResults.getString("message");
+                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                            favorite.setBackgroundResource(R.drawable.button3_1);
+                                            favorite.setText("Favorite");
+                                            favoritestatus = false;
+                                            progressDialog.dismiss();
+                                        }
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }catch (IOException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                else {
+                                    Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                progressDialog.dismiss();
+                                initDialog(3);
+                            }
+                        });
+                    }
+                    else {
+                        service.req_add_to_favorite(token, String.valueOf(storeDetails.getStoreId())).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code()==200){
+                                    try{
+                                        JSONObject jsonResults = new JSONObject(response.body().string());
+                                        if(jsonResults.getBoolean("status")){
+                                            String message = jsonResults.getString("message");
+                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                            favorite.setBackgroundResource(R.drawable.button3_2);
+                                            favorite.setText("Unfavorite");
+                                            favoritestatus = true;
+                                            progressDialog.dismiss();
+                                        }
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }catch (IOException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                else {
+                                    Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                progressDialog.dismiss();
+                                initDialog(3);
+                            }
+                        });
+                    }
+                }
+                else {
+                    progressDialog.dismiss();
+                    initDialog(1);
+                }
+            }
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                initDialog(3);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    private void initDialog(int stats){
+        if (stats == 1){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Authorization")
+                    .setContentText("You need to login first !")
+                    .setConfirmText("Login")
+                    .setCancelText("Cancel")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            Intent intent = new Intent(context, Login.class);
+                            initanim(intent);
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+        if (stats == 3){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
+        }
+    }
+    private void initanim(Intent intent){
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
 }

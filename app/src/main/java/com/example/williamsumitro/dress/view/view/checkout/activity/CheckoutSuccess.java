@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +24,7 @@ import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
-import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.purchase.adapter.BankRVAdapter;
 import com.google.gson.Gson;
 
@@ -31,6 +34,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
 public class CheckoutSuccess extends AppCompatActivity {
     @BindView(R.id.checkout_success_toolbar) Toolbar toolbar;
@@ -50,6 +55,7 @@ public class CheckoutSuccess extends AppCompatActivity {
     private BankRVAdapter adapter;
 
     private final static String PAYMENTRESPONSE = "PAYMENTRESPONSE";
+    private final static String CHECKOUT = "CHECKOUT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +68,8 @@ public class CheckoutSuccess extends AppCompatActivity {
         confirmpayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, PurchasePayment.class);
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(CHECKOUT, "CHECKOUT");
                 initanim(intent);
                 finish();
                 Payment.PAYMENT.finish();
@@ -85,8 +92,12 @@ public class CheckoutSuccess extends AppCompatActivity {
         adapter = new BankRVAdapter(bankArrayList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(alphaAdapter);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
     }
 
     private void initGetIntent() {
@@ -97,7 +108,7 @@ public class CheckoutSuccess extends AppCompatActivity {
             paymentResponse = gson.fromJson(json, PaymentResponse.class);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
 

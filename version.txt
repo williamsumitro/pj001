@@ -1,0 +1,47 @@
+v2.0
+- Dialog improved to Sweet Dialog Library
+	- MainActivity
+	- Login
+	- Register
+	- Open Store - Choose store name
+	- Open Store - File Upload
+	- Open Store - Store Information
+	- Checkout courier
+	- Shopping Bag Product RV
+	- Purchase - Receipt RV
+	- Purchase - Review Rating Detail
+	- Active Request RV
+	- Order Approve Product
+	- Shipping Confirmation RV
+	- Seller Panel
+	- Detail Product
+- Toast improved to Toasty
+- Improved Design
+	- Profile
+	- No Store
+	- Open Store
+	- Full screen Image
+	- Add to Bag
+	- Shopping Bag
+	- Purchase
+	- Home
+	- Recycler View animation
+	- Seller Panel
+	- Order Confirmation
+	- Shipping Confirmation
+	- Partnership
+	- Search Product incl filter & Sort
+	- Request of Quotation
+
+- Fix Bugs
+	- Open store - choose store name : store name can't input enter
+	- Register : full name, email, etc can't input enter
+	- Open store - Store Information : phone number limit input, edit text can't input enter
+	- My Wallet : balance has shown up
+	- Dialog Withdraw : edit text can't input enter
+	- Add to bag : qty validation
+	- Checkout
+	- Payment
+	- Order Confirmation : Change to fragment
+	- Shipping confirmation : Change to fragment
+	- MyWallet : change to fragment

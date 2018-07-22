@@ -14,6 +14,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,18 +25,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.OrderStore;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.request.activity.RequestForQuotation;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
-import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
+import com.example.williamsumitro.dress.view.view.offer.fragment.RequestListFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -44,11 +41,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -94,7 +91,7 @@ public class AddMyOffer extends AppCompatActivity {
             rfqid = getintent.getStringExtra(RFQID);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
     private void initView(){
@@ -115,7 +112,7 @@ public class AddMyOffer extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Add My Offer");
+        getSupportActionBar().setTitle("Add My OfferActivity");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,14 +182,12 @@ public class AddMyOffer extends AppCompatActivity {
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if(jsonResults.getString("message").toLowerCase().equals("submitted successfully")){
-                            Intent intent = new Intent(context, RequestList.class);
-                            initanim(intent);
-                            Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show();
-                            RequestList.REQUESTLIST.finish();
+                            Toasty.success(context, "Success!", Toast.LENGTH_SHORT, true).show();
+                            Toasty.info(context, "Please swipe down to refresh", Toast.LENGTH_SHORT, true).show();
                             finish();
                         }else{
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                         }
                     }catch (JSONException e){
                         e.printStackTrace();
@@ -252,7 +247,7 @@ public class AddMyOffer extends AppCompatActivity {
         try {
             if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(this, "Unable to pick image", Toast.LENGTH_SHORT, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -268,7 +263,7 @@ public class AddMyOffer extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(this, "Please Try Again", Toast.LENGTH_LONG).show();
+                Toasty.error(this, "Please Try Again", Toast.LENGTH_SHORT, true).show();
             }
         } catch (Exception e){}
     }

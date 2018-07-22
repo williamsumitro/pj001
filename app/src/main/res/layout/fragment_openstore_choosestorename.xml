@@ -62,6 +62,8 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:id="@+id/openstore_choosestorename_etStorename"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

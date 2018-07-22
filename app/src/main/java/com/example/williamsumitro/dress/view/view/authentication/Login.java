@@ -1,5 +1,6 @@
 package com.example.williamsumitro.dress.view.view.authentication;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,6 +31,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +49,7 @@ public class Login extends AppCompatActivity{
     private Context context;
     private apiService service;
     private String token;
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private ProgressDialog progressDialog;
     private SessionManagement sessionManagement;
     @Override
@@ -152,60 +154,52 @@ public class Login extends AppCompatActivity{
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
     private void initDialog(final String message, int stats){
-        dialog = new Dialog(context);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.dialog_custom);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
         if(stats == 1){
-            bg.setBackgroundResource(R.color.green7);
-            status.setText("Welcome back!");
-            detail.setText("Hello there, check out our new dresses");
-            button.setBackgroundResource(R.drawable.button1_green);
-            button.setText("Ok");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    sessionManagement.createLoginSession(message);
-                    MainActivity.mainactivity.finish();
-                    finish();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    initanim(intent);
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Welcome back!")
+                    .setContentText("Hello there, check out our new dresses")
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sessionManagement.createLoginSession(message);
+                            MainActivity.mainactivity.finish();
+                            finish();
+                            Intent intent = new Intent(context, MainActivity.class);
+                            initanim(intent);
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if(stats == 0){
-            status.setText("Oops!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.red7);
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Invalid")
+                    .setContentText(message)
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if (stats == 3){
-            status.setText("Uh Oh!");
-            bg.setBackgroundResource(R.color.red7);
-            detail.setText("There is a problem with internet connection or the server");
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
 }

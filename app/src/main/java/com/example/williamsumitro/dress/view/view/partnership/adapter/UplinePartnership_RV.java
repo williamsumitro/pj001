@@ -1,12 +1,9 @@
 package com.example.williamsumitro.dress.view.view.partnership.adapter;
 
-import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -14,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,7 +36,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
-import com.example.williamsumitro.dress.view.view.partnership.activity.UplinePartnership;
+import com.example.williamsumitro.dress.view.view.partnership.fragment.UplinePartnershipFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -52,6 +50,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -77,10 +76,12 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
     private ProgressDialog progressDialog;
     private SessionManagement sessionManagement;
     private String token;
+    private UplinePartnershipFragment uplinePartnershipFragment;
 
-    public UplinePartnership_RV(Context context, ArrayList<UplinePartnershipItem> itemArrayList){
+    public UplinePartnership_RV(Context context, ArrayList<UplinePartnershipItem> itemArrayList, UplinePartnershipFragment uplinePartnershipFragment){
         this.context = context;
         this.itemArrayList = itemArrayList;
+        this.uplinePartnershipFragment = uplinePartnershipFragment;
         priceList = new ArrayList<>();
         progressDialog = new ProgressDialog(context);
         sessionManagement = new SessionManagement(context);
@@ -112,7 +113,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         }
         else {
             holder.partnership.setImageResource(0);
-            holder.partnership.setImageResource(R.drawable.partnership);
+            holder.partnership.setImageResource(R.drawable.partnership4);
         }
         holder.partnership.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +183,9 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
             public void onClick(View view) {
                 formatter = new DecimalFormat("#,###,###");
 
+                int maxlength = 11;
+                InputFilter[] fArray = new InputFilter[1];
+                fArray[0] = new InputFilter.LengthFilter(maxlength);
                 LinearLayout mainLinearLayout = new LinearLayout(context);
                 LinearLayout.LayoutParams mainParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 mainLinearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -195,7 +199,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                 firstChildLinearLayout.setLayoutParams(firstChildParams);
 
                 LinearLayout.LayoutParams etParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                etParams.width = 100;
+                etParams.width = 80;
 
                 TextView row = new TextView(context);
                 LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -211,6 +215,9 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                 qtymin.setHint("Qty (Min)");
                 qtymin.setLayoutParams(etParams);
                 qtymin.setTextSize(12);
+                qtymin.setFilters(fArray);
+                qtymin.setSingleLine(true);
+                qtymin.setMaxLines(1);
                 qtymin.addTextChangedListener(new FinancialTextWatcher(qtymin));
 
 
@@ -227,6 +234,9 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                 qtymax.setLayoutParams(etParams);
                 qtymax.setInputType(InputType.TYPE_CLASS_NUMBER);
                 qtymax.setTextSize(12);
+                qtymax.setFilters(fArray);
+                qtymax.setSingleLine(true);
+                qtymax.setMaxLines(1);
                 qtymax.addTextChangedListener(new FinancialTextWatcher(qtymax));
 
                 Button button = new Button(context);
@@ -248,7 +258,6 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                     }
                 });
 
-
                 LinearLayout.LayoutParams etprice = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 etprice.weight = 1;
                 EditText price = new EditText(context);
@@ -256,6 +265,9 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                 price.setLayoutParams(etprice);
                 price.setInputType(InputType.TYPE_CLASS_NUMBER);
                 price.setTextSize(12);
+                price.setFilters(fArray);
+                price.setSingleLine(true);
+                price.setMaxLines(1);
                 price.addTextChangedListener(new FinancialTextWatcher(price));
 
                 firstChildLinearLayout.addView(row, 0);
@@ -307,7 +319,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                     layout_minorder.setError("Minimum order is required");
                     return;
                 } else if (container_price.size() == 0) {
-                    Toast.makeText(context, "Please add your price", Toast.LENGTH_LONG).show();
+                    Toasty.info(context, "Please add your price", Toast.LENGTH_LONG, true).show();
                     return;
                 } else if (container_price.size() != 0) {
                     Boolean check = true;
@@ -379,7 +391,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                         }
                     }
                     if (!check) {
-                        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+                        Toasty.error(context, error, Toast.LENGTH_SHORT, true).show();
                         return;
                     }
                 }
@@ -423,17 +435,12 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
                                 JSONObject jsonResults = new JSONObject(response.body().string());
                                 if(jsonResults.getString("message").toLowerCase().equals("request partnership submitted successfully")){
                                     String message = jsonResults.getString("message");
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                                    Bundle bundle = null;
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                        Intent intent = new Intent(context, UplinePartnership.class);
-                                        bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                                        context.startActivity(intent, bundle);
-                                        UplinePartnership.UPLINEPARTNERSHIP.finish();
-                                    }
+                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                    uplinePartnershipFragment.initRefresh();
+                                    dialog.dismiss();
                                 }else{
                                     String message = jsonResults.getString("message");
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                                 }
                                 //"message": "Nama Franchise sudah didaftarkan"
                                 //"message": "Franchise registered successfully",

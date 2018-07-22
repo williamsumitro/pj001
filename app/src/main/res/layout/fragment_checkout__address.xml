@@ -17,6 +17,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/checkout_address_name"
                 android:hint="Receiver Name"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -30,6 +32,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/checkout_address_address"
                 android:hint="Address"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -45,6 +49,9 @@
                 android:inputType="phone"
                 android:hint="Phone Number"
                 android:digits="0123456789"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:maxLength="16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -62,6 +69,8 @@
                 android:hint="Postal Code"
                 android:digits="0123456789"
                 android:gravity="top"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -138,13 +147,6 @@
             android:layout_gravity="center"
             android:background="@drawable/button1_3"
             android:layout_width="150dp"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textSize="16sp"
-            android:id="@+id/checkout_address_tvStatus"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

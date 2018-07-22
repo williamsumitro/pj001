@@ -24,6 +24,7 @@
     <color name="red8">#ffcdd2</color>
     <color name="red9">#ffebee</color>
 
+    <color name="transparent">#00000000</color>
     <!-- pink -->
     <color name="pink">#880E4F</color>
     <color name="pink1">#AD1457</color>

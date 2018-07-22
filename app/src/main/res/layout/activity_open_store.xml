@@ -16,5 +16,5 @@
         android:id="@+id/openstore_stepperLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:ms_stepperType="tabs" />
+        app:ms_stepperType="tabs"/>
 </LinearLayout>

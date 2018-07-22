@@ -9,12 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Review;
 import com.example.williamsumitro.dress.view.model.ReviewRating;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +47,7 @@ public class DetailProductReviewsRVADapter extends RecyclerView.Adapter<DetailPr
         holder.username.setText(reviewRating.getFullName());
         holder.date.setText(reviewRating.getUpdatedAt());
         holder.comment.setText(reviewRating.getReview());
-        if (reviewRating.getRating() == null){
+        if (reviewRating.getRating() == null || reviewRating.getRating() == 0){
             holder.one.setImageResource(R.drawable.star0);
             holder.two.setImageResource(R.drawable.star0);
             holder.three.setImageResource(R.drawable.star0);

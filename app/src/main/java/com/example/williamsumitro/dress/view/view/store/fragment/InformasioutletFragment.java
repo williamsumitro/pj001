@@ -3,22 +3,13 @@ package com.example.williamsumitro.dress.view.view.store.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bank;
-import com.example.williamsumitro.dress.view.model.Courier;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
-import com.example.williamsumitro.dress.view.view.purchase.adapter.BankRVAdapter;
-import com.example.williamsumitro.dress.view.view.openstore.adapter.CourierRVAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

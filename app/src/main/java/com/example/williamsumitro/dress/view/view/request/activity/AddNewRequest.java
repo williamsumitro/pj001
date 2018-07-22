@@ -12,7 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.StyleRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +32,6 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -53,6 +51,7 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -175,14 +174,13 @@ public class AddNewRequest extends AppCompatActivity {
                 if(response.isSuccessful()){
                     try{
                         JSONObject jsonResults = new JSONObject(response.body().string());
-                        if(jsonResults.getString("message").toLowerCase().equals("submitted successfully")){
-                            Intent intent = new Intent(context, RequestForQuotation.class);
-                            initanim(intent);
-                            RequestForQuotation.REQUESTFORQUOTATION.finish();
+                        String message = jsonResults.getString("message");
+                        if(message.toLowerCase().equals("submitted successfully")){
+                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                            Toasty.info(context, "Please swipe down to refresh", Toast.LENGTH_SHORT, true).show();
                             finish();
                         }else{
-                            String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                         }
                     }catch (JSONException e){
                         e.printStackTrace();
@@ -310,7 +308,7 @@ public class AddNewRequest extends AppCompatActivity {
         try {
             if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -326,7 +324,7 @@ public class AddNewRequest extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(this, "Please Try Again", Toast.LENGTH_LONG).show();
+                Toasty.error(context, "Please Try Again", Toast.LENGTH_SHORT, true).show();
             }
         } catch (Exception e){}
     }

@@ -1,10 +1,10 @@
 package com.example.williamsumitro.dress.view.view.main;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,9 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +31,6 @@ import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.UserDetails;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
-import com.example.williamsumitro.dress.view.view.Help;
 import com.example.williamsumitro.dress.view.view.Test;
 import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.home.fragment.HomeFragment;
@@ -41,21 +38,24 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.favoritestore.fragment.FavoriteStoreFragment;
-import com.example.williamsumitro.dress.view.view.openstore.activity.NoStore;
-import com.example.williamsumitro.dress.view.view.purchase.activity.Purchase;
-import com.example.williamsumitro.dress.view.view.request.activity.RequestForQuotation;
-import com.example.williamsumitro.dress.view.view.wallet.activity.Mywallet;
+import com.example.williamsumitro.dress.view.view.purchase.fragment.PurchaseFragment;
+import com.example.williamsumitro.dress.view.view.request.fragment.RFQFragment;
+import com.example.williamsumitro.dress.view.view.sellerpanel.fragment.NoStoreFragment;
+import com.example.williamsumitro.dress.view.view.sellerpanel.fragment.SellerPanelFragment;
 import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
+import com.example.williamsumitro.dress.view.view.wallet.fragment.WalletFragment;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String FAVORITESTORE = "FAVORITESTORE";
     private static final String WISHLIST = "WISHLIST";
     private static final String HELP = "HELP";
-    private static final String OPENINGREQUEST = "OPENINGREQUEST";
+    private static final String PURCHASE = "PURCHASE";
+    private static final String SELLERPANEL = "SELLERPANEL";
+    private static final String NOSTORE = "NOSTORE";
+    private static final String MYWALLET = "MYWALLET";
+    private static final String RFQ = "RFQ";
     public static String CURRENT = HOME;
 
     private String[] activityTitles;
@@ -83,11 +87,14 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private SessionManagement sessionManagement;
     private String token ="", total_qty="0";
-    private Dialog dialog;
     private apiService service;
     private Boolean status = false;
     private TextView itemcount;
     private ProgressDialog progressDialog;
+    private SweetAlertDialog sweetAlertDialog;
+    private final static String CHECKOUT = "CHECKOUT";
+    private final static String FILEUPLOAD = "FILEUPLOAD";
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,12 +102,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         loadNavBar();
+        Intent getintent = getIntent();
         setupNavigationView();
-        if (savedInstanceState == null) {
-            navIndex = 2;
-            CURRENT = HOME;
+        if (getintent.hasExtra(CHECKOUT)){
+            navIndex = 4;
+            CURRENT = PURCHASE;
             loadHomeFragment();
         }
+        else if (getintent.hasExtra(FILEUPLOAD)){
+            navIndex = 1;
+            CURRENT = FILEUPLOAD;
+            loadHomeFragment();
+        }
+        else{
+            if (savedInstanceState == null) {
+                navIndex = 2;
+                CURRENT = HOME;
+                loadHomeFragment();
+            }
+        }
+
     }
     private void initView(){
         mainactivity = this;
@@ -146,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                initDialog(3);
+                initDialog(0);
                 progressDialog.dismiss();
             }
         });
@@ -218,19 +239,21 @@ public class MainActivity extends AppCompatActivity {
                 if(response.code()==200){
                     status = response.body().getHaveStore();
                     if(status){
-                        Intent intent = new Intent(context, SellerPanel.class);
-                        initanim(intent);
+                        navIndex = 1;
+                        CURRENT = SELLERPANEL;
+                        loadHomeFragment();
 
                     }else {
-                        Intent intent = new Intent(context, NoStore.class);
-                        initanim(intent);
+                        navIndex = 1;
+                        CURRENT = NOSTORE;
+                        loadHomeFragment();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<StoreResponse> call, Throwable t) {
-                initDialog(3);
+                initDialog(0);
             }
         });
     }
@@ -241,24 +264,24 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.drawer_wallet:
-                            Intent intent = new Intent(MainActivity.this, Mywallet.class);
-                            initanim(intent);
-                            return true;
+                            navIndex = 0;
+                            CURRENT = MYWALLET;
+                            break;
                         case R.id.drawer_sellerpanel:
                             api_hasstore();
-                            return true;
+                            break;
                         case R.id.drawer_home:
                             navIndex = 2;
                             CURRENT = HOME;
                             break;
                         case R.id.drawer_openrequest:
-                            Intent intent0 = new Intent(MainActivity.this, RequestForQuotation.class);
-                            initanim(intent0);
-                            return true;
+                            navIndex = 3;
+                            CURRENT = RFQ;
+                            break;
                         case R.id.drawer_order:
-                            Intent intent1 = new Intent(MainActivity.this, Purchase.class);
-                            initanim(intent1);
-                            return true;
+                            navIndex = 4;
+                            CURRENT = PURCHASE;
+                            break;
                         case R.id.drawer_wishlist:
                             navIndex = 5;
                             CURRENT = WISHLIST;
@@ -272,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                             CURRENT = HELP;
                             break;
                         case R.id.drawer_logout:
-                            initDialog(10);
+                            initDialog(2);
                             break;
                         default:
                             navIndex = 2;
@@ -352,15 +375,29 @@ public class MainActivity extends AppCompatActivity {
     }
     private Fragment getHomeFragment() {
         switch (navIndex) {
+            case 0 :
+                WalletFragment walletFragment = new WalletFragment();
+                return walletFragment;
             case 1 :
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    if (Objects.equals(CURRENT, NOSTORE)){
+                        NoStoreFragment noStoreFragment = new NoStoreFragment();
+                        return noStoreFragment;
+                    }
+                    if (Objects.equals(CURRENT, SELLERPANEL)){
+                        SellerPanelFragment sellerPanelFragment = new SellerPanelFragment();
+                        return sellerPanelFragment;
+                    }
+                }
             case 2:
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 3:
-
+                RFQFragment rfqFragment = new RFQFragment();
+                return rfqFragment;
             case 4:
-
+                PurchaseFragment purchaseFragment = new PurchaseFragment();
+                return purchaseFragment;
             case 5:
                 WishlistFragment wishlistFragment = new WishlistFragment();
                 return wishlistFragment;
@@ -403,9 +440,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Search.class);
             initanim(intent);
         }else if(id == R.id.menu_notification_purchase){
-            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+            navIndex = 4;
+            CURRENT = PURCHASE;
+            loadHomeFragment();
         }else if(id == R.id.menu_notification_request){
-            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -441,114 +479,103 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void initDialog(int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-        if(stats == 0){
-            status.setText("Sorry");
-            detail.setText("You need to login first");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_green);
-            buttoncancel.setBackgroundResource(R.drawable.button1_1);
-            buttonok.setText("Login");
-            buttoncancel.setVisibility(View.VISIBLE);
-            buttoncancel.setText("Cancel");
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, Login.class);
-                    initanim(intent);
-                }
-            });
-            dialog.show();
-        }
-        else if(stats == 4){
-            status.setText("Oops!");
-            detail.setText("");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Try Again");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
-        else if(stats == 1){
-            status.setText("Registered Success!");
-            detail.setText("");
-            bg.setBackgroundResource(R.color.green7);
-            buttonok.setBackgroundResource(R.drawable.button1_green);
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    startActivity(new Intent(context, Login.class));
-                    finish();
-                }
-            });
-            dialog.show();
-        }
-        else if (stats == 3){
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Try Again");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Intent restart = new Intent(context, MainActivity.class);
-                    initanim(restart);
-                }
-            });
+        if (stats == 0){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                            Intent restart = new Intent(context, MainActivity.class);
+                            initanim(restart);
+                            sweetAlertDialog.dismiss();
+                        }
+                    });
             if(!((Activity) context).isFinishing())
-            {
-                dialog.show();
+                sweetAlertDialog.show();
+//                prettyDialog.show();
+        }
+        else if (stats == 2){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Logout")
+                    .setContentText("Are sure you want to logout ?")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.setTitleText("Logout")
+                                    .setContentText("See you again !")
+                                    .setConfirmText("OK")
+                                    .showCancelButton(false)
+                                    .setCancelClickListener(null)
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            finish();
+                                            sessionManagement.logoutUser();
+                                            sweetAlertDialog.dismiss();
+                                        }
+                                    })
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        }
+                    })
+                    .show();
+//            prettyDialog.setTitle("")
+//                    .setMessage("")
+//                    .setIcon(R.drawable.pdlg_icon_info)
+//                    .setIconTint(R.color.pdlg_color_red)
+//                    .addButton("Yes",
+//                            R.color.pdlg_color_white,
+//                            R.color.pdlg_color_green, new PrettyDialogCallback() {
+//                                @Override
+//                                public void onClick() {
+//                                    prettyDialog.dismiss();
+//                                }
+//                            })
+//                    .addButton("No",
+//                            R.color.pdlg_color_white,
+//                            R.color.pdlg_color_red, new PrettyDialogCallback() {
+//                                @Override
+//                                public void onClick() {
+//                                    prettyDialog.dismiss();
+//                                    navigationView.getMenu().getItem(8).setChecked(false);
+//                                    navigationView.getMenu().getItem(navIndex).setChecked(true);
+//                                }
+//                            })
+//                    .setAnimationEnabled(true)
+//                    .show();
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toasty.info(this, "Please click BACK again to exit", Toast.LENGTH_SHORT, true).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
             }
-        }
-        else if (stats == 10){
-            buttoncancel.setVisibility(View.VISIBLE);
-            status.setText("Are you sure want to logout ?");
-            detail.setText("");
-            bg.setBackgroundResource(R.color.blue7);
-            buttonok.setBackgroundResource(R.drawable.button1_green);
-            buttoncancel.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Yes");
-            buttoncancel.setText("No");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    finish();
-                    sessionManagement.logoutUser();
-                }
-            });
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    navigationView.getMenu().getItem(8).setChecked(false);
-//                    navigationView.setCheckedItem(R.id.drawer_home);
-                    navigationView.getMenu().getItem(navIndex).setChecked(true);
-                }
-            });
-            dialog.show();
-        }
+        }, 2000);
     }
 }

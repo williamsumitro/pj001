@@ -1,10 +1,8 @@
 package com.example.williamsumitro.dress.view.view.partnership.adapter;
 
-import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,14 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Addproduct_Price;
 import com.example.williamsumitro.dress.view.model.DownlinePartnershipItem;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
-import com.example.williamsumitro.dress.view.view.partnership.activity.DownlinePartnership;
+import com.example.williamsumitro.dress.view.view.partnership.fragment.DownlinePartnershipFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -37,10 +34,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,16 +56,17 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
     private apiService service;
     private BuyRVAdapter pricedetailsadapter;
     private ArrayList<Price> priceList;
-    private List<Addproduct_Price> container_price;
     private DecimalFormat formatter;
     private int index;
     private ProgressDialog progressDialog;
     private SessionManagement sessionManagement;
     private String token;
+    private DownlinePartnershipFragment downlinePartnershipFragment;
 
-    public DownlinePartnership_RV(Context context, ArrayList<DownlinePartnershipItem> itemArrayList){
+    public DownlinePartnership_RV(Context context, ArrayList<DownlinePartnershipItem> itemArrayList, DownlinePartnershipFragment downlinePartnershipFragment){
         this.context = context;
         this.itemArrayList = itemArrayList;
+        this.downlinePartnershipFragment = downlinePartnershipFragment;
         priceList = new ArrayList<>();
         progressDialog = new ProgressDialog(context);
         sessionManagement = new SessionManagement(context);
@@ -105,17 +103,14 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
                             JSONObject jsonResults = new JSONObject(response.body().string());
                             if(jsonResults.getString("message").toLowerCase().equals("partnership accepted")){
                                 String message = jsonResults.getString("message");
-                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                                 Bundle bundle = null;
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                    Intent intent = new Intent(context, DownlinePartnership.class);
-                                    bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                                    context.startActivity(intent, bundle);
-                                    DownlinePartnership.DOWNLINEPARTNERSHIP.finish();
+                                    downlinePartnershipFragment.initRefresh();
                                 }
                             }else{
                                 String message = jsonResults.getString("message");
-                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -150,17 +145,15 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
                                 JSONObject jsonResults = new JSONObject(response.body().string());
                                 if(jsonResults.getString("message").toLowerCase().equals("partnership rejected")){
                                     String message = jsonResults.getString("message");
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                                     Bundle bundle = null;
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                        Intent intent = new Intent(context, DownlinePartnership.class);
-                                        bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                                        context.startActivity(intent, bundle);
-                                        DownlinePartnership.DOWNLINEPARTNERSHIP.finish();
+                                        downlinePartnershipFragment.initRefresh();
+                                        dialog.dismiss();
                                     }
                                 }else{
                                     String message = jsonResults.getString("message");
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                                 }
                             }catch (JSONException e){
                                 e.printStackTrace();

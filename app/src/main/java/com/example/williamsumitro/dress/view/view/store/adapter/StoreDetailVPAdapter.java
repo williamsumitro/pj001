@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.williamsumitro.dress.view.view.store.fragment.InformasioutletFragment;
 import com.example.williamsumitro.dress.view.view.store.fragment.ProdukoutletFragment;
-import com.example.williamsumitro.dress.view.view.store.fragment.UlasanoutletFragment;
 
 /**
  * Created by WilliamSumitro on 14/03/2018.

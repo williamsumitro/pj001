@@ -40,6 +40,8 @@
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:hint="Insert name of product here"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="0dp"
                     android:layout_weight="3.5"
                     android:layout_height="wrap_content" />
@@ -89,6 +91,8 @@
                     android:textSize="14sp"
                     android:hint="Insert quantity here"
                     android:layout_width="0dp"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_weight="3.5"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -143,6 +147,8 @@
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:hint="min"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginRight="55dp"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content" />
@@ -154,6 +160,8 @@
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:hint="max"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>

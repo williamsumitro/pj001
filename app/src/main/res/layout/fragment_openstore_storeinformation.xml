@@ -43,6 +43,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/openstore_storeinformation_name"
                 android:hint="Name"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -55,8 +57,9 @@
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/openstore_storeinformation_jobtitle"
-                android:inputType="textEmailAddress"
                 android:hint="Job Title"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -72,6 +75,9 @@
                 android:id="@+id/openstore_storeinformation_phonenumber"
                 android:inputType="phone"
                 android:hint="Phone Number"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:maxLength="16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -101,21 +107,26 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"/>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/openstore_storeinformation_layout_yearestbalished"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+        <LinearLayout
+            android:id="@+id/openstore_storeinformation_ln_year"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/openstore_storeinformation_yearestbalished"
-                android:inputType="number"
-                android:hint="Pick Year Established"
-                android:maxLength="4"
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/openstore_storeinformation_tv_year"
+                android:textSize="20sp"
+                android:text="Pick Year Established"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </android.support.design.widget.TextInputLayout>
+            <View
+                android:layout_marginTop="5dp"
+                android:background="@color/grey3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"

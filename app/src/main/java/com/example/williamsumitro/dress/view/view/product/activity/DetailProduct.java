@@ -1,6 +1,5 @@
 package com.example.williamsumitro.dress.view.view.product.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,9 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.DownlinePartner;
 import com.example.williamsumitro.dress.view.model.Price;
-import com.example.williamsumitro.dress.view.model.PriceDetails;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ReviewRating;
@@ -40,9 +39,8 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
-import com.example.williamsumitro.dress.view.view.bag.activity.Buy;
+import com.example.williamsumitro.dress.view.view.bag.activity.AddToBag;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductReviewsRVADapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProduct_DownlineRV;
@@ -56,11 +54,12 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,6 +77,7 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_lnreview) LinearLayout review;
     @BindView(R.id.detailproduct_rvpricedetails) RecyclerView pricedetails;
     @BindView(R.id.detailproduct_image) ImageView image;
+    @BindView(R.id.detailproduct_tv_productname) TextView productname;
     @BindView(R.id.detailproduct_tv_decoration) TextView decoration;
     @BindView(R.id.detailproduct_tv_waiseline) TextView waiseline;
     @BindView(R.id.detailproduct_tv_style) TextView style;
@@ -115,12 +115,14 @@ public class DetailProduct extends AppCompatActivity {
 
     private final static String NAMAPRODUCT = "NAMAPRODUCT";
     private final static String QTYMINORDER = "QTYMINORDER";
+    private final static String QTYMAXORDER = "QTYMAXORDER";
     private final static String GAMBARPRODUCT = "GAMBARPRODUCT";
     private final static String MINORDER = "MINORDER";
     private final static String PRICELIST = "PRICELIST";
     private final static String SIZELIST = "SIZELIST";
     private final static String PRODUCT_ID = "PRODUCT_ID";
     private final static String STORE_ID = "STORE_ID";
+    private final static String IMAGE = "IMAGE";
 
 
     private static final Integer[] XMEN= {R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake};
@@ -128,14 +130,13 @@ public class DetailProduct extends AppCompatActivity {
     private Context context;
     private static int currentPage = 0;
 
-    private List<PriceDetails> priceDetailsList;
     private BuyRVAdapter pricedetailsadapter;
     private apiService service;
     private ProductInfo productInfo;
     private StoreInfo storeInfo;
     private ArrayList<Size> sizeList;
     private ArrayList<Price> priceList;
-    private ArrayList<String> qtyminlist, priceminlist, availablesizelist;
+    private ArrayList<String> qtyminlist, qtymaxlist, priceminlist, availablesizelist;
     private Boolean detailclick = false, wishliststatus= false, click_downline = false;
     private ArrayList<model_CourierService> courierServiceList;
     private String extra_productid;
@@ -143,6 +144,7 @@ public class DetailProduct extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private ProgressDialog progressDialog;
     private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private DetailProductCourierRVAdapter adapter;
     private DetailProductReviewsRVADapter review_adapter;
     private TextView itemcount;
@@ -169,7 +171,7 @@ public class DetailProduct extends AppCompatActivity {
             extra_productid = getintent.getExtras().getString(PRODUCT_ID);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
     private void initProductDetails() {
@@ -191,6 +193,7 @@ public class DetailProduct extends AppCompatActivity {
         }
         else
             container_downlinepartnership.setVisibility(View.VISIBLE);
+        productname.setText(productInfo.getProductName());
         price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(priceList.get(0).getPrice()))));
         minOrder.setText(String.valueOf(productInfo.getMinOrder()));
         Picasso.with(context)
@@ -207,7 +210,7 @@ public class DetailProduct extends AppCompatActivity {
         decoration.setText(productInfo.getDecorationName());
         patterntype.setText(productInfo.getPatterntypeName());
         rating.setText("("+df.format(Double.parseDouble(productInfo.getRating()))+")");
-        weight.setText(String.valueOf(productInfo.getWeight()));
+        weight.setText(String.valueOf(productInfo.getWeight()) +" gr");
         courier.setText(String.valueOf(courierServiceList.size()));
         if (Double.parseDouble(productInfo.getRating()) == 0){
             star1.setImageResource(R.drawable.star0);
@@ -285,127 +288,133 @@ public class DetailProduct extends AppCompatActivity {
         intent.putExtra(MINORDER, String.valueOf(productInfo.getMinOrder()));
         intent.putStringArrayListExtra(PRICELIST, priceminlist);
         intent.putStringArrayListExtra(QTYMINORDER, qtyminlist);
+        intent.putStringArrayListExtra(QTYMAXORDER, qtymaxlist);
         intent.putStringArrayListExtra(SIZELIST, availablesizelist);
+    }
+    private void api_wishlist(){
+        progressDialog.setMessage("Loading ...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code()==200){
+                    if (wishliststatus){
+                        service.req_delete_from_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code()==200){
+                                    try{
+                                        JSONObject jsonResults = new JSONObject(response.body().string());
+                                        if(jsonResults.getBoolean("status")){
+                                            String message = jsonResults.getString("message");
+                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                            addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
+                                            addtowishlist.setText("Add to Wishlist");
+                                            wishliststatus = false;
+                                            progressDialog.dismiss();
+                                        }
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }catch (IOException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                progressDialog.dismiss();
+                                initDialog(3);
+                            }
+                        });
+                    }
+                    else {
+                        service.req_add_to_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code()==200){
+                                    try{
+                                        JSONObject jsonResults = new JSONObject(response.body().string());
+                                        if(jsonResults.getBoolean("status")){
+                                            String message = jsonResults.getString("message");
+                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                            addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
+                                            addtowishlist.setText("Delete from Wishlist");
+                                            wishliststatus = true;
+                                            progressDialog.dismiss();
+                                        }
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }catch (IOException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                progressDialog.dismiss();
+                                initDialog(3);
+                            }
+                        });
+                    }
+                }
+                else {
+                    progressDialog.dismiss();
+                    initDialog(1);
+                }
+            }
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                initDialog(3);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    private void api_addtobag(){
+        progressDialog.setMessage("Loading ...");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code()==200){
+                    for (int i = 0; i <priceList.size(); i++){
+                        priceminlist.add(String.valueOf(priceList.get(i).getPrice()));
+                        qtyminlist.add(String.valueOf(priceList.get(i).getQtyMin()));
+                        qtymaxlist.add(String.valueOf(priceList.get(i).getQtyMax()));
+                    }
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(context, AddToBag.class);
+                    initSendData(intent);
+                    initanim(intent);
+                }
+                else {
+                    progressDialog.dismiss();
+                    initDialog(1);
+                }
+            }
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                initDialog(3);
+                progressDialog.dismiss();
+            }
+        });
     }
     private void initClick(){
         addtowishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Loading ...");
-                progressDialog.show();
-                progressDialog.setCancelable(false);
-                progressDialog.setCanceledOnTouchOutside(false);
-                service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                        if (response.code()==200){
-                            if (wishliststatus){
-                                service.req_delete_from_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.code()==200){
-                                            try{
-                                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                                if(jsonResults.getBoolean("status")){
-                                                    String message = jsonResults.getString("message");
-                                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
-                                                    addtowishlist.setText("Add to Wishlist");
-                                                    wishliststatus = false;
-                                                    progressDialog.dismiss();
-                                                }
-                                            }catch (JSONException e){
-                                                e.printStackTrace();
-                                            }catch (IOException e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        progressDialog.dismiss();
-                                        initDialog(3);
-                                    }
-                                });
-                            }
-                            else {
-                                service.req_add_to_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.code()==200){
-                                            try{
-                                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                                if(jsonResults.getBoolean("status")){
-                                                    String message = jsonResults.getString("message");
-                                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
-                                                    addtowishlist.setText("Delete from Wishlist");
-                                                    wishliststatus = true;
-                                                    progressDialog.dismiss();
-                                                }
-                                            }catch (JSONException e){
-                                                e.printStackTrace();
-                                            }catch (IOException e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        progressDialog.dismiss();
-                                        initDialog(3);
-                                    }
-                                });
-                            }
-                        }
-                        else {
-                            progressDialog.dismiss();
-                            initDialog(1);
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
-                        initDialog(3);
-                        progressDialog.dismiss();
-                    }
-                });
-
+                api_wishlist();
             }
         });
         addtobag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage("Loading ...");
-                progressDialog.show();
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.setCancelable(false);
-                service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                        if (response.code()==200){
-                            for (int i = 0; i <priceList.size(); i++){
-                                priceminlist.add(String.valueOf(priceList.get(i).getPrice()));
-                                qtyminlist.add(String.valueOf(priceList.get(i).getQtyMin()));
-                            }
-                            progressDialog.dismiss();
-                            Intent intent = new Intent(context, Buy.class);
-                            initSendData(intent);
-                            initanim(intent);
-                        }
-                        else {
-                            progressDialog.dismiss();
-                            initDialog(1);
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
-                        initDialog(3);
-                        progressDialog.dismiss();
-                    }
-                });
-
+                api_addtobag();
             }
         });
         container_product.setOnClickListener(new View.OnClickListener() {
@@ -459,6 +468,14 @@ public class DetailProduct extends AppCompatActivity {
                 dialog_reviewrating(averagerating, reviewRatingArrayList);
             }
         });
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FullScreenImage.class);
+                intent.putExtra(IMAGE, productInfo.getPhoto());
+                initanim(intent);
+            }
+        });
     }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -473,12 +490,12 @@ public class DetailProduct extends AppCompatActivity {
         if (getResources().getBoolean(R.bool.portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-        priceDetailsList = new ArrayList<>();
         priceList = new ArrayList<>();
         sizeList = new ArrayList<>();
         courierServiceList = new ArrayList<>();
         priceminlist = new ArrayList<>();
         qtyminlist = new ArrayList<>();
+        qtymaxlist = new ArrayList<>();
         availablesizelist = new ArrayList<>();
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
@@ -526,8 +543,6 @@ public class DetailProduct extends AppCompatActivity {
             }
         });
     }
-
-
     private void setupRV(){
         pricedetailsadapter = new BuyRVAdapter(priceList, context);
         RecyclerView.LayoutManager horizontallayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -540,9 +555,10 @@ public class DetailProduct extends AppCompatActivity {
             rv_downlinepartnership.setLayoutManager(horizontallayout1);
             rv_downlinepartnership.setItemAnimator(new DefaultItemAnimator());
             rv_downlinepartnership.setAdapter(downline_adapter);
+        }else {
+            container_downlinepartnership.setVisibility(View.GONE);
         }
     }
-
     private void api_getdetailproduct(){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
@@ -575,9 +591,13 @@ public class DetailProduct extends AppCompatActivity {
                                     addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
                                     addtowishlist.setText("Add to Wishlist");
                                 }
-                                setupRV();
                                 initProductDetails();
+                                setupRV();
                                 initClick();
+                                progressDialog.dismiss();
+                            }
+                            else {
+                                Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
                                 progressDialog.dismiss();
                             }
                         }
@@ -603,9 +623,14 @@ public class DetailProduct extends AppCompatActivity {
                                 averagerating = productInfo.getRating();
                                 downlinePartnerArrayList = productInfo.getDownlinePartner();
                                 reviewRatingArrayList = productInfo.getReviewRating();
-                                setupRV();
                                 initProductDetails();
+                                setupRV();
                                 initClick();
+                                progressDialog.dismiss();
+                            }
+                            else {
+                                Toasty.error(context, "Some error here", Toast.LENGTH_SHORT, true).show();
+                                progressDialog.dismiss();
                             }
                         }
                         @Override
@@ -626,61 +651,38 @@ public class DetailProduct extends AppCompatActivity {
 
     }
     private void initDialog(int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if (stats == 1){
-            status.setText("Uh Oh!");
-            detail.setText("You need to login first !");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_green);
-            buttoncancel.setBackgroundResource(R.drawable.button1_1);
-            buttonok.setText("Login");
-            buttoncancel.setText("Cancel");
-            buttoncancel.setVisibility(View.VISIBLE);
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(context, Login.class);
-                    initanim(intent);
-                }
-            });
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            if(!((Activity) context).isFinishing())
-            {
-                dialog.show();
-            }
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Authorization")
+                    .setContentText("You need to login first !")
+                    .setConfirmText("Login")
+                    .setCancelText("Cancel")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            Intent intent = new Intent(context, Login.class);
+                            initanim(intent);
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
         }
         if (stats == 3){
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-            bg.setBackgroundResource(R.color.red7);
-            buttonok.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Try Again");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Intent restart = new Intent(context, MainActivity.class);
-                    initanim(restart);
-                }
-            });
-            if(!((Activity) context).isFinishing())
-            {
-                dialog.show();
-            }
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
     private void initDialog(ArrayList<model_CourierService> courierServices){
@@ -707,8 +709,6 @@ public class DetailProduct extends AppCompatActivity {
     private void dialog_reviewrating(String average_rating, ArrayList<ReviewRating> reviewRatingArrayList){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_reviewrating);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
 
         final RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.reviewratingdialog_recyclerview);
         final TextView averagerating = (TextView) dialog.findViewById(R.id.reviewratingdialog_tvscore);
@@ -720,7 +720,7 @@ public class DetailProduct extends AppCompatActivity {
         final Button ok = (Button) dialog.findViewById(R.id.reviewratingdialog_btn_ok);
 
         averagerating.setText("Score : "+df.format(Double.parseDouble(average_rating)));
-        if (Double.parseDouble(average_rating) == 0){
+        if (average_rating == null || Double.parseDouble(average_rating) == 0){
             one.setImageResource(R.drawable.star0);
             two.setImageResource(R.drawable.star0);
             three.setImageResource(R.drawable.star0);
@@ -839,4 +839,5 @@ public class DetailProduct extends AppCompatActivity {
         });
         dialog.show();
     }
+
 }

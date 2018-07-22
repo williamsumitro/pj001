@@ -1,7 +1,6 @@
 package com.example.williamsumitro.dress.view.view.checkout.fragment;
 
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,19 +8,24 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.CheckoutInfo;
+import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.stepstone.stepper.Step;
@@ -32,13 +36,18 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Checkout_CourierFragment extends Fragment implements Step {
     @BindView(R.id.checkout_courier_rvshoppingbag) RecyclerView recyclerView;
-//    @BindView(R.id.checkout_courier_button) Button button;
+    @BindView(R.id.checkout_courier_btn_refresh) Button refresh;
     @BindView(R.id.checkout_courier_nestedscrollview) NestedScrollView nestedScrollView;
     @BindView(R.id.checkout_courier_btn_check) Button check;
     @BindView(R.id.checkout_courier_tvStatus) TextView tv_status;
@@ -53,9 +62,10 @@ public class Checkout_CourierFragment extends Fragment implements Step {
     private String total_price;
     private String available_points;
     private CheckoutRVAdapter adapter;
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
 
-    private Boolean checked = false;
+    private Boolean checked = false, check_refresh = false;
+
 
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
@@ -71,14 +81,13 @@ public class Checkout_CourierFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout__courier, container, false);
         initView(view);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                api_getcheckoutinfo();
-//                button.setVisibility(View.GONE);
-//                nestedScrollView.setVisibility(View.VISIBLE);
-//            }
-//        });
+        initButton();
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                api_getcheckoutinfo();
+            }
+        });
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,8 +96,12 @@ public class Checkout_CourierFragment extends Fragment implements Step {
         });
         return view;
     }
-
-
+    private void initButton(){
+        if (!check_refresh)
+            check.setVisibility(View.GONE);
+        else
+            check.setVisibility(View.VISIBLE);
+    }
     private void initView(View view){
         ButterKnife.bind(this,view);
         context = getContext();
@@ -131,41 +144,81 @@ public class Checkout_CourierFragment extends Fragment implements Step {
     }
 
     private void initDialog(final int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        final TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if(stats == 0){
-            status.setText("Confirm");
-            detail.setText("You have checked all the information");
-            bg.setBackgroundResource(R.color.green7);
-            buttonok.setBackgroundResource(R.drawable.button1_green);
-            buttoncancel.setBackgroundResource(R.drawable.button1_1);
-            buttonok.setText("Yes");
-            buttoncancel.setVisibility(View.VISIBLE);
-            buttoncancel.setText("No");
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    checked = true;
-                    tv_status.setText("Please click complete to proceed");
-                    tv_status.setTextColor(getResources().getColor(R.color.green));
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            final TextView text = new TextView(context);
+            text.setText("Have you check all the information ?");
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Confirm")
+                    .setCustomView(text)
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            checked = true;
+                            ((Checkout)getActivity()).ChangeColor(2);
+                            tv_status.setText("Please click complete to proceed");
+                            tv_status.setTextColor(getResources().getColor(R.color.green));
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
         }
+    }
+
+    private void api_getcheckoutinfo() {
+        progressDialog.setMessage("Please wait ....");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        service = apiUtils.getAPIService();
+
+        service = apiUtils.getAPIService();
+        service.req_get_checkout_info(token, id_city).enqueue(new Callback<CheckoutResponse>() {
+            @Override
+            public void onResponse(Call<CheckoutResponse> call, Response<CheckoutResponse> response) {
+                if (response.code()==200){
+                    if (response.body().getStatus()){
+                        checkoutInfoArrayList = response.body().getCheckoutInfo();
+                        total_price = response.body().getTotalPrice();
+                        total_qty = response.body().getTotalQty();
+                        available_points = String.valueOf(response.body().getAvailablePoints());
+                        CheckoutRVAdapter adapter = new CheckoutRVAdapter(checkoutInfoArrayList, context, Checkout_CourierFragment.this);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.checkout_courier_rvshoppingbag);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(adapter);
+                        progressDialog.dismiss();
+                        sessionManagement.keepCheckoutCourier(total_price, total_qty, available_points);
+                        check_refresh = true;
+                        initButton();
+                    }
+                    else {
+                        String message = response.body().getMessage();
+                        Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+                        progressDialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
+                Toasty.error(context, "Please press button refresh again", Toast.LENGTH_LONG, true).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public void setCheck(Boolean checkz){
+        checked = checkz;
     }
 }

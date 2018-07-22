@@ -311,7 +311,7 @@
                                             android:layout_marginTop="5dp"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Add Clothes"
+                                            android:text="Add Product"
                                             android:textColor="@color/black"
                                             android:textAlignment="center"/>
                                     </LinearLayout>

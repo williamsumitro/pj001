@@ -57,7 +57,6 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.sellerpanel.activity.SellerPanel;
 import com.example.williamsumitro.dress.view.view.product.adapter.Decoration_Spinner_Adapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.Fabrictype_Spinner_Adapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.Material_Spinner_Adapter;
@@ -85,6 +84,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -247,6 +247,8 @@ public class AddProduct extends AppCompatActivity {
                 qtymin.setLayoutParams(etParams);
                 qtymin.setTextSize(12);
                 qtymin.setFilters(fArray);
+                qtymin.setSingleLine(true);
+                qtymin.setMaxLines(1);
                 qtymin.addTextChangedListener(new FinancialTextWatcher(qtymin));
 
 
@@ -264,6 +266,8 @@ public class AddProduct extends AppCompatActivity {
                 qtymax.setInputType(InputType.TYPE_CLASS_NUMBER);
                 qtymax.setTextSize(12);
                 qtymax.setFilters(fArray);
+                qtymax.setSingleLine(true);
+                qtymax.setMaxLines(1);
                 qtymax.addTextChangedListener(new FinancialTextWatcher(qtymax));
 
                 Button button = new Button(context);
@@ -293,6 +297,8 @@ public class AddProduct extends AppCompatActivity {
                 price.setInputType(InputType.TYPE_CLASS_NUMBER);
                 price.setTextSize(12);
                 price.setFilters(fArray);
+                price.setSingleLine(true);
+                price.setMaxLines(1);
                 price.addTextChangedListener(new FinancialTextWatcher(price));
 
                 firstChildLinearLayout.addView(row, 0);
@@ -615,7 +621,7 @@ public class AddProduct extends AppCompatActivity {
         try {
             if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK && null != data) {
                 if(data == null){
-                    Toast.makeText(this, "Unable to pick image", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, "Unable to pick image", Toast.LENGTH_LONG, true).show();
                 }
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -631,20 +637,13 @@ public class AddProduct extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(this, "Please Try Again", Toast.LENGTH_LONG).show();
+                Toasty.error(context, "Please Try Again", Toast.LENGTH_LONG, true).show();
             }
         } catch (Exception e){}
     }
 
     private void api_addproduct(){
         getAllEditTextValues();
-//        if(container_price != null){
-//            for(int i = 0;i<container_price.size();i++){
-//                Toast.makeText(context, String.valueOf(container_price.get(i).getQty_min()) + "\n" +
-//                        String.valueOf(container_price.get(i).getQty_max()) + "\n" +
-//                        String.valueOf(container_price.get(i).getprice()), Toast.LENGTH_SHORT).show();
-//            }
-//        }
         layout_name.setErrorEnabled(false);
         layout_minorder.setErrorEnabled(false);
         layout_weight.setErrorEnabled(false);
@@ -674,32 +673,37 @@ public class AddProduct extends AppCompatActivity {
             Boolean check = true;
             int k = 0;
             String error = null;
+            String regexStr = "^[0-9]*$";
             for (int i = 0; i < container_price.size() * 3; i++) {
                 String qty_min = container_price.get(k).getQty_min(), qty_max = container_price.get(k).getQty_max(), price = container_price.get(k).getprice();
                 int min, max, pric;
                 if (qty_min.equals("")) {
                     check = false;
-                    error = "Please insert the qty minimum at row " + String.valueOf(k+1);
+                    error = "Please insert the qty minimum at row " + String.valueOf(k + 1);
                     break;
                 }
                 if (qty_max.equals("")) {
                     check = false;
-                    error = "Please insert the qty maximum at row " + String.valueOf(k+1);
+                    error = "Please insert the qty maximum at row " + String.valueOf(k + 1);
+                    break;
+                }
+                if (!qty_max.trim().matches(regexStr) && !qty_max.equals("max")){
+                    check = false;
+                    error = "Qty maximum at row " + String.valueOf(k+1) + " can only be input as number or max";
                     break;
                 }
                 if (price.equals("")) {
                     check = false;
-                    error = "Please insert the price at row " + String.valueOf(k+1);
+                    error = "Please insert the price at row " + String.valueOf(k + 1);
                     break;
-                }
-                else {
+                } else {
                     min = Integer.parseInt(qty_min);
                     pric = Integer.parseInt(price);
                     if (!qty_max.equals("max")) {
                         max = Integer.parseInt(qty_max);
                         if (min > max) {
                             check = false;
-                            error = "Qty minimum cannot bigger than qty maximum at row " + String.valueOf(k+1);
+                            error = "Qty minimum cannot bigger than qty maximum at row " + String.valueOf(k + 1);
                             break;
                         }
                     }
@@ -734,8 +738,8 @@ public class AddProduct extends AppCompatActivity {
                     k++;
                 }
             }
-            if (!check){
-                Snackbar.make(container, error, Snackbar.LENGTH_LONG).show();
+            if (!check) {
+                Toasty.error(context, error, Toast.LENGTH_SHORT, true).show();
                 return;
             }
         }
@@ -799,13 +803,11 @@ public class AddProduct extends AppCompatActivity {
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if(jsonResults.getString("message").toLowerCase().equals("product registered successfully ")){
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(context, SellerPanel.class);
-                            initanim(intent);
+                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                             finish();
                         }else{
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                         }
                         //"message": "Nama Franchise sudah didaftarkan"
                         //"message": "Franchise registered successfully",

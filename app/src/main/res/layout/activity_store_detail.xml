@@ -146,7 +146,7 @@
                 <Button
                     android:id="@+id/detailstore_btn_favorite"
                     android:layout_width="100dp"
-                    android:layout_height="30sp"
+                    android:layout_height="40sp"
                     android:layout_alignTop="@+id/linearLayout2"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="33dp"
@@ -161,7 +161,7 @@
                     android:layout_height="80dp"
                     android:layout_alignBottom="@+id/detailstore_btn_favorite"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="33dp"
+                    android:layout_marginBottom="43dp"
                     android:src="@drawable/fake_store1" />
                 <LinearLayout
                     android:id="@+id/linearLayout"

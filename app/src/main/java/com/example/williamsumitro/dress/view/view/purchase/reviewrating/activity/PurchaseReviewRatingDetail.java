@@ -1,6 +1,5 @@
 package com.example.williamsumitro.dress.view.view.purchase.reviewrating.activity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
@@ -41,7 +38,9 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,9 +65,10 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private ArrayList<Product> productArrayList;
     private ArrayList<ProductRating> productRatingArrayList;
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private PurchaseReviewRatingDetail_RV rvadapter;
     private Boolean checked_star1 = false, checked_star2 = false, checked_star3 = false, checked_star4 = false, checked_star5 = false;
+    private SnapHelper snapHelper = new LinearSnapHelper();
 
     private final static String PRODUCT = "PRODUCT";
     private final static String STORE_ID = "STORE_ID";
@@ -105,11 +105,7 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productRatingArrayList = rvadapter.retrivedata();
-//                for (int i = 0; i<productRatingArrayList.size();i++){
-//                    Toast.makeText(context, productRatingArrayList.get(i).getProduct_id().toLowerCase() + " " + productRatingArrayList.get(i).getRating() + " " + productRatingArrayList.get(i).getReview(), Toast.LENGTH_SHORT).show();
-//                }
-                api_submitreviewrating();
+                    initDialog("",2);
             }
         });
         star1.setOnClickListener(new View.OnClickListener() {
@@ -278,7 +274,7 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
         if (productRatingArrayList.size()>0){
             for (int i = 0; i<productRatingArrayList.size();i++){
                 if (productRatingArrayList.get(i).getReview().equals("")){
-                    Toast.makeText(context, "Please insert your review for " + productArrayList.get(i).getProductName(), Toast.LENGTH_SHORT).show();
+                    Toasty.info(context, "Please insert your review for " + productArrayList.get(i).getProductName(), Toast.LENGTH_SHORT, true).show();
                     check = false;
                     break;
                 }
@@ -288,11 +284,12 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
         }
         else {
             check = false;
-            Toast.makeText(context, "Please insert your review to all product", Toast.LENGTH_SHORT).show();
+            Toasty.info(context, "Please insert your review to all product", Toast.LENGTH_SHORT, true).show();
         }
         return check;
     }
     private void api_submitreviewrating(){
+        productRatingArrayList = rvadapter.retrivedata();
         if (checkreviewproduct()){
             service = apiUtils.getAPIService();
             SubmitReviewRating submitreviewrating = new SubmitReviewRating(token, transactionid, storeid, storerating, productRatingArrayList);
@@ -305,11 +302,11 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
                             if(jsonResults.getBoolean("status")){
                                 String message = jsonResults.getString("message");
                                 progressDialog.dismiss();
-                                initDialog(message, 2);
+                                initDialog1(message, 1);
                             }else{
                                 String message = jsonResults.getString("message");
                                 progressDialog.dismiss();
-                                initDialog(message, 0);
+                                initDialog1(message, 0);
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -321,7 +318,8 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    initDialog("",3);
+                    progressDialog.dismiss();
+                    initDialog1("", 0);
                 }
             });
         }
@@ -329,7 +327,6 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
 
     private void setupRV(){
         rvadapter = new PurchaseReviewRatingDetail_RV(context, productArrayList);
-        SnapHelper snapHelper = new LinearSnapHelper();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -374,98 +371,77 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
             storephoto = getintent.getStringExtra(STORE_PHOTO);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
 
     private void initDialog(final String message, int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-        if(stats == 0){
-            status.setText("Oops!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.red6);
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+
+        if (stats == 2){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Save")
+                    .setContentText("Are you sure submit ?")
+                    .setContentText("Once submit you cannot undo")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            api_submitreviewrating();
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
         }
-        else if (stats == 2){
-            status.setText("Confirmation");
-            detail.setText("Are you sure to submit ? Once submit you cannot undo");
-            bg.setBackgroundResource(R.color.orange7);
-            button.setBackgroundResource(R.drawable.button1_green);
-            button.setText("I'm sure");
-            buttoncancel.setVisibility(View.VISIBLE);
-            buttoncancel.setBackgroundResource(R.drawable.button1_red);
-            buttoncancel.setText("No");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    initDialog1(message, 1);
-                }
-            });
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
-        else if (stats == 3){
-            bg.setBackgroundResource(R.color.red7);
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
+
     }
     private void initDialog1(final String message, int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
         if(stats == 1){
-            status.setText("Success !");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.green7);
-            button.setBackgroundResource(R.drawable.button1_green);
-            button.setText("Ok");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PurchaseReviewRating.PURCHASEREVIEWRATING.finish();
-                    finish();
-                    Intent intent = new Intent(context, PurchaseReviewRating.class);
-                    initanim(intent);
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Success!")
+                    .setContentText(message)
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Toasty.info(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                            finish();
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
+        }
+        else if(stats == 0){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Invalid")
+                    .setContentText(message)
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
+        }
+        else if (stats == 3){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
     private void initanim(Intent intent){

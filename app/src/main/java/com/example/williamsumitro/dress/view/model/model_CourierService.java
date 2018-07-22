@@ -4,11 +4,13 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by WilliamSumitro on 10/06/2018.
  */
 
-public class model_CourierService {
+public class model_CourierService implements Serializable {
     @SerializedName("store_id")
     @Expose
     private Integer storeId;

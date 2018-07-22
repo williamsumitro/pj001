@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:stateListAnimator="@null"
         android:id="@+id/purchasehistorydetail_appbar">
         <android.support.v7.widget.Toolbar
             android:background="@color/white"
@@ -160,8 +159,8 @@
                     <TextView
                         android:id="@+id/purchasehistorydetail_tv_acceptedproduct"
                         android:visibility="gone"
-                        android:textColor="@color/red"
-                        android:text="No Product Rejected"
+                        android:textColor="@color/green1"
+                        android:text="No Product Accepted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -214,7 +213,7 @@
                         android:id="@+id/purchasehistorydetail_tv_rejectedproduct"
                         android:visibility="gone"
                         android:textColor="@color/red"
-                        android:text="No Product Accepted"
+                        android:text="No Product Rejected"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>

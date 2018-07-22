@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:id="@+id/drawergroup_my"
-        android:checkableBehavior="none"
+        android:checkableBehavior="single"
         android:visible="false">
         <item
             android:id="@+id/drawer_wallet"
@@ -18,11 +18,9 @@
             android:id="@+id/drawer_home"
             android:title="@string/Home"/>
         <item
-            android:checkable="false"
             android:id="@+id/drawer_openrequest"
             android:title="Request for Quotation"/>
         <item
-            android:checkable="false"
             android:id="@+id/drawer_order"
             android:title="Purchase" />
         <item
@@ -35,6 +33,7 @@
             android:id="@+id/drawer_help"
             android:title="Help" />
         <item
+            android:checkable="false"
             android:id="@+id/drawer_logout"
             android:title="@string/Logout" />
     </group>

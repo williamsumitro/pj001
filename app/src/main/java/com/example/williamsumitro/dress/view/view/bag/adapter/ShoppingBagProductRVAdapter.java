@@ -19,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
+import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -37,6 +39,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,8 +59,10 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     private String token;
     SessionManagement sessionManagement;
     private apiService service;
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private ProgressDialog progressDialog;
+    private final static String PRODUCT_ID = "PRODUCT_ID";
+    private final static String IMAGE = "IMAGE";
     public ShoppingBagProductRVAdapter(ArrayList<Product> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
@@ -122,6 +128,15 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                 }
             }
         });
+        holder.viewproduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailProduct.class);
+                intent.putExtra(PRODUCT_ID, product.getProductId().toString());
+                Bundle bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
+                context.startActivity(intent, bundle);
+            }
+        });
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +158,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                         JSONObject jsonResults = new JSONObject(response.body().string());
                         if (jsonResults.getBoolean("status")){
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                             progressDialog.dismiss();
                             Intent intent = new Intent(context, ShoppingBag.class);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -153,7 +168,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                         }
                         else{
                             String message = jsonResults.getString("message");
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                             progressDialog.dismiss();
                         }
                     } catch (JSONException e) {
@@ -196,6 +211,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
         @BindView(R.id.itemshoppingbagproduct_imgcaret) ImageView caret;
         @BindView(R.id.itemshoppingbagproduct_img_product) ImageView product;
         @BindView(R.id.itemshoppingbagproduct_img_delete) ImageView delete;
+        @BindView(R.id.itemshoppingbagproduct_btn_viewproduct) Button viewproduct;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -203,58 +219,53 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
         }
     }
     private void initDialog(int stats, final Product product){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button buttonok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button buttoncancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
+
         if(stats == 1){
-            status.setText("Delete ?");
-            detail.setText("Are you sure you want to delete ?");
-            bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_oops);
-            buttoncancel.setVisibility(View.VISIBLE);
-            buttonok.setBackgroundResource(R.drawable.button1_red);
-            buttoncancel.setBackgroundResource(R.drawable.button1_1);
-            buttonok.setText("Yes");
-            buttoncancel.setText("No");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    api_deleteproduct(product);
-                    dialog.dismiss();
-                }
-            });
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Delete Confirmation")
+                    .setContentText("Are you sure you want to delete ?")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            // reuse previous dialog instance
+                            api_deleteproduct(product);
+                            sDialog.setTitleText("Deleted!")
+                                    .setContentText("Your imaginary file has been deleted!")
+                                    .setConfirmText("OK")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            sweetAlertDialog.dismiss();
+                                        }
+                                    })
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if (stats == 0){
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-            bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_cry);
-            buttonok.setBackgroundResource(R.drawable.button1_red);
-            buttonok.setText("Try Again");
-            buttonok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            if(!((Activity) context).isFinishing())
-            {
-                dialog.show();
-            }
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
     private void initanim(Intent intent){

@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
-import com.example.williamsumitro.dress.view.model.Cloth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ public class SearchResult extends AppCompatActivity {
     @BindView(R.id.searchresult_toolbar) Toolbar toolbar;
     private Context context;
     private String extrafilter;
-    private List<Cloth> newList = new ArrayList<>();
     private HotRVAdapter adapternew;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

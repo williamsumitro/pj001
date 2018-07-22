@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:focusableInTouchMode="true"
             android:id="@+id/item_purchaseorderstatus_ln_pending"
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -106,6 +107,7 @@
         </LinearLayout>
         <LinearLayout
             android:visibility="gone"
+            android:focusableInTouchMode="true"
             android:id="@+id/item_purchaseorderstatus_ln_mid_accepted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,6 +158,7 @@
         </LinearLayout>
         <LinearLayout
             android:visibility="gone"
+            android:focusableInTouchMode="true"
             android:id="@+id/item_purchaseorderstatus_ln_mid_rejected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

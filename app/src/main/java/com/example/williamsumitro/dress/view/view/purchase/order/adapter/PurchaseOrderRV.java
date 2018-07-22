@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.purchase.order.adapter;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,29 +77,30 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
             holder.status.setTextColor(context.getResources().getColor(R.color.green3));
             holder.status.setTypeface(Typeface.DEFAULT_BOLD);
             holder.top.setBackgroundColor(context.getResources().getColor(R.color.green3));
-            if (orderResult.getProductAccepted()!=null){
+            if (orderResult.getProductStatus()!=null){
                 productArrayList = new ArrayList<>();
-                holder.accepted.setVisibility(View.VISIBLE);
-                for (int i = 0; i<orderResult.getProductAccepted().size();i++){
-                    Product product = new Product(orderResult.getProductAccepted().get(i).getProductId(),
-                            orderResult.getProductAccepted().get(i).getProductName(),
-                            orderResult.getProductAccepted().get(i).getProductPhoto(),
-                            orderResult.getProductAccepted().get(i).getPriceUnit(),
-                            orderResult.getProductAccepted().get(i).getTotalQty(),
-                            orderResult.getProductAccepted().get(i).getPriceTotal(),
-                            orderResult.getProductAccepted().get(i).getSizeInfo());
+                for (int i = 0; i<orderResult.getProductStatus().size(); i++){
+                    Product product = new Product(orderResult.getProductStatus().get(i).getProductId(),
+                            orderResult.getProductStatus().get(i).getProductName(),
+                            orderResult.getProductStatus().get(i).getProductPhoto(),
+                            orderResult.getProductStatus().get(i).getPriceUnit(),
+                            orderResult.getProductStatus().get(i).getTotalQty(),
+                            orderResult.getProductStatus().get(i).getPriceTotal(),
+                            orderResult.getProductStatus().get(i).getSizeInfo());
                     productArrayList.add(product);
                 }
-                rvadapter = new CheckoutProductRVAdapter(productArrayList, context);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                holder.rv_accepted.setLayoutManager(layoutManager);
-                holder.rv_accepted.setItemAnimator(new DefaultItemAnimator());
-                holder.rv_accepted.setAdapter(rvadapter);
-                snapHelper.attachToRecyclerView(holder.rv_accepted);
+                if (productArrayList.size()>0){
+                    holder.accepted.setVisibility(View.VISIBLE);
+                    rvadapter = new CheckoutProductRVAdapter(productArrayList, context);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                    holder.rv_accepted.setLayoutManager(layoutManager);
+                    holder.rv_accepted.setItemAnimator(new DefaultItemAnimator());
+                    holder.rv_accepted.setAdapter(rvadapter);
+                    snapHelper.attachToRecyclerView(holder.rv_accepted);
+                }
             }
             if (orderResult.getProductRejected()!=null){
                 productArrayList = new ArrayList<>();
-                holder.rejected.setVisibility(View.VISIBLE);
                 for (int i = 0; i<orderResult.getProductRejected().size();i++){
                     Product product = new Product(orderResult.getProductRejected().get(i).getProductId(),
                             orderResult.getProductRejected().get(i).getProductName(),
@@ -109,12 +111,15 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
                             orderResult.getProductRejected().get(i).getSizeInfo());
                     productArrayList.add(product);
                 }
-                rvadapter = new CheckoutProductRVAdapter(productArrayList, context);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                holder.rv_rejected.setLayoutManager(layoutManager);
-                holder.rv_rejected.setItemAnimator(new DefaultItemAnimator());
-                holder.rv_rejected.setAdapter(rvadapter);
-                snapHelper.attachToRecyclerView(holder.rv_rejected);
+                if (productArrayList.size()>0){
+                    holder.rejected.setVisibility(View.VISIBLE);
+                    rvadapter = new CheckoutProductRVAdapter(productArrayList, context);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                    holder.rv_rejected.setLayoutManager(layoutManager);
+                    holder.rv_rejected.setItemAnimator(new DefaultItemAnimator());
+                    holder.rv_rejected.setAdapter(rvadapter);
+                    snapHelper.attachToRecyclerView(holder.rv_rejected);
+                }
             }
         }
         else {
@@ -135,20 +140,21 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
         if (orderResult.getNote()== null)
             note = "";
         else
-            note = ("Note : " + orderResult.getNote());
+            note = (orderResult.getNote());
 
         holder.viewdetais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initDialog(orderResult.getInvoiceDate(), orderResult.getReceiverName(), orderResult.getAddress(),
                         orderResult.getProvinceName(), orderResult.getCityName(), orderResult.getPhoneNumber(),
-                        orderResult.getPostalCode(), orderResult.getCourierName(), note);
+                        orderResult.getPostalCode(), orderResult.getCourierName() + " " + orderResult.getCourierService(), orderResult.getNote());
             }
         });
 
         holder.container_accepted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!click_accepted){
                     holder.container_accepteddetail.setVisibility(View.VISIBLE);
                     click_accepted = true;

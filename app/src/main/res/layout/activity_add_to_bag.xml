@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray"
+    android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/addtobag_appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/white"
+            android:id="@+id/addtobag_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@+id/addtobag_appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="125dp">
+        <LinearLayout
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/addtobag_tvnameproduct"
+                android:textColor="@color/black"
+                android:text="Nama Product"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/addtobag_tvpriceproduct"
+                android:textColor="@color/black"
+                android:text="Price Product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/addtobag_imgproduct"
+                    android:src="@drawable/image"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp" />
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/addtobag_lns"
+                        android:gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:text="S : "
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/addtobag_qv_s"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:qv_quantity="0"
+                                app:qv_minQuantity="0"
+                                app:qv_maxQuantity="100"
+                                app:qv_addButtonBackground="@color/green"
+                                app:qv_addButtonText=" + "
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_removeButtonBackground="@color/red"
+                                app:qv_removeButtonText=" - "
+                                app:qv_removeButtonTextColor="@color/white"
+                                app:qv_quantityPadding="30dp"
+                                app:qv_quantityDialog="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/addtobag_lnm"
+                        android:gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="M : "
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/addtobag_qv_m"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:qv_quantity="0"
+                                app:qv_minQuantity="0"
+                                app:qv_maxQuantity="100"
+                                app:qv_addButtonBackground="@color/green"
+                                app:qv_addButtonText=" + "
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_removeButtonBackground="@color/red"
+                                app:qv_removeButtonText=" - "
+                                app:qv_removeButtonTextColor="@color/white"
+                                app:qv_quantityPadding="30dp"
+                                app:qv_quantityDialog="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/addtobag_lnl"
+                        android:gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="L : "
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/addtobag_qv_l"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:qv_quantity="0"
+                                app:qv_minQuantity="0"
+                                app:qv_maxQuantity="100"
+                                app:qv_addButtonBackground="@color/green"
+                                app:qv_addButtonText=" + "
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_removeButtonBackground="@color/red"
+                                app:qv_removeButtonText=" - "
+                                app:qv_removeButtonTextColor="@color/white"
+                                app:qv_quantityPadding="30dp"
+                                app:qv_quantityDialog="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/addtobag_lnxl"
+                        android:gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="XL : "
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/addtobag_qv_xl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:qv_quantity="0"
+                                app:qv_minQuantity="0"
+                                app:qv_maxQuantity="100"
+                                app:qv_addButtonBackground="@color/green"
+                                app:qv_addButtonText=" + "
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_removeButtonBackground="@color/red"
+                                app:qv_removeButtonText=" - "
+                                app:qv_removeButtonTextColor="@color/white"
+                                app:qv_quantityPadding="30dp"
+                                app:qv_quantityDialog="true"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/addtobag_lnfree"
+                        android:gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:text="FREE : "
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/addtobag_qv_free"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:qv_quantity="0"
+                                app:qv_minQuantity="0"
+                                app:qv_maxQuantity="100"
+                                app:qv_addButtonBackground="@color/green"
+                                app:qv_addButtonText=" + "
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_removeButtonBackground="@color/red"
+                                app:qv_removeButtonText=" - "
+                                app:qv_removeButtonTextColor="@color/white"
+                                app:qv_quantityPadding="30dp"
+                                app:qv_quantityDialog="true"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/addtobag_tvtotal"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:text="xxxxx"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/info"
+                android:layout_marginRight="3dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+            <TextView
+                android:layout_gravity="center"
+                android:textColor="#00529B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min. Order = "/>
+            <TextView
+                android:id="@+id/addtobag_tvMinOrder"
+                android:textColor="#00529B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/addtobag_btncontinue"
+            android:textColor="@color/white"
+            android:text="Continue"
+            android:background="@color/green1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

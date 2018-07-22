@@ -15,12 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Offer;
 import com.example.williamsumitro.dress.view.model.OfferHistoryResult;
-import com.example.williamsumitro.dress.view.model.RFQ_HistoryResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.offer.activity.OfferHistory;
 import com.example.williamsumitro.dress.view.view.request.adapter.MyRequestHistoryOfferRV;
 import com.squareup.picasso.Picasso;
 

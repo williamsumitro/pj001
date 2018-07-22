@@ -36,6 +36,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 public class PurchaseHistoryDetail extends AppCompatActivity {
     @BindView(R.id.purchasehistorydetail_appbar) AppBarLayout appBarLayout;
@@ -86,7 +87,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
         viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initDialog(result.getInvoiceDate(), result.getReceiverName(), result.getAddress(), result.getProvinceName(), result.getCityName(), result.getPhoneNumber(), result.getPostalCode(), result.getCourierName(), result.getNote());
+                initDialog(result.getInvoiceDate(), result.getReceiverName(), result.getAddress(), result.getProvinceName(), result.getCityName(), result.getPhoneNumber(), result.getPostalCode(), result.getCourierName() + " " + result.getCourierService(), result.getNote());
             }
         });
     }
@@ -128,7 +129,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
             result = (Purchase_TransactionHistoryResult) getintent.getSerializableExtra(RESULT);
         }
         else{
-            Toast.makeText(context, "SOMETHING WRONG", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -138,17 +139,17 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
         shippingfee.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getShippingPrice()))));
         ordernumber.setText("Order number : " + result.getOrderNumber());
         snapHelper = new LinearSnapHelper();
-        if (result.getProductAccepted().size()>0){
+        if (result.getProductStatus().size()>0){
             rv_accepted.setVisibility(View.VISIBLE);
             productArrayList = new ArrayList<>();
-            for (int i = 0; i<result.getProductAccepted().size();i++){
-                Product product = new Product(result.getProductAccepted().get(i).getProductId(),
-                        result.getProductAccepted().get(i).getProductName(),
-                        result.getProductAccepted().get(i).getProductPhoto(),
-                        result.getProductAccepted().get(i).getPriceUnit(),
-                        result.getProductAccepted().get(i).getTotalQty(),
-                        result.getProductAccepted().get(i).getPriceTotal(),
-                        result.getProductAccepted().get(i).getSizeInfo());
+            for (int i = 0; i<result.getProductStatus().size(); i++){
+                Product product = new Product(result.getProductStatus().get(i).getProductId(),
+                        result.getProductStatus().get(i).getProductName(),
+                        result.getProductStatus().get(i).getProductPhoto(),
+                        result.getProductStatus().get(i).getPriceUnit(),
+                        result.getProductStatus().get(i).getTotalQty(),
+                        result.getProductStatus().get(i).getPriceTotal(),
+                        result.getProductStatus().get(i).getSizeInfo());
                 productArrayList.add(product);
             }
             rvadapter = new CheckoutProductRVAdapter(productArrayList, context);

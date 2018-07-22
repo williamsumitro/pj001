@@ -11,10 +11,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +38,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +61,7 @@ public class HotFragment extends Fragment {
     private ProductInfo productInfo;
     private Dialog dialog;
     private ProgressDialog progressDialog;
+    private SnapHelper snapHelper = new LinearSnapHelper();
     public HotFragment() {
 
     }
@@ -96,8 +102,11 @@ public class HotFragment extends Fragment {
                         bestAdapter = new HotRVAdapter(bestList, getActivity());
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         rv_bestseller.setLayoutManager(layoutManager);
-                        rv_bestseller.setItemAnimator(new DefaultItemAnimator());
-                        rv_bestseller.setAdapter(bestAdapter);
+                        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(bestAdapter);
+                        alphaAdapter.setDuration(1000);
+                        alphaAdapter.setInterpolator(new OvershootInterpolator());
+                        rv_bestseller.setAdapter(alphaAdapter);
+                        snapHelper.attachToRecyclerView(rv_bestseller);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                     else {
@@ -105,11 +114,15 @@ public class HotFragment extends Fragment {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }
+                else {
+                    Toasty.error(getContext(), "Something error", Toast.LENGTH_SHORT, true).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailure(Call<BestResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(), "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -126,8 +139,11 @@ public class HotFragment extends Fragment {
                         newAdapter = new HotRVAdapter(newList, getActivity());
                         RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(getActivity(), 2);
                         rv_newproduct.setLayoutManager(grid_layoutmanager);
-                        rv_newproduct.setItemAnimator(new DefaultItemAnimator());
-                        rv_newproduct.setAdapter(newAdapter);
+                        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(newAdapter);
+                        alphaAdapter.setDuration(1000);
+                        alphaAdapter.setInterpolator(new OvershootInterpolator());
+                        rv_newproduct.setAdapter(alphaAdapter);
+                        snapHelper.attachToRecyclerView(rv_newproduct);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                     else {
@@ -135,11 +151,15 @@ public class HotFragment extends Fragment {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }
+                else {
+                    Toasty.error(getContext(), "Something error", Toast.LENGTH_SHORT, true).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailure(Call<BestResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(), "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

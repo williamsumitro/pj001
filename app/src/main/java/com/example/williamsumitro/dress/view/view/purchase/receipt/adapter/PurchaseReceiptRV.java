@@ -1,10 +1,8 @@
 package com.example.williamsumitro.dress.view.view.purchase.receipt.adapter;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -25,7 +23,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutProductRVAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.receipt.activity.PurchaseReceiptConfirmation;
+import com.example.williamsumitro.dress.view.view.purchase.receipt.fragment.P_receiptFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +35,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,14 +54,17 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
     private SessionManagement sessionManagement;
     private ProgressDialog progressDialog;
     private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private DecimalFormat formatter;
     private String note;
     private SnapHelper snapHelper;
     private CheckoutProductRVAdapter rvadapter;
     private Boolean click_receipt = false;
-    public PurchaseReceiptRV(Context context, ArrayList<Sales_OrderResult> orderresultArrayList){
+    private P_receiptFragment p_receiptFragment;
+    public PurchaseReceiptRV(Context context, ArrayList<Sales_OrderResult> orderresultArrayList, P_receiptFragment p_receiptFragment){
         this.orderresultArrayList = orderresultArrayList;
         this.context = context;
+        this.p_receiptFragment = p_receiptFragment;
         productArrayList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
         progressDialog = new ProgressDialog(context);
@@ -91,7 +93,7 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
             public void onClick(View v) {
                 initDialog(orderResult.getInvoiceDate(), orderResult.getReceiverName(), orderResult.getAddress(),
                         orderResult.getProvinceName(), orderResult.getCityName(), orderResult.getPhoneNumber(),
-                        orderResult.getPostalCode(), orderResult.getCourierName(), note);
+                        orderResult.getPostalCode(), orderResult.getCourierName() + " " + orderResult.getCourierService(), orderResult.getNote());
             }
         });
         holder.ordernumber.setText(orderResult.getOrderNumber());
@@ -100,29 +102,7 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
         holder.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                service.req_confirm_receipt(token, String.valueOf(orderResult.getTransactionId()), String.valueOf(orderResult.getStoreId())).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.code()==200){
-                            try {
-                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                if (jsonResults.getBoolean("status")){
-                                    String message = jsonResults.getString("message");
-                                    initDialog(message, 1);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
+                initDialog1(1, orderResult);
             }
         });
 
@@ -148,7 +128,35 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
         holder.recyclerView.setAdapter(rvadapter);
         snapHelper.attachToRecyclerView(holder.recyclerView);
     }
+    private void api_submit(Sales_OrderResult orderResult){
+        service.req_confirm_receipt(token, String.valueOf(orderResult.getTransactionId()), String.valueOf(orderResult.getStoreId())).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code()==200){
+                    try {
+                        JSONObject jsonResults = new JSONObject(response.body().string());
+                        if (jsonResults.getBoolean("status")){
+                            String message = jsonResults.getString("message");
+                            initDialog(message, 1);
+                        }
+                        else {
+                            String message = jsonResults.getString("message");
+                            initDialog(message, 0);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                initDialog("",3);
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         return orderresultArrayList.size();
@@ -169,56 +177,70 @@ public class PurchaseReceiptRV extends RecyclerView.Adapter<PurchaseReceiptRV.Vi
             ButterKnife.bind(this,itemView);
         }
     }
-    private void initDialog(String message, int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
+    private void initDialog1(int stats, final Sales_OrderResult orderResult){
         if(stats == 1){
-            status.setText("Success!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.green7);
-            button.setBackgroundResource(R.drawable.button1_green);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    context.startActivity(new Intent(context, PurchaseReceiptConfirmation.class));
-                    ((Activity) context).finish();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Receive")
+                    .setContentText("Please check again closely. After you received, you can't undo again")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            api_submit(orderResult);
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+    }
+    private void initDialog(String message, int stats){
+
+        if(stats == 1){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Success!")
+                    .setContentText(message)
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            p_receiptFragment.initRefresh();
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if(stats == 0){
-            status.setText("Oops!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.red6);
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Invalid")
+                    .setContentText(message)
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if (stats == 3){
-            bg.setBackgroundResource(R.color.red7);
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
     private void initDialog(final String invoicedate, final String receivername, final String shippingaddress,

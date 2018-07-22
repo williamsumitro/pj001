@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center">
     <LinearLayout
         android:background="@color/gray"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -50,6 +50,8 @@
                     android:inputType="phone"
                     android:hint="Withdraw Amount"
                     android:digits="0123456789"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
@@ -61,6 +63,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/withdrawdialog_bankname"
                     android:hint="Bank Name"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
@@ -72,6 +76,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/withdrawdialog_bankbranch"
                     android:hint="Bank Branch"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
@@ -85,6 +91,9 @@
                     android:inputType="phone"
                     android:hint="Account Number"
                     android:digits="0123456789"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:maxLength="16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
@@ -95,32 +104,39 @@
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/withdrawdialog_nameholder"
-                    android:inputType="phone"
                     android:hint="Name in Bank Account"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/withdrawdialog_layout_password"
                 android:layout_marginTop="5dp"
+                app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/withdrawdialog_password"
                     android:inputType="textPassword"
                     android:hint="Password"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/withdrawdialog_layout_retypepassword"
                 android:layout_marginTop="5dp"
+                app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/withdrawdialog_retypepassword"
                     android:inputType="textPassword"
                     android:hint="Retype Your Password"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>

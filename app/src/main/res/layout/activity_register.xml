@@ -43,9 +43,11 @@
                     android:layout_height="wrap_content">
                     <android.support.design.widget.TextInputEditText
                         android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/user2"
-                        android:drawableLeft="@drawable/user2"
+                        android:drawableStart="@drawable/user3"
+                        android:drawableLeft="@drawable/user3"
                         android:textSize="14sp"
+                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColorHint="@color/black"
                         android:backgroundTint="@color/black"
                         android:textColor="@color/black"
@@ -64,6 +66,8 @@
                         android:drawableStart="@drawable/email1"
                         android:drawableLeft="@drawable/email1"
                         android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textSize="14sp"
                         android:textColorHint="@color/black"
                         android:backgroundTint="@color/black"
@@ -91,6 +95,8 @@
                         android:id="@+id/register_etpassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:maxLines="1"
                         android:maxLength="15"
                         android:hint="Password"/>
                 </android.support.design.widget.TextInputLayout>
@@ -143,6 +149,8 @@
                         android:textColor="@color/black"
                         android:id="@+id/register_etphonenumber"
                         android:layout_width="match_parent"
+                        android:singleLine="true"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:hint="Phone Number"
                         android:maxLength="16"/>

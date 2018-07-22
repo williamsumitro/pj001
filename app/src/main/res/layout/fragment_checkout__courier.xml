@@ -1,6 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/checkout_courier_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
@@ -16,6 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <Button
+                android:layout_marginTop="20dp"
+                android:id="@+id/checkout_courier_btn_refresh"
+                android:textColor="@color/white"
+                android:text="Refresh"
+                android:layout_gravity="center"
+                android:background="@drawable/button1_green"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
             <android.support.v7.widget.RecyclerView
                 android:focusableInTouchMode="true"
                 android:layout_marginTop="5dp"

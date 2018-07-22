@@ -1,0 +1,65 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.williamsumitro.dress.view.view.sellerpanel.fragment.SellerPanelFragment">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/seller_panel_swiperefreshlayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/seller_panel_img_status"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+            <TextView
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:id="@+id/seller_panel_tv_status"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:text="Waiting for admin approval heheheheh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:id="@+id/seller_panel_ln_top_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:text="Reject Comment : "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/seller_panel_tv_comment"
+                    android:textSize="20sp"
+                    android:text="Waiting for admin approval heheheheh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+        android:visibility="gone"
+        android:id="@+id/seller_panel_hicvp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+        app:icvp_scroll_duration="250"
+        app:icvp_center_page_scale_offset="30dp"
+        app:icvp_min_page_scale_offset="5dp"
+        app:icvp_max_page_scale="0.8"
+        app:icvp_min_page_scale="0.55"
+        app:icvp_medium_scaled="false"/>
+
+</FrameLayout>

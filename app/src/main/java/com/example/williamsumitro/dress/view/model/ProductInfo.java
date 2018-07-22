@@ -106,6 +106,9 @@ public class ProductInfo {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("product_rating")
+    @Expose
+    private String productRating;
     @SerializedName("average_rating")
     @Expose
     private String averageRating;
@@ -133,6 +136,19 @@ public class ProductInfo {
     @SerializedName("review_rating")
     @Expose
     private ArrayList<ReviewRating> reviewRating = null;
+    @SerializedName("max_price")
+    @Expose
+    private Integer maxPrice;
+    @SerializedName("province")
+    @Expose
+    private String province;
+    @SerializedName("city")
+    @Expose
+    private String city;
+    @SerializedName("courier_id")
+    @Expose
+    private String courierId;
+
 
     public Integer getProductId() {
         return productId;
@@ -451,5 +467,45 @@ public class ProductInfo {
 
     public void setAverageRating(String averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public Integer getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(Integer maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public String getProductRating() {
+        return productRating;
+    }
+
+    public void setProductRating(String productRating) {
+        this.productRating = productRating;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCourierId() {
+        return courierId;
+    }
+
+    public void setCourierId(String courierId) {
+        this.courierId = courierId;
     }
 }

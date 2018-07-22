@@ -64,6 +64,7 @@ public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<Purchase
                 .load(product.getProductPhoto())
                 .placeholder(R.drawable.logo404)
                 .into(holder.product);
+        updateProductArrayList(product, "0", "");
         holder.star1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

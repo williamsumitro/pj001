@@ -1,7 +1,7 @@
 package com.example.williamsumitro.dress.view.model;
 
 /**
- * Created by WilliamSumitro on 10/06/2018.
+ * Created by WilliamSumitro on 18/07/2018.
  */
 
 public class Addproduct_Price {

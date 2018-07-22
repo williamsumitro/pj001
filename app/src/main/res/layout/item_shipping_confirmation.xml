@@ -88,6 +88,8 @@
             <EditText
                 android:id="@+id/item_shippingconfirmation_et_receiptnumber"
                 android:layout_width="match_parent"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout

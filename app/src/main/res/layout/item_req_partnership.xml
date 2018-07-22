@@ -73,7 +73,7 @@
             android:id="@+id/item_reqpartnership_img_partnership"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:src="@drawable/partnership"
+            android:src="@drawable/partnership4"
             android:layout_width="60dp"
             android:layout_height="60dp" />
         <TextView

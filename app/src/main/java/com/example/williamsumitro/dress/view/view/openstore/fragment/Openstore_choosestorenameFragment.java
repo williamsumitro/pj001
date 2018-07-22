@@ -4,6 +4,7 @@ package com.example.williamsumitro.dress.view.view.openstore.fragment;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,9 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.openstore.activity.OpenStore;
+import com.example.williamsumitro.dress.view.view.openstore.adapter.OpenStore_Button;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
@@ -37,6 +41,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,9 +60,10 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
     private SessionManagement sessionManagement;
     private boolean check = false, success = false, trigger = false, registered = false;
     private String nama_toko, token = "";
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private Context context;
     private ProgressDialog progressDialog;
+    private OpenStore_Button listener;
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
 
@@ -83,11 +90,11 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
                 if (trigger&&check)
                     api_registerstorename();
                 else if (!trigger){
-                    Toast.makeText(context, "Please fill your store name", Toast.LENGTH_SHORT).show();
+                    Toasty.info(context, "Please fill your store name", Toast.LENGTH_SHORT, true).show();
                     edittext_storename.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
                 }
                 else if (!check){
-                    Toast.makeText(context, "Please check your store name", Toast.LENGTH_SHORT).show();
+                    Toasty.info(context, "Please check your store name", Toast.LENGTH_SHORT, true).show();
                     button_checkstore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
                 }
             }
@@ -232,128 +239,118 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
         }
     }
     private void initDialog(String message, int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-        if(stats == 1){
-            status.setText("Registered Success!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.green7);
-//            imageView.setImageResource(R.drawable.emoji_success);
-            ok.setBackgroundResource(R.drawable.button1_green);
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Toast.makeText(context, "Please click the next button to continue", Toast.LENGTH_LONG).show();
-                }
-            });
-            dialog.show();
+        if(stats == 1) {
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Registered Success!")
+                    .setContentText(message)
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Toasty.info(context, "Please click the next button to continue", Toast.LENGTH_LONG, true).show();
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if(stats == 0){
-            status.setText("Oops!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.red7);
-//            imageView.setImageResource(R.drawable.emoji_oops);
-            ok.setBackgroundResource(R.drawable.button1_red);
-            ok.setText("Try Again");
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Invalid")
+                    .setContentText(message)
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if (stats == 3){
-            status.setText("Uh Oh!");
-            bg.setBackgroundResource(R.color.red7);
-            detail.setText("There is a problem with internet connection or the server");
-//            imageView.setImageResource(R.drawable.emoji_cry);
-            ok.setBackgroundResource(R.drawable.button1_red);
-            ok.setText("Try Again");
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if (stats==4){
-            status.setText("Register your store ?");
-            detail.setText("After your press ok, your store name will automatically save and can't be change Are you Sure ?");
-            bg.setBackgroundResource(R.color.green7);
-            cancel.setVisibility(View.VISIBLE);
-            cancel.setText("Cancel");
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    nama_toko = edittext_storename.getText().toString();
-                    progressDialog.setMessage("Wait a sec..");
-                    progressDialog.show();
-                    service = apiUtils.getAPIService();
-                    service.req_register_store_name(token, nama_toko)
-                            .enqueue(new Callback<ResponseBody>() {
-                                @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    if(response.code()==200){
-                                        try {
-                                            JSONObject jsonResults = new JSONObject(response.body().string());
-                                            String status = jsonResults.getString("status").toLowerCase();
-                                            if(status.equals("true")){
-                                                String message = jsonResults.getString("message");
-                                                initDialog(message,1);
-                                                sessionManagement.keepStoreName(edittext_storename.getText().toString());
-                                                progressDialog.dismiss();
-                                                success = true;
-                                                edittext_storename.setEnabled(false);
-                                                button_checkstore.setEnabled(false);
-                                                button_checkstore.setClickable(false);
-                                                button_registerstore.setEnabled(false);
-                                                button_registerstore.setClickable(false);
-                                                tv_status.setText("Successful");
-                                            }
-                                            else if(status.equals("false")) {
-                                                String message = jsonResults.getString("message");
-                                                initDialog(message,0);
-                                                progressDialog.dismiss();
-                                                success = false;
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                    Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Confirm")
+                    .setContentText("Are you sure ?")
+                    .setContentText("After your press ok, your store name will automatically save and can't be change Are you Sure ?")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            api_registerit();
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+    }
+    private void api_registerit(){
+        nama_toko = edittext_storename.getText().toString();
+        progressDialog.setMessage("Wait a sec..");
+        progressDialog.show();
+        service = apiUtils.getAPIService();
+        service.req_register_store_name(token, nama_toko)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code()==200){
+                            try {
+                                JSONObject jsonResults = new JSONObject(response.body().string());
+                                String status = jsonResults.getString("status").toLowerCase();
+                                if(status.equals("true")){
+                                    String message = jsonResults.getString("message");
+                                    initDialog(message,1);
+                                    ((OpenStore)getActivity()).ChangeColor(1);
+                                    sessionManagement.keepStoreName(edittext_storename.getText().toString());
                                     progressDialog.dismiss();
-                                    initDialog(t.getMessage(), 3);
+                                    success = true;
+                                    edittext_storename.setEnabled(false);
+                                    button_checkstore.setEnabled(false);
+                                    button_checkstore.setClickable(false);
+                                    button_registerstore.setEnabled(false);
+                                    button_registerstore.setClickable(false);
+                                    tv_status.setText("Successful");
+                                }
+                                else if(status.equals("false")) {
+                                    String message = jsonResults.getString("message");
+                                    initDialog(message,0);
+                                    progressDialog.dismiss();
                                     success = false;
                                 }
-                            });
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                        progressDialog.dismiss();
+                        initDialog(t.getMessage(), 3);
+                        success = false;
+                    }
+                });
     }
 
 }

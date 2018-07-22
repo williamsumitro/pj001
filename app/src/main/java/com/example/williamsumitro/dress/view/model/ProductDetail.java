@@ -3,11 +3,13 @@ package com.example.williamsumitro.dress.view.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by WilliamSumitro on 10/06/2018.
  */
 
-public class ProductDetail {
+public class ProductDetail implements Serializable{
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -20,7 +22,6 @@ public class ProductDetail {
     @SerializedName("wishlist_status")
     @Expose
     private Boolean wishlistStatus;
-
 
     public Boolean getStatus() {
         return status;

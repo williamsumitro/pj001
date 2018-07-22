@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +54,7 @@ public class Register extends AppCompatActivity {
     private RadioButton sexbutton;
     private Context context;
     private apiService service;
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,58 +186,50 @@ public class Register extends AppCompatActivity {
                 });
     }
     private void initDialog(String message, int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button button = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        if(stats == 1){
-            status.setText("Registered Success!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.green7);
-//            imageView.setImageResource(R.drawable.emoji_success);
-            button.setBackgroundResource(R.drawable.button1_green);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    startActivity(new Intent(context, Login.class));
-                    finish();
-                }
-            });
-            dialog.show();
+        if(stats == 1) {
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Registered Success!")
+                    .setContentText(message)
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Intent intent = new Intent(context, Login.class);
+                            initanim(intent);
+                            finish();
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if(stats == 0){
-            status.setText("Oops!");
-            detail.setText(message);
-            bg.setBackgroundResource(R.color.red6);
-//            imageView.setImageResource(R.drawable.emoji_oops);
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Invalid")
+                    .setContentText(message)
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
         else if (stats == 3){
-            bg.setBackgroundResource(R.color.red7);
-            status.setText("Uh Oh!");
-            detail.setText("There is a problem with internet connection or the server");
-//            imageView.setImageResource(R.drawable.emoji_cry);
-            button.setBackgroundResource(R.drawable.button1_red);
-            button.setText("Try Again");
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
 }

@@ -21,6 +21,7 @@ import com.stepstone.stepper.VerificationError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 public class Checkout extends AppCompatActivity implements StepperLayout.StepperListener, OnNavigationBarListener {
     private static final String CURRENT_STEP_POSITION_KEY = "position";
@@ -85,12 +86,11 @@ public class Checkout extends AppCompatActivity implements StepperLayout.Stepper
 
     @Override
     public void onError(VerificationError verificationError) {
-        Toast.makeText(this, verificationError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        Toasty.info(context, verificationError.getErrorMessage(), Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void onStepSelected(int newStepPosition) {
-//        Toast.makeText(this, "onStepSelected! -> " + newStepPosition, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -127,5 +127,13 @@ public class Checkout extends AppCompatActivity implements StepperLayout.Stepper
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void ChangeColor(int stat) {
+        if (stat==1){
+            stepperLayout.setNextButtonColor(getResources().getColor(R.color.blue1));
+        }
+        if (stat==2){
+            stepperLayout.setCompleteButtonColor(getResources().getColor(R.color.green1));
+        }
     }
 }

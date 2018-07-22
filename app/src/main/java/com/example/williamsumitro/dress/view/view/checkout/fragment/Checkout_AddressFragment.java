@@ -6,13 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -29,16 +25,14 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.CheckoutInfo;
-import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.model.CityDetails;
 import com.example.williamsumitro.dress.view.model.CityResponse;
-import com.example.williamsumitro.dress.view.model.CourierDetails;
 import com.example.williamsumitro.dress.view.model.ProvinceDetails;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
+import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
@@ -51,6 +45,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +54,6 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class Checkout_AddressFragment extends Fragment implements Step {
-    @BindView(R.id.checkout_address_tvStatus) TextView status;
     @BindView(R.id.checkout_address_spinner_province) Spinner spinner_province;
     @BindView(R.id.checkout_address_spinner_city) Spinner spinner_city;
     @BindView(R.id.checkout_address_postalcode) TextInputEditText postalcode;
@@ -124,6 +118,7 @@ public class Checkout_AddressFragment extends Fragment implements Step {
                     spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                            checked  = false;
                             CityDetails citydetails = spinCityAdapter.getItem(position);
                             idcity = citydetails.getCityId();
                             choosen_city = citydetails.getCityName();
@@ -154,6 +149,7 @@ public class Checkout_AddressFragment extends Fragment implements Step {
                     spinner_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                            checked  = false;
                             ProvinceDetails provinceDetails = spinProvinceAdapter.getItem(position);
                             idprovince = provinceDetails.getProvinceId();
                             choosen_province = provinceDetails.getProvinceName();
@@ -265,13 +261,11 @@ public class Checkout_AddressFragment extends Fragment implements Step {
                     checked = false;
                 }
                 if (checked) {
-                    status.setText("Checked");
-                    Toast.makeText(context, "Please click the next button to continue", Toast.LENGTH_LONG).show();
-                    status.setTextColor(getResources().getColor(R.color.green));
+                    ((Checkout)getActivity()).ChangeColor(1);
+                    Toasty.info(context, "Please click the next button to continue", Toast.LENGTH_SHORT, true).show();
                 }
                 else {
-                    status.setText("Please check the information again, something is error");
-                    status.setTextColor(getResources().getColor(R.color.red));
+                    Toasty.error(context, "Please check the information again, something is error", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -284,53 +278,11 @@ public class Checkout_AddressFragment extends Fragment implements Step {
         if (isInformationValid()) {
             sessionManagement.keepCheckoutAddress(name.getText().toString(), address.getText().toString(),
                     phonenumber.getText().toString(), idprovince, idcity, postalcode.getText().toString());
-            api_getcheckoutinfo();
         }
         else {
             verificationError = new VerificationError("Please press the button check");
         }
         return verificationError;
-    }
-    private void api_getcheckoutinfo() {
-        progressDialog.setMessage("Please wait ....");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        service = apiUtils.getAPIService();
-
-        service = apiUtils.getAPIService();
-        service.req_get_checkout_info(token, idcity).enqueue(new Callback<CheckoutResponse>() {
-            @Override
-            public void onResponse(Call<CheckoutResponse> call, Response<CheckoutResponse> response) {
-                if (response.code()==200){
-                    if (response.body().getStatus()){
-                        checkoutInfoArrayList = response.body().getCheckoutInfo();
-                        total_price = response.body().getTotalPrice();
-                        total_qty = response.body().getTotalQty();
-                        available_points = String.valueOf(response.body().getAvailablePoints());
-                        CheckoutRVAdapter adapter = new CheckoutRVAdapter(checkoutInfoArrayList, context);
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.checkout_courier_rvshoppingbag);
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(adapter);
-                        progressDialog.dismiss();
-                        sessionManagement.keepCheckoutCourier(total_price, total_qty, available_points);
-                    }
-                    else {
-                        String message = response.body().getMessage();
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
-                Toast.makeText(context, "Please press back then next again", Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
-            }
-        });
     }
     @Override
     public void onSelected() {

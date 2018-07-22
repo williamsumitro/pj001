@@ -13,6 +13,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.view.home.adapter.TabHomeAdapter;
 import com.example.williamsumitro.dress.view.view.category.fragment.CategoryFragment;
 import com.example.williamsumitro.dress.view.view.openstore.fragment.StoreFragment;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-    @BindView(R.id.home_tabs) TabLayout tabLayout;
+    @BindView(R.id.home_smarttablayout) SmartTabLayout tabLayout;
     @BindView(R.id.home_viewpager) ViewPager viewPager;
 
 
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment {
         initView(view);
         viewPager.setOffscreenPageLimit(2);
         setupVP(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setViewPager(viewPager);
         return view;
     }
     private void initView(View view){

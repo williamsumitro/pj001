@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +53,7 @@ public class MyDownlinePartnership extends AppCompatActivity {
     private DecimalFormat formatter;
     private ArrayList<PartnershipResult> resultArrayList;
     private MyDownlinePartnership_RV adapter;
+    private SnapHelper snapHelper = new LinearSnapHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +110,11 @@ public class MyDownlinePartnership extends AppCompatActivity {
         adapter = new MyDownlinePartnership_RV(context, resultArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(alphaAdapter);
+        snapHelper.attachToRecyclerView(recyclerView);
     }
     private void api_getdownline() {
         service = apiUtils.getAPIService();
@@ -130,7 +139,7 @@ public class MyDownlinePartnership extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PartnershipResponse> call, Throwable t) {
-                Toast.makeText(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT).show();
+                Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

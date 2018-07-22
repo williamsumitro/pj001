@@ -43,6 +43,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/addproduct_et_name"
                 android:hint="Name"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -58,6 +60,8 @@
                 android:maxLength="11"
                 android:id="@+id/addproduct_et_MinOrder"
                 android:hint="Minimum Order"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -73,6 +77,8 @@
                 android:id="@+id/addproduct_et_weight"
                 android:maxLength="11"
                 android:hint="Weight (gr)"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
@@ -86,6 +92,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/addproduct_et_description"
                 android:hint="Description"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>

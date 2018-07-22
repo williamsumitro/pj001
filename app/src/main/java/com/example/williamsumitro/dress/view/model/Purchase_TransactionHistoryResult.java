@@ -91,10 +91,10 @@ public class Purchase_TransactionHistoryResult implements Serializable {
     private ArrayList<Product> productOrdered = null;
     @SerializedName("product_accepted")
     @Expose
-    private ArrayList<ProductAccepted> productAccepted = null;
+    private ArrayList<ProductStatus> productStatus = null;
     @SerializedName("product_rejected")
     @Expose
-    private ArrayList<ProductRejected> productRejected = null;
+    private ArrayList<ProductStatus> productRejected = null;
 
     public Integer getTransactionId() {
         return transactionId;
@@ -304,19 +304,19 @@ public class Purchase_TransactionHistoryResult implements Serializable {
         this.productOrdered = productOrdered;
     }
 
-    public ArrayList<ProductAccepted> getProductAccepted() {
-        return productAccepted;
+    public ArrayList<ProductStatus> getProductStatus() {
+        return productStatus;
     }
 
-    public void setProductAccepted(ArrayList<ProductAccepted> productAccepted) {
-        this.productAccepted = productAccepted;
+    public void setProductStatus(ArrayList<ProductStatus> productStatus) {
+        this.productStatus = productStatus;
     }
 
-    public ArrayList<ProductRejected> getProductRejected() {
+    public ArrayList<ProductStatus> getProductRejected() {
         return productRejected;
     }
 
-    public void setProductRejected(ArrayList<ProductRejected> productRejected) {
+    public void setProductRejected(ArrayList<ProductStatus> productRejected) {
         this.productRejected = productRejected;
     }
 }

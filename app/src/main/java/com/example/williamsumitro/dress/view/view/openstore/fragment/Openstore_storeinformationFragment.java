@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,18 +41,28 @@ import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.openstore.activity.OpenStore;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
 import com.example.williamsumitro.dress.view.view.openstore.adapter.OpenStore_CourierAdapter;
+import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,11 +85,12 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     @BindView(R.id.openstore_storeinformation_tvStatus) TextView status;
     @BindView(R.id.openstore_storeinformation_container) ScrollView container;
     @BindView(R.id.openstore_storeinformation_spinner_businesstype) Spinner spinner_businesstype;
-    @BindView(R.id.openstore_storeinformation_layout_yearestbalished) TextInputLayout layout_since;
-    @BindView(R.id.openstore_storeinformation_yearestbalished) TextInputEditText since;
     @BindView(R.id.openstore_storeinformation_rv_courier) RecyclerView rv_courier;
+    @BindView(R.id.openstore_storeinformation_ln_year) LinearLayout container_year;
+    @BindView(R.id.openstore_storeinformation_tv_year) TextView tv_year;
+
     private apiService service;
-    private Dialog dialog;
+    private SweetAlertDialog sweetAlertDialog;
     private Context context;
     private ProgressDialog progressDialog;
     private List<ProvinceDetails> provinceDetailsList;
@@ -86,11 +98,15 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     private SpinProvinceAdapter spinProvinceAdapter;
     private SpinCityAdapter spinCityAdapter;
     private SessionManagement sessionManagement;
-    private String idprovince, idcity, choosen_province, choosen_city, chosen_businesstype;
+    private String idprovince, idcity, choosen_province, choosen_city, chosen_businesstype, year="";
     private Boolean checked = false;
     private List<String> bisnis = new ArrayList<>();
     private List<CourierDetails> courierDetailsList;
     private OpenStore_CourierAdapter adapter;
+    private SwitchDateTimeDialogFragment dateTimeFragment;
+    private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
+
+
 
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
@@ -137,6 +153,53 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     }
 
     private void initOnClick(){
+        container_year.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimeFragment = (SwitchDateTimeDialogFragment) getFragmentManager().findFragmentByTag(TAG_DATETIME_FRAGMENT);
+                if(dateTimeFragment == null) {
+                    dateTimeFragment = SwitchDateTimeDialogFragment.newInstance(
+                            getString(R.string.label_datetime_dialog),
+                            getString(android.R.string.ok),
+                            getString(android.R.string.cancel)
+                    );
+                }
+                dateTimeFragment.setTimeZone(TimeZone.getDefault());
+
+                final SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy", java.util.Locale.getDefault());
+                dateTimeFragment.setMinimumDateTime(new GregorianCalendar(1900, Calendar.JANUARY, 1).getTime());
+                dateTimeFragment.setMaximumDateTime(new GregorianCalendar(2018, Calendar.DECEMBER, 31).getTime());
+
+                try {
+                    dateTimeFragment.setSimpleDateMonthAndDayFormat(new SimpleDateFormat("MMMM dd", Locale.getDefault()));
+                } catch (SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException e) {
+                    Log.e("TAG", e.getMessage());
+                }
+
+                dateTimeFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonWithNeutralClickListener() {
+                    @Override
+                    public void onPositiveButtonClick(Date date) {
+                        year = myDateFormat.format(date);
+                        tv_year.setText("Year Established : " + year);
+                    }
+
+                    @Override
+                    public void onNegativeButtonClick(Date date) {
+                    }
+
+                    @Override
+                    public void onNeutralButtonClick(Date date) {
+                    }
+                });
+                dateTimeFragment.startAtYearView();
+                if (year.equals("")){
+                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(2000, Calendar.MARCH, 4, 15, 20).getTime());
+                }else {
+                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(Integer.parseInt(year), Calendar.MARCH, 4, 15, 20).getTime());
+                }
+                dateTimeFragment.show(getFragmentManager(), TAG_DATETIME_FRAGMENT);
+            }
+        });
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -201,22 +264,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
 
             }
         });
-        since.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,7 +272,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                 layout_jobtitle.setErrorEnabled(false);
                 layout_name.setErrorEnabled(false);
                 layout_phonenumber.setErrorEnabled(false);
-                layout_since.setErrorEnabled(false);
                 if (TextUtils.isEmpty(name.getText().toString())){
                     layout_name.setErrorEnabled(true);
                     layout_name.setError("Name of contact person is required");
@@ -241,9 +287,8 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     layout_phonenumber.setError("Phone number is required");
                     checked = false;
                     return;
-                }if (TextUtils.isEmpty(since.getText().toString())){
-                    layout_since.setErrorEnabled(true);
-                    layout_since.setError("Year Established is required");
+                }if (TextUtils.isEmpty(year)){
+                    Snackbar.make(container, "Please choose your year established", Snackbar.LENGTH_SHORT).show();
                     checked = false;
                     return;
                 }if (TextUtils.isEmpty(detail.getText().toString())){
@@ -258,7 +303,8 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                 }
                 if (checked) {
                     status.setText("Successful");
-                    Toast.makeText(context, "Please click the complete button to continue", Toast.LENGTH_LONG).show();
+                    Toasty.info(context, "Please click the complete button to continue", Toast.LENGTH_SHORT, true).show();
+                    ((OpenStore)getActivity()).ChangeColor(2);
                     status.setTextColor(getResources().getColor(R.color.green));
                 }
                 else {
@@ -363,7 +409,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
         if (isInformationValid()) {
-            sessionManagement.keepStoreInformation(since.getText().toString(), idprovince, idcity, name.getText().toString(),
+            sessionManagement.keepStoreInformation(year, idprovince, idcity, name.getText().toString(),
                     jobtitle.getText().toString(), phonenumber.getText().toString(), detail.getText().toString(), choosen_province, choosen_city, chosen_businesstype);
         }
         else {
@@ -407,31 +453,19 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
         else return false;
     }
     private void initDialog(int stats){
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_custom);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        LinearLayout bg = (LinearLayout) dialog.findViewById(R.id.customdialog_lnBg);
-        TextView status = (TextView) dialog.findViewById(R.id.customdialog_tvStatus);
-        TextView detail = (TextView) dialog.findViewById(R.id.customdialog_tvDetail);
-//        ImageView imageView = (ImageView) dialog.findViewById(R.id.customdialog_img);
-        Button ok = (Button) dialog.findViewById(R.id.customdialog_btnok);
-        Button cancel = (Button) dialog.findViewById(R.id.customdialog_btncancel);
-
         if (stats == 3){
-            status.setText("Uh Oh!");
-            bg.setBackgroundResource(R.color.red7);
-            detail.setText("There is a problem with internet connection or the server");
-//            imageView.setImageResource(R.drawable.emoji_cry);
-            ok.setBackgroundResource(R.drawable.button1_red);
-            ok.setText("Try Again");
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Sorry")
+                    .setContentText("There is a problem with internet connection or the server")
+                    .setConfirmText("Try Again")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
     }
 }

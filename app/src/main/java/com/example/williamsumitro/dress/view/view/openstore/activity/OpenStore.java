@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.openstore.adapter.OpenStore_Button;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.example.williamsumitro.dress.view.view.openstore.adapter.StepAdapter;
 import com.stepstone.stepper.StepperLayout;
@@ -19,8 +20,9 @@ import com.stepstone.stepper.VerificationError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
-public class OpenStore extends AppCompatActivity implements StepperLayout.StepperListener, OnNavigationBarListener {
+public class OpenStore extends AppCompatActivity implements StepperLayout.StepperListener, OnNavigationBarListener{
     @BindView(R.id.openstore_stepperLayout) StepperLayout stepperLayout;
     @BindView(R.id.openstore_toolbar) Toolbar toolbar;
 
@@ -37,6 +39,7 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
         int startingStepPosition = savedInstanceState != null ? savedInstanceState.getInt(CURRENT_STEP_POSITION_KEY) : 0;
         stepperLayout.setAdapter(new StepAdapter(getSupportFragmentManager(), this), startingStepPosition);
         stepperLayout.setListener(this);
+
     }
     private void initView(){
         ButterKnife.bind(this);
@@ -84,12 +87,11 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
 
     @Override
     public void onError(VerificationError verificationError) {
-        Toast.makeText(this, verificationError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        Toasty.info(this, verificationError.getErrorMessage(), Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void onStepSelected(int newStepPosition) {
-//        Toast.makeText(this, "onStepSelected! -> " + newStepPosition, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -107,5 +109,13 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
         context.startActivity(intent);
+    }
+    public void ChangeColor(int stat) {
+        if (stat==1){
+            stepperLayout.setNextButtonColor(getResources().getColor(R.color.blue1));
+        }
+        if (stat==2){
+            stepperLayout.setCompleteButtonColor(getResources().getColor(R.color.green1));
+        }
     }
 }

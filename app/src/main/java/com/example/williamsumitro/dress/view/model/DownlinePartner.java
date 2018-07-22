@@ -4,11 +4,13 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by William Sumitro on 7/12/2018.
  */
 
-public class DownlinePartner {
+public class DownlinePartner implements Serializable {
     @SerializedName("product_id")
     @Expose
     private Integer productId;

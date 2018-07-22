@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Cloth;
 import com.example.williamsumitro.dress.view.model.Filter_Model;
 import com.example.williamsumitro.dress.view.view.search.activity.SearchResult;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

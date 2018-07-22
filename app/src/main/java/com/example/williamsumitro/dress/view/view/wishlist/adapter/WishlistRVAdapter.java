@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.model.StoreInfo;
 import com.example.williamsumitro.dress.view.model.WishlistResult;
 import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
@@ -31,6 +32,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
+import com.example.williamsumitro.dress.view.view.store.activity.DetailStore;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -71,6 +73,7 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
     private ArrayList<String> qtyminlist, priceminlist, availablesizelist;
     private Dialog dialog;
     private DetailProductCourierRVAdapter adapter;
+    private final static String STORE_ID = "STORE_ID";
 
     public WishlistRVAdapter(ArrayList<WishlistResult> wishlistArraylist, Context context){
         this.wishlistArraylist = wishlistArraylist;
@@ -138,24 +141,6 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
         holder.minorder.setText(String.valueOf(wishlist.getMinOrder()));
         getRating(wishlist, holder);
         initProductDetails(wishlist, holder);
-
-        holder.container_courier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                service.req_get_product_detail(token, String.valueOf(wishlist.getProductId())).enqueue(new Callback<ProductDetail>() {
-                    @Override
-                    public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
-                        if (response.code()==200) {
-                            initDialog(response.body().getStoreInfo().getCourierService());
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ProductDetail> call, Throwable t) {
-                        progressDialog.dismiss();
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -209,7 +194,56 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
             }
         });
     }
+    private void dialog_store(final StoreInfo storeInfo){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_store);
 
+        final TextView tv_storename = (TextView) dialog.findViewById(R.id.storedialog_tv_storename);
+        final TextView tv_soldproduct = (TextView) dialog.findViewById(R.id.storedialog_tv_soldproduct);
+        final TextView tv_totaltransaction = (TextView) dialog.findViewById(R.id.storedialog_tv_totaltransaction);
+        final TextView tv_establishedyear = (TextView) dialog.findViewById(R.id.storedialog_tv_establishedyear);
+        final TextView tv_province = (TextView) dialog.findViewById(R.id.storedialog_tv_province);
+        final TextView tv_city = (TextView) dialog.findViewById(R.id.storedialog_tv_city);
+        final TextView tv_businesstype = (TextView) dialog.findViewById(R.id.storedialog_tv_businesstype);
+        final TextView tv_description = (TextView) dialog.findViewById(R.id.storedialog_tv_description);
+        final TextView tv_contactpersonname = (TextView) dialog.findViewById(R.id.storedialog_tv_contactpersonname);
+        final TextView tv_contactpersonjobtitle = (TextView) dialog.findViewById(R.id.storedialog_tv_contactpersonjobtitle);
+        final TextView tv_contactpersonphonenumber = (TextView) dialog.findViewById(R.id.storedialog_tv_contactpersonphonenumber);
+        final Button buttonok = (Button) dialog.findViewById(R.id.storedialog_btn_ok);
+        final Button buttonviewstore = (Button) dialog.findViewById(R.id.storedialog_btn_viewstore);
+
+        tv_storename.setText(storeInfo.getName());
+        tv_soldproduct.setText(storeInfo.getSoldProduct());
+        tv_totaltransaction.setText(storeInfo.getTransaction().toString());
+        tv_establishedyear.setText(storeInfo.getEstablishedYear());
+        tv_province.setText(storeInfo.getProvinceName());
+        tv_city.setText(storeInfo.getCityName());
+        tv_businesstype.setText(storeInfo.getBusinessType());
+        tv_description.setText(storeInfo.getDescription());
+        tv_contactpersonname.setText(storeInfo.getContactPersonName());
+        tv_contactpersonjobtitle.setText(storeInfo.getContactPersonJobTitle());
+        tv_contactpersonphonenumber.setText(storeInfo.getContactPersonPhoneNumber());
+
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        buttonviewstore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    Intent intent = new Intent(context, DetailStore.class);
+                    intent.putExtra(STORE_ID, storeInfo.getStoreId().toString());
+                    bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
+                    context.startActivity(intent, bundle);
+                }
+            }
+        });
+        dialog.show();
+    }
     public void restoreItem(final WishlistResult item, final int position) {
         service.req_add_to_wishlist(token, String.valueOf(item.getProductId())).enqueue(new Callback<ResponseBody>() {
             @Override

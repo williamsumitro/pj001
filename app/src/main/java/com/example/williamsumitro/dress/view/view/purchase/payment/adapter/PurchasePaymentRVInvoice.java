@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -31,7 +32,7 @@ import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatch
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
 import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PP_InvoiceDetail;
-import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PurchasePayment;
+import com.example.williamsumitro.dress.view.view.purchase.payment.fragment.P_paymentFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +44,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,20 +66,20 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
     private apiService service;
     private String token;
     private SessionManagement sessionManagement;
-    private ProgressDialog progressDialog;
     private ArrayList<OrderStore> orderStoreArrayList;
+    private P_paymentFragment p_paymentFragment;
 
     private final static String ORDERSTORELIST = "ORDERSTORELIST";
     private final static String INVOICENUMBER = "INVOICENUMBER";
     private final static String GRANDTOTAL = "GRANDTOTAL";
 
-    public PurchasePaymentRVInvoice(Context context, ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList, ArrayList<Bank> bankArrayList){
+    public PurchasePaymentRVInvoice(Context context, ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList, ArrayList<Bank> bankArrayList, P_paymentFragment p_paymentFragment){
         this.context = context;
         this.purchasePaymentResultArrayList = purchasePaymentResultArrayList;
         this.bankArrayList = bankArrayList;
+        this.p_paymentFragment = p_paymentFragment;
         orderStoreArrayList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
-        progressDialog = new ProgressDialog(context);
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
@@ -91,6 +94,9 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Purchase_PaymentResult purchase_paymentResponse = purchasePaymentResultArrayList.get(position);
         holder.status.setText("Status : " + purchase_paymentResponse.getPaymentStatus());
+        if (purchase_paymentResponse.getPaymentStatus().equals("Payment Confirmation Sent")){
+            holder.status.setTextColor(context.getResources().getColor(R.color.green2));
+        }
         holder.invoicenumber.setText("Invoice Number : " + String.valueOf(purchase_paymentResponse.getTransactionId()));
         holder.date.setText(purchase_paymentResponse.getInvoiceDate());
         holder.grandtotal.setText("Grand Total : " +  "IDR " + formatter.format(Double.parseDouble(purchase_paymentResponse.getInvoiceGrandTotal())));
@@ -153,6 +159,10 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
         final Button buttonok = (Button) dialog.findViewById(R.id.paymentdialog_btnok);
         final Button buttoncancel = (Button) dialog.findViewById(R.id.paymentdialog_btncancel);
 
+        if (grand_total.equals("0")){
+            amount.setText("0");
+            amount.setEnabled(false);
+        }
         amount.addTextChangedListener(new FinancialTextWatcher(amount));
 
         invoicenumber.setText("Invoice Number : " + invoice_number);
@@ -218,16 +228,12 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
                                 JSONObject jsonResults = new JSONObject(response.body().string());
                                 if (jsonResults.getBoolean("status")) {
                                     String message = jsonResults.getString("message");
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
-                                    Intent intent = new Intent(context, PurchasePayment.class);
-                                    context.startActivity(intent);
-                                    ((Activity) context).finish();
+                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                    p_paymentFragment.initRefresh();
                                 }
                                 else {
                                     String message = jsonResults.getString("message");
-                                    progressDialog.dismiss();
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

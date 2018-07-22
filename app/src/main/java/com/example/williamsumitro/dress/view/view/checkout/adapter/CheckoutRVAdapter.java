@@ -1,7 +1,5 @@
 package com.example.williamsumitro.dress.view.view.checkout.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.TextInputEditText;
@@ -17,34 +15,28 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Bagz;
-import com.example.williamsumitro.dress.view.model.Bank;
-import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.model.CheckoutInfo;
 import com.example.williamsumitro.dress.view.model.Checkout_Courier;
 import com.example.williamsumitro.dress.view.model.Checkout_CourierArrayList;
+import com.example.williamsumitro.dress.view.model.CourierService;
 import com.example.williamsumitro.dress.view.model.CourierSpinner;
-import com.example.williamsumitro.dress.view.model.Shipping;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
-import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.checkout.fragment.Checkout_CourierFragment;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
 /**
  * Created by WilliamSumitro on 30/03/2018.
@@ -54,7 +46,6 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
     private ArrayList<CheckoutInfo> checkoutInfoArrayList;
     private Context context;
     private DecimalFormat formatter;
-    private boolean checking = true;
     private apiService service;
     private ArrayList<CourierSpinner> courierSpinners;
     CourierSpinner courierSpinner;
@@ -63,15 +54,14 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
     private CheckoutProductRVAdapter rvadapter;
     private ArrayList<Checkout_Courier> checkout_courierArrayList;
     private SessionManagement sessionManagement;
+    private Checkout_CourierFragment checkout_courierFragment;
 
-    public CheckoutRVAdapter(ArrayList<CheckoutInfo> checkoutInfoArrayList, Context context){
+    public CheckoutRVAdapter(ArrayList<CheckoutInfo> checkoutInfoArrayList, Context context, Checkout_CourierFragment checkout_courierFragment){
         this.context = context;
         this.checkoutInfoArrayList = checkoutInfoArrayList;
+        this.checkout_courierFragment = checkout_courierFragment;
         checkout_courierArrayList = new ArrayList<>();
         sessionManagement = new SessionManagement(context);
-    }
-    public boolean getCheckout(){
-        return checking;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -127,13 +117,13 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                checkout_courierFragment.setCheck(false);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                checking = false;
                 boolean check = false;
+                checkout_courierFragment.setCheck(false);
                 int j = -1;
                 for (int i = 0; i<checkout_courierArrayList.size();i++){
                     if (String.valueOf(checkoutInfo.getStoreId()).equals(checkout_courierArrayList.get(i).getStore_id())){
@@ -145,14 +135,18 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
                         check = false;
                 }
                 if (check){
+                    int selected = holder.courierservice.getSelectedItemPosition();
+                    CourierSpinner cs = new CourierSpinner(adapter.getItem(selected));
                     Checkout_Courier checkout_courier = new Checkout_Courier(String.valueOf(checkoutInfo.getStoreId()),
-                            courierSpinner.getCourier_id(),
-                            courierSpinner.getCourier_service(),
-                            courierSpinner.getFee(),
+                            cs.getCourier_id(),
+                            cs.getCourier_service(),
+                            cs.getFee(),
                             s.toString());
                     checkout_courierArrayList.set(j, checkout_courier);
                     sessionManagement.keepCheckoutCourierService(new Checkout_CourierArrayList(checkout_courierArrayList));
                 }else {
+                    int selected = holder.courierservice.getSelectedItemPosition();
+                    CourierSpinner cs = new CourierSpinner(adapter.getItem(selected));
                     Checkout_Courier checkout_courier = new Checkout_Courier(String.valueOf(checkoutInfo.getStoreId()),
                             courierSpinner.getCourier_id(),
                             courierSpinner.getCourier_service(),
@@ -161,13 +155,14 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
                     checkout_courierArrayList.add(checkout_courier);
                     sessionManagement.keepCheckoutCourierService(new Checkout_CourierArrayList(checkout_courierArrayList));
                 }
+
             }
         });
 
         holder.courierservice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checking = false;
+                checkout_courierFragment.setCheck(false);
                 CourierSpinner courierSpinner = (CourierSpinner) parent.getItemAtPosition(position);
                 idcourier = courierSpinner.getCourier_id();
                 boolean check = false;
@@ -221,8 +216,10 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
         SnapHelper snapHelper = new LinearSnapHelper();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.rv.setLayoutManager(layoutManager);
-        holder.rv.setItemAnimator(new DefaultItemAnimator());
-        holder.rv.setAdapter(rvadapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(rvadapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        holder.rv.setAdapter(alphaAdapter);
         snapHelper.attachToRecyclerView(holder.rv);
     }
 

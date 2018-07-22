@@ -6,16 +6,18 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +25,6 @@ import android.widget.TextView;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bag;
 import com.example.williamsumitro.dress.view.model.BagResponse;
-import com.example.williamsumitro.dress.view.model.Bagz;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +60,6 @@ public class ShoppingBag extends AppCompatActivity {
 //    @BindView(R.id.bag_tvpoint) TextView point;
     private ShoppingBagRVAdapter adapter;
     private Context context;
-    private List<Bagz> bagList;
     private apiService service;
     private String token;
     private SessionManagement sessionManagement;
@@ -66,6 +67,7 @@ public class ShoppingBag extends AppCompatActivity {
     private String total_qty, total_price;
     private DecimalFormat formatter;
     private ProgressDialog progressDialog;
+    private SnapHelper snapHelper = new LinearSnapHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +140,6 @@ public class ShoppingBag extends AppCompatActivity {
         ButterKnife.bind(this);
         context = this;
         SHOPPINGBAG = this;
-        bagList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
@@ -166,8 +167,11 @@ public class ShoppingBag extends AppCompatActivity {
         adapter = new ShoppingBagRVAdapter(bagArrayList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(alphaAdapter);
+        snapHelper.attachToRecyclerView(recyclerView);
     }
     private void initData(){
         totalpembayaran.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(total_price))));

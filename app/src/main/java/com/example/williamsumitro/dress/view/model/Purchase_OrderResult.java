@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by WilliamSumitro on 17/06/2018.
@@ -70,7 +69,7 @@ public class Purchase_OrderResult {
     private String courierService;
     @SerializedName("note")
     @Expose
-    private Object note;
+    private String note;
     @SerializedName("total_qty")
     @Expose
     private String totalQty;
@@ -91,10 +90,10 @@ public class Purchase_OrderResult {
     private ArrayList<Product> productOrdered = null;
     @SerializedName("product_accepted")
     @Expose
-    private ArrayList<ProductAccepted> productAccepted = null;
+    private ArrayList<ProductStatus> productStatus = null;
     @SerializedName("product_rejected")
     @Expose
-    private ArrayList<ProductRejected> productRejected = null;
+    private ArrayList<ProductStatus> productRejected = null;
 
     public Integer getTransactionId() {
         return transactionId;
@@ -248,11 +247,11 @@ public class Purchase_OrderResult {
         this.courierService = courierService;
     }
 
-    public Object getNote() {
+    public String getNote() {
         return note;
     }
 
-    public void setNote(Object note) {
+    public void setNote(String note) {
         this.note = note;
     }
 
@@ -304,19 +303,19 @@ public class Purchase_OrderResult {
         this.productOrdered = productOrdered;
     }
 
-    public ArrayList<ProductAccepted> getProductAccepted() {
-        return productAccepted;
+    public ArrayList<ProductStatus> getProductStatus() {
+        return productStatus;
     }
 
-    public void setProductAccepted(ArrayList<ProductAccepted> productAccepted) {
-        this.productAccepted = productAccepted;
+    public void setProductStatus(ArrayList<ProductStatus> productStatus) {
+        this.productStatus = productStatus;
     }
 
-    public ArrayList<ProductRejected> getProductRejected() {
+    public ArrayList<ProductStatus> getProductRejected() {
         return productRejected;
     }
 
-    public void setProductRejected(ArrayList<ProductRejected> productRejected) {
+    public void setProductRejected(ArrayList<ProductStatus> productRejected) {
         this.productRejected = productRejected;
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    android:id="@+id/item_transaction_cv"
     android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -8,82 +9,67 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
-            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/item_transaction_tv_transactionname"
+                android:textSize="20sp"
+                android:textColor="@color/grey"
+                android:text="Transaction Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="2dp"
+                android:text="26 May 2018"
+                android:id="@+id/item_transaction_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/item_transaction_tv_note"
+                android:layout_marginTop="5dp"
+                android:text="Note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="26 May 2018"
-                        android:id="@+id/item_transaction_tv_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:layout_marginTop="5dp"
-                        android:background="@color/grey5"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"/>
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/item_transaction_tv_transactionname"
-                    android:textSize="16sp"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="5dp"
-                    android:text="Transaction Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/item_transaction_tv_note"
-                    android:layout_marginTop="5dp"
-                    android:text="Note"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:orientation="vertical"
+            <TextView
+                android:id="@+id/item_transaction_tv_status"
+                android:text="Status"
+                android:textSize="30sp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/item_transaction_tv_nominal"
-                        android:textAlignment="center"
-                        android:layout_gravity="center"
-                        android:textSize="16sp"
-                        android:text="25.000.000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/item_transaction_img_status"
-                    android:src="@drawable/out"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/item_transaction_tv_nominal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="25.000.000"
+                android:textSize="16sp" />
         </LinearLayout>
         <View
-            android:layout_margin="5dp"
-            android:background="@color/grey5"
+            android:background="@color/grey6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <LinearLayout
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -93,13 +79,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:textSize="20sp"
                 android:id="@+id/item_transaction_tv_balance"
                 android:layout_gravity="center"
                 android:text="25,000,000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:layout_gravity="center"
+                android:layout_gravity="bottom"
                 android:text=".00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

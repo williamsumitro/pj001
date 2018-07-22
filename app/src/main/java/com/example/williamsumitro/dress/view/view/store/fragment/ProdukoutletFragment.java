@@ -20,9 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Cloth;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
-import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.view.filter.Filter;
 import com.example.williamsumitro.dress.view.view.store.adapter.StoreProductRV;
 
@@ -43,7 +41,6 @@ public class ProdukoutletFragment extends Fragment {
     @BindView(R.id.produkoutlet_searchview) SearchView searchView;
     @BindView(R.id.produkoutlet_lnfilter) LinearLayout filter;
     @BindView(R.id.produkoutlet_lnsort) LinearLayout sort;
-    private List<Cloth> newList = new ArrayList<>();
     private StoreProductRV adapternew;
     private Context context;
 

@@ -1,7 +1,7 @@
 package com.example.williamsumitro.dress.view.model;
 
 /**
- * Created by WilliamSumitro on 01/04/2018.
+ * Created by WilliamSumitro on 17/07/2018.
  */
 
 public class Store {
