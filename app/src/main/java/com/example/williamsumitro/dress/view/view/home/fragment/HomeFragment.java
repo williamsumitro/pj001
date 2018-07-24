@@ -2,7 +2,6 @@ package com.example.williamsumitro.dress.view.view.home.fragment;
 
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.view.home.adapter.TabHomeAdapter;
 import com.example.williamsumitro.dress.view.view.category.fragment.CategoryFragment;
-import com.example.williamsumitro.dress.view.view.openstore.fragment.StoreFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;

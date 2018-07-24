@@ -9,10 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.view.category.fragment.CategoryFragment;
 import com.example.williamsumitro.dress.view.view.home.adapter.TabHomeAdapter;
-import com.example.williamsumitro.dress.view.view.home.fragment.HotFragment;
-import com.example.williamsumitro.dress.view.view.openstore.fragment.StoreFragment;
 import com.example.williamsumitro.dress.view.view.purchase.history.fragment.P_historyFragment;
 import com.example.williamsumitro.dress.view.view.purchase.order.fragment.P_orderFragment;
 import com.example.williamsumitro.dress.view.view.purchase.payment.fragment.P_paymentFragment;

@@ -2,6 +2,7 @@ package com.example.williamsumitro.dress.view.presenter.api;
 
 import com.example.williamsumitro.dress.view.model.AddToBag;
 import com.example.williamsumitro.dress.view.model.AdvancedSearchResult;
+import com.example.williamsumitro.dress.view.model.AllStoreResponse;
 import com.example.williamsumitro.dress.view.model.ApproveOrder;
 import com.example.williamsumitro.dress.view.model.BagResponse;
 import com.example.williamsumitro.dress.view.model.BestResponse;
@@ -487,7 +488,7 @@ public interface apiService {
     @POST("update_user_image")
     Call<ResponseBody> req_update_user_image(
             @Part("token") RequestBody token,
-            @Part("avatar") RequestBody avatar
+            @Part MultipartBody.Part avatar
     );
 
     @FormUrlEncoded
@@ -509,5 +510,8 @@ public interface apiService {
                                                @Field("store_id") String store_id,
                                                @Field("courier_id") String courier_id);
 
+
+    @POST("get_all_store")
+    Call<AllStoreResponse> req_get_all_store();
 
 }

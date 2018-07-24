@@ -151,10 +151,9 @@ public class MainActivity extends AppCompatActivity {
                     TextView nama = (TextView) header.findViewById(R.id.nav_header_name);
                     CircleImageView image = (CircleImageView) header.findViewById(R.id.nav_header_image);
                     nama.setText(userDetails.getFullName());
-                    if (userDetails.getGender().toLowerCase().equals("m"))
-                        Picasso.with(context).load(userDetails.getAvatar()).placeholder(R.drawable.man).into(image);
-                    else
-                        Picasso.with(context).load(userDetails.getAvatar()).placeholder(R.drawable.woman1).into(image);
+                    Picasso.with(context)
+                            .load(userDetails.getAvatar())
+                            .into(image);
                     progressDialog.dismiss();
                 }
                 else if (response.code()==500){
@@ -442,6 +441,9 @@ public class MainActivity extends AppCompatActivity {
             CURRENT = PURCHASE;
             loadHomeFragment();
         }else if(id == R.id.menu_notification_request){
+            navIndex = 3;
+            CURRENT = RFQ;
+            loadHomeFragment();
         }
 
         return super.onOptionsItemSelected(item);

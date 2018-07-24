@@ -21,6 +21,9 @@ public class StoreInfo {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("full_name")
+    @Expose
+    private String fullName;
     @SerializedName("photo")
     @Expose
     private String photo;
@@ -307,5 +310,13 @@ public class StoreInfo {
 
     public void setCourierService(ArrayList<model_CourierService> courierService) {
         this.courierService = courierService;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

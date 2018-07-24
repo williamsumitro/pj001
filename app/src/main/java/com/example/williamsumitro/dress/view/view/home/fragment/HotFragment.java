@@ -4,6 +4,7 @@ package com.example.williamsumitro.dress.view.view.home.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,6 +63,7 @@ public class HotFragment extends Fragment {
     private Dialog dialog;
     private ProgressDialog progressDialog;
     private SnapHelper snapHelper = new LinearSnapHelper();
+    private Context context;
     public HotFragment() {
 
     }
@@ -89,6 +91,7 @@ public class HotFragment extends Fragment {
     private void initView(View view){
         ButterKnife.bind(this,view);
         progressDialog = new ProgressDialog(getContext());
+        context = getContext();
     }
     private void api_getbestsellerproduct(){
         service = apiUtils.getAPIService();
@@ -115,14 +118,14 @@ public class HotFragment extends Fragment {
                     }
                 }
                 else {
-                    Toasty.error(getContext(), "Something error", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(context, "Something error", Toast.LENGTH_SHORT, true).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<BestResponse> call, Throwable t) {
-                Toasty.error(getContext(), "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -152,14 +155,14 @@ public class HotFragment extends Fragment {
                     }
                 }
                 else {
-                    Toasty.error(getContext(), "Something error", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(context, "Something error", Toast.LENGTH_SHORT, true).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<BestResponse> call, Throwable t) {
-                Toasty.error(getContext(), "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

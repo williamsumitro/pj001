@@ -80,8 +80,8 @@ public class ActiveRequestFragment extends Fragment {
     private void initView(View view){
         ButterKnife.bind(this,view);
         context = getContext();
-        formatter = new DecimalFormat("#,###,###");
         sessionManagement = new SessionManagement(getContext());
+        formatter = new DecimalFormat("#,###,###");
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         resultArrayList = new ArrayList<>();

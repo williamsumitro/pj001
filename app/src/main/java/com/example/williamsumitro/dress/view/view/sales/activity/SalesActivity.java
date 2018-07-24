@@ -9,10 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.view.category.fragment.CategoryFragment;
 import com.example.williamsumitro.dress.view.view.home.adapter.TabHomeAdapter;
-import com.example.williamsumitro.dress.view.view.home.fragment.HotFragment;
-import com.example.williamsumitro.dress.view.view.openstore.fragment.StoreFragment;
 import com.example.williamsumitro.dress.view.view.sales.fragment.OrderConfirmationFragment;
 import com.example.williamsumitro.dress.view.view.sales.fragment.ShippingConfirmationFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;

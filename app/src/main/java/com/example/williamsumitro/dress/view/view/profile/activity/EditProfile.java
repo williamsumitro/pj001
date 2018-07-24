@@ -23,8 +23,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.AuthActivity;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 
@@ -32,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,9 +46,9 @@ import retrofit2.Response;
 
 public class EditProfile extends AppCompatActivity {
     @BindView(R.id.editprofile_toolbar) Toolbar toolbar;
-    @BindView(R.id.editprofile_rbmale) RadioButton male;
-    @BindView(R.id.editprofile_rbfemale) RadioButton female;
-    @BindView(R.id.editprofile_radiogroup) RadioGroup radioGroup;
+//    @BindView(R.id.editprofile_rbmale) RadioButton male;
+//    @BindView(R.id.editprofile_rbfemale) RadioButton female;
+//    @BindView(R.id.editprofile_radiogroup) RadioGroup radioGroup;
     @BindView(R.id.editprofile_layoutphonenumber) TextInputLayout layoutphonenumber;
     @BindView(R.id.editprofile_layoutfullname) TextInputLayout layoutfullname;
     @BindView(R.id.editprofile_etphonenumber) TextInputEditText phonenumber;
@@ -59,18 +62,53 @@ public class EditProfile extends AppCompatActivity {
     private apiService service;
     private SweetAlertDialog sweetAlertDialog;
     private ProgressDialog progressDialog;
+    private SessionManagement sessionManagement;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         initView();
+        api_getUserData();
         setupToolbar();
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postDataToAPI();
+            }
+        });
     }
+
+    private void api_getUserData() {
+        service.req_get_auth_user(token)
+                .enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.code()==200){
+                            email.setText(response.body().getUserDetails().getEmail());
+                            phonenumber.setText(response.body().getUserDetails().getPhoneNumber());
+                            fullname.setText(response.body().getUserDetails().getFullName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                        progressDialog.dismiss();
+                        initDialog(t.getMessage(), 3);
+                    }
+                });
+    }
+
     private void initView(){
         ButterKnife.bind(this);
         context= this;
         progressDialog = new ProgressDialog(this);
+        sessionManagement = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = sessionManagement.getUserDetails();
+        token = user.get(SessionManagement.TOKEN);
+        service = apiUtils.getAPIService();
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);
@@ -106,26 +144,26 @@ public class EditProfile extends AppCompatActivity {
             layoutphonenumber.setErrorEnabled(true);
             layoutphonenumber.setError("Phone number is required");
             return;
-        } else if(radioGroup.getCheckedRadioButtonId() == -1){
-            Snackbar.make(container, "Please choose your gender", Snackbar.LENGTH_LONG).show();
-            return;
         }
-        int selectedID = radioGroup.getCheckedRadioButtonId();
-        sexbutton = (RadioButton) findViewById(selectedID);
-        String sex = "";
-        if (sexbutton.getText().toString().toLowerCase().equals("female")){
-            sex = "F";
-        }else if(sexbutton.getText().toString().toLowerCase().equals("male")){
-            sex = "M";
-        }
+//        else if(radioGroup.getCheckedRadioButtonId() == -1){
+//            Snackbar.make(container, "Please choose your gender", Snackbar.LENGTH_LONG).show();
+//            return;
+//        }
+//        int selectedID = radioGroup.getCheckedRadioButtonId();
+//        sexbutton = (RadioButton) findViewById(selectedID);
+//        String sex = "";
+//        if (sexbutton.getText().toString().toLowerCase().equals("female")){
+//            sex = "F";
+//        }else if(sexbutton.getText().toString().toLowerCase().equals("male")){
+//            sex = "M";
+//        }
 
         progressDialog.setMessage("Wait a sec..");
         progressDialog.show();
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
 
-        service = apiUtils.getAPIService();
-        service.req_update_user_profile(fullname.getText().toString(), sex, phonenumber.getText().toString()).
+        service.req_update_user_profile(token, fullname.getText().toString(), phonenumber.getText().toString()).
                 enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -166,7 +204,7 @@ public class EditProfile extends AppCompatActivity {
             sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.setTitleText("Registered Success!")
+            sweetAlertDialog.setTitleText("Updated Success!")
                     .setContentText(message)
                     .setConfirmText("Ok")
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

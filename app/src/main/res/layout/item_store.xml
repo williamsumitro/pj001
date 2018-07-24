@@ -1,57 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:id="@+id/itemstore_container"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
-    android:layout_height="200dp">
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/itemstore_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/itemstore_image"
-            android:src="@drawable/image"
             android:layout_width="150dp"
             android:layout_height="150dp" />
         <TextView
+            android:layout_gravity="center"
             android:id="@+id/itemstore_name"
             android:maxLines="1"
             android:singleLine="true"
             android:text="Nama Toko"
             android:textColor="@color/black"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <LinearLayout
-            android:layout_marginTop="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/itemstore_imgstar1"
-                android:layout_gravity="center_vertical"
-                android:layout_width="13dp"
-                android:layout_height="13dp"/>
-            <ImageView
-                android:id="@+id/itemstore_imgstar2"
-                android:layout_gravity="center_vertical"
-                android:layout_width="13dp"
-                android:layout_height="13dp"/>
-            <ImageView
-                android:id="@+id/itemstore_imgstar3"
-                android:layout_gravity="center_vertical"
-                android:layout_width="13dp"
-                android:layout_height="13dp"/>
-            <ImageView
-                android:id="@+id/itemstore_imgstar4"
-                android:layout_gravity="center_vertical"
-                android:layout_width="13dp"
-                android:layout_height="13dp"/>
-            <ImageView
-                android:id="@+id/itemstore_imgstar5"
-                android:layout_gravity="center_vertical"
-                android:layout_width="13dp"
-                android:layout_height="13dp"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+            <!--<ImageView-->
+                <!--android:id="@+id/itemstore_imgstar1"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_width="13dp"-->
+                <!--android:layout_height="13dp"/>-->
+            <!--<ImageView-->
+                <!--android:id="@+id/itemstore_imgstar2"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_width="13dp"-->
+                <!--android:layout_height="13dp"/>-->
+            <!--<ImageView-->
+                <!--android:id="@+id/itemstore_imgstar3"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_width="13dp"-->
+                <!--android:layout_height="13dp"/>-->
+            <!--<ImageView-->
+                <!--android:id="@+id/itemstore_imgstar4"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_width="13dp"-->
+                <!--android:layout_height="13dp"/>-->
+            <!--<ImageView-->
+                <!--android:id="@+id/itemstore_imgstar5"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_width="13dp"-->
+                <!--android:layout_height="13dp"/>-->
+        <!--</LinearLayout>-->
     </LinearLayout>
-</android.support.v7.widget.CardView>
