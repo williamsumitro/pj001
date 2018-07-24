@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/profile_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
@@ -11,115 +13,63 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
     </android.support.design.widget.AppBarLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
         <LinearLayout
+            android:layout_below="@+id/profile_appbar"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_circleimageview"
-                android:src="@drawable/fake_store1"
-                android:layout_width="70dp"
-                android:layout_height="70dp" />
-            <TextView
-                android:id="@+id/profile_tv_name"
-                android:textSize="20sp"
-                android:text="Nama"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="250dp"
+                android:layout_height="250dp" />
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_gravity="center"
-                    android:src="@drawable/location"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/profile_tv_address"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:text="Address"
+                    android:id="@+id/profile_tv_name"
+                    android:textSize="24sp"
+                    android:text="Nama"
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/profile_img_gender"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-    <android.support.v7.widget.CardView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/profile_ln_editprofile"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
             <TextView
-                android:layout_gravity="center_vertical"
-                android:text="Edit Profile"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:id="@+id/profile_tv_email"
+                android:text="Nama"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/caret_right_brown"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/profile_ln_changeprofilepicture"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
             <TextView
-                android:layout_gravity="center_vertical"
-                android:text="Change Profile Picture"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:id="@+id/profile_tv_phonenumber"
+                android:text="Nama"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/caret_right_brown"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/profile_ln_changepassword"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:text="Change Password"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/caret_right_brown"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/profile_boom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        app:bmb_normalColor="@color/blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bmb_buttonEnum="ham"
+        app:bmb_piecePlaceEnum="piecePlace_ham_3"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+        />
+</RelativeLayout>

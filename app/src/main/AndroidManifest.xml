@@ -65,7 +65,11 @@
         <activity android:name=".view.FullScreenImage" />
         <activity android:name=".view.view.sales.activity.SalesActivity" />
         <activity android:name=".view.view.partnership.activity.Partnership" />
-        <activity android:name=".view.view.offer.activity.OfferActivity"></activity>
+        <activity android:name=".view.view.offer.activity.OfferActivity" />
+        <activity android:name=".view.view.product.activity.MyProduct" />
+        <activity android:name=".view.view.mystore.activity.MyStore" />
+        <activity android:name=".view.view.mystore.activity.SupportingDocument" />
+        <activity android:name=".view.view.mystore.activity.CourierService"></activity>
     </application>
 
 </manifest>

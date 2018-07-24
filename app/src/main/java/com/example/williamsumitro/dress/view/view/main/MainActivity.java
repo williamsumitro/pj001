@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (getintent.hasExtra(FILEUPLOAD)){
             navIndex = 1;
-            CURRENT = FILEUPLOAD;
+            CURRENT = SELLERPANEL;
             loadHomeFragment();
         }
         else{
@@ -379,15 +379,13 @@ public class MainActivity extends AppCompatActivity {
                 WalletFragment walletFragment = new WalletFragment();
                 return walletFragment;
             case 1 :
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    if (Objects.equals(CURRENT, NOSTORE)){
-                        NoStoreFragment noStoreFragment = new NoStoreFragment();
-                        return noStoreFragment;
-                    }
-                    if (Objects.equals(CURRENT, SELLERPANEL)){
-                        SellerPanelFragment sellerPanelFragment = new SellerPanelFragment();
-                        return sellerPanelFragment;
-                    }
+                if (CURRENT == NOSTORE){
+                    NoStoreFragment noStoreFragment = new NoStoreFragment();
+                    return noStoreFragment;
+                }
+                if (CURRENT == SELLERPANEL) {
+                    SellerPanelFragment sellerPanelFragment = new SellerPanelFragment();
+                    return sellerPanelFragment;
                 }
             case 2:
                 HomeFragment homeFragment = new HomeFragment();

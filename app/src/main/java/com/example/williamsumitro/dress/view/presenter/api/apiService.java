@@ -402,4 +402,112 @@ public interface apiService {
     @FormUrlEncoded
     @POST("get_sort_by_id")
     Call<SortByIdResult> req_get_sort_by_id(@Field("sort_id") String sort_id);
+
+
+    @Multipart
+    @POST("update_store_information")
+    Call<ResponseBody> req_update_store_information(
+            @Part("token") RequestBody token,
+            @Part("store_id") RequestBody store_id,
+            @Part("business_type") RequestBody business_type,
+            @Part("established_year") RequestBody established_year,
+            @Part("province") RequestBody province,
+            @Part("city") RequestBody city,
+            @Part("contact_person_name") RequestBody contact_person_name,
+            @Part("contact_person_job_title") RequestBody contact_person_job_title,
+            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part photo,
+            @Part MultipartBody.Part banner,
+            @Part("store_name") RequestBody store_name
+    );
+
+
+    @Multipart
+    @POST("update_store_information")
+    Call<ResponseBody> req_update_store_information_without_photo(
+            @Part("token") RequestBody token,
+            @Part("store_id") RequestBody store_id,
+            @Part("business_type") RequestBody business_type,
+            @Part("established_year") RequestBody established_year,
+            @Part("province") RequestBody province,
+            @Part("city") RequestBody city,
+            @Part("contact_person_name") RequestBody contact_person_name,
+            @Part("contact_person_job_title") RequestBody contact_person_job_title,
+            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part banner,
+            @Part("store_name") RequestBody store_name
+    );
+
+
+    @Multipart
+    @POST("update_store_information")
+    Call<ResponseBody> req_update_store_information_without_banner(
+            @Part("token") RequestBody token,
+            @Part("store_id") RequestBody store_id,
+            @Part("business_type") RequestBody business_type,
+            @Part("established_year") RequestBody established_year,
+            @Part("province") RequestBody province,
+            @Part("city") RequestBody city,
+            @Part("contact_person_name") RequestBody contact_person_name,
+            @Part("contact_person_job_title") RequestBody contact_person_job_title,
+            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part photo,
+            @Part("store_name") RequestBody store_name
+    );
+
+
+    @Multipart
+    @POST("update_store_information")
+    Call<ResponseBody> req_update_store_information_without_photo_banner(
+            @Part("token") RequestBody token,
+            @Part("store_id") RequestBody store_id,
+            @Part("business_type") RequestBody business_type,
+            @Part("established_year") RequestBody established_year,
+            @Part("province") RequestBody province,
+            @Part("city") RequestBody city,
+            @Part("contact_person_name") RequestBody contact_person_name,
+            @Part("contact_person_job_title") RequestBody contact_person_job_title,
+            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
+            @Part("description") RequestBody description,
+            @Part("store_name") RequestBody store_name
+    );
+
+
+    @FormUrlEncoded
+    @POST("update_user_profile")
+    Call<ResponseBody> req_update_user_profile(@Field("token") String token,
+                                                  @Field("full_name") String full_name,
+                                                  @Field("phone_number") String phone_number);
+
+
+    @Multipart
+    @POST("update_user_image")
+    Call<ResponseBody> req_update_user_image(
+            @Part("token") RequestBody token,
+            @Part("avatar") RequestBody avatar
+    );
+
+    @FormUrlEncoded
+    @POST("update_user_password")
+    Call<ResponseBody> req_update_user_password(@Field("token") String token,
+                                               @Field("password") String password,
+                                               @Field("new_password") String new_password);
+
+    @FormUrlEncoded
+    @POST("delete_user_store_courier")
+    Call<ResponseBody> req_delete_user_store_courier(@Field("token") String token,
+                                               @Field("store_id") String store_id,
+                                               @Field("courier_id") String courier_id);
+
+
+    @FormUrlEncoded
+    @POST("insert_user_store_courier")
+    Call<ResponseBody> req_insert_user_store_courier(@Field("token") String token,
+                                               @Field("store_id") String store_id,
+                                               @Field("courier_id") String courier_id);
+
+
 }

@@ -19,7 +19,7 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/bohemian"
-                android:layout_width="180dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent" />
             <ImageView
                 android:layout_width="150dp"
@@ -73,7 +73,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/brief"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -127,7 +127,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/casual"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -181,7 +181,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/cute"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -235,7 +235,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/fashion"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -289,7 +289,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/flare"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -343,7 +343,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/novelty"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -397,7 +397,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ol"
-                    android:layout_width="180dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent" />
                 <ImageView
                     android:layout_width="150dp"
@@ -451,7 +451,7 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/party"
-                android:layout_width="180dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent" />
             <ImageView
                 android:layout_width="150dp"
@@ -505,7 +505,7 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/sexy"
-                android:layout_width="180dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent" />
             <ImageView
                 android:layout_width="150dp"
@@ -559,7 +559,7 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/vintage"
-                android:layout_width="180dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent" />
             <ImageView
                 android:layout_width="150dp"
@@ -613,7 +613,7 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/work"
-                android:layout_width="180dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent" />
             <ImageView
                 android:layout_width="150dp"

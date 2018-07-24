@@ -112,7 +112,7 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
         holder.storename.setText(store.getName());
         holder.rating.setText("("+df.format(Double.parseDouble(store.getRating()))+")");
         holder.follower.setText(store.getSoldProduct());
-        holder.partnership.setText(String.valueOf(store.getTransaction()));
+        holder.product.setText(String.valueOf(store.getTransaction()));
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,11 +138,11 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
         @BindView(R.id.itemfavoritestore_ln_container) LinearLayout container;
         @BindView(R.id.itemfavoritestore_rl_container) RelativeLayout container1;
         @BindView(R.id.itemfavoritestore_ln_follower) LinearLayout container_follower;
-        @BindView(R.id.itemfavoritestore_ln_partnership) LinearLayout container_partnership;
+//        @BindView(R.id.itemfavoritestore_ln_partnership) LinearLayout container_partnership;
         @BindView(R.id.itemfavoritestore_ln_product) LinearLayout container_product;
         @BindView(R.id.itemfavoritestore_ln_rating) LinearLayout container_rating;
         @BindView(R.id.itemfavoritestore_tv_follower) TextView follower;
-        @BindView(R.id.itemfavoritestore_tv_partnership) TextView partnership;
+//        @BindView(R.id.itemfavoritestore_tv_partnership) TextView partnership;
         @BindView(R.id.itemfavoritestore_tv_product) TextView product;
         @BindView(R.id.itemfavoritestore_tv_rating) TextView rating;
         @BindView(R.id.itemfavoritestore_tvname) TextView storename;

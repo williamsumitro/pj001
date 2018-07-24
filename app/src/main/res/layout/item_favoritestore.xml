@@ -86,7 +86,7 @@
                             android:layout_height="wrap_content" />
                         <TextView
                             android:textSize="12sp"
-                            android:text="Product"
+                            android:text="Sold Product"
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -109,34 +109,34 @@
                             android:layout_height="wrap_content" />
                         <TextView
                             android:textSize="12sp"
-                            android:text="Followers"
+                            android:text="Transaction"
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/itemfavoritestore_ln_partnership"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/itemfavoritestore_tv_partnership"
-                            android:textStyle="bold"
-                            android:text="5"
-                            android:textColor="@color/white"
-                            android:textSize="20dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:textSize="12sp"
-                            android:text="Partnership"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--android:id="@+id/itemfavoritestore_ln_partnership"-->
+                        <!--android:layout_margin="5dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical">-->
+                        <!--<TextView-->
+                            <!--android:id="@+id/itemfavoritestore_tv_partnership"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:text="5"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:textSize="20dp"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+                        <!--<TextView-->
+                            <!--android:textSize="12sp"-->
+                            <!--android:text="Partnership"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+                    <!--</LinearLayout>-->
                 </LinearLayout>
             </LinearLayout>
             <View

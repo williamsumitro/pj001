@@ -11,11 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.Offer;
 import com.example.williamsumitro.dress.view.view.offer.activity.OfferActivity;
 import com.example.williamsumitro.dress.view.view.partnership.activity.Partnership;
+import com.example.williamsumitro.dress.view.view.product.activity.MyProduct;
 import com.example.williamsumitro.dress.view.view.sales.activity.SalesActivity;
 import com.example.williamsumitro.dress.view.view.sellerpanel.Utils;
+import com.example.williamsumitro.dress.view.view.mystore.activity.MyStore;
 
 import static com.example.williamsumitro.dress.view.view.sellerpanel.Utils.setupItem;
 
@@ -26,7 +27,7 @@ import static com.example.williamsumitro.dress.view.view.sellerpanel.Utils.setup
 public class SellerPanelPagerAdapter extends PagerAdapter {
     private final Utils.LibraryObject[] LIBRARIES = new Utils.LibraryObject[]{
             new Utils.LibraryObject(
-                    R.drawable.store1,
+                    R.drawable.store6,
                     "Store Settings"
             ),
             new Utils.LibraryObject(
@@ -73,7 +74,7 @@ public class SellerPanelPagerAdapter extends PagerAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, SalesActivity.class);
+                    Intent intent = new Intent(mContext, MyStore.class);
                     Bundle bundle = ActivityOptions.makeCustomAnimation(mContext,R.anim.slideright, R.anim.fadeout).toBundle();
                     mContext.startActivity(intent, bundle);
                 }
@@ -83,7 +84,7 @@ public class SellerPanelPagerAdapter extends PagerAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, SalesActivity.class);
+                    Intent intent = new Intent(mContext, MyProduct.class);
                     Bundle bundle = ActivityOptions.makeCustomAnimation(mContext,R.anim.slideright, R.anim.fadeout).toBundle();
                     mContext.startActivity(intent, bundle);
                 }

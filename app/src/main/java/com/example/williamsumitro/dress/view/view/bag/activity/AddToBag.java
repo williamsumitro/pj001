@@ -441,14 +441,20 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         int sum = qtyS + qtyM + qtyL + qtyXL +qtyFree;
         for (int i = 0; i<extra_qtyminorder.size(); i++){
             min = Integer.parseInt(extra_qtyminorder.get(i));
-            max = Integer.parseInt(extra_qtymaxorder.get(i));
-            if(sum>=min && sum<=max) {
+            if (extra_qtymaxorder.get(i).equals("max")){
                 percen = Double.parseDouble(extra_priceminlist.get(i));
-                break;
             }
             else {
-                percen = Double.parseDouble(extra_priceminlist.get(0));
+                max = Integer.parseInt(extra_qtymaxorder.get(i));
+                if(sum>=min && sum<=max) {
+                    percen = Double.parseDouble(extra_priceminlist.get(i));
+                    break;
+                }
+                else {
+                    percen = Double.parseDouble(extra_priceminlist.get(0));
+                }
             }
+
         }
 
         if(sum < Integer.parseInt(extra_minorder)){

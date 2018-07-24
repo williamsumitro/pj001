@@ -3,11 +3,13 @@ package com.example.williamsumitro.dress.view.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by WilliamSumitro on 29/05/2018.
  */
 
-public class Price {
+public class Price implements Serializable{
     @SerializedName("product_id_partner")
     @Expose
     private Integer productIdPartner;

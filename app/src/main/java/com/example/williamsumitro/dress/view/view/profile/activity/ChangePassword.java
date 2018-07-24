@@ -3,6 +3,8 @@ package com.example.williamsumitro.dress.view.view.profile.activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,12 @@ import butterknife.ButterKnife;
 
 public class ChangePassword extends AppCompatActivity {
     @BindView(R.id.changepassword_toolbar) Toolbar toolbar;
+    @BindView(R.id.changepassword_layoutpassword) TextInputLayout layout_password;
+    @BindView(R.id.changepassword_etpassword) TextInputEditText password;
+    @BindView(R.id.changepassword_layout_newpassword) TextInputLayout layout_newpassword;
+    @BindView(R.id.changepassword_et_newpassword) TextInputEditText newpassword;
+    @BindView(R.id.changepassword_layout_confirmnewpassword) TextInputLayout layout_confirmnewpassword;
+    @BindView(R.id.changepassword_et_confirmnewpassword) TextInputEditText confirmnewpassword;
 
     private Context context;
     @Override
