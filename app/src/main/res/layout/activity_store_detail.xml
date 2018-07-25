@@ -26,8 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    app:layout_collapseMode="parallax"
-                    android:src="@drawable/fake_dress1"/>
+                    app:layout_collapseMode="parallax"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -52,7 +51,6 @@
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="50"
                             android:textSize="30sp"
                             android:textStyle="bold" />
 
@@ -80,7 +78,6 @@
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="150"
                             android:textSize="30sp"
                             android:textStyle="bold" />
 
@@ -108,7 +105,6 @@
                             android:id="@+id/detailstore_transaction"
                             android:textSize="30sp"
                             android:textStyle="bold"
-                            android:text="10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
@@ -132,7 +128,6 @@
                             android:id="@+id/detailstore_tv_courier"
                             android:textSize="30sp"
                             android:textStyle="bold"
-                            android:text="10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
@@ -161,8 +156,7 @@
                     android:layout_height="80dp"
                     android:layout_alignBottom="@+id/detailstore_btn_favorite"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="43dp"
-                    android:src="@drawable/fake_store1" />
+                    android:layout_marginBottom="43dp"/>
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
@@ -178,7 +172,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-5dp"
-                            android:text="Nama Toko"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="20sp"

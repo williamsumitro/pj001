@@ -89,7 +89,7 @@ public class StoreFragment extends Fragment {
                     }
                 }
                 else {
-                    Toasty.error(getContext(), "Something error", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(getContext(), "Please swipe down to refresh on Outlet Tab", Toast.LENGTH_SHORT, true).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }

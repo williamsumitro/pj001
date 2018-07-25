@@ -21,6 +21,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.ApproveOrder;
 import com.example.williamsumitro.dress.view.model.ApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -54,7 +55,7 @@ public class OrderApproveProduct extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private DecimalFormat formatter;
     private ProgressDialog progressDialog;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private OC_ProductRVAdapter rvadapter;
     private ArrayList<ApproveOrderProduct> approveOrderProductArrayList;
     private SweetAlertDialog sweetAlertDialog;
@@ -157,7 +158,7 @@ public class OrderApproveProduct extends AppCompatActivity {
     private void initGetIntent() {
         Intent getintent = getIntent();
             if (getintent.hasExtra(TRANSACTION_ID)){
-            productArrayList = (ArrayList<Product>) getintent.getSerializableExtra(PRODUCT);
+            productArrayList = (ArrayList<ProductInfo>) getintent.getSerializableExtra(PRODUCT);
             transactionid = getintent.getStringExtra(TRANSACTION_ID);
             storeid = getintent.getStringExtra(STORE_ID);
         }

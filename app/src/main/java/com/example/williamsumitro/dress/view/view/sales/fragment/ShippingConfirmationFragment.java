@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResult;
 import com.example.williamsumitro.dress.view.model.SizeInfo;
@@ -54,7 +55,7 @@ public class ShippingConfirmationFragment extends Fragment {
     private DecimalFormat formatter;
     private ArrayList<Sales_OrderResult> orderResultArrayList;
     private List<SizeInfo> sizeInfoList;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private SC_RVAdapter adapter;
     private String product;
     private SnapHelper snapHelper = new LinearSnapHelper();

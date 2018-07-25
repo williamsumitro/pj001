@@ -16,6 +16,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.ApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.CheckApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  */
 
 public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapter.ViewHolder>{
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private Context context;
     private DecimalFormat formatter;
     private List<String> sizelist;
@@ -44,7 +45,7 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
     private RadioButton lastCheckedRB = null;
     private String product_id;
 
-    public OC_ProductRVAdapter(ArrayList<Product> productArrayList, Context context){
+    public OC_ProductRVAdapter(ArrayList<ProductInfo> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
         approveOrderProductArrayList = new ArrayList<>();
@@ -88,7 +89,7 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         sizelist = new ArrayList<>();
-        final Product product = productArrayList.get(position);
+        final ProductInfo product = productArrayList.get(position);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(10,5,10,5);

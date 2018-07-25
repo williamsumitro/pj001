@@ -100,7 +100,7 @@ public class Sales_OrderResult {
     private String receiptStatus;
     @SerializedName("product")
     @Expose
-    private ArrayList<Product> product = null;
+    private ArrayList<ProductInfo> product = null;
 
 
     public Integer getTransactionId() {
@@ -303,11 +303,11 @@ public class Sales_OrderResult {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<Product> getProduct() {
+    public ArrayList<ProductInfo> getProduct() {
         return product;
     }
 
-    public void setProduct(ArrayList<Product> product) {
+    public void setProduct(ArrayList<ProductInfo> product) {
         this.product = product;
     }
 

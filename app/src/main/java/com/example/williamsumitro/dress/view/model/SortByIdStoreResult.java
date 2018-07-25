@@ -7,19 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by William Sumitro on 7/17/2018.
+ * Created by William Sumitro on 7/25/2018.
  */
 
-public class BestResponse implements Serializable{
+public class SortByIdStoreResult implements Serializable {
     @SerializedName("status")
     @Expose
     private Boolean status;
     @SerializedName("product_info")
     @Expose
     private ArrayList<ProductInfo> productInfo = null;
-    @SerializedName("result")
-    @Expose
-    private ArrayList<ProductInfo> result = null;
 
     public Boolean getStatus() {
         return status;
@@ -35,13 +32,5 @@ public class BestResponse implements Serializable{
 
     public void setProductInfo(ArrayList<ProductInfo> productInfo) {
         this.productInfo = productInfo;
-    }
-
-    public ArrayList<ProductInfo> getResult() {
-        return result;
-    }
-
-    public void setResult(ArrayList<ProductInfo> result) {
-        this.result = result;
     }
 }

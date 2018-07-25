@@ -276,6 +276,12 @@ public class Checkout_AddressFragment extends Fragment implements Step {
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
         if (isInformationValid()) {
+//            Toasty.info(context, "Name " + name.getText().toString() + "\n" +
+//                    "Address " + address.getText().toString()+ "\n" +
+//                    "Phone Number " + phonenumber.getText().toString()+ "\n" +
+//                    "Id Province " + idprovince+ "\n" +
+//                    "Id City " + idcity+ "\n" +
+//                    "Postal Code " + postalcode.getText().toString(), Toast.LENGTH_LONG, true).show();
             sessionManagement.keepCheckoutAddress(name.getText().toString(), address.getText().toString(),
                     phonenumber.getText().toString(), idprovince, idcity, postalcode.getText().toString());
         }

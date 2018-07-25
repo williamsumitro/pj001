@@ -17,6 +17,7 @@ import com.example.williamsumitro.dress.view.model.ApproveOrder;
 import com.example.williamsumitro.dress.view.model.ApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.CheckApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -182,7 +183,7 @@ public class OC_RVAdapter extends RecyclerView.Adapter<OC_RVAdapter.ViewHolder> 
         dialog.show();
     }
 
-    private void dialog_approve(final String transactionid, final ArrayList<Product> productArrayList, final String storeid){
+    private void dialog_approve(final String transactionid, final ArrayList<ProductInfo> productArrayList, final String storeid){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_approveproduct);
 

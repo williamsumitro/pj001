@@ -29,6 +29,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
+import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
@@ -100,7 +101,6 @@ public class DetailStore extends AppCompatActivity {
         setContentView(R.layout.activity_store_detail);
         iniView();
         initGetIntent();
-        get_detailstore();
         setupToolbar();
         initCollapToolbar();
     }
@@ -110,7 +110,6 @@ public class DetailStore extends AppCompatActivity {
         progressDialog.show();
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
-        service = apiUtils.getAPIService();
         service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
@@ -118,6 +117,7 @@ public class DetailStore extends AppCompatActivity {
                     service.req_get_user_store_detail(token, storeid).enqueue(new Callback<StoreDetailResponse>() {
                         @Override
                         public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+//                            Toasty.info(context, storeid, Toast.LENGTH_SHORT, true).show();
                             if (response.code()==200){
                                 storeDetails = response.body().getResult();
                                 courierServiceList = storeDetails.getCourierService();
@@ -138,7 +138,8 @@ public class DetailStore extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toasty.error(context, "Please try again", Toast.LENGTH_LONG, true).show();
+                            Toasty.info(context, t.getMessage(), Toast.LENGTH_LONG, true).show();
+                            Toasty.error(context, "Please Try again", Toast.LENGTH_LONG, true).show();
                         }
                     });
                 }
@@ -185,6 +186,7 @@ public class DetailStore extends AppCompatActivity {
                 api_favorite();
             }
         });
+
     }
 
     private void initData() {
@@ -266,9 +268,7 @@ public class DetailStore extends AppCompatActivity {
         Intent getintent = getIntent();
         if (getintent.hasExtra(STORE_ID)){
             storeid = getintent.getExtras().getString(STORE_ID);
-        }
-        else{
-            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
+            get_detailstore();
         }
     }
     private void iniView() {
@@ -281,6 +281,7 @@ public class DetailStore extends AppCompatActivity {
         progressDialog = new ProgressDialog(context);
         sessionManagement = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = sessionManagement.getUserDetails();
+        service = apiUtils.getAPIService();
         token = user.get(SessionManagement.TOKEN);
         df = new DecimalFormat("###.#");
         courierServiceList = new ArrayList<>();

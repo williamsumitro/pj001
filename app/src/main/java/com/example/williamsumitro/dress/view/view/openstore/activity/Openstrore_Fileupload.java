@@ -474,6 +474,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                             intent.putExtra(FILEUPLOAD, "FILEUPLOAD");
                             initanim(intent);
                             finish();
+                            sweetAlertDialog.dismiss();
                         }else{
                             String message = jsonResults.getString("message");
                             Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
@@ -515,7 +516,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                     .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-
+                            sweetAlertDialog.dismiss();
                         }
                     })
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

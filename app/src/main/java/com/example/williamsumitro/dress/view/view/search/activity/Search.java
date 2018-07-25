@@ -12,14 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,9 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
-import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
-import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.AdvancedSearchResult;
 import com.example.williamsumitro.dress.view.model.BestResponse;
@@ -52,12 +46,8 @@ import com.example.williamsumitro.dress.view.model.SortByIdResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
-import com.example.williamsumitro.dress.view.presenter.helper.InputFilterMinMax;
-import com.example.williamsumitro.dress.view.view.bag.activity.AddToBag;
 import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
-import com.example.williamsumitro.dress.view.view.purchase.history.adapter.PurchaseHistory_RV;
 import com.example.williamsumitro.dress.view.view.search.adapter.CourierAdapter;
-import com.example.williamsumitro.dress.view.view.search.adapter.SearchAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
 
@@ -128,9 +118,6 @@ public class Search extends AppCompatActivity {
         sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View itemview) {
-                progressDialog.setMessage("Wait a sec..");
-                progressDialog.show();
-                progressDialog.setCancelable(false);
                 final AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
                 builderSingle.setTitle("Sort by");
 
@@ -149,6 +136,9 @@ public class Search extends AppCompatActivity {
                 builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
+                        progressDialog.setMessage("Wait a sec..");
+                        progressDialog.show();
+                        progressDialog.setCancelable(false);
                         String strName = arrayAdapter.getItem(which);
                         int id = 0;
                         if (strName.equals("Recommended")){

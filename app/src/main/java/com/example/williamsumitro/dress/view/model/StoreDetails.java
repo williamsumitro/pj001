@@ -114,7 +114,7 @@ public class StoreDetails implements Serializable{
     private ArrayList<model_CourierService> courierService = null;
     @SerializedName("product")
     @Expose
-    private ArrayList<Product> product = null;
+    private ArrayList<ProductInfo> product = null;
 
     public Integer getUserId() {
         return userId;
@@ -304,7 +304,7 @@ public class StoreDetails implements Serializable{
     }
 
     public String getKtp() {
-        return ktp;
+        return apiUtils.getUrlImage() +  ktp;
     }
 
     public void setKtp(String ktp) {
@@ -312,7 +312,7 @@ public class StoreDetails implements Serializable{
     }
 
     public String getSiup() {
-        return siup;
+        return apiUtils.getUrlImage() +  siup;
     }
 
     public void setSiup(String siup) {
@@ -320,7 +320,7 @@ public class StoreDetails implements Serializable{
     }
 
     public String getNpwp() {
-        return npwp;
+        return apiUtils.getUrlImage() +  npwp;
     }
 
     public void setNpwp(String npwp) {
@@ -328,7 +328,7 @@ public class StoreDetails implements Serializable{
     }
 
     public String getSkdp() {
-        return skdp;
+        return apiUtils.getUrlImage() +  skdp;
     }
 
     public void setSkdp(String skdp) {
@@ -336,7 +336,7 @@ public class StoreDetails implements Serializable{
     }
 
     public String getTdp() {
-        return tdp;
+        return apiUtils.getUrlImage() +  tdp;
     }
 
     public void setTdp(String tdp) {
@@ -375,11 +375,11 @@ public class StoreDetails implements Serializable{
         this.courierService = courierService;
     }
 
-    public ArrayList<Product> getProduct() {
+    public ArrayList<ProductInfo> getProduct() {
         return product;
     }
 
-    public void setProduct(ArrayList<Product> product) {
+    public void setProduct(ArrayList<ProductInfo> product) {
         this.product = product;
     }
 

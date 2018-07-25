@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ProductRating;
 import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResult;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
@@ -120,7 +121,7 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
 
         }
     }
-    private void dialog_review(final String transactionid, final ArrayList<Product> productArrayList,
+    private void dialog_review(final String transactionid, final ArrayList<ProductInfo> productArrayList,
                                final String storeid, final String storename, final String storephoto){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_review);
@@ -332,7 +333,7 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
         });
         dialog.show();
     }
-    private void initDialog(final String message, int stats, final String transactionid, final String storeid, final ArrayList<Product> productArrayList){
+    private void initDialog(final String message, int stats, final String transactionid, final String storeid, final ArrayList<ProductInfo> productArrayList){
 
         if (stats == 2){
             sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
@@ -355,49 +356,54 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
         }
 
     }
-    private void api_submitreviewrating(String transactionid, String storeid, ArrayList<Product> productArrayList){
+    private void api_submitreviewrating(String transactionid, String storeid, ArrayList<ProductInfo> productArrayList){
         productRatingArrayList = rvadapter.retrivedata();
+        boolean chck = false;
         if (productRatingArrayList.size()>0){
             for (int i = 0; i<productRatingArrayList.size();i++){
                 if (productRatingArrayList.get(i).getReview().equals("")){
                     Toasty.info(context, "Please insert your review for " + productArrayList.get(i).getProductName(), Toast.LENGTH_SHORT, true).show();
+                    chck = true;
                     break;
                 }
-                else{
-                    service = apiUtils.getAPIService();
-                    SubmitReviewRating submitreviewrating = new SubmitReviewRating(token, transactionid, storeid, storerating, productRatingArrayList);
-                    service.req_submit_review_rating(submitreviewrating).enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.code()==200){
-                                try{
-                                    JSONObject jsonResults = new JSONObject(response.body().string());
-                                    if(jsonResults.getBoolean("status")){
-                                        String message = jsonResults.getString("message");
-                                        progressDialog.dismiss();
-                                        initDialog1(message, 1);
-                                    }else{
-                                        String message = jsonResults.getString("message");
-                                        progressDialog.dismiss();
-                                        initDialog1(message, 0);
-                                    }
-                                }catch (JSONException e){
-                                    e.printStackTrace();
-                                }catch (IOException e){
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            progressDialog.dismiss();
-                            initDialog1("", 0);
-                        }
-                    });
+                else {
+                    chck = false;
                 }
             }
-        }
+            if (!chck){
+                service = apiUtils.getAPIService();
+                SubmitReviewRating submitreviewrating = new SubmitReviewRating(token, transactionid, storeid, storerating, productRatingArrayList);
+                service.req_submit_review_rating(submitreviewrating).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.code()==200){
+                            try{
+                                JSONObject jsonResults = new JSONObject(response.body().string());
+                                if(jsonResults.getBoolean("status")){
+                                    String message = jsonResults.getString("message");
+                                    progressDialog.dismiss();
+                                    initDialog1(message, 1);
+                                }else{
+                                    String message = jsonResults.getString("message");
+                                    progressDialog.dismiss();
+                                    initDialog1(message, 0);
+                                }
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        progressDialog.dismiss();
+                        initDialog1("", 0);
+                    }
+                });
+            }
+            }
         else {
             Toasty.info(context, "Please insert your review to all product", Toast.LENGTH_SHORT, true).show();
         }
@@ -414,8 +420,9 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            reviewratingFragment.initRefresh();
+                            sweetAlertDialog.dismiss();
                             dialog.dismiss();
+                            reviewratingFragment.initRefresh();
                             sweetAlertDialog.dismiss();
                         }
                     }).show();

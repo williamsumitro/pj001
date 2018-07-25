@@ -38,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHolder> {
     private Context context;
     private ArrayList<StoreInfo> storeInfoArrayList;
+    private final static String STORE_ID = "STORE_ID";
 
     public StoreRVAdapter(ArrayList<StoreInfo> storeInfoArrayList, Context context) {
         this.storeInfoArrayList = storeInfoArrayList;
@@ -52,7 +53,7 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        StoreInfo storeInfo = storeInfoArrayList.get(position);
+        final StoreInfo storeInfo = storeInfoArrayList.get(position);
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         try{
@@ -78,6 +79,18 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
                 .placeholder(R.drawable.logo404)
                 .into(holder.image);
         holder.name.setText(storeInfo.getFullName());
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    Intent intent = new Intent(context, DetailStore.class);
+                    intent.putExtra(STORE_ID, storeInfo.getStoreId().toString());
+                    bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
+                    context.startActivity(intent, bundle);
+                }
+            }
+        });
 //        if (storeInfo.getRating() == 0){
 //            holder.star1.setImageResource(R.drawable.star0);
 //            holder.star2.setImageResource(R.drawable.star0);
@@ -154,17 +167,6 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailStore.class);
-                    Bundle bundle = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        bundle = ActivityOptions.makeCustomAnimation(context, R.anim.slideright, R.anim.fadeout).toBundle();
-                        context.startActivity(intent, bundle);
-                    }
-                }
-            });
         }
     }
 }

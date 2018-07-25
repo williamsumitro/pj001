@@ -118,7 +118,7 @@ public class HotFragment extends Fragment {
                     }
                 }
                 else {
-                    Toasty.error(context, "Something error", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -155,7 +155,7 @@ public class HotFragment extends Fragment {
                     }
                 }
                 else {
-                    Toasty.error(context, "Something error", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }

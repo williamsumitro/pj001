@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -47,7 +48,7 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
     private Dialog dialog;
     private DecimalFormat formatter;
     private CheckoutProductRVAdapter rvadapter;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private SnapHelper snapHelper;
     private Boolean click_accepted =false, click_rejected = false, click_pending = false;
     String note;
@@ -80,7 +81,7 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
             if (orderResult.getProductStatus()!=null){
                 productArrayList = new ArrayList<>();
                 for (int i = 0; i<orderResult.getProductStatus().size(); i++){
-                    Product product = new Product(orderResult.getProductStatus().get(i).getProductId(),
+                    ProductInfo product = new ProductInfo(orderResult.getProductStatus().get(i).getProductId(),
                             orderResult.getProductStatus().get(i).getProductName(),
                             orderResult.getProductStatus().get(i).getProductPhoto(),
                             orderResult.getProductStatus().get(i).getPriceUnit(),
@@ -102,7 +103,7 @@ public class PurchaseOrderRV extends RecyclerView.Adapter<PurchaseOrderRV.ViewHo
             if (orderResult.getProductRejected()!=null){
                 productArrayList = new ArrayList<>();
                 for (int i = 0; i<orderResult.getProductRejected().size();i++){
-                    Product product = new Product(orderResult.getProductRejected().get(i).getProductId(),
+                    ProductInfo product = new ProductInfo(orderResult.getProductRejected().get(i).getProductId(),
                             orderResult.getProductRejected().get(i).getProductName(),
                             orderResult.getProductRejected().get(i).getProductPhoto(),
                             orderResult.getProductRejected().get(i).getPriceUnit(),

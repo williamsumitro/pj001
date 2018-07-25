@@ -15,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -44,7 +45,9 @@ import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.ProvinceDetails;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResult;
+import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
+import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -115,7 +118,7 @@ public class EditStore extends AppCompatActivity {
     private SpinProvinceAdapter spinProvinceAdapter;
     private SpinCityAdapter spinCityAdapter;
     private SessionManagement sessionManagement;
-    private String token, idprovince, idcity, choosen_province, choosen_city, chosen_businesstype, year="", mediaPathLogo = "", mediaPathBanner = "";
+    private String token, idprovince, idcity, choosen_province, choosen_city, chosen_businesstype, year="", mediaPathLogo = "", mediaPathBanner = "", storeid;
     private Boolean checked = false, click_logo = false, click_banner = false;
     private List<String> bisnis = new ArrayList<>();
     private List<CourierDetails> courierDetailsList;
@@ -128,7 +131,7 @@ public class EditStore extends AppCompatActivity {
     private Dialog dialog;
     private StoreDetails storeDetails;
 
-    private final static String RESULT = "RESULT";
+    private final static String STORE_RESULT = "STORE_RESULT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,11 +139,7 @@ public class EditStore extends AppCompatActivity {
         setContentView(R.layout.activity_edit_store);
         initView();
         setuptoolbar();
-        initGetIntent();
-        initProvinceSpinner();
-        initBisnisSpinner();
-        initData();
-        initOnClick();
+        api_getuserstore();
     }
 
     private void initData() {
@@ -152,7 +151,7 @@ public class EditStore extends AppCompatActivity {
                 .load(storeDetails.getBanner())
                 .placeholder(R.drawable.logo404)
                 .into(banner);
-        storename.setText(storeDetails.getStoreName());
+        storename.setText(storeDetails.getName());
         if (storeDetails.getBusinessType().equals("Manufacture / Factory")){
             spinner_businesstype.setSelection(0);
         }
@@ -185,15 +184,55 @@ public class EditStore extends AppCompatActivity {
         tv_year.setText("Year Established : " + year);
         chosen_businesstype = storeDetails.getBusinessType();
     }
+    private void api_getuserstore() {
+        progressDialog.setMessage("Loading ...");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        service.req_get_user_store(token).enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                if (response.code()==200){
+                    storeid = response.body().getStore().getStoreId().toString();
+                    api_getstoredetail(storeid);
+                }
+                else {
+                    Toasty.error(context, response.message(), Toast.LENGTH_SHORT,true).show();
+                    progressDialog.dismiss();
+                }
+            }
 
-    private void initGetIntent() {
-        Intent getintent = getIntent();
-        if (getintent.hasExtra(RESULT)){
-            storeDetails = (StoreDetails) getintent.getSerializableExtra(RESULT);
-        }
-        else{
-            Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
-        }
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toasty.error(context, "Please try again", Toast.LENGTH_LONG, true).show();
+            }
+        });
+    }
+    private void api_getstoredetail(String store_id){
+        service.req_get_store_detail(store_id).enqueue(new Callback<StoreDetailResponse>() {
+            @Override
+            public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+                if (response.code()==200){
+                    storeDetails = response.body().getResult();
+                    initProvinceSpinner();
+                    initBisnisSpinner();
+                    initData();
+                    initOnClick();
+                    progressDialog.dismiss();
+                }
+                else {
+                    Toasty.error(context, response.message(), Toast.LENGTH_SHORT,true).show();
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toasty.error(context, "Please try again", Toast.LENGTH_LONG, true).show();
+            }
+        });
     }
 
 
@@ -487,159 +526,235 @@ public class EditStore extends AppCompatActivity {
                     MediaType text = MediaType.parse("text/plain");
                     progressDialog.setMessage("Uploading, please wait ....");
                     progressDialog.show();
+
                     RequestBody request_token = RequestBody.create(text, token);
                     RequestBody request_store_id = RequestBody.create(text, storeDetails.getStoreId().toString());
                     RequestBody request_store_businesstype = RequestBody.create(text, chosen_businesstype);
                     RequestBody request_store_established_year = RequestBody.create(text, year);
-                    RequestBody request_store_province = RequestBody.create(text, choosen_province);
-                    RequestBody request_store_city = RequestBody.create(text, choosen_city);
+                    RequestBody request_store_province = RequestBody.create(text, idprovince);
+                    RequestBody request_store_city = RequestBody.create(text, idcity);
                     RequestBody request_store_contact_person_name = RequestBody.create(text, name.getText().toString());
                     RequestBody request_store_contact_person_job_title = RequestBody.create(text, jobtitle.getText().toString());
                     RequestBody request_store_contact_person_phone_number = RequestBody.create(text, phonenumber.getText().toString());
                     RequestBody request_store_description = RequestBody.create(text, detail.getText().toString());
                     RequestBody request_store_name = RequestBody.create(text, storeDetails.getName());
-                    if (click_banner && click_logo){
-                        MultipartBody.Part body_photo = null;
-                        MultipartBody.Part body_banner = null;
+
+                    MultipartBody.Part body_photo;
+                    MultipartBody.Part body_banner;
+
+                    if (click_banner&&click_logo){
                         File filephoto = new File(mediaPathLogo);
                         RequestBody requestFileLogo = RequestBody.create(MediaType.parse("multipart/form-data"), filephoto);
                         body_photo = MultipartBody.Part.createFormData("photo", filephoto.getName(), requestFileLogo);
                         File filebanner = new File(mediaPathBanner);
                         RequestBody requestFileBanner = RequestBody.create(MediaType.parse("multipart/form-data"), filebanner);
                         body_banner = MultipartBody.Part.createFormData("banner", filebanner.getName(), requestFileBanner);
-                        service.req_update_store_information(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, body_photo, body_banner, request_store_name)
-                                .enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.code()==200){
-                                            try{
-                                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                                String message = jsonResults.getString("message");
-                                                if(jsonResults.getBoolean("status")){
-                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                                }else if (!jsonResults.getBoolean("status")){
-                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
-                                                }else {
-                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
-                                                }
-                                            }catch (JSONException e){
-                                                e.printStackTrace();
-                                            }catch (IOException e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        initDialog(3);
-                                    }
-                                });
                     }
                     else if (click_banner){
-                        MultipartBody.Part body_banner = null;
+                        RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("text/plain"), "");
+                        body_photo = MultipartBody.Part.createFormData("photo", "", attachmentEmpty);
+
                         File filebanner = new File(mediaPathBanner);
                         RequestBody requestFileBanner = RequestBody.create(MediaType.parse("multipart/form-data"), filebanner);
                         body_banner = MultipartBody.Part.createFormData("banner", filebanner.getName(), requestFileBanner);
-                        service.req_update_store_information_without_photo(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, body_banner, request_store_name)
-                                .enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.code()==200){
-                                            try{
-                                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                                String message = jsonResults.getString("message");
-                                                if(jsonResults.getBoolean("status")){
-                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                                    finish();
-                                                    MyStore.MYSTORE.finish();
-                                                }else if (!jsonResults.getBoolean("status")){
-                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
-                                                }else {
-                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
-                                                }
-                                            }catch (JSONException e){
-                                                e.printStackTrace();
-                                            }catch (IOException e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        initDialog(3);
-                                    }
-                                });
                     }
                     else if (click_logo){
-                        MultipartBody.Part body_photo = null;
                         File filephoto = new File(mediaPathLogo);
                         RequestBody requestFileLogo = RequestBody.create(MediaType.parse("multipart/form-data"), filephoto);
                         body_photo = MultipartBody.Part.createFormData("photo", filephoto.getName(), requestFileLogo);
-                        service.req_update_store_information_without_banner(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, body_photo, request_store_name)
-                                .enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.code()==200){
-                                            try{
-                                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                                String message = jsonResults.getString("message");
-                                                if(jsonResults.getBoolean("status")){
-                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                                    finish();
-                                                    MyStore.MYSTORE.finish();
-                                                }else if (!jsonResults.getBoolean("status")){
-                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
-                                                }else {
-                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
-                                                }
-                                            }catch (JSONException e){
-                                                e.printStackTrace();
-                                            }catch (IOException e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
 
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        initDialog(3);
-                                    }
-                                });
+                        RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("text/plain"), "");
+                        body_banner = MultipartBody.Part.createFormData("banner", "", attachmentEmpty);
                     }
                     else {
-                        service.req_update_store_information_without_photo_banner(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, request_store_name)
-                                .enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.code()==200){
-                                            try{
-                                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                                String message = jsonResults.getString("message");
-                                                if(jsonResults.getBoolean("status")){
-                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                                    finish();
-                                                    MyStore.MYSTORE.finish();
-                                                }else if (!jsonResults.getBoolean("status")){
-                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
-                                                }else {
-                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
-                                                }
-                                            }catch (JSONException e){
-                                                e.printStackTrace();
-                                            }catch (IOException e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        initDialog(3);
-                                    }
-                                });
+                        RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("text/plain"), "");
+                        body_photo = MultipartBody.Part.createFormData("photo", "", attachmentEmpty);
+                        body_banner = MultipartBody.Part.createFormData("banner", "", attachmentEmpty);
                     }
+
+                    service.req_update_store_information(request_token, request_store_id, request_store_name, request_store_businesstype,
+                            request_store_established_year, request_store_province, request_store_city,
+                            request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number,
+                            body_photo, body_banner, request_store_description)
+                            .enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.code()==200){
+                                            Toasty.success(context, "Updated Successfully", Toast.LENGTH_SHORT, true).show();
+                                            finish();
+                                            MyStore.MYSTORE.finish();
+                                            progressDialog.dismiss();
+                                    }
+                                    else {
+                                        Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                                        progressDialog.dismiss();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    initDialog(3);
+                                    progressDialog.dismiss();
+                                }
+                            });
+
+//                    if (click_banner && click_logo){
+//                        MultipartBody.Part body_photo = null;
+//                        MultipartBody.Part body_banner = null;
+//                        File filephoto = new File(mediaPathLogo);
+//                        RequestBody requestFileLogo = RequestBody.create(MediaType.parse("multipart/form-data"), filephoto);
+//                        body_photo = MultipartBody.Part.createFormData("photo", filephoto.getName(), requestFileLogo);
+//                        File filebanner = new File(mediaPathBanner);
+//                        RequestBody requestFileBanner = RequestBody.create(MediaType.parse("multipart/form-data"), filebanner);
+//                        body_banner = MultipartBody.Part.createFormData("banner", filebanner.getName(), requestFileBanner);
+//                        service.req_update_store_information(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, body_photo, body_banner, request_store_name)
+//                                .enqueue(new Callback<ResponseBody>() {
+//                                    @Override
+//                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                                        if (response.code()==200){
+//                                            try{
+//                                                JSONObject jsonResults = new JSONObject(response.body().string());
+//                                                String message = jsonResults.getString("message");
+//                                                if(jsonResults.getBoolean("status")){
+//                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                }else if (!jsonResults.getBoolean("status")){
+//                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                }else {
+//                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
+//                                                }
+//                                            }catch (JSONException e){
+//                                                e.printStackTrace();
+//                                            }catch (IOException e){
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                        else {
+//                                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                                        initDialog(3);
+//                                    }
+//                                });
+//                    }
+//                    else if (click_banner){
+//                        MultipartBody.Part body_banner = null;
+//                        File filebanner = new File(mediaPathBanner);
+//                        RequestBody requestFileBanner = RequestBody.create(MediaType.parse("multipart/form-data"), filebanner);
+//                        body_banner = MultipartBody.Part.createFormData("banner", filebanner.getName(), requestFileBanner);
+//                        service.req_update_store_information_without_photo(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, body_banner, request_store_name)
+//                                .enqueue(new Callback<ResponseBody>() {
+//                                    @Override
+//                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                                        if (response.code()==200){
+//                                            try{
+//                                                JSONObject jsonResults = new JSONObject(response.body().string());
+//                                                String message = jsonResults.getString("message");
+//                                                if(jsonResults.getBoolean("status")){
+//                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                    finish();
+//                                                    MyStore.MYSTORE.finish();
+//                                                }else if (!jsonResults.getBoolean("status")){
+//                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                }else {
+//                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
+//                                                }
+//                                            }catch (JSONException e){
+//                                                e.printStackTrace();
+//                                            }catch (IOException e){
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                        else {
+//                                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                                        initDialog(3);
+//                                    }
+//                                });
+//                    }
+//                    else if (click_logo){
+//                        MultipartBody.Part body_photo = null;
+//                        File filephoto = new File(mediaPathLogo);
+//                        RequestBody requestFileLogo = RequestBody.create(MediaType.parse("multipart/form-data"), filephoto);
+//                        body_photo = MultipartBody.Part.createFormData("photo", filephoto.getName(), requestFileLogo);
+//                        service.req_update_store_information_without_banner(request_token, request_store_id, request_store_businesstype, request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name, request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description, body_photo, request_store_name)
+//                                .enqueue(new Callback<ResponseBody>() {
+//                                    @Override
+//                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                                        if (response.code()==200){
+//                                            try{
+//                                                JSONObject jsonResults = new JSONObject(response.body().string());
+//                                                String message = jsonResults.getString("message");
+//                                                if(jsonResults.getBoolean("status")){
+//                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                    finish();
+//                                                    MyStore.MYSTORE.finish();
+//                                                }else if (!jsonResults.getBoolean("status")){
+//                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                }else {
+//                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
+//                                                }
+//                                            }catch (JSONException e){
+//                                                e.printStackTrace();
+//                                            }catch (IOException e){
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                        else {
+//                                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                                        initDialog(3);
+//                                    }
+//                                });
+//                    }
+//                    else {
+//                        service.req_update_store_information(request_token, request_store_id, request_store_businesstype,
+//                                request_store_established_year, request_store_province, request_store_city, request_store_contact_person_name,
+//                                request_store_contact_person_job_title, request_store_contact_person_phone_number, request_store_description,
+//                                "", "", request_store_name)
+//                                .enqueue(new Callback<ResponseBody>() {
+//                                    @Override
+//                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                                        if (response.code()==200){
+//                                            try{
+//                                                JSONObject jsonResults = new JSONObject(response.body().string());
+//                                                String message = jsonResults.getString("message");
+//                                                if(jsonResults.getBoolean("status")){
+//                                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                    finish();
+//                                                    MyStore.MYSTORE.finish();
+//                                                }else if (!jsonResults.getBoolean("status")){
+//                                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+//                                                }else {
+//                                                    Snackbar.make(container, "WHAT ERROR IS THIS ?", Snackbar.LENGTH_LONG).show();
+//                                                }
+//                                            }catch (JSONException e){
+//                                                e.printStackTrace();
+//                                            }catch (IOException e){
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                        else {
+//                                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                                        initDialog(3);
+//                                    }
+//                                });
+//                    }
                 }
                 else {
                     Toasty.error(context, "Please check the information again, something is error", Toast.LENGTH_SHORT, true).show();

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.squareup.picasso.Picasso;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  */
 
 public class CheckoutProductRVAdapter extends RecyclerView.Adapter<CheckoutProductRVAdapter.ViewHolder> {
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private Context context;
     private DecimalFormat formatter;
     private List<String> sizelist;
@@ -37,7 +38,7 @@ public class CheckoutProductRVAdapter extends RecyclerView.Adapter<CheckoutProdu
     SessionManagement sessionManagement;
     private apiService service;
 
-    public CheckoutProductRVAdapter(ArrayList<Product> productArrayList, Context context){
+    public CheckoutProductRVAdapter(ArrayList<ProductInfo> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
         sessionManagement = new SessionManagement(context);
@@ -54,7 +55,7 @@ public class CheckoutProductRVAdapter extends RecyclerView.Adapter<CheckoutProdu
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         sizelist = new ArrayList<>();
-        final Product product = productArrayList.get(position);
+        final ProductInfo product = productArrayList.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.productname.setText(product.getProductName());
         Picasso.with(context)

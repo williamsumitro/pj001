@@ -23,7 +23,7 @@
         <activity android:name=".view.view.authentication.Register" />
         <activity android:name=".view.view.product.activity.ManagePasswords" />
         <activity android:name=".view.view.Help" />
-        <activity android:name=".view.view.bag.activity.AddToBag" />
+        <activity android:name=".view.view.bag.activity.AddToBagActivity" />
         <activity android:name=".view.view.bag.activity.ShoppingBag" />
         <activity android:name=".view.view.checkout.activity.Checkout" />
         <activity android:name=".view.view.filter.Filter" />
@@ -69,7 +69,7 @@
         <activity android:name=".view.view.product.activity.MyProduct" />
         <activity android:name=".view.view.mystore.activity.MyStore" />
         <activity android:name=".view.view.mystore.activity.SupportingDocument" />
-        <activity android:name=".view.view.mystore.activity.CourierService"></activity>
+        <activity android:name=".view.view.mystore.activity.CourierServiceActivity"></activity>
     </application>
 
 </manifest>

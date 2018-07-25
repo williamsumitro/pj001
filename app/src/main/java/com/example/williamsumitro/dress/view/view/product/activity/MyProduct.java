@@ -17,9 +17,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
@@ -29,6 +32,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.MyProductRV;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -44,6 +48,8 @@ public class MyProduct extends AppCompatActivity {
     @BindView(R.id.myproduct_toolbar) Toolbar toolbar;
     @BindView(R.id.myproduct_rv) RecyclerView recyclerView;
     @BindView(R.id.myproduct_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.myproduct_ln_bottom) LinearLayout container_bottom;
+    @BindView(R.id.myproduct_ln_top) LinearLayout container_top;
 
     private Context context;
     private SessionManagement sessionManagement;
@@ -51,6 +57,7 @@ public class MyProduct extends AppCompatActivity {
     private apiService service;
     private String storeid, token;
     private MyProductRV adapter;
+    private ArrayList<ProductInfo> productArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +109,18 @@ public class MyProduct extends AppCompatActivity {
             @Override
             public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
                 if (response.code()==200){
-                    adapter = new MyProductRV(response.body().getResult().getProduct(), context);
-                    RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(context, 2);
-                    recyclerView.setLayoutManager(grid_layoutmanager);
-                    AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
-                    alphaAdapter.setDuration(1000);
-                    alphaAdapter.setInterpolator(new OvershootInterpolator());
-                    recyclerView.setAdapter(alphaAdapter);
+                    productArrayList = response.body().getResult().getProduct();
+                    if (productArrayList.size()>0){
+                        container_bottom.setVisibility(View.VISIBLE);
+                        container_top.setVisibility(View.GONE);
+                        setupRV();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                    else {
+                        container_bottom.setVisibility(View.GONE);
+                        container_top.setVisibility(View.VISIBLE);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -120,7 +132,15 @@ public class MyProduct extends AppCompatActivity {
             }
         });
 
-
+    }
+    private void setupRV(){
+        adapter = new MyProductRV(productArrayList, context);
+        RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(context, 2);
+        recyclerView.setLayoutManager(grid_layoutmanager);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(alphaAdapter);
     }
     private void initView(){
         ButterKnife.bind(this);
@@ -133,6 +153,7 @@ public class MyProduct extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(this);
         service = apiUtils.getAPIService();
+        productArrayList = new ArrayList<>();
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  */
 
 public class MyProductRV extends RecyclerView.Adapter<MyProductRV.ViewHolder> {
-    private ArrayList<Product> products;
+    private ArrayList<ProductInfo> products;
     private int favoriteclick = 0;
     private Context context;
     private DecimalFormat formatter;
@@ -48,7 +48,7 @@ public class MyProductRV extends RecyclerView.Adapter<MyProductRV.ViewHolder> {
     private ProgressDialog progressDialog;
     private Dialog dialog;
 
-    public MyProductRV(ArrayList<Product> products, Context context) {
+    public MyProductRV(ArrayList<ProductInfo> products, Context context) {
         this.products = products;
         this.context = context;
         progressDialog = new ProgressDialog(context);
@@ -62,7 +62,7 @@ public class MyProductRV extends RecyclerView.Adapter<MyProductRV.ViewHolder> {
 
     @Override
     public void onBindViewHolder(MyProductRV.ViewHolder holder, int position) {
-        final Product product = products.get(position);
+        final ProductInfo product = products.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.name.setText(product.getProductName());
         priceList = product.getPrice();
@@ -85,7 +85,7 @@ public class MyProductRV extends RecyclerView.Adapter<MyProductRV.ViewHolder> {
         });
     }
 
-    private void get_rating(Product product, ViewHolder holder){
+    private void get_rating(ProductInfo product, ViewHolder holder){
         if (product.getAverageRating() != null){
             if (Double.parseDouble(product.getAverageRating()) == 0){
                 holder.star1.setImageResource(R.drawable.star0);

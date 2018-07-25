@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -51,7 +52,7 @@ import retrofit2.Response;
  */
 
 public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBagProductRVAdapter.ViewHolder> {
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private Context context;
     private DecimalFormat formatter;
     private List<String> sizelist;
@@ -63,7 +64,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     private ProgressDialog progressDialog;
     private final static String PRODUCT_ID = "PRODUCT_ID";
     private final static String IMAGE = "IMAGE";
-    public ShoppingBagProductRVAdapter(ArrayList<Product> productArrayList, Context context){
+    public ShoppingBagProductRVAdapter(ArrayList<ProductInfo> productArrayList, Context context){
         this.context = context;
         this.productArrayList = productArrayList;
         sessionManagement = new SessionManagement(context);
@@ -81,7 +82,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         sizelist = new ArrayList<>();
-        final Product product = productArrayList.get(position);
+        final ProductInfo product = productArrayList.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
@@ -144,7 +145,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
             }
         });
     }
-    private void api_deleteproduct(final Product product){
+    private void api_deleteproduct(final ProductInfo product){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
         progressDialog.setCancelable(true);
@@ -218,7 +219,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
             ButterKnife.bind(this, itemView);
         }
     }
-    private void initDialog(int stats, final Product product){
+    private void initDialog(int stats, final ProductInfo product){
 
         if(stats == 1){
             sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);

@@ -18,7 +18,7 @@ public class DownlinePartnershipResult {
     private String storeNamePartner;
     @SerializedName("product")
     @Expose
-    private ArrayList<Product> product = null;
+    private ArrayList<ProductInfo> product = null;
 
     public Integer getStoreIdPartner() {
         return storeIdPartner;
@@ -36,11 +36,11 @@ public class DownlinePartnershipResult {
         this.storeNamePartner = storeNamePartner;
     }
 
-    public ArrayList<Product> getProduct() {
+    public ArrayList<ProductInfo> getProduct() {
         return product;
     }
 
-    public void setProduct(ArrayList<Product> product) {
+    public void setProduct(ArrayList<ProductInfo> product) {
         this.product = product;
     }
 }

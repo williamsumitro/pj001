@@ -90,7 +90,7 @@ public class MyDownlinePartnership extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Upline Partner");
+        getSupportActionBar().setTitle("My Downline Partners");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

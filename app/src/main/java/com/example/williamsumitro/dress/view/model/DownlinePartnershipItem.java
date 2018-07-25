@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class DownlinePartnershipItem {
     private String store_name_partner;
-    private Product product;
-    public DownlinePartnershipItem(String store_name_partner, Product product){
+    private ProductInfo product;
+    public DownlinePartnershipItem(String store_name_partner, ProductInfo product){
         this.store_name_partner = store_name_partner;
         this.product = product;
     }
@@ -23,11 +23,11 @@ public class DownlinePartnershipItem {
         this.store_name_partner = store_name_partner;
     }
 
-    public Product getProduct() {
+    public ProductInfo getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductInfo product) {
         this.product = product;
     }
 }

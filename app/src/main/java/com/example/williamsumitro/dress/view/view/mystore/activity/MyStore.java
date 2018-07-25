@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -38,8 +37,8 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.mystore.adapter.MyStoreVP;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
-import com.example.williamsumitro.dress.view.view.store.adapter.StoreDetailVPAdapter;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -297,7 +296,7 @@ public class MyStore extends AppCompatActivity {
     private void setupViewPager(){
         Bundle bundle = new Bundle();
         bundle.putSerializable(STORE_RESULT, storeDetails);
-        viewPager.setAdapter(new StoreDetailVPAdapter(getSupportFragmentManager(),bundle));
+        viewPager.setAdapter(new MyStoreVP(getSupportFragmentManager(),bundle));
         tabLayout.setupWithViewPager(viewPager);
     }
     private void initDialog(ArrayList<model_CourierService> courierServices){
@@ -340,7 +339,6 @@ public class MyStore extends AppCompatActivity {
                             @Override
                             public void onBoomButtonClick(int index) {
                                 Intent intent = new Intent(context, EditStore.class);
-                                intent.putExtra(RESULT, storeDetails);
                                 initanim(intent);
                             }
                         });
@@ -384,7 +382,7 @@ public class MyStore extends AppCompatActivity {
                         .listener(new OnBMClickListener() {
                             @Override
                             public void onBoomButtonClick(int index) {
-                                Intent intent = new Intent(context, EditStore.class);
+                                Intent intent = new Intent(context, CourierServiceActivity.class);
                                 initanim(intent);
                             }
                         });

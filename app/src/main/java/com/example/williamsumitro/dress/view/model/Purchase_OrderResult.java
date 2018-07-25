@@ -87,7 +87,7 @@ public class Purchase_OrderResult {
     private String totalPrice;
     @SerializedName("product_ordered")
     @Expose
-    private ArrayList<Product> productOrdered = null;
+    private ArrayList<ProductInfo> productOrdered = null;
     @SerializedName("product_accepted")
     @Expose
     private ArrayList<ProductStatus> productStatus = null;
@@ -295,11 +295,11 @@ public class Purchase_OrderResult {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<Product> getProduct() {
+    public ArrayList<ProductInfo> getProduct() {
         return productOrdered;
     }
 
-    public void setProduct(ArrayList<Product> productOrdered) {
+    public void setProduct(ArrayList<ProductInfo> productOrdered) {
         this.productOrdered = productOrdered;
     }
 

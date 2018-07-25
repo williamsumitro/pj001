@@ -39,8 +39,8 @@ import butterknife.ButterKnife;
  */
 
 public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHolder> implements Filterable {
-    private ArrayList<Product> productArrayList;
-    private ArrayList<Product> productArrayListFiltered;
+    private ArrayList<ProductInfo> productArrayList;
+    private ArrayList<ProductInfo> productArrayListFiltered;
     private int favoriteclick = 0;
     private Context context;
     private DecimalFormat formatter;
@@ -51,7 +51,7 @@ public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHold
     private ProgressDialog progressDialog;
     private Dialog dialog;
 
-    public StoreProductRV (ArrayList<Product> productArrayList, Context context){
+    public StoreProductRV (ArrayList<ProductInfo> productArrayList, Context context){
         this.productArrayList = productArrayList;
         this.productArrayListFiltered = productArrayList;
         this.context = context;
@@ -67,7 +67,7 @@ public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHold
     @Override
 
     public void onBindViewHolder(StoreProductRV.ViewHolder holder, int position) {
-        final Product product = productArrayListFiltered.get(position);
+        final ProductInfo product = productArrayListFiltered.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.name.setText(product.getProductName());
         priceList = product.getPrice();
@@ -95,7 +95,7 @@ public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHold
         return productArrayListFiltered.size();
     }
 
-    private void get_rating(Product product, ViewHolder holder){
+    private void get_rating(ProductInfo product, ViewHolder holder){
         if (Double.parseDouble(product.getAverageRating()) == 0){
             holder.star1.setImageResource(R.drawable.star0);
             holder.star2.setImageResource(R.drawable.star0);
@@ -164,8 +164,8 @@ public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHold
                 if (charString.isEmpty()) {
                     productArrayListFiltered = productArrayList;
                 } else {
-                    ArrayList<Product> filteredList = new ArrayList<>();
-                    for (Product row : productArrayList) {
+                    ArrayList<ProductInfo> filteredList = new ArrayList<>();
+                    for (ProductInfo row : productArrayList) {
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
@@ -184,7 +184,7 @@ public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHold
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                productArrayListFiltered = (ArrayList<Product>) filterResults.values;
+                productArrayListFiltered = (ArrayList<ProductInfo>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

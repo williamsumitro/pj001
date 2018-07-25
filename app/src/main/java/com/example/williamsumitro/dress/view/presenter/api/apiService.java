@@ -28,6 +28,7 @@ import com.example.williamsumitro.dress.view.model.RFQ_ActiveResponse;
 import com.example.williamsumitro.dress.view.model.RFQ_HistoryResponse;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResponse;
 import com.example.williamsumitro.dress.view.model.SortByIdResult;
+import com.example.williamsumitro.dress.view.model.SortByIdStoreResult;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
@@ -410,6 +411,7 @@ public interface apiService {
     Call<ResponseBody> req_update_store_information(
             @Part("token") RequestBody token,
             @Part("store_id") RequestBody store_id,
+            @Part("name") RequestBody name,
             @Part("business_type") RequestBody business_type,
             @Part("established_year") RequestBody established_year,
             @Part("province") RequestBody province,
@@ -417,65 +419,24 @@ public interface apiService {
             @Part("contact_person_name") RequestBody contact_person_name,
             @Part("contact_person_job_title") RequestBody contact_person_job_title,
             @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
-            @Part("description") RequestBody description,
             @Part MultipartBody.Part photo,
             @Part MultipartBody.Part banner,
-            @Part("store_name") RequestBody store_name
+            @Part("description") RequestBody description
     );
 
 
     @Multipart
-    @POST("update_store_information")
-    Call<ResponseBody> req_update_store_information_without_photo(
+    @POST("update_store_document")
+    Call<ResponseBody> req_update_store_legaldoc(
             @Part("token") RequestBody token,
             @Part("store_id") RequestBody store_id,
-            @Part("business_type") RequestBody business_type,
-            @Part("established_year") RequestBody established_year,
-            @Part("province") RequestBody province,
-            @Part("city") RequestBody city,
-            @Part("contact_person_name") RequestBody contact_person_name,
-            @Part("contact_person_job_title") RequestBody contact_person_job_title,
-            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
-            @Part("description") RequestBody description,
-            @Part MultipartBody.Part banner,
-            @Part("store_name") RequestBody store_name
+            @Part("store_name") RequestBody store_name,
+            @Part MultipartBody.Part ktp,
+            @Part MultipartBody.Part siup,
+            @Part MultipartBody.Part npwp,
+            @Part MultipartBody.Part skdp,
+            @Part MultipartBody.Part tdp
     );
-
-
-    @Multipart
-    @POST("update_store_information")
-    Call<ResponseBody> req_update_store_information_without_banner(
-            @Part("token") RequestBody token,
-            @Part("store_id") RequestBody store_id,
-            @Part("business_type") RequestBody business_type,
-            @Part("established_year") RequestBody established_year,
-            @Part("province") RequestBody province,
-            @Part("city") RequestBody city,
-            @Part("contact_person_name") RequestBody contact_person_name,
-            @Part("contact_person_job_title") RequestBody contact_person_job_title,
-            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
-            @Part("description") RequestBody description,
-            @Part MultipartBody.Part photo,
-            @Part("store_name") RequestBody store_name
-    );
-
-
-    @Multipart
-    @POST("update_store_information")
-    Call<ResponseBody> req_update_store_information_without_photo_banner(
-            @Part("token") RequestBody token,
-            @Part("store_id") RequestBody store_id,
-            @Part("business_type") RequestBody business_type,
-            @Part("established_year") RequestBody established_year,
-            @Part("province") RequestBody province,
-            @Part("city") RequestBody city,
-            @Part("contact_person_name") RequestBody contact_person_name,
-            @Part("contact_person_job_title") RequestBody contact_person_job_title,
-            @Part("contact_person_phone_number") RequestBody contact_person_phone_number,
-            @Part("description") RequestBody description,
-            @Part("store_name") RequestBody store_name
-    );
-
 
     @FormUrlEncoded
     @POST("update_user_profile")
@@ -513,5 +474,14 @@ public interface apiService {
 
     @POST("get_all_store")
     Call<AllStoreResponse> req_get_all_store();
+
+
+    @FormUrlEncoded
+    @POST("get_sort_by_id_store")
+    Call<SortByIdStoreResult> req_get_sort_by_id_store(@Field("store_id") String store_id, @Field("token") String token, @Field("sort_id") String sort_id);
+
+    @FormUrlEncoded
+    @POST("get_product_by_style")
+    Call<BestResponse> req_get_product_by_style(@Field("style_id") String style_id);
 
 }

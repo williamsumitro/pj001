@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
@@ -67,7 +68,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
     private SnapHelper snapHelper;
     private Boolean click_accepted = false, click_rejected = false;
     private CheckoutProductRVAdapter rvadapter;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private Dialog dialog;
 
     private final static String RESULT = "RESULT";
@@ -143,7 +144,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
             rv_accepted.setVisibility(View.VISIBLE);
             productArrayList = new ArrayList<>();
             for (int i = 0; i<result.getProductStatus().size(); i++){
-                Product product = new Product(result.getProductStatus().get(i).getProductId(),
+                ProductInfo product = new ProductInfo(result.getProductStatus().get(i).getProductId(),
                         result.getProductStatus().get(i).getProductName(),
                         result.getProductStatus().get(i).getProductPhoto(),
                         result.getProductStatus().get(i).getPriceUnit(),
@@ -166,7 +167,7 @@ public class PurchaseHistoryDetail extends AppCompatActivity {
             rv_rejected.setVisibility(View.VISIBLE);
             productArrayList = new ArrayList<>();
             for (int i = 0; i<result.getProductRejected().size();i++){
-                Product product = new Product(result.getProductRejected().get(i).getProductId(),
+                ProductInfo product = new ProductInfo(result.getProductRejected().get(i).getProductId(),
                         result.getProductRejected().get(i).getProductName(),
                         result.getProductRejected().get(i).getProductPhoto(),
                         result.getProductRejected().get(i).getPriceUnit(),

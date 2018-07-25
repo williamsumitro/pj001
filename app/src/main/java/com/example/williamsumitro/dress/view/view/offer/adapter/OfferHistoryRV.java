@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
@@ -115,15 +116,16 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
         final TextView description = (TextView) dialog.findViewById(R.id.dialog_offerdetail_tv_description);
         final TextView weight = (TextView) dialog.findViewById(R.id.dialog_offerdetail_tv_weight);
         final Button close = (Button) dialog.findViewById(R.id.dialog_offerdetail_btn_close);
+        final LinearLayout container_total = (LinearLayout) dialog.findViewById(R.id.dialog_offerdetail_ln_total);
 
         Picasso.with(context)
                 .load(offer_photo)
                 .into(image);
         price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(price_unit))));
-        weight.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(weight_unit))));
+        weight.setText(formatter.format(Double.parseDouble(String.valueOf(weight_unit))) + " gr");
         description.setText(des);
         storename.setVisibility(View.GONE);
-        total.setVisibility(View.GONE);
+        container_total.setVisibility(View.GONE);
         location.setVisibility(View.GONE);
 
         close.setOnClickListener(new View.OnClickListener() {

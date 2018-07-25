@@ -72,7 +72,13 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
         formatter = new DecimalFormat("#,###,###");
         holder.name.setText(productInfo.getProductName());
         priceList = productInfo.getPrice();
-        holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(productInfo.getMaxPrice()))));
+        if (productInfo.getMaxPrice().matches("\\d+(?:\\.\\d+)?")){
+            holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(productInfo.getMaxPrice()))));
+        }
+        else {
+            holder.price.setText(productInfo.getMaxPrice());
+        }
+
         Picasso.with(context)
                 .load(productInfo.getPhoto())
                 .resize(180, 200)

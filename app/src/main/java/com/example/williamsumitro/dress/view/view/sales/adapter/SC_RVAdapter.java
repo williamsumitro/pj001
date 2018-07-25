@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.Sales_OrderResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -50,7 +51,7 @@ import retrofit2.Response;
 public class SC_RVAdapter extends RecyclerView.Adapter<SC_RVAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Sales_OrderResult> orderresultArrayList;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private apiService service;
     private String token;
     private SessionManagement sessionManagement;

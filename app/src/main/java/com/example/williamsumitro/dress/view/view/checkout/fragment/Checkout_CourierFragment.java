@@ -110,8 +110,6 @@ public class Checkout_CourierFragment extends Fragment implements Step {
         progressDialog = new ProgressDialog(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
-        HashMap<String, String> idcity = sessionManagement.getCheckoutIdCity();
-        id_city = idcity.get(SessionManagement.CHECKOUT_IDCITY);
     }
     @Nullable
     @Override
@@ -176,6 +174,9 @@ public class Checkout_CourierFragment extends Fragment implements Step {
     }
 
     private void api_getcheckoutinfo() {
+        HashMap<String, String> idcity = sessionManagement.getCheckoutIdCity();
+        id_city = idcity.get(SessionManagement.CHECKOUT_IDCITY);
+//        Toasty.warning(context, id_city, Toast.LENGTH_LONG, true).show();
         progressDialog.setMessage("Please wait ....");
         progressDialog.show();
         progressDialog.setCancelable(false);

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ProductRating;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
@@ -63,7 +64,7 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private DecimalFormat formatter;
     private ProgressDialog progressDialog;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private ArrayList<ProductRating> productRatingArrayList;
     private SweetAlertDialog sweetAlertDialog;
     private PurchaseReviewRatingDetail_RV rvadapter;
@@ -364,7 +365,7 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
     private void initGetIntent() {
         Intent getintent = getIntent();
         if (getintent.hasExtra(TRANSACTION_ID)){
-            productArrayList = (ArrayList<Product>) getintent.getSerializableExtra(PRODUCT);
+            productArrayList = (ArrayList<ProductInfo>) getintent.getSerializableExtra(PRODUCT);
             transactionid = getintent.getStringExtra(TRANSACTION_ID);
             storeid = getintent.getStringExtra(STORE_ID);
             storename = getintent.getStringExtra(STORE_NAME);

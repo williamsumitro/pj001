@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,13 +13,13 @@ import java.util.List;
 public class CourierResponse {
     @SerializedName("courier")
     @Expose
-    private List<CourierDetails> courier = null;
+    private ArrayList<CourierDetails> courier = null;
 
-    public List<CourierDetails> getCourier() {
+    public ArrayList<CourierDetails> getCourier() {
         return courier;
     }
 
-    public void setCourier(List<CourierDetails> courier) {
+    public void setCourier(ArrayList<CourierDetails> courier) {
         this.courier = courier;
     }
 }

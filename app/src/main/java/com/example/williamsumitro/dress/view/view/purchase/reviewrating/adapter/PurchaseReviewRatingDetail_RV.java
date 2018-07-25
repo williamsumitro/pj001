@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.ApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ProductRating;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
 import com.squareup.picasso.Picasso;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by William Sumitro on 7/1/2018.
@@ -29,12 +32,12 @@ import butterknife.ButterKnife;
 
 public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<PurchaseReviewRatingDetail_RV.ViewHolder> {
     private Context context;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private ArrayList<ProductRating> productRatingArrayList;
     private String rating = "0";
     private Boolean checked_star1 = false, checked_star2 = false, checked_star3 = false, checked_star4 = false, checked_star5 = false;
 
-    public PurchaseReviewRatingDetail_RV(Context context, ArrayList<Product> productArrayList){
+    public PurchaseReviewRatingDetail_RV(Context context, ArrayList<ProductInfo> productArrayList){
         this.context = context;
         this.productArrayList = productArrayList;
         productRatingArrayList = new ArrayList<>();
@@ -58,7 +61,7 @@ public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<Purchase
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Product product = productArrayList.get(position);
+        final ProductInfo product = productArrayList.get(position);
         holder.product_name.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
@@ -242,7 +245,7 @@ public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<Purchase
             }
         });
     }
-    private void updateProductArrayList(Product product, String rating, String review){
+    private void updateProductArrayList(ProductInfo product, String rating, String review){
         Boolean ketemu = false;
         Integer index = -1;
         if (productRatingArrayList.size()>0){

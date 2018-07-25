@@ -9,9 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +24,6 @@ import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.Product_Size_Qty;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
-import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.squareup.picasso.Picasso;
@@ -49,7 +46,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddToBag extends AppCompatActivity implements QuantityView.OnQuantityChangeListener {
+public class AddToBagActivity extends AppCompatActivity implements QuantityView.OnQuantityChangeListener {
     @BindView(R.id.addtobag_tvnameproduct) TextView nameproduct;
     @BindView(R.id.addtobag_tvpriceproduct) TextView priceproduct;
     @BindView(R.id.addtobag_tvtotal) TextView total;
@@ -115,9 +112,9 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         qv_s.setQuantityClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBag.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
                 builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBag.this).inflate(R.layout.dialog_qty, null, false);
+                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
                 final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
 
                 et.setText(String.valueOf(qv_s.getQuantity()));
@@ -143,9 +140,9 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         qv_m.setQuantityClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBag.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
                 builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBag.this).inflate(R.layout.dialog_qty, null, false);
+                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
                 final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
                 et.setText(String.valueOf(qv_m.getQuantity()));
 
@@ -172,9 +169,9 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         qv_l.setQuantityClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBag.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
                 builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBag.this).inflate(R.layout.dialog_qty, null, false);
+                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
                 final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
                 et.setText(String.valueOf(qv_l.getQuantity()));
 
@@ -200,9 +197,9 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         qv_xl.setQuantityClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBag.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
                 builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBag.this).inflate(R.layout.dialog_qty, null, false);
+                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
                 final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
                 et.setText(String.valueOf(qv_xl.getQuantity()));
 
@@ -228,9 +225,9 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         qv_free.setQuantityClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBag.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
                 builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBag.this).inflate(R.layout.dialog_qty, null, false);
+                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
                 final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
                 et.setText(String.valueOf(qv_free.getQuantity()));
 
@@ -349,7 +346,7 @@ public class AddToBag extends AppCompatActivity implements QuantityView.OnQuanti
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("AddToBag Product");
+        getSupportActionBar().setTitle("Add Product to Bag");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -88,7 +88,7 @@ public class Purchase_TransactionHistoryResult implements Serializable {
     private String totalPrice;
     @SerializedName("product_ordered")
     @Expose
-    private ArrayList<Product> productOrdered = null;
+    private ArrayList<ProductInfo> productOrdered = null;
     @SerializedName("product_accepted")
     @Expose
     private ArrayList<ProductStatus> productStatus = null;
@@ -296,11 +296,11 @@ public class Purchase_TransactionHistoryResult implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<Product> getProductOrdered() {
+    public ArrayList<ProductInfo> getProductOrdered() {
         return productOrdered;
     }
 
-    public void setProductOrdered(ArrayList<Product> productOrdered) {
+    public void setProductOrdered(ArrayList<ProductInfo> productOrdered) {
         this.productOrdered = productOrdered;
     }
 

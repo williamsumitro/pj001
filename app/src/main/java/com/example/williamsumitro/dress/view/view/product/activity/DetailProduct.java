@@ -39,7 +39,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
-import com.example.williamsumitro.dress.view.view.bag.activity.AddToBag;
+import com.example.williamsumitro.dress.view.view.bag.activity.AddToBagActivity;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductReviewsRVADapter;
@@ -388,7 +388,7 @@ public class DetailProduct extends AppCompatActivity {
                         qtymaxlist.add(String.valueOf(priceList.get(i).getQtyMax()));
                     }
                     progressDialog.dismiss();
-                    Intent intent = new Intent(context, AddToBag.class);
+                    Intent intent = new Intent(context, AddToBagActivity.class);
                     initSendData(intent);
                     initanim(intent);
                 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.Product;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -29,12 +30,12 @@ import butterknife.ButterKnife;
 
 public class MyPartnershipDetail_RV extends RecyclerView.Adapter<MyPartnershipDetail_RV.ViewHolder> {
     private Context context;
-    private ArrayList<Product> productArrayList;
+    private ArrayList<ProductInfo> productArrayList;
     private int index;
     private Dialog dialog;
     private BuyRVAdapter pricedetailsadapter;
 
-    public MyPartnershipDetail_RV(Context context, ArrayList<Product> productArrayList){
+    public MyPartnershipDetail_RV(Context context, ArrayList<ProductInfo> productArrayList){
         this.context = context;
         this.productArrayList = productArrayList;
     }
@@ -47,7 +48,7 @@ public class MyPartnershipDetail_RV extends RecyclerView.Adapter<MyPartnershipDe
 
     @Override
     public void onBindViewHolder(MyPartnershipDetail_RV.ViewHolder holder, int position) {
-        final Product product = productArrayList.get(position);
+        final ProductInfo product = productArrayList.get(position);
         holder.status.setText("Status : " + product.getStatus());
         Picasso.with(context)
                 .load(product.getPhoto())

@@ -112,7 +112,7 @@ public class AddMyOffer extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Add My OfferActivity");
+        getSupportActionBar().setTitle("Add My Offer");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

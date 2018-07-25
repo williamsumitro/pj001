@@ -1,18 +1,21 @@
 package com.example.williamsumitro.dress.view.view.store.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,7 @@ public class InformasioutletFragment extends Fragment {
 
     private StoreDetails storeDetails;
     private final static String STORE_RESULT = "STORE_RESULT";
+    private Context context;
 
     public InformasioutletFragment() {
         // Required empty public constructor
@@ -57,6 +61,7 @@ public class InformasioutletFragment extends Fragment {
 
     private void initView(View view){
         ButterKnife.bind(this, view);
+        context = getContext();
         Bundle args = getArguments();
         storeDetails = (StoreDetails) args.getSerializable(STORE_RESULT);
     }
