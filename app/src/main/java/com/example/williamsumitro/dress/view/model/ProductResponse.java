@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by WilliamSumitro on 10/06/2018.
  */
 
-public class ProductDetail implements Serializable{
+public class ProductResponse implements Serializable{
     @SerializedName("status")
     @Expose
     private Boolean status;

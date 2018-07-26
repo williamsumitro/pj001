@@ -107,7 +107,7 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
                 courierSpinners.add(courierSpinner);
             }
         }
-        adapter = new CheckoutSpinCourierServiceAdapter(context, android.R.layout.simple_spinner_item, courierSpinners);
+        adapter = new CheckoutSpinCourierServiceAdapter(context, R.layout.item_spinner, courierSpinners);
         holder.courierservice.setAdapter(adapter);
         holder.note.addTextChangedListener(new TextWatcher() {
             @Override

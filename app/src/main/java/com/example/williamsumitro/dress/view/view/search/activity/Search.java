@@ -136,7 +136,7 @@ public class Search extends AppCompatActivity {
                 builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-                        progressDialog.setMessage("Wait a sec..");
+                        progressDialog.setMessage("Searching... please wait");
                         progressDialog.show();
                         progressDialog.setCancelable(false);
                         String strName = arrayAdapter.getItem(which);
@@ -157,15 +157,11 @@ public class Search extends AppCompatActivity {
                                         bottom.setVisibility(View.VISIBLE);
                                         top.setVisibility(View.GONE);
                                         setupRV();
-                                        progressDialog.dismiss();
-                                        dialog.dismiss();
                                     }
                                     else {
                                         top.setVisibility(View.VISIBLE);
                                         bottom.setVisibility(View.GONE);
                                         setupRV();
-                                        progressDialog.dismiss();
-                                        dialog.dismiss();
                                     }
                                     dialog.dismiss();
                                 }
@@ -287,6 +283,7 @@ public class Search extends AppCompatActivity {
         rv.setLayoutManager(grid_layoutmanager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
+        progressDialog.dismiss();
     }
     private void dialog_filter(){
         dialog = new Dialog(context);
@@ -369,7 +366,7 @@ public class Search extends AppCompatActivity {
             public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
                 if(response.code() == 200){
                     provinceDetailsList = response.body().getProvinceDetails();
-                    spinProvinceAdapter = new SpinProvinceAdapter(context, android.R.layout.simple_spinner_item, provinceDetailsList);
+                    spinProvinceAdapter = new SpinProvinceAdapter(context, R.layout.item_spinner, provinceDetailsList);
                     province.setAdapter(spinProvinceAdapter);
                     province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -382,7 +379,7 @@ public class Search extends AppCompatActivity {
                                 public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
                                     if(response.code() == 200){
                                         cityDetailsList = response.body().getCityDetails();
-                                        spinCityAdapter = new SpinCityAdapter(context, android.R.layout.simple_spinner_item, cityDetailsList);
+                                        spinCityAdapter = new SpinCityAdapter(context, R.layout.item_spinner, cityDetailsList);
                                         city.setAdapter(spinCityAdapter);
                                         city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                             @Override
@@ -423,7 +420,7 @@ public class Search extends AppCompatActivity {
             public void onResponse(Call<CourierResponse> call, Response<CourierResponse> response) {
                 if(response.code() == 200){
                     courierDetailsList = response.body().getCourier();
-                    courierAdapter = new CourierAdapter(context, android.R.layout.simple_spinner_item, courierDetailsList);
+                    courierAdapter = new CourierAdapter(context, R.layout.item_spinner, courierDetailsList);
                     courier.setAdapter(courierAdapter);
                     courier.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -448,7 +445,7 @@ public class Search extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Wait a sec..");
+                progressDialog.setMessage("Searching... please wait");
                 progressDialog.show();
                 progressDialog.setCancelable(false);
                 service.req_advance_search(String.valueOf(qv_minorder.getQuantity()), min_rating.getText().toString(), max_rating.getText().toString(), idprovince, idcity, idcourier,

@@ -52,6 +52,7 @@
                     android:id="@+id/itemcheckoutproduct_tv_productname"
                     android:layout_marginLeft="5dp"
                     android:text="Nama Barang"
+                    android:maxLines="3"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
@@ -67,6 +68,7 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:padding="10dp"
             android:id="@+id/itemcheckoutproduct_ln_qty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -86,13 +88,13 @@
                 android:layout_height="10dp" />
         </LinearLayout>
         <LinearLayout
+            android:padding="10dp"
             android:visibility="gone"
             android:id="@+id/itemcheckoutproduct_ln_qtydetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <View
-                android:layout_marginTop="5dp"
                 android:background="@color/gray1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>

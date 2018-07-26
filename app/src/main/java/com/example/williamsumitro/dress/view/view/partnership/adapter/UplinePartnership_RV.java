@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Addproduct_Price;
 import com.example.williamsumitro.dress.view.model.Price;
-import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.UplinePartnershipItem;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -101,7 +101,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         holder.productname.setText(item.getProductname());
         Picasso.with(context)
                 .load(item.getImage())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.storename.setText(item.getStorename());
         if (item.getHaspartnership()){
@@ -159,9 +159,9 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         storename.setText(store_name);
 
         service = apiUtils.getAPIService();
-        service.req_get_product_detail(prodcut_id).enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail(prodcut_id).enqueue(new Callback<ProductResponse>() {
             @Override
-            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code()==200){
                     priceList = response.body().getProductInfo().getPrice();
                     pricedetailsadapter = new BuyRVAdapter(priceList, context);
@@ -173,7 +173,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
             }
 
             @Override
-            public void onFailure(Call<ProductDetail> call, Throwable t) {
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
 
             }
         });

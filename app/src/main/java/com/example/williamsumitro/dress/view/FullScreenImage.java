@@ -31,6 +31,7 @@ public class FullScreenImage extends AppCompatActivity {
         if (getintent.hasExtra(IMAGE)){
             Picasso.with(this)
                     .load(getintent.getStringExtra(IMAGE))
+                    .placeholder(R.drawable.default_product)
                     .into(image);
         }
         else{

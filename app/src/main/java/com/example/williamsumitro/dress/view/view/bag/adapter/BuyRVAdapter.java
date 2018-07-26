@@ -49,7 +49,10 @@ public class BuyRVAdapter extends RecyclerView.Adapter<BuyRVAdapter.ViewHolder> 
                 holder.dash.setText(" - ");
                 holder.semicolon.setText("Qty : ");
             }
-            holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(price.getPrice()))));
+            if (price.getPrice().matches("\\d+(?:\\.\\d+)?"))
+                holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(price.getPrice()))));
+            else
+                holder.price.setText(price.getPrice());
         }
 
     }

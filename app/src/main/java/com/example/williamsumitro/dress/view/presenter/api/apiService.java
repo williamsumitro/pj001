@@ -16,8 +16,7 @@ import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
 import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
 import com.example.williamsumitro.dress.view.model.PartnershipResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
-import com.example.williamsumitro.dress.view.model.ProductDetail;
-import com.example.williamsumitro.dress.view.model.ProductInfo;
+import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
@@ -144,12 +143,12 @@ public interface apiService {
 
     @FormUrlEncoded
     @POST("get_product_detail")
-    Call<ProductDetail> req_get_product_detail(@Field("product_id") String product_id);
+    Call<ProductResponse> req_get_product_detail(@Field("product_id") String product_id);
 
     @FormUrlEncoded
     @POST("get_product_detail")
-    Call<ProductDetail> req_get_product_detail(@Field("token") String token,
-                                               @Field("product_id") String product_id);
+    Call<ProductResponse> req_get_product_detail(@Field("token") String token,
+                                                 @Field("product_id") String product_id);
 
     @POST("add_to_bag")
     Call<ResponseBody> req_add_to_bag(@Body AddToBag addToBag);

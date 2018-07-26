@@ -107,7 +107,7 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
         }
         Picasso.with(context)
                 .load(store.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_photo)
                 .into(holder.storeimage);
         holder.storename.setText(store.getName());
         holder.rating.setText("("+df.format(Double.parseDouble(store.getRating()))+")");

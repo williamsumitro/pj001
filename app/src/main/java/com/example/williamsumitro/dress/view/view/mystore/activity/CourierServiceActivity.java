@@ -144,7 +144,7 @@ public class CourierServiceActivity extends AppCompatActivity {
             public void onResponse(Call<CourierResponse> call, Response<CourierResponse> response) {
                 if(response.code() == 200){
                     courierServiceArrayList = response.body().getCourier();
-                    spinCourierAdapter = new SpinCourierAdapter(context, android.R.layout.simple_spinner_item, courierServiceArrayList);
+                    spinCourierAdapter = new SpinCourierAdapter(context, R.layout.item_spinner, courierServiceArrayList);
                     spinner.setAdapter(spinCourierAdapter);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

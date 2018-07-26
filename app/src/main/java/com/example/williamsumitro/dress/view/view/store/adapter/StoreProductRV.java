@@ -23,7 +23,6 @@ import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +73,7 @@ public class StoreProductRV extends RecyclerView.Adapter<StoreProductRV.ViewHold
         holder.price.setVisibility(View.GONE);
         Picasso.with(context)
                 .load(product.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.storename.setText(product.getStoreName());
         get_rating(product, holder);

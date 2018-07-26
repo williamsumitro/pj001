@@ -98,7 +98,7 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.product);
         holder.container_acceptreject.setVisibility(View.VISIBLE);
         holder.totalqty.setText(formatter.format(Double.parseDouble(product.getTotalQty())));

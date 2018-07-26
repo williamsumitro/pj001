@@ -136,8 +136,8 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
         bisnis.add("Online Shop / Store");
         bisnis.add("Individual");
         bisnis.add("Other");
-        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, bisnis);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_spinner, bisnis);
+        dataAdapter.setDropDownViewResource(R.layout.item_spinner);
         spinner_businesstype.setAdapter(dataAdapter);
         spinner_businesstype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -343,7 +343,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
             public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
                 if(response.code() == 200){
                     cityDetailsList = response.body().getCityDetails();
-                    spinCityAdapter = new SpinCityAdapter(context, android.R.layout.simple_spinner_item, cityDetailsList);
+                    spinCityAdapter = new SpinCityAdapter(context, R.layout.item_spinner, cityDetailsList);
                     city.setAdapter(spinCityAdapter);
                     city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -373,7 +373,7 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
             public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
                 if(response.code() == 200){
                     provinceDetailsList = response.body().getProvinceDetails();
-                    spinProvinceAdapter = new SpinProvinceAdapter(context, android.R.layout.simple_spinner_item, provinceDetailsList);
+                    spinProvinceAdapter = new SpinProvinceAdapter(context, R.layout.item_spinner, provinceDetailsList);
                     province.setAdapter(spinProvinceAdapter);
                     province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

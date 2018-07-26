@@ -52,6 +52,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="Nama Barang"
                     android:textSize="16sp"
+                    android:maxLines="2"
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -76,15 +77,16 @@
                     android:layout_height="20dp" />
             </LinearLayout>
             <ImageView
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/itemshoppingbagproduct_img_delete"
                 android:src="@drawable/delete3"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/itemshoppingbagproduct_ln_qty"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -104,12 +106,12 @@
         </LinearLayout>
         <LinearLayout
             android:visibility="gone"
+            android:padding="10dp"
             android:id="@+id/itemshoppingbagproduct_ln_qtydetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <View
-                android:layout_marginTop="5dp"
                 android:background="@color/gray1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>

@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:id="@+id/addtobag_tvnameproduct"
                 android:textColor="@color/black"
@@ -38,7 +38,7 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"
-                android:textSize="16sp"
+                android:textSize="24sp"
                 android:id="@+id/addtobag_tvpriceproduct"
                 android:textColor="@color/black"
                 android:text="Price Product"

@@ -136,7 +136,7 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
 
         Picasso.with(context)
                 .load(storephoto)
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_photo)
                 .into(store_photo);
 
         rvadapter = new PurchaseReviewRatingDetail_RV(context, productArrayList);

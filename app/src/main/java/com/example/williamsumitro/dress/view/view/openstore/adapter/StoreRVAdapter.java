@@ -76,7 +76,7 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
         }
         Picasso.with(context)
                 .load(storeInfo.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_photo)
                 .into(holder.image);
         holder.name.setText(storeInfo.getFullName());
         holder.container.setOnClickListener(new View.OnClickListener() {

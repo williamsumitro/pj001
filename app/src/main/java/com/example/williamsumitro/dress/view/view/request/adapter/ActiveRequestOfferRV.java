@@ -81,7 +81,7 @@ public class ActiveRequestOfferRV extends RecyclerView.Adapter<ActiveRequestOffe
         final Offer offer = offers.get(position);
         Picasso.with(context)
                 .load(offer.getPhoto().getFilePath())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.imageView);
         holder.total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(offer.getTotalPrice()))));
         holder.storename.setText(offer.getStoreName());

@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/purchasereviewratingdetail_circleimageview"
-                    android:src="@drawable/logo404"
+                    android:src="@drawable/default_photo"
                     android:layout_width="150dp"
                     android:layout_height="150dp" />
                 <LinearLayout

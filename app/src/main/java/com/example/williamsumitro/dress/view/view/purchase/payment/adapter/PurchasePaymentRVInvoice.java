@@ -167,7 +167,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
 
         invoicenumber.setText("Invoice Number : " + invoice_number);
         total.setText("Total : IDR " + formatter.format(Double.parseDouble(grand_total)));
-        spinBankAdapter = new SpinBankAdapter(context, android.R.layout.simple_spinner_item, bankArrayList);
+        spinBankAdapter = new SpinBankAdapter(context, R.layout.item_spinner, bankArrayList);
         spinner.setAdapter(spinBankAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

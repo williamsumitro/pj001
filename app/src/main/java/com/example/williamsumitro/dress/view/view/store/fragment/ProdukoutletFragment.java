@@ -15,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,9 +84,8 @@ public class ProdukoutletFragment extends Fragment {
     @BindView(R.id.produkoutlet_ln_top) LinearLayout top;
 
 
-    private HotRVAdapter adapterProduct;
+    private StoreProductRV adapterProduct;
     private Context context;
-    private ProgressDialog progressDialog;
     private apiService service;
     private String token;
     private String productname = "";
@@ -105,6 +105,7 @@ public class ProdukoutletFragment extends Fragment {
     private CourierAdapter courierAdapter;
     private String idprovince, idcity, choosen_province, choosen_city, idcourier, choosen_courier;
     private SweetAlertDialog sweetAlertDialog;
+    private ProgressDialog progressDialog;
 
     public ProdukoutletFragment() {
         // Required empty public constructor
@@ -155,7 +156,7 @@ public class ProdukoutletFragment extends Fragment {
                 builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-                        progressDialog.setMessage("Wait a sec..");
+                        progressDialog.setMessage("Getting all the data, please wait");
                         progressDialog.show();
                         progressDialog.setCancelable(false);
                         String strName = arrayAdapter.getItem(which);
@@ -215,16 +216,20 @@ public class ProdukoutletFragment extends Fragment {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
+        progressDialog.setMessage("Getting all the data, please wait");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
         setupRV();
+        swipeRefreshLayout.setRefreshing(false);
     }
     private void setupRV(){
         bottom.setVisibility(View.VISIBLE);
-        adapterProduct = new HotRVAdapter(searchList, context);
+        adapterProduct = new StoreProductRV(searchList, context);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapterProduct);
         adapterProduct.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
+        progressDialog.dismiss();
     }
 
     private void dialog_filter(){
@@ -308,7 +313,7 @@ public class ProdukoutletFragment extends Fragment {
             public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
                 if(response.code() == 200){
                     provinceDetailsList = response.body().getProvinceDetails();
-                    spinProvinceAdapter = new SpinProvinceAdapter(context, android.R.layout.simple_spinner_item, provinceDetailsList);
+                    spinProvinceAdapter = new SpinProvinceAdapter(context, R.layout.item_spinner, provinceDetailsList);
                     province.setAdapter(spinProvinceAdapter);
                     province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -321,7 +326,7 @@ public class ProdukoutletFragment extends Fragment {
                                 public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
                                     if(response.code() == 200){
                                         cityDetailsList = response.body().getCityDetails();
-                                        spinCityAdapter = new SpinCityAdapter(context, android.R.layout.simple_spinner_item, cityDetailsList);
+                                        spinCityAdapter = new SpinCityAdapter(context, R.layout.item_spinner, cityDetailsList);
                                         city.setAdapter(spinCityAdapter);
                                         city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                             @Override
@@ -362,7 +367,7 @@ public class ProdukoutletFragment extends Fragment {
             public void onResponse(Call<CourierResponse> call, Response<CourierResponse> response) {
                 if(response.code() == 200){
                     courierDetailsList = response.body().getCourier();
-                    courierAdapter = new CourierAdapter(context, android.R.layout.simple_spinner_item, courierDetailsList);
+                    courierAdapter = new CourierAdapter(context, R.layout.item_spinner, courierDetailsList);
                     courier.setAdapter(courierAdapter);
                     courier.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

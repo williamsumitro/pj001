@@ -113,7 +113,7 @@ public class Checkout_AddressFragment extends Fragment implements Step {
             public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
                 if(response.code() == 200){
                     cityDetailsList = response.body().getCityDetails();
-                    spinCityAdapter = new SpinCityAdapter(context, android.R.layout.simple_spinner_item, cityDetailsList);
+                    spinCityAdapter = new SpinCityAdapter(context, R.layout.item_spinner, cityDetailsList);
                     spinner_city.setAdapter(spinCityAdapter);
                     spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -144,7 +144,7 @@ public class Checkout_AddressFragment extends Fragment implements Step {
             public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
                 if(response.code() == 200){
                     provinceDetailsList = response.body().getProvinceDetails();
-                    spinProvinceAdapter = new SpinProvinceAdapter(context, android.R.layout.simple_spinner_item, provinceDetailsList);
+                    spinProvinceAdapter = new SpinProvinceAdapter(context, R.layout.item_spinner, provinceDetailsList);
                     spinner_province.setAdapter(spinProvinceAdapter);
                     spinner_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

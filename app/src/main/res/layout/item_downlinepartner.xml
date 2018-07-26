@@ -10,7 +10,6 @@
         android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/itemdownlinepartnert_img"
-            android:src="@drawable/logo404"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
         <LinearLayout

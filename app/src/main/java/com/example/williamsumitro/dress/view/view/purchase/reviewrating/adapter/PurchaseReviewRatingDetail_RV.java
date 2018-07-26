@@ -65,7 +65,7 @@ public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<Purchase
         holder.product_name.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.product);
         updateProductArrayList(product, "0", "");
         holder.star1.setOnClickListener(new View.OnClickListener() {

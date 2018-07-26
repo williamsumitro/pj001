@@ -72,7 +72,7 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
         holder.budget.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMin()))) + " - IDR" + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMax()))));
         Picasso.with(context)
                 .load(result.getRequestPhoto().getFilePath())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image_product);
         holder.accepted.setVisibility(View.GONE);
         holder.viewoffer.setText("View Your Offer");

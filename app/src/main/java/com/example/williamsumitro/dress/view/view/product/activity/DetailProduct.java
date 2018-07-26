@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,7 +28,7 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.DownlinePartner;
 import com.example.williamsumitro.dress.view.model.Price;
-import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ReviewRating;
 import com.example.williamsumitro.dress.view.model.StoreInfo;
@@ -112,6 +113,7 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_ln_uplinepartnership) LinearLayout container_uplinepartnership;
     @BindView(R.id.detailproduct_img_uplinepartnership) CircleImageView imagestore_uplinepartnership;
     @BindView(R.id.detailproduct_caret_downlinepartnership) ImageView caret_downline;
+    @BindView(R.id.detailproduct_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private final static String NAMAPRODUCT = "NAMAPRODUCT";
     private final static String QTYMINORDER = "QTYMINORDER";
@@ -161,7 +163,13 @@ public class DetailProduct extends AppCompatActivity {
         setContentView(R.layout.activity_detail_product);
         initView();
         initGetIntent();
-        api_getdetailproduct();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initRefresh();
+            }
+        });
         initCollapToolbar();
         setupToolbar();
     }
@@ -174,13 +182,21 @@ public class DetailProduct extends AppCompatActivity {
             Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
         }
     }
+    private void initRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
+        progressDialog.setMessage("Getting all the data, please wait");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        api_getdetailproduct();
+        swipeRefreshLayout.setRefreshing(false);
+    }
     private void initProductDetails() {
         if (is_partnerhsip) {
             container_uplinepartnership.setVisibility(View.VISIBLE);
             storename_uplinepartnership.setText(productInfo.getUplinePartner().getStoreNameUpline());
             Picasso.with(context)
                     .load(productInfo.getUplinePartner().getStorePhotoUpline())
-                    .placeholder(R.drawable.logo404)
+                    .placeholder(R.drawable.default_photo)
                     .into(imagestore_uplinepartnership);
             btn_uplinepartnerhsip.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -194,11 +210,18 @@ public class DetailProduct extends AppCompatActivity {
         else
             container_downlinepartnership.setVisibility(View.VISIBLE);
         productname.setText(productInfo.getProductName());
-        price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(priceList.get(0).getPrice()))));
+        if (productInfo.getMaxPrice().matches("\\d+(?:\\.\\d+)?")){
+            price.setText("IDR " + formatter.format(Double.parseDouble(priceList.get(0).getPrice())));
+        }
+        else {
+            price.setText(productInfo.getMaxPrice());
+            addtobag.setBackgroundColor(getResources().getColor(R.color.grey3));
+            addtobag.setEnabled(false);
+        }
         minOrder.setText(String.valueOf(productInfo.getMinOrder()));
         Picasso.with(context)
                 .load(productInfo.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(image);
         style.setText(productInfo.getStyleName());
         season.setText(productInfo.getSeasonName());
@@ -505,6 +528,7 @@ public class DetailProduct extends AppCompatActivity {
         reviewRatingArrayList = new ArrayList<>();
         formatter = new DecimalFormat("#,###,###");
         df = new DecimalFormat("###.#");
+        service = apiUtils.getAPIService();
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -560,18 +584,13 @@ public class DetailProduct extends AppCompatActivity {
         }
     }
     private void api_getdetailproduct(){
-        progressDialog.setMessage("Loading ...");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        service = apiUtils.getAPIService();
         service.req_get_auth_user(token).enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code()==200){
-                    service.req_get_product_detail(token, extra_productid).enqueue(new Callback<ProductDetail>() {
+                    service.req_get_product_detail(token, extra_productid).enqueue(new Callback<ProductResponse>() {
                         @Override
-                        public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                        public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                             if (response.code()==200){
                                 productInfo = response.body().getProductInfo();
                                 storeInfo = response.body().getStoreInfo();
@@ -602,16 +621,16 @@ public class DetailProduct extends AppCompatActivity {
                             }
                         }
                         @Override
-                        public void onFailure(Call<ProductDetail> call, Throwable t) {
+                        public void onFailure(Call<ProductResponse> call, Throwable t) {
                             progressDialog.dismiss();
                             initDialog(3);
                         }
                     });
                 }
                 else {
-                    service.req_get_product_detail(extra_productid).enqueue(new Callback<ProductDetail>() {
+                    service.req_get_product_detail(extra_productid).enqueue(new Callback<ProductResponse>() {
                         @Override
-                        public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                        public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                             if (response.code()==200){
                                 productInfo = response.body().getProductInfo();
                                 storeInfo = response.body().getStoreInfo();
@@ -634,7 +653,7 @@ public class DetailProduct extends AppCompatActivity {
                             }
                         }
                         @Override
-                        public void onFailure(Call<ProductDetail> call, Throwable t) {
+                        public void onFailure(Call<ProductResponse> call, Throwable t) {
                             progressDialog.dismiss();
                             initDialog(3);
                         }

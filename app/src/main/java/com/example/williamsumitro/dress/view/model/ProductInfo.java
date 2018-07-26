@@ -14,6 +14,182 @@ import java.util.List;
  */
 
 public class ProductInfo implements Serializable{
+    //DetailProduct
+    @SerializedName("product_id")
+    @Expose
+    private Integer productId;
+
+    @SerializedName("store_id")
+    @Expose
+    private Integer storeId;
+
+    @SerializedName("store_name")
+    @Expose
+    private String storeName;
+
+    @SerializedName("product_name")
+    @Expose
+    private String productName;
+
+    @SerializedName("min_order")
+    @Expose
+    private Integer minOrder;
+
+    @SerializedName("weight")
+    @Expose
+    private Integer weight;
+
+    @SerializedName("description")
+    @Expose
+    private String description;
+
+    @SerializedName("photo")
+    @Expose
+    private String photo;
+
+    @SerializedName("style_id")
+    @Expose
+    private Integer styleId;
+
+    @SerializedName("style_name")
+    @Expose
+    private String styleName;
+
+    @SerializedName("season_id")
+    @Expose
+    private Integer seasonId;
+
+    @SerializedName("season_name")
+    @Expose
+    private String seasonName;
+
+    @SerializedName("neckline_id")
+    @Expose
+    private Integer necklineId;
+
+    @SerializedName("neckline_name")
+    @Expose
+    private String necklineName;
+
+    @SerializedName("sleevelength_id")
+    @Expose
+    private Integer sleevelengthId;
+
+    @SerializedName("sleevelength_name")
+    @Expose
+    private String sleevelengthName;
+
+    @SerializedName("waiseline_id")
+    @Expose
+    private Integer waiselineId;
+
+    @SerializedName("waiseline_name")
+    @Expose
+    private String waiselineName;
+
+    @SerializedName("material_id")
+    @Expose
+    private Integer materialId;
+
+    @SerializedName("material_name")
+    @Expose
+    private String materialName;
+
+    @SerializedName("fabrictype_id")
+    @Expose
+    private Integer fabrictypeId;
+
+    @SerializedName("fabrictype_name")
+    @Expose
+    private String fabrictypeName;
+
+    @SerializedName("decoration_id")
+    @Expose
+    private Integer decorationId;
+
+    @SerializedName("decoration_name")
+    @Expose
+    private String decorationName;
+
+    @SerializedName("patterntype_id")
+    @Expose
+    private Integer patterntypeId;
+
+    @SerializedName("patterntype_name")
+    @Expose
+    private String patterntypeName;
+
+    @SerializedName("product_type")
+    @Expose
+    private String productType;
+
+    @SerializedName("product_active_status")
+    @Expose
+    private String productActiveStatus;
+
+    @SerializedName("product_ownership")
+    @Expose
+    private String productOwnership;
+
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+
+    @SerializedName("available_status")
+    @Expose
+    private String available_status;
+
+    @SerializedName("average_rating")
+    @Expose
+    private String averageRating;
+
+    @SerializedName("sold")
+    @Expose
+    private String sold;
+
+    @SerializedName("max_price")
+    @Expose
+    private String maxPrice;
+
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+
+    @SerializedName("size")
+    @Expose
+    private ArrayList<Size> size = null;
+
+    @SerializedName("price")
+    @Expose
+    private ArrayList<Price> price = null;
+
+    @SerializedName("downline_partner")
+    @Expose
+    private ArrayList<DownlinePartner> downlinePartner = null;
+
+    @SerializedName("is_partnership")
+    @Expose
+    private Boolean isPartnership;
+
+    @SerializedName("upline_partner")
+    @Expose
+    private UplinePartner uplinePartner;
+
+    @SerializedName("review_rating")
+    @Expose
+    private ArrayList<ReviewRating> reviewRating = null;
+
+
+
+
+    @SerializedName("status")
+    @Expose
+    private String status;
+
 
     @SerializedName("product_id_partner")
     @Expose
@@ -24,10 +200,6 @@ public class ProductInfo implements Serializable{
     @Expose
     private Integer partnershipId;
 
-
-    @SerializedName("status")
-    @Expose
-    private String status;
 
     @SerializedName("product_photo")
     @Expose
@@ -40,132 +212,10 @@ public class ProductInfo implements Serializable{
     @Expose
     private String storeNamePartner;
 
-    @SerializedName("product_id")
-    @Expose
-    private Integer productId;
-    @SerializedName("store_id")
-    @Expose
-    private Integer storeId;
-    @SerializedName("store_name")
-    @Expose
-    private String storeName;
-    @SerializedName("product_name")
-    @Expose
-    private String productName;
-    @SerializedName("min_order")
-    @Expose
-    private Integer minOrder;
-    @SerializedName("weight")
-    @Expose
-    private Integer weight;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("photo")
-    @Expose
-    private String photo;
-    @SerializedName("style_id")
-    @Expose
-    private Integer styleId;
-    @SerializedName("style_name")
-    @Expose
-    private String styleName;
-    @SerializedName("season_id")
-    @Expose
-    private Integer seasonId;
-    @SerializedName("season_name")
-    @Expose
-    private String seasonName;
-    @SerializedName("neckline_id")
-    @Expose
-    private Integer necklineId;
-    @SerializedName("neckline_name")
-    @Expose
-    private String necklineName;
-    @SerializedName("sleevelength_id")
-    @Expose
-    private Integer sleevelengthId;
-    @SerializedName("sleevelength_name")
-    @Expose
-    private String sleevelengthName;
-    @SerializedName("waiseline_id")
-    @Expose
-    private Integer waiselineId;
-    @SerializedName("waiseline_name")
-    @Expose
-    private String waiselineName;
-    @SerializedName("material_id")
-    @Expose
-    private Integer materialId;
-    @SerializedName("material_name")
-    @Expose
-    private String materialName;
-    @SerializedName("fabrictype_id")
-    @Expose
-    private Integer fabrictypeId;
-    @SerializedName("fabrictype_name")
-    @Expose
-    private String fabrictypeName;
-    @SerializedName("decoration_id")
-    @Expose
-    private Integer decorationId;
-    @SerializedName("decoration_name")
-    @Expose
-    private String decorationName;
-    @SerializedName("patterntype_id")
-    @Expose
-    private Integer patterntypeId;
-    @SerializedName("patterntype_name")
-    @Expose
-    private String patterntypeName;
-    @SerializedName("product_type")
-    @Expose
-    private String productType;
-    @SerializedName("product_active_status")
-    @Expose
-    private String productActiveStatus;
-    @SerializedName("product_ownership")
-    @Expose
-    private String productOwnership;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
     @SerializedName("product_rating")
     @Expose
     private String productRating;
-    @SerializedName("average_rating")
-    @Expose
-    private String averageRating;
-    @SerializedName("sold")
-    @Expose
-    private String sold;
-    @SerializedName("rating")
-    @Expose
-    private String rating;
-    @SerializedName("size")
-    @Expose
-    private ArrayList<Size> size = null;
-    @SerializedName("price")
-    @Expose
-    private ArrayList<Price> price = null;
-    @SerializedName("downline_partner")
-    @Expose
-    private ArrayList<DownlinePartner> downlinePartner = null;
-    @SerializedName("is_partnership")
-    @Expose
-    private Boolean isPartnership;
-    @SerializedName("upline_partner")
-    @Expose
-    private UplinePartner uplinePartner;
-    @SerializedName("review_rating")
-    @Expose
-    private ArrayList<ReviewRating> reviewRating = null;
-    @SerializedName("max_price")
-    @Expose
-    private String maxPrice;
+
     @SerializedName("province")
     @Expose
     private String province;
@@ -175,9 +225,7 @@ public class ProductInfo implements Serializable{
     @SerializedName("courier_id")
     @Expose
     private String courierId;
-    @SerializedName("available_status")
-    @Expose
-    private String available_status;
+
     @SerializedName("recommendation")
     @Expose
     private String recommendation;

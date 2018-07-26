@@ -88,7 +88,7 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
         holder.productname.setText(item.getProduct().getProductName());
         Picasso.with(context)
                 .load(item.getProduct().getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.imageView);
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override

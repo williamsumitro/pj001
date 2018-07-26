@@ -92,7 +92,7 @@ public class PurchaseReviewRatingDetail extends AppCompatActivity {
     private void initObject() {
         Picasso.with(context)
                 .load(storephoto)
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_photo)
                 .into(store_photo);
     }
     private void clearImage(){

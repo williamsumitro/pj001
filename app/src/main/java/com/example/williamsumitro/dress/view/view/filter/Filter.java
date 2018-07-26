@@ -262,7 +262,7 @@ public class Filter extends AppCompatActivity {
             public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
                 if(response.code() == 200){
                     provinceDetailsList = response.body().getProvinceDetails();
-                    spinProvinceAdapter = new SpinProvinceAdapter(context, android.R.layout.simple_spinner_item, provinceDetailsList);
+                    spinProvinceAdapter = new SpinProvinceAdapter(context, R.layout.item_spinner, provinceDetailsList);
                     province.setAdapter(spinProvinceAdapter);
                     province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

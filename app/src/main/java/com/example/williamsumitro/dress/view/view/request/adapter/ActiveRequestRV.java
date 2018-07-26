@@ -91,7 +91,7 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
         holder.budget.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMin()))) + " - IDR" + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMax()))));
         Picasso.with(context)
                 .load(result.getPhoto().getFilePath())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image_product);
         holder.viewoffer.setOnClickListener(new View.OnClickListener() {
             @Override

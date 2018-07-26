@@ -69,7 +69,7 @@ public class MyProductRV extends RecyclerView.Adapter<MyProductRV.ViewHolder> {
         Picasso.with(context)
                 .load(product.getPhoto())
                 .resize(180, 200)
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.storename.setText(product.getStoreName());
         get_rating(product, holder);

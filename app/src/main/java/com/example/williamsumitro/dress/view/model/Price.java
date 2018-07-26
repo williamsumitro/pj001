@@ -24,7 +24,7 @@ public class Price implements Serializable{
     private String qtyMax;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private String price;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -64,11 +64,11 @@ public class Price implements Serializable{
         this.qtyMax = qtyMax;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

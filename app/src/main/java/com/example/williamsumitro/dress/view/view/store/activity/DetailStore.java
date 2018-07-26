@@ -26,10 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.StoreDetails;
-import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
@@ -196,11 +194,11 @@ public class DetailStore extends AppCompatActivity {
         transaction.setText(storeDetails.getTransaction().toString());
         Picasso.with(context)
                 .load(storeDetails.getBanner())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_banner)
                 .into(banner);
         Picasso.with(context)
                 .load(storeDetails.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_photo)
                 .into(circleImageView);
         if (Double.parseDouble(storeDetails.getRating()) == 0){
             one.setImageResource(R.drawable.star0);
@@ -260,7 +258,6 @@ public class DetailStore extends AppCompatActivity {
             five.setImageResource(R.drawable.star);
         }
         courier.setText(String.valueOf(storeDetails.getCourierService().size()));
-        progressDialog.dismiss();
         setupViewPager();
     }
 
@@ -328,6 +325,7 @@ public class DetailStore extends AppCompatActivity {
         bundle.putSerializable(STORE_RESULT, storeDetails);
         viewPager.setAdapter(new StoreDetailVPAdapter(getSupportFragmentManager(),bundle));
         tabLayout.setupWithViewPager(viewPager);
+        progressDialog.dismiss();
     }
     private void initDialog(ArrayList<model_CourierService> courierServices){
         dialog = new Dialog(context);

@@ -362,7 +362,7 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
         priceproduct.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(extra_priceminlist.get(0)))));
         Picasso.with(context)
                 .load(extra_gambarproduct)
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(imageproduct);
         minorder.setText(extra_minorder);
         for (int i = 0; i<extra_sizelist.size(); i++){

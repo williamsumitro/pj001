@@ -52,7 +52,7 @@ public class MyPartnershipDetail_RV extends RecyclerView.Adapter<MyPartnershipDe
         holder.status.setText("Status : " + product.getStatus());
         Picasso.with(context)
                 .load(product.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.product_name.setText(product.getProductName());
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {

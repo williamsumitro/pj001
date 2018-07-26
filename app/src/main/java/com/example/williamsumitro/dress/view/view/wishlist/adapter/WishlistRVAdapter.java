@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Price;
-import com.example.williamsumitro.dress.view.model.ProductDetail;
+import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.StoreInfo;
 import com.example.williamsumitro.dress.view.model.WishlistResult;
 import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
@@ -330,15 +330,15 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
     }
 
     private void initProductDetails(WishlistResult wishlistResult, final ViewHolder holder){
-        service.req_get_product_detail(token, wishlistResult.getProductId().toString()).enqueue(new Callback<ProductDetail>() {
+        service.req_get_product_detail(token, wishlistResult.getProductId().toString()).enqueue(new Callback<ProductResponse>() {
             @Override
-            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code()==200){
                     holder.courier.setText(String.valueOf(response.body().getStoreInfo().getCourierService().size()));
                 }
             }
             @Override
-            public void onFailure(Call<ProductDetail> call, Throwable t) {
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
 
             }
         });

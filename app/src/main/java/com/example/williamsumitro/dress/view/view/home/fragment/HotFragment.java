@@ -1,15 +1,13 @@
 package com.example.williamsumitro.dress.view.view.home.fragment;
 
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -19,20 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.BestResponse;
-import com.example.williamsumitro.dress.view.model.ProductDetail;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
-import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
-import com.example.williamsumitro.dress.view.view.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +54,9 @@ public class HotFragment extends Fragment {
     private apiService service;
     private ProductInfo productInfo;
     private Dialog dialog;
-    private ProgressDialog progressDialog;
     private SnapHelper snapHelper = new LinearSnapHelper();
     private Context context;
+    private ProgressDialog progressDialog;
     public HotFragment() {
 
     }
@@ -85,13 +78,16 @@ public class HotFragment extends Fragment {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
+        progressDialog.setMessage("Getting all the data, please wait");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
         api_getbestsellerproduct();
-        api_getnewproduct();
+        swipeRefreshLayout.setRefreshing(false);
     }
     private void initView(View view){
         ButterKnife.bind(this,view);
-        progressDialog = new ProgressDialog(getContext());
         context = getContext();
+        progressDialog = new ProgressDialog(context);
     }
     private void api_getbestsellerproduct(){
         service = apiUtils.getAPIService();
@@ -110,23 +106,23 @@ public class HotFragment extends Fragment {
                         alphaAdapter.setInterpolator(new OvershootInterpolator());
                         rv_bestseller.setAdapter(alphaAdapter);
                         snapHelper.attachToRecyclerView(rv_bestseller);
-                        swipeRefreshLayout.setRefreshing(false);
+                        api_getnewproduct();
                     }
                     else {
                         container_best.setVisibility(View.GONE);
-                        swipeRefreshLayout.setRefreshing(false);
+                        api_getnewproduct();
                     }
                 }
                 else {
-                    Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    Toasty.error(context, "Best seller product is not showing up"+"\n"+"Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<BestResponse> call, Throwable t) {
-                Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
-                swipeRefreshLayout.setRefreshing(false);
+                Toasty.error(context, "Best seller product is not showing up"+"\n"+"Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                progressDialog.dismiss();
             }
         });
     }
@@ -147,23 +143,23 @@ public class HotFragment extends Fragment {
                         alphaAdapter.setInterpolator(new OvershootInterpolator());
                         rv_newproduct.setAdapter(alphaAdapter);
                         snapHelper.attachToRecyclerView(rv_newproduct);
-                        swipeRefreshLayout.setRefreshing(false);
+                        progressDialog.dismiss();
                     }
                     else {
                         container_new.setVisibility(View.GONE);
-                        swipeRefreshLayout.setRefreshing(false);
+                        progressDialog.dismiss();
                     }
                 }
                 else {
-                    Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    Toasty.error(context, "New product is not showing up"+"\n"+"Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<BestResponse> call, Throwable t) {
-                Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
-                swipeRefreshLayout.setRefreshing(false);
+                Toasty.error(context, "New product is not showing up"+"\n"+"Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
+                progressDialog.dismiss();
             }
         });
 

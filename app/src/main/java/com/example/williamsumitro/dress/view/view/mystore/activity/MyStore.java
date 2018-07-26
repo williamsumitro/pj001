@@ -163,11 +163,11 @@ public class MyStore extends AppCompatActivity {
         transaction.setText(storeDetails.getTransaction().toString());
         Picasso.with(context)
                 .load(storeDetails.getBanner())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_banner)
                 .into(banner);
         Picasso.with(context)
                 .load(storeDetails.getPhoto())
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_photo)
                 .into(circleImageView);
         if (Double.parseDouble(storeDetails.getRating()) == 0){
             one.setImageResource(R.drawable.star0);

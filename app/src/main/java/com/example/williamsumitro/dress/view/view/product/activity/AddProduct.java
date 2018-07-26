@@ -359,7 +359,7 @@ public class AddProduct extends AppCompatActivity {
             public void onResponse(Call<DressAttribute> call, Response<DressAttribute> response) {
                 if(response.code() == 200){
                     decorationList = response.body().getDecoration();
-                    decoration_spinner_adapter = new Decoration_Spinner_Adapter(context, android.R.layout.simple_spinner_item, decorationList);
+                    decoration_spinner_adapter = new Decoration_Spinner_Adapter(context, R.layout.item_spinner, decorationList);
                     decoration.setAdapter(decoration_spinner_adapter);
                     decoration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -374,7 +374,7 @@ public class AddProduct extends AppCompatActivity {
                         }
                     });
                     fabrictypeList = response.body().getFabrictype();
-                    fabrictype_spinner_adapter = new Fabrictype_Spinner_Adapter(context, android.R.layout.simple_spinner_item, fabrictypeList);
+                    fabrictype_spinner_adapter = new Fabrictype_Spinner_Adapter(context, R.layout.item_spinner, fabrictypeList);
                     fabrictype.setAdapter(fabrictype_spinner_adapter);
                     fabrictype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -389,7 +389,7 @@ public class AddProduct extends AppCompatActivity {
                         }
                     });
                     materialList = response.body().getMaterial();
-                    material_spinner_adapter = new Material_Spinner_Adapter(context, android.R.layout.simple_spinner_item, materialList);
+                    material_spinner_adapter = new Material_Spinner_Adapter(context, R.layout.item_spinner, materialList);
                     material.setAdapter(material_spinner_adapter);
                     material.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -404,7 +404,7 @@ public class AddProduct extends AppCompatActivity {
                         }
                     });
                     necklineList = response.body().getNeckline();
-                    neckline_spinner_adapter = new Neckline_Spinner_Adapter(context, android.R.layout.simple_spinner_item, necklineList);
+                    neckline_spinner_adapter = new Neckline_Spinner_Adapter(context, R.layout.item_spinner, necklineList);
                     neckline.setAdapter(neckline_spinner_adapter);
                     neckline.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -419,7 +419,7 @@ public class AddProduct extends AppCompatActivity {
                         }
                     });
                     patterntypeList = response.body().getPatterntype();
-                    patterntype_spinner_adapter = new Patterntype_Spinner_Adapter(context, android.R.layout.simple_spinner_item, patterntypeList);
+                    patterntype_spinner_adapter = new Patterntype_Spinner_Adapter(context, R.layout.item_spinner, patterntypeList);
                     patterntype.setAdapter(patterntype_spinner_adapter);
                     patterntype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -435,7 +435,7 @@ public class AddProduct extends AppCompatActivity {
                     });
 
                     seasonList = response.body().getSeason();
-                    season_spinner_adapter = new Season_Spinner_Adapter(context, android.R.layout.simple_spinner_item, seasonList);
+                    season_spinner_adapter = new Season_Spinner_Adapter(context, R.layout.item_spinner, seasonList);
                     season.setAdapter(season_spinner_adapter);
                     season.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -528,7 +528,7 @@ public class AddProduct extends AppCompatActivity {
                             }
                         });
                     sleevelengthList = response.body().getSleevelength();
-                    sleeveLength_spinner_adapter = new SleeveLength_Spinner_Adapter(context, android.R.layout.simple_spinner_item, sleevelengthList);
+                    sleeveLength_spinner_adapter = new SleeveLength_Spinner_Adapter(context, R.layout.item_spinner, sleevelengthList);
                     sleevelength.setAdapter(sleeveLength_spinner_adapter);
                     sleevelength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -543,7 +543,7 @@ public class AddProduct extends AppCompatActivity {
                         }
                     });
                     styleList = response.body().getStyle();
-                    style_spinner_adapter = new Style_Spinner_Adapter(context, android.R.layout.simple_spinner_item, styleList);
+                    style_spinner_adapter = new Style_Spinner_Adapter(context, R.layout.item_spinner, styleList);
                     style.setAdapter(style_spinner_adapter);
                     style.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -558,7 +558,7 @@ public class AddProduct extends AppCompatActivity {
                         }
                     });
                     waiselineList = response.body().getWaiseline();
-                    waiseline_spinner_adapter = new Waiseline_Spinner_Adapter(context, android.R.layout.simple_spinner_item, waiselineList);
+                    waiseline_spinner_adapter = new Waiseline_Spinner_Adapter(context, R.layout.item_spinner, waiselineList);
                     waiseline.setAdapter(waiseline_spinner_adapter);
                     waiseline.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

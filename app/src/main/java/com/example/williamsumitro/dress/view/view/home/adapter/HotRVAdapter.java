@@ -1,6 +1,7 @@
 package com.example.williamsumitro.dress.view.view.home.adapter;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,14 +51,12 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
     private List<Price> priceList = new ArrayList<>();
     private final static String PRODUCT_ID = "PRODUCT_ID";
     private Boolean detailclick = false, wishliststatus= false;
-    private ProgressDialog progressDialog;
     private Dialog dialog;
 
 
     public HotRVAdapter (List<ProductInfo> productInfoList, Context context){
         this.productInfoList = productInfoList;
         this.context = context;
-        progressDialog = new ProgressDialog(context);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
         Picasso.with(context)
                 .load(productInfo.getPhoto())
                 .resize(180, 200)
-                .placeholder(R.drawable.logo404)
+                .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.storename.setText(productInfo.getStoreName());
         get_rating(productInfo, holder);
