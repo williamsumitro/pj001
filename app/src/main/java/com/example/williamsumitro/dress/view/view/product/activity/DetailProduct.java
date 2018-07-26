@@ -17,6 +17,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -184,7 +185,7 @@ public class DetailProduct extends AppCompatActivity {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
-        progressDialog.setMessage("Getting all the data, please wait");
+        progressDialog.setMessage("Retrieving all the data, please wait");
         progressDialog.show();
         progressDialog.setCancelable(false);
         api_getdetailproduct();

@@ -59,6 +59,7 @@ public class SellerPanelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_seller_panel, container, false);
         initView(view);
+
         checkstatus();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -69,8 +70,10 @@ public class SellerPanelFragment extends Fragment {
         horizontalInfiniteCycleViewPager.setAdapter(new SellerPanelPagerAdapter(getContext()));
         return view;
     }
+
     private void checkstatus() {
         swipeRefreshLayout.setRefreshing(true);
+
         service = apiUtils.getAPIService();
         service.req_get_user_store(token).enqueue(new Callback<StoreResponse>() {
             @Override

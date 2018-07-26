@@ -219,6 +219,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                     mediaPathLogo = cursor.getString(columnIndex);
                     Picasso.with(context).load(new File(mediaPathLogo))
                             .into(logo);
+                    Picasso.with(context).cancelRequest(logo);
                     cursor.close();
                     dialog.dismiss();
                 }
@@ -236,6 +237,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                     mediaPathBanner = cursor.getString(columnIndex);
                     Picasso.with(context).load(new File(mediaPathBanner))
                             .into(banner);
+                    Picasso.with(context).cancelRequest(banner);
                     cursor.close();
                     dialog.dismiss();
                 }
@@ -253,6 +255,7 @@ public class Openstrore_Fileupload extends AppCompatActivity {
                     mediaPathKTP = cursor.getString(columnIndex);
                     Picasso.with(context).load(new File(mediaPathKTP))
                             .into(ktp);
+                    Picasso.with(context).cancelRequest(ktp);
                     cursor.close();
                     dialog.dismiss();
                 }

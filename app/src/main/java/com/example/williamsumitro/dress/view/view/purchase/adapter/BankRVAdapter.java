@@ -42,10 +42,12 @@ public class BankRVAdapter extends RecyclerView.Adapter<BankRVAdapter.ViewHolder
         Bank bank = bankList.get(position);
         holder.accountholder.setText(bank.getNameInAccount());
         holder.accountnumber.setText(bank.getAccountNumber());
+
         Picasso.with(context)
                 .load(bank.getLogo())
                 .placeholder(R.drawable.logo404)
                 .into(holder.imageView);
+        Picasso.with(context).cancelRequest(holder.imageView);
     }
 
     @Override

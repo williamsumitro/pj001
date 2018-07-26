@@ -78,7 +78,7 @@ public class HotFragment extends Fragment {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
-        progressDialog.setMessage("Getting all the data, please wait");
+        progressDialog.setMessage("Retrieving all the data, please wait");
         progressDialog.show();
         progressDialog.setCancelable(false);
         api_getbestsellerproduct();

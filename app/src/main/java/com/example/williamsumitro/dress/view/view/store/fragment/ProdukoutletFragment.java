@@ -156,7 +156,7 @@ public class ProdukoutletFragment extends Fragment {
                 builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-                        progressDialog.setMessage("Getting all the data, please wait");
+                        progressDialog.setMessage("Retrieving all the data, please wait");
                         progressDialog.show();
                         progressDialog.setCancelable(false);
                         String strName = arrayAdapter.getItem(which);
@@ -216,7 +216,7 @@ public class ProdukoutletFragment extends Fragment {
     }
     private void initRefresh(){
         swipeRefreshLayout.setRefreshing(true);
-        progressDialog.setMessage("Getting all the data, please wait");
+        progressDialog.setMessage("Retrieving all the data, please wait");
         progressDialog.show();
         progressDialog.setCancelable(false);
         setupRV();

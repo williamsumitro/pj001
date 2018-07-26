@@ -64,7 +64,7 @@
                             android:id="@+id/detailproduct_tvPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp. 12.000.000"
+                            android:text=""
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"/>

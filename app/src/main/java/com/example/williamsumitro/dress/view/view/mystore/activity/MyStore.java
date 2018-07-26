@@ -20,6 +20,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.Util;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,10 +163,13 @@ public class MyStore extends AppCompatActivity {
         product.setText(String.valueOf(storeDetails.getProduct().size()));
         soldout.setText(storeDetails.getSoldProduct());
         transaction.setText(storeDetails.getTransaction().toString());
+
         Picasso.with(context)
                 .load(storeDetails.getBanner())
                 .placeholder(R.drawable.default_banner)
                 .into(banner);
+
+        Log.d("SEARCHERROR", String.valueOf(storeDetails.getBanner()));
         Picasso.with(context)
                 .load(storeDetails.getPhoto())
                 .placeholder(R.drawable.default_photo)
