@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class DetailProductCourierRVAdapter extends RecyclerView.Adapter<DetailPr
         holder.name.setText(courier.getCourierName());
         Picasso.with(context)
                 .load(courier.getLogo())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.logo404)
                 .into(holder.image);
     }

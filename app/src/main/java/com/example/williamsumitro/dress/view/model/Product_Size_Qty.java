@@ -14,7 +14,6 @@ public class Product_Size_Qty {
     @SerializedName("qty")
     @Expose
     private int qty;
-
     public Product_Size_Qty(int size_id, int qty){
         this.size_id = size_id;
         this.qty = qty;

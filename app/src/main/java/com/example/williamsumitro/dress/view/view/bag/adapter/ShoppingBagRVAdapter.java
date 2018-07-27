@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bag;
+import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -36,10 +37,12 @@ public class ShoppingBagRVAdapter extends RecyclerView.Adapter<ShoppingBagRVAdap
     private boolean open = false;
     private ShoppingBagProductRVAdapter adapter;
     private SnapHelper snapHelper = new LinearSnapHelper();
+    private ShoppingBag shoppingBag;
 
-    public ShoppingBagRVAdapter(ArrayList<Bag> bagList, Context context){
+    public ShoppingBagRVAdapter(ArrayList<Bag> bagList, Context context, ShoppingBag shoppingBag){
         this.context = context;
         this.bagList = bagList;
+        this.shoppingBag = shoppingBag;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -69,8 +72,13 @@ public class ShoppingBagRVAdapter extends RecyclerView.Adapter<ShoppingBagRVAdap
         Bag bag = bagList.get(position);
         formatter = new DecimalFormat("#,###,###");
         holder.storename.setText(bag.getStoreName());
-        adapter = new ShoppingBagProductRVAdapter(bagList.get(position).getProduct(), context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        adapter = new ShoppingBagProductRVAdapter(bagList.get(position).getProduct(), context, shoppingBag);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         holder.rv.setLayoutManager(layoutManager);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
         alphaAdapter.setDuration(1000);

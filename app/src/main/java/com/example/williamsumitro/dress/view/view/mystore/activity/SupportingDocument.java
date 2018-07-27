@@ -31,7 +31,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -151,22 +154,32 @@ public class SupportingDocument extends AppCompatActivity {
         storeid = storeDetails.getStoreId().toString();
         Picasso.with(context)
                 .load(storeDetails.getKtp())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.document)
                 .into(ktp);
         Picasso.with(context)
                 .load(storeDetails.getSiup())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.document)
                 .into(siup);
         Picasso.with(context)
                 .load(storeDetails.getNpwp())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.document)
                 .into(npwp);
         Picasso.with(context)
                 .load(storeDetails.getSkdp())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.document)
                 .into(skdp);
         Picasso.with(context)
                 .load(storeDetails.getTdp())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.document)
                 .into(tdp);
     }
@@ -380,6 +393,7 @@ public class SupportingDocument extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(this);
         service = apiUtils.getAPIService();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

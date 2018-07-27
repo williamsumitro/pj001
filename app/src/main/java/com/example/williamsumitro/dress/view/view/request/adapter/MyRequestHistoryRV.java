@@ -23,7 +23,10 @@ import com.example.williamsumitro.dress.view.model.RFQ_HistoryResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.home.fragment.HotFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -57,6 +60,7 @@ public class MyRequestHistoryRV extends RecyclerView.Adapter<MyRequestHistoryRV.
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -74,6 +78,8 @@ public class MyRequestHistoryRV extends RecyclerView.Adapter<MyRequestHistoryRV.
         holder.budget.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMin()))) + " - IDR" + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMax()))));
         Picasso.with(context)
                 .load(result.getPhoto().getFilePath())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.image_product);
         holder.viewoffer.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +172,8 @@ public class MyRequestHistoryRV extends RecyclerView.Adapter<MyRequestHistoryRV.
 
         Picasso.with(context)
                 .load(offer.getPhoto().getFilePath())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(image);
         total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(offer.getTotalPrice()))));
         storename.setText(offer.getStoreName());

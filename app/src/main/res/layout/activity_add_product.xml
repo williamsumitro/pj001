@@ -108,6 +108,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:text="Size"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -115,8 +116,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical"
                 android:text="Selected size"
-                android:maxLines="1"
-                android:singleLine="true"
+                android:maxLines="3"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
@@ -124,6 +124,7 @@
                 android:id="@+id/addproduct_img_caret"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/caret"
+                android:layout_gravity="center"
                 android:layout_width="10dp"
                 android:layout_height="10dp" />
         </LinearLayout>

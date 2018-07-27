@@ -247,10 +247,10 @@ public class ProductInfo implements Serializable{
     private Boolean hasPartnership;
     @SerializedName("size_info")
     @Expose
-    private List<SizeInfo> sizeInfo = null;
+    private ArrayList<SizeInfo> sizeInfo = null;
 
 
-    public ProductInfo(Integer productId, String productName, String productPhoto, Integer priceUnit, String totalQty, String priceTotal, List<SizeInfo> sizeInfo){
+    public ProductInfo(Integer productId, String productName, String productPhoto, Integer priceUnit, String totalQty, String priceTotal, ArrayList<SizeInfo> sizeInfo){
         this.productId = productId;
         this.productName = productName;
         this.productPhoto = productPhoto;
@@ -627,11 +627,11 @@ public class ProductInfo implements Serializable{
         this.available_status = available_status;
     }
 
-    public List<SizeInfo> getSizeInfo() {
+    public ArrayList<SizeInfo> getSizeInfo() {
         return sizeInfo;
     }
 
-    public void setSizeInfo(List<SizeInfo> sizeInfo) {
+    public void setSizeInfo(ArrayList<SizeInfo> sizeInfo) {
         this.sizeInfo = sizeInfo;
     }
 

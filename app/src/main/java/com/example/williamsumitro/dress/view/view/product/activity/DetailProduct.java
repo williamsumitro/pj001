@@ -47,7 +47,10 @@ import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductC
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductReviewsRVADapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProduct_DownlineRV;
 import com.example.williamsumitro.dress.view.view.store.activity.DetailStore;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -157,6 +160,7 @@ public class DetailProduct extends AppCompatActivity {
     private DetailProduct_DownlineRV downline_adapter;
     private ArrayList<ReviewRating> reviewRatingArrayList;
     private DecimalFormat formatter, df;
+    private ArrayList<Size> sizes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +201,8 @@ public class DetailProduct extends AppCompatActivity {
             storename_uplinepartnership.setText(productInfo.getUplinePartner().getStoreNameUpline());
             Picasso.with(context)
                     .load(productInfo.getUplinePartner().getStorePhotoUpline())
+                    .memoryPolicy(MemoryPolicy.NO_CACHE )
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
                     .placeholder(R.drawable.default_photo)
                     .into(imagestore_uplinepartnership);
             btn_uplinepartnerhsip.setOnClickListener(new View.OnClickListener() {
@@ -222,6 +228,8 @@ public class DetailProduct extends AppCompatActivity {
         minOrder.setText(String.valueOf(productInfo.getMinOrder()));
         Picasso.with(context)
                 .load(productInfo.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(image);
         style.setText(productInfo.getStyleName());
@@ -313,7 +321,7 @@ public class DetailProduct extends AppCompatActivity {
         intent.putStringArrayListExtra(PRICELIST, priceminlist);
         intent.putStringArrayListExtra(QTYMINORDER, qtyminlist);
         intent.putStringArrayListExtra(QTYMAXORDER, qtymaxlist);
-        intent.putStringArrayListExtra(SIZELIST, availablesizelist);
+        intent.putExtra(SIZELIST, productInfo.getSize());
     }
     private void api_wishlist(){
         progressDialog.setMessage("Loading ...");
@@ -530,6 +538,8 @@ public class DetailProduct extends AppCompatActivity {
         formatter = new DecimalFormat("#,###,###");
         df = new DecimalFormat("###.#");
         service = apiUtils.getAPIService();
+        PicassoTools.clearCache(Picasso.with(context));
+        sizes = new ArrayList<>();
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));

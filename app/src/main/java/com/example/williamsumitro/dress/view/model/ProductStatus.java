@@ -32,7 +32,7 @@ public class ProductStatus implements Serializable {
     private String priceTotal;
     @SerializedName("size_info")
     @Expose
-    private List<SizeInfo> sizeInfo = null;
+    private ArrayList<SizeInfo> sizeInfo = null;
 
     public Integer getProductId() {
         return productId;
@@ -82,11 +82,11 @@ public class ProductStatus implements Serializable {
         this.priceTotal = priceTotal;
     }
 
-    public List<SizeInfo> getSizeInfo() {
+    public ArrayList<SizeInfo> getSizeInfo() {
         return sizeInfo;
     }
 
-    public void setSizeInfo(List<SizeInfo> sizeInfo) {
+    public void setSizeInfo(ArrayList<SizeInfo> sizeInfo) {
         this.sizeInfo = sizeInfo;
     }
 }

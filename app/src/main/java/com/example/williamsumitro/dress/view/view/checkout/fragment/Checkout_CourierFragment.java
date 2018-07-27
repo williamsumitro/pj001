@@ -8,14 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +25,11 @@ import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
+import com.example.williamsumitro.dress.view.view.checkout.activity.CheckoutActivity;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
-import com.stepstone.stepper.Step;
+import com.stepstone.stepper.BlockingStep;
+import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.util.ArrayList;
@@ -45,12 +46,13 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Checkout_CourierFragment extends Fragment implements Step {
+public class Checkout_CourierFragment extends Fragment implements BlockingStep {
+
     @BindView(R.id.checkout_courier_rvshoppingbag) RecyclerView recyclerView;
-    @BindView(R.id.checkout_courier_btn_refresh) Button refresh;
     @BindView(R.id.checkout_courier_nestedscrollview) NestedScrollView nestedScrollView;
-    @BindView(R.id.checkout_courier_btn_check) Button check;
     @BindView(R.id.checkout_courier_tvStatus) TextView tv_status;
+    @BindView(R.id.checkout_courier_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.checkout_courier_container) RelativeLayout container;
 
     private apiService service;
     private Context context;
@@ -81,26 +83,21 @@ public class Checkout_CourierFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout__courier, container, false);
         initView(view);
-        initButton();
-        refresh.setOnClickListener(new View.OnClickListener() {
+//        initButton();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                api_getcheckoutinfo();
-            }
-        });
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initDialog(0);
+            public void onRefresh() {
+                initRefresh();
             }
         });
         return view;
     }
-    private void initButton(){
-        if (!check_refresh)
-            check.setVisibility(View.GONE);
-        else
-            check.setVisibility(View.VISIBLE);
+
+    public void initRefresh(){
+        Toasty.info(context, "Ada refresh", Toast.LENGTH_SHORT, true).show();
+        swipeRefreshLayout.setRefreshing(true);
+        api_getcheckoutinfo();
     }
     private void initView(View view){
         ButterKnife.bind(this,view);
@@ -115,8 +112,8 @@ public class Checkout_CourierFragment extends Fragment implements Step {
     @Override
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
-        if (!isRefresh())
-            verificationError = new VerificationError("Please press the button confirm");
+//        if (!isRefresh())
+//            verificationError = new VerificationError("Please press the button confirm");
         return verificationError;
     }
 
@@ -128,17 +125,14 @@ public class Checkout_CourierFragment extends Fragment implements Step {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-        if(!checked)
-            check.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
+//        if(!checked)
+//            check.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
 
     }
     private void updateNavigationBar() {
         if (onNavigationBarListener != null) {
             onNavigationBarListener.onChangeEndButtonsEnabled(true);
         }
-    }
-    private boolean isRefresh(){
-        return checked;
     }
 
     private void initDialog(final int stats){
@@ -163,7 +157,7 @@ public class Checkout_CourierFragment extends Fragment implements Step {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             checked = true;
-                            ((Checkout)getActivity()).ChangeColor(2);
+                            ((CheckoutActivity)getActivity()).ChangeColor(2);
                             tv_status.setText("Please click complete to proceed");
                             tv_status.setTextColor(getResources().getColor(R.color.green));
                             sweetAlertDialog.dismiss();
@@ -193,7 +187,7 @@ public class Checkout_CourierFragment extends Fragment implements Step {
                         total_price = response.body().getTotalPrice();
                         total_qty = response.body().getTotalQty();
                         available_points = String.valueOf(response.body().getAvailablePoints());
-                        CheckoutRVAdapter adapter = new CheckoutRVAdapter(checkoutInfoArrayList, context, Checkout_CourierFragment.this);
+                        CheckoutRVAdapter adapter = new CheckoutRVAdapter(checkoutInfoArrayList, context);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.checkout_courier_rvshoppingbag);
                         recyclerView.setLayoutManager(layoutManager);
@@ -201,12 +195,12 @@ public class Checkout_CourierFragment extends Fragment implements Step {
                         recyclerView.setAdapter(adapter);
                         progressDialog.dismiss();
                         sessionManagement.keepCheckoutCourier(total_price, total_qty, available_points);
-                        check_refresh = true;
-                        initButton();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                     else {
                         String message = response.body().getMessage();
                         Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+                        swipeRefreshLayout.setRefreshing(false);
                         progressDialog.dismiss();
                     }
                 }
@@ -214,12 +208,28 @@ public class Checkout_CourierFragment extends Fragment implements Step {
 
             @Override
             public void onFailure(Call<CheckoutResponse> call, Throwable t) {
-                Toasty.error(context, "Please press button refresh again", Toast.LENGTH_LONG, true).show();
+                Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_LONG, true).show();
+                swipeRefreshLayout.setRefreshing(false);
                 progressDialog.dismiss();
             }
         });
     }
     public void setCheck(Boolean checkz){
         checked = checkz;
+    }
+
+    @Override
+    public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+        callback.goToNextStep();
+    }
+
+    @Override
+    public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+
+    }
+
+    @Override
+    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+        callback.goToPrevStep();
     }
 }

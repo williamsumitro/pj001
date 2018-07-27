@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.ReviewRating;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,7 @@ public class DetailProductReviewsRVADapter extends RecyclerView.Adapter<DetailPr
     public DetailProductReviewsRVADapter(ArrayList<ReviewRating> reviewArrayList, Context context){
         this.context = context;
         this.reviewArrayList = reviewArrayList;
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public DetailProductReviewsRVADapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,6 +46,8 @@ public class DetailProductReviewsRVADapter extends RecyclerView.Adapter<DetailPr
         ReviewRating reviewRating = reviewArrayList.get(position);
         Picasso.with(context)
                 .load(reviewRating.getAvatar())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.logo404)
                 .into(holder.user);
         holder.username.setText(reviewRating.getFullName());

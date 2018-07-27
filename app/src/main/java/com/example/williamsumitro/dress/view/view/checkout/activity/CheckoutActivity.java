@@ -13,7 +13,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.Checkout_Courier;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutStepAdapter;
+import com.example.williamsumitro.dress.view.view.checkout.fragment.Checkout_AddressFragment;
+import com.example.williamsumitro.dress.view.view.checkout.fragment.Checkout_CourierFragment;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.stepstone.stepper.StepperLayout;
@@ -23,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
-public class Checkout extends AppCompatActivity implements StepperLayout.StepperListener, OnNavigationBarListener {
+public class CheckoutActivity extends AppCompatActivity implements StepperLayout.StepperListener, OnNavigationBarListener, Checkout_AddressFragment.setClick {
     private static final String CURRENT_STEP_POSITION_KEY = "position";
 
     @BindView(R.id.checkout_toolbar) Toolbar toolbar;
@@ -38,6 +41,7 @@ public class Checkout extends AppCompatActivity implements StepperLayout.Stepper
         setuptoolbar();
         int startingStepPosition = savedInstanceState != null ? savedInstanceState.getInt(CURRENT_STEP_POSITION_KEY) : 0;
         stepperLayout.setAdapter(new CheckoutStepAdapter(getSupportFragmentManager(), this), startingStepPosition);
+        stepperLayout.setOffscreenPageLimit(2);
         stepperLayout.setListener(this);
     }
     private void initView(){
@@ -52,7 +56,7 @@ public class Checkout extends AppCompatActivity implements StepperLayout.Stepper
         getSupportActionBar().setHomeAsUpIndicator(arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Checkout");
+        getSupportActionBar().setTitle("CheckoutActivity");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +95,7 @@ public class Checkout extends AppCompatActivity implements StepperLayout.Stepper
 
     @Override
     public void onStepSelected(int newStepPosition) {
+
     }
 
     @Override
@@ -135,5 +140,12 @@ public class Checkout extends AppCompatActivity implements StepperLayout.Stepper
         if (stat==2){
             stepperLayout.setCompleteButtonColor(getResources().getColor(R.color.green1));
         }
+    }
+
+    @Override
+    public void clicked() {
+        Checkout_CourierFragment frag = (Checkout_CourierFragment)
+                getSupportFragmentManager().findFragmentById(R.id.checkout_courier_container);
+        frag.initRefresh();
     }
 }

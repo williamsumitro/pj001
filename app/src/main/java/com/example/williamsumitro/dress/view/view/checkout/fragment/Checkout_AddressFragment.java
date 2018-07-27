@@ -1,6 +1,7 @@
 package com.example.williamsumitro.dress.view.view.checkout.fragment;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,18 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
@@ -32,13 +28,17 @@ import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
+import com.example.williamsumitro.dress.view.view.checkout.activity.CheckoutActivity;
+import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutStepAdapter;
+import com.example.williamsumitro.dress.view.view.openstore.adapter.StepAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
-import com.stepstone.stepper.Step;
+import com.stepstone.stepper.BlockingStep;
+import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +53,11 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Checkout_AddressFragment extends Fragment implements Step {
+public class Checkout_AddressFragment extends Fragment implements BlockingStep {
+    setClick setClick;
+    public interface setClick{
+        public void clicked();
+    }
     @BindView(R.id.checkout_address_spinner_province) Spinner spinner_province;
     @BindView(R.id.checkout_address_spinner_city) Spinner spinner_city;
     @BindView(R.id.checkout_address_postalcode) TextInputEditText postalcode;
@@ -64,7 +68,6 @@ public class Checkout_AddressFragment extends Fragment implements Step {
     @BindView(R.id.checkout_address_layout_name) TextInputLayout layout_name;
     @BindView(R.id.checkout_address_layout_address) TextInputLayout layout_address;
     @BindView(R.id.checkout_address_container) ScrollView container;
-    @BindView(R.id.checkout_address_btn_check) Button check;
     @BindView(R.id.checkout_address_address) TextInputEditText address;
 
     private apiService service;
@@ -75,7 +78,10 @@ public class Checkout_AddressFragment extends Fragment implements Step {
     private SpinCityAdapter spinCityAdapter;
     private SessionManagement sessionManagement;
     private String idprovince, idcity, choosen_province, choosen_city;
-    private Boolean checked = false;
+    private Boolean checked = false, trigger_receivername = false,
+    trigger_address = false,
+    trigger_phonenumber = false,
+    trigger_postalcode = false;
     private ProgressDialog progressDialog;
     private String token;
     private ArrayList<CheckoutInfo> checkoutInfoArrayList;
@@ -98,6 +104,21 @@ public class Checkout_AddressFragment extends Fragment implements Step {
         initProvinceSpinner();
         return view;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            setClick = (setClick) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement TextClicked");
+        }
+    }
+
     private void initView(View view){
         ButterKnife.bind(this,view);
         context = getContext();
@@ -171,123 +192,90 @@ public class Checkout_AddressFragment extends Fragment implements Step {
 
     }
     private void initOnClick(){
-        name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        name.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().equals(""))
+//                    trigger_receivername = false;
+//                else {
+//                    trigger_receivername = true;
+//                }
+//            }
+//        });
+//        postalcode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().equals(""))
+//                    trigger_postalcode = false;
+//                else {
+//                    trigger_postalcode = true;
+//                }
+//            }
+//        });
+//        phonenumber.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().equals(""))
+//                    trigger_phonenumber = false;
+//                else {
+//                    trigger_phonenumber = true;
+//                }
+//            }
+//        });
+//        address.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().equals(""))
+//                    trigger_address = false;
+//                else {
+//                    trigger_address = true;
+//                }
+//            }
+//        });
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        postalcode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        phonenumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        address.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checked = true;
-                layout_address.setErrorEnabled(false);
-                layout_postalcode.setErrorEnabled(false);
-                layout_name.setErrorEnabled(false);
-                layout_phonenumber.setErrorEnabled(false);
-                if (TextUtils.isEmpty(name.getText().toString())){
-                    layout_name.setErrorEnabled(true);
-                    layout_name.setError("Name of receiver is required");
-                    checked = false;
-                }if (TextUtils.isEmpty(address.getText().toString())){
-                    layout_address.setErrorEnabled(true);
-                    layout_address.setError("Address is required");
-                    checked = false;
-                }if (TextUtils.isEmpty(phonenumber.getText().toString())){
-                    layout_phonenumber.setErrorEnabled(true);
-                    layout_phonenumber.setError("Phone number is required");
-                    checked = false;
-                }if (TextUtils.isEmpty(postalcode.getText().toString())){
-                    layout_postalcode.setErrorEnabled(true);
-                    layout_postalcode.setError("Postal Code is required");
-                    checked = false;
-                }
-                if (checked) {
-                    ((Checkout)getActivity()).ChangeColor(1);
-                    Toasty.info(context, "Please click the next button to continue", Toast.LENGTH_SHORT, true).show();
-                }
-                else {
-                    Toasty.error(context, "Please check the information again, something is error", Toast.LENGTH_SHORT, true).show();
-                }
-            }
-        });
     }
 
     @Nullable
     @Override
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
-        if (isInformationValid()) {
-//            Toasty.info(context, "Name " + name.getText().toString() + "\n" +
-//                    "Address " + address.getText().toString()+ "\n" +
-//                    "Phone Number " + phonenumber.getText().toString()+ "\n" +
-//                    "Id Province " + idprovince+ "\n" +
-//                    "Id City " + idcity+ "\n" +
-//                    "Postal Code " + postalcode.getText().toString(), Toast.LENGTH_LONG, true).show();
-            sessionManagement.keepCheckoutAddress(name.getText().toString(), address.getText().toString(),
-                    phonenumber.getText().toString(), idprovince, idcity, postalcode.getText().toString());
-        }
-        else {
-            verificationError = new VerificationError("Please press the button check");
-        }
+
         return verificationError;
     }
     @Override
@@ -297,8 +285,7 @@ public class Checkout_AddressFragment extends Fragment implements Step {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-        if(!checked)
-            check.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
+
     }
     private void updateNavigationBar() {
         if (onNavigationBarListener != null) {
@@ -307,5 +294,52 @@ public class Checkout_AddressFragment extends Fragment implements Step {
     }
     private boolean isInformationValid(){
         return checked;
+    }
+
+    @Override
+    public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+        layout_address.setErrorEnabled(false);
+        layout_postalcode.setErrorEnabled(false);
+        layout_name.setErrorEnabled(false);
+        layout_phonenumber.setErrorEnabled(false);
+        if (TextUtils.isEmpty(name.getText().toString())){
+            layout_name.setErrorEnabled(true);
+            layout_name.setError("Name of receiver is required");
+            checked = false;
+        }if (TextUtils.isEmpty(address.getText().toString())){
+            layout_address.setErrorEnabled(true);
+            layout_address.setError("Address is required");
+            checked = false;
+        }if (TextUtils.isEmpty(phonenumber.getText().toString())){
+            layout_phonenumber.setErrorEnabled(true);
+            layout_phonenumber.setError("Phone number is required");
+            checked = false;
+        }if (TextUtils.isEmpty(postalcode.getText().toString())){
+            layout_postalcode.setErrorEnabled(true);
+            layout_postalcode.setError("Postal Code is required");
+            checked = false;
+        }
+        else {
+            ((CheckoutActivity)getActivity()).ChangeColor(1);
+            sessionManagement.keepCheckoutAddress(name.getText().toString(), address.getText().toString(),
+                    phonenumber.getText().toString(), idprovince, idcity, postalcode.getText().toString());
+            Toasty.info(context, name.getText().toString() +"\n"+
+                            address.getText().toString() +"\n"+
+                    phonenumber.getText().toString() +"\n"+
+                    idprovince +"\n"+
+                    idcity +"\n"+
+                    postalcode.getText().toString(), Toast.LENGTH_LONG, true).show();
+
+            callback.goToNextStep();
+        }
+    }
+
+    @Override
+    public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+
+    }
+
+    @Override
+    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
     }
 }

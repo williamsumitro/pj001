@@ -8,6 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,13 +23,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
+import com.example.williamsumitro.dress.view.model.AddToBag;
 import com.example.williamsumitro.dress.view.model.Price;
+import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.Product_Size_Qty;
+import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.bag.adapter.AddToBagRV;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,26 +64,30 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
     @BindView(R.id.addtobag_imgproduct) ImageView imageproduct;
     @BindView(R.id.addtobag_tvMinOrder) TextView minorder;
     @BindView(R.id.addtobag_btncontinue) Button continues;
-    @BindView(R.id.addtobag_lnfree) LinearLayout container_free;
-    @BindView(R.id.addtobag_lnl) LinearLayout container_l;
-    @BindView(R.id.addtobag_lnm) LinearLayout container_m;
-    @BindView(R.id.addtobag_lnxl) LinearLayout container_xl;
-    @BindView(R.id.addtobag_lns) LinearLayout container_s;
-    @BindView(R.id.addtobag_qv_l) QuantityView qv_l;
-    @BindView(R.id.addtobag_qv_xl) QuantityView qv_xl;
-    @BindView(R.id.addtobag_qv_free) QuantityView qv_free;
-    @BindView(R.id.addtobag_qv_s) QuantityView qv_s;
-    @BindView(R.id.addtobag_qv_m) QuantityView qv_m;
+//    @BindView(R.id.addtobag_lnfree) LinearLayout container_free;
+//    @BindView(R.id.addtobag_lnl) LinearLayout container_l;
+//    @BindView(R.id.addtobag_lnm) LinearLayout container_m;
+//    @BindView(R.id.addtobag_lnxl) LinearLayout container_xl;
+//    @BindView(R.id.addtobag_lns) LinearLayout container_s;
+//    @BindView(R.id.addtobag_qv_l) QuantityView qv_l;
+//    @BindView(R.id.addtobag_qv_xl) QuantityView qv_xl;
+//    @BindView(R.id.addtobag_qv_free) QuantityView qv_free;
+//    @BindView(R.id.addtobag_qv_s) QuantityView qv_s;
+//    @BindView(R.id.addtobag_qv_m) QuantityView qv_m;
+    @BindView(R.id.addtobag_rv) RecyclerView rv;
 
     private List<Price> priceDetailsList;
     private Context context;
     private BuyRVAdapter pricedetailsadapter;
+    private AddToBagRV adapter;
     private int qtyS = 0, qtyM = 0, qtyL = 0, qtyXL = 0, qtyFree = 0, subtot = 0, disc = 0;
     private Double percen = 0.0, tot = 0.0;
     private DecimalFormat formatter;
     private apiService service;
     private SessionManagement sessionManagement;
-    private ArrayList<Product_Size_Qty> product_size_qtyArrayList;
+    private ArrayList<Size> sizes;
+    private ArrayList<Product_Size_Qty> data;
+    private Product_Size_Qty data_size;
 
     private final static String NAMAPRODUCT = "NAMAPRODUCT";
     private final static String QTYMINORDER = "QTYMINORDER";
@@ -94,8 +108,8 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
         setuptoolbar();
         getactivityIntent();
         initData();
-        initQV();
-        initGetRV();
+//        initQV();
+//        initGetRV();
         initClick();
     }
 
@@ -104,215 +118,44 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
             @Override
             public void onClick(View v) {
                 api_addtobag();
+//                RetriveData();
             }
         });
     }
 
-    private void initQV(){
-        qv_s.setQuantityClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
-                builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
-                final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
-
-                et.setText(String.valueOf(qv_s.getQuantity()));
-
-                builder.setView(inflate);
-                builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newQuantity = et.getText().toString();
-                        if (TextUtils.isEmpty(newQuantity)) return;
-
-                        qtyS = Integer.parseInt(newQuantity);
-                        if (qtyS>100){
-                            Toasty.error(context, "Maximum quantity you can order only 100 / size", Toast.LENGTH_LONG, true).show();
-                        }
-                        qv_s.setQuantity(qtyS);
-                        changeprice();
-                    }
-                }).setNegativeButton("Cancel", null);
-                builder.show();
+    public void RetriveData(){
+        data_size = adapter.retreiveData();
+        Boolean check = false;
+        Integer index = -1;
+        if (data.size()>0){
+            for (int i = 0; i <data.size();i++){
+                if (String.valueOf(data_size.getSize_id()).equals(String.valueOf(data.get(i).getSize_id()))){
+                    check = true;
+                    index = i;
+                    break;
+                }else {
+                    check = false;
+                }
             }
-        });
-        qv_m.setQuantityClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
-                builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
-                final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
-                et.setText(String.valueOf(qv_m.getQuantity()));
-
-
-                builder.setView(inflate);
-                builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newQuantity = et.getText().toString();
-                        if (TextUtils.isEmpty(newQuantity)) return;
-
-                        qtyM = Integer.parseInt(newQuantity);
-                        if (qtyM>100){
-                            Toasty.error(context, "Maximum quantity you can order only 100 / size", Toast.LENGTH_LONG, true).show();
-                        }
-
-                        qv_m.setQuantity(qtyM);
-                        changeprice();
-                    }
-                }).setNegativeButton("Cancel", null);
-                builder.show();
+            if (check){
+                Product_Size_Qty sizedata;
+                sizedata = new Product_Size_Qty(data_size.getSize_id(),data_size.getQty());
+                data.set(index, sizedata);
             }
-        });
-        qv_l.setQuantityClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
-                builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
-                final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
-                et.setText(String.valueOf(qv_l.getQuantity()));
-
-                builder.setView(inflate);
-                builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newQuantity = et.getText().toString();
-                        if (TextUtils.isEmpty(newQuantity)) return;
-
-                        qtyL = Integer.parseInt(newQuantity);
-                        if (qtyL>100){
-                            Toasty.error(context, "Maximum quantity you can order only 100 / size", Toast.LENGTH_LONG, true).show();
-                        }
-
-                        qv_l.setQuantity(qtyL);
-                        changeprice();
-                    }
-                }).setNegativeButton("Cancel", null);
-                builder.show();
+            else {
+                Product_Size_Qty sizedata;
+                sizedata = new Product_Size_Qty(data_size.getSize_id(), data_size.getQty());
+                data.add(sizedata);
             }
-        });
-        qv_xl.setQuantityClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
-                builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
-                final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
-                et.setText(String.valueOf(qv_xl.getQuantity()));
-
-                builder.setView(inflate);
-                builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newQuantity = et.getText().toString();
-                        if (TextUtils.isEmpty(newQuantity)) return;
-
-                        qtyXL = Integer.parseInt(newQuantity);
-                        if (qtyXL>100){
-                            Toasty.error(context, "Maximum quantity you can order only 100 / size", Toast.LENGTH_LONG, true).show();
-                        }
-
-                        qv_xl.setQuantity(qtyXL);
-                        changeprice();
-                    }
-                }).setNegativeButton("Cancel", null);
-                builder.show();
-            }
-        });
-        qv_free.setQuantityClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddToBagActivity.this);
-                builder.setTitle("Change Quantity");
-                View inflate = LayoutInflater.from(AddToBagActivity.this).inflate(R.layout.dialog_qty, null, false);
-                final EditText et = (EditText) inflate.findViewById(R.id.dialog_qty_et_qty);
-                et.setText(String.valueOf(qv_free.getQuantity()));
-
-                builder.setView(inflate);
-                builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newQuantity = et.getText().toString();
-                        if (TextUtils.isEmpty(newQuantity)) return;
-
-                        qtyFree = Integer.parseInt(newQuantity);
-                        if (qtyFree>100){
-                            Toasty.error(context, "Maximum quantity you can order only 100 / size", Toast.LENGTH_LONG, true).show();
-                        }
-
-                        qv_free.setQuantity(qtyFree);
-                        changeprice();
-                    }
-                }).setNegativeButton("Cancel", null);
-                builder.show();
-            }
-        });
+        }
+        else {
+            Product_Size_Qty sizedata;
+            sizedata = new Product_Size_Qty(data_size.getSize_id(), data_size.getQty());
+            data.add(sizedata);
+        }
+        changeprice();
     }
-    private void initGetRV(){
-        qv_s.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                qtyS = qv_s.getQuantity();
-                changeprice();
-            }
 
-            @Override
-            public void onLimitReached() {
-
-            }
-        });
-        qv_m.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                qtyM = qv_m.getQuantity();
-                changeprice();
-            }
-
-            @Override
-            public void onLimitReached() {
-
-            }
-        });
-        qv_l.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                qtyL = qv_l.getQuantity();
-                changeprice();
-            }
-
-            @Override
-            public void onLimitReached() {
-
-            }
-        });
-        qv_xl.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                qtyXL = qv_xl.getQuantity();
-                changeprice();
-            }
-
-            @Override
-            public void onLimitReached() {
-
-            }
-        });
-        qv_free.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                qtyFree = qv_free.getQuantity();
-                changeprice();
-            }
-
-            @Override
-            public void onLimitReached() {
-
-            }
-        });
-    }
     private void initView(){
         ButterKnife.bind(this);
         context = this;
@@ -322,6 +165,8 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
         continues.setEnabled(false);
         continues.setBackgroundColor(getResources().getColor(R.color.gray1));
         sessionManagement = new SessionManagement(getApplicationContext());
+        sizes = new ArrayList<>();
+        data = new ArrayList<>();
     }
     private void getactivityIntent(){
         Intent getintent = getIntent();
@@ -333,7 +178,7 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
             extra_priceminlist = getintent.getStringArrayListExtra(PRICELIST);
             extra_qtyminorder = getintent.getStringArrayListExtra(QTYMINORDER);
             extra_qtymaxorder = getintent.getStringArrayListExtra(QTYMAXORDER);
-            extra_sizelist = getintent.getStringArrayListExtra(SIZELIST);
+            sizes = (ArrayList<Size>) getintent.getSerializableExtra(SIZELIST);
         }
         else{
             Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
@@ -360,46 +205,28 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
     private void initData(){
         nameproduct.setText(extra_namaproduct);
         priceproduct.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(extra_priceminlist.get(0)))));
-        Picasso.with(context).cancelRequest(imageproduct);
+
         Picasso.with(context)
                 .load(extra_gambarproduct)
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(imageproduct);
         minorder.setText(extra_minorder);
-        for (int i = 0; i<extra_sizelist.size(); i++){
-            if (extra_sizelist.get(i).toLowerCase().equals("1"))
-                container_s.setVisibility(View.VISIBLE);
-            else if (extra_sizelist.get(i).toLowerCase().equals("2"))
-                container_m.setVisibility(View.VISIBLE);
-            else if (extra_sizelist.get(i).toLowerCase().equals("3"))
-                container_l.setVisibility(View.VISIBLE);
-            else if (extra_sizelist.get(i).toLowerCase().equals("4"))
-                container_xl.setVisibility(View.VISIBLE);
-            else if (extra_sizelist.get(i).toLowerCase().equals("5"))
-                container_free.setVisibility(View.VISIBLE);
-        }
+        setupRV();
     }
-
+    private void setupRV(){
+        adapter = new AddToBagRV(context, sizes, AddToBagActivity.this);
+        RecyclerView.LayoutManager verticallayout = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(verticallayout);
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(adapter);
+    }
     private void api_addtobag() {
-        product_size_qtyArrayList = new ArrayList<>();
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
-        for (int i = 0; i<extra_sizelist.size(); i++){
-            Product_Size_Qty product_size_qty = null;
-            if (extra_sizelist.get(i).toLowerCase().equals("1"))
-                product_size_qty = new Product_Size_Qty(1, qtyS);
-            else if (extra_sizelist.get(i).toLowerCase().equals("2"))
-                product_size_qty = new Product_Size_Qty(2, qtyM);
-            else if (extra_sizelist.get(i).toLowerCase().equals("3"))
-                product_size_qty = new Product_Size_Qty(3, qtyL);
-            else if (extra_sizelist.get(i).toLowerCase().equals("4"))
-                product_size_qty = new Product_Size_Qty(4, qtyXL);
-            else if (extra_sizelist.get(i).toLowerCase().equals("5"))
-                product_size_qty = new Product_Size_Qty(5, qtyFree);
-            product_size_qtyArrayList.add(product_size_qty);
-        }
         service = apiUtils.getAPIService();
-        com.example.williamsumitro.dress.view.model.AddToBag addToBag = new com.example.williamsumitro.dress.view.model.AddToBag(token, extra_productid, product_size_qtyArrayList);
+        com.example.williamsumitro.dress.view.model.AddToBag addToBag = new com.example.williamsumitro.dress.view.model.AddToBag(token, extra_productid, data);
         service.req_add_to_bag(addToBag).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -435,8 +262,11 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
     }
 
     private void changeprice(){
+        int sum = 0;
+        for (int i = 0; i < data.size(); i++){
+            sum += data.get(i).getQty();
+        }
         int min, max;
-        int sum = qtyS + qtyM + qtyL + qtyXL +qtyFree;
         for (int i = 0; i<extra_qtyminorder.size(); i++){
             min = Integer.parseInt(extra_qtyminorder.get(i));
             if (extra_qtymaxorder.get(i).equals("max")){

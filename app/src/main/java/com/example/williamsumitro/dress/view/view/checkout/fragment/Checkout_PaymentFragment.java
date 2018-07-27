@@ -1,48 +1,55 @@
-package com.example.williamsumitro.dress.view.view.checkout.activity;
+package com.example.williamsumitro.dress.view.view.checkout.fragment;
 
-import android.app.Activity;
+
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
-import com.example.williamsumitro.dress.view.model.*;
 import com.example.williamsumitro.dress.view.model.Checkout;
+import com.example.williamsumitro.dress.view.model.Checkout_CourierArrayList;
+import com.example.williamsumitro.dress.view.model.PaymentResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.checkout.activity.CheckoutSuccess;
 import com.google.gson.Gson;
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Payment extends AppCompatActivity {
-    public static Payment PAYMENT;
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class Checkout_PaymentFragment extends Fragment implements Step {
     @BindView(R.id.payment_btn_submit) Button submit;
     @BindView(R.id.payment_et_point) EditText et_point;
-    @BindView(R.id.payment_toolbar) Toolbar toolbar;
     @BindView(R.id.payment_tv_point) TextView tv_point;
     @BindView(R.id.payment_tv_totalprice) TextView totalprice;
     @BindView(R.id.payment_tv_shippingprice) TextView tv_shippingprice;
@@ -62,15 +69,17 @@ public class Payment extends AppCompatActivity {
 
     private final static String PAYMENTRESPONSE = "PAYMENTRESPONSE";
 
+    public Checkout_PaymentFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment);
-        initView();
-        setuptoolbar();
-        initData();
-        initEt();
-        initOnClick();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_checkout__payment, container, false);
+        initView(view);
+        return view;
     }
 
     private void initEt() {
@@ -168,7 +177,6 @@ public class Payment extends AppCompatActivity {
                         Intent intent = new Intent(context, CheckoutSuccess.class);
                         intent.putExtra(PAYMENTRESPONSE, json);
                         initanim(intent);
-                        finish();
                     }
                     else {
                         initDialog(response.body().getMessage(), 0);
@@ -184,7 +192,7 @@ public class Payment extends AppCompatActivity {
     }
     private void initDialog1(int stats){
         if(stats == 1){
-            sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.setCanceledOnTouchOutside(false);
             sweetAlertDialog.setTitleText("Submit")
@@ -255,12 +263,11 @@ public class Payment extends AppCompatActivity {
         y = x + Double.parseDouble(subtotal) - usepoint;
         totalprice.setText("Total Price : IDR " + formatter.format(Double.parseDouble(String.valueOf(y))));
     }
-    private void initView(){
-        ButterKnife.bind(this);
-        context = this;
+    private void initView(View view){
+        ButterKnife.bind(this, view);
+        context = getContext();
         formatter = new DecimalFormat("#,###,###");
-        PAYMENT = this;
-        sessionManagement = new SessionManagement(getApplicationContext());
+        sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         HashMap<String, String> courier = sessionManagement.getcheckoutcourier();
@@ -274,28 +281,31 @@ public class Payment extends AppCompatActivity {
         city = address.get(SessionManagement.CHECKOUT_IDCITY);
         phonenumber = address.get(SessionManagement.CHECKOUT_PHONE_NUMBER);
         postalcode = address.get(SessionManagement.CHECKOUT_POSTAL_CODE);
+        if (point !=null){
+            initData();
+            initEt();
+            initOnClick();
+        }
     }
-    private void setuptoolbar(){
-        setSupportActionBar(toolbar);
-        final Drawable arrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        arrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(arrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Payment");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
-                finish();
-            }
-        });
-    }
+
     private void initanim(Intent intent){
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+        Bundle bundle = ActivityOptions.makeCustomAnimation(context,R.anim.slideright, R.anim.fadeout).toBundle();
+        context.startActivity(intent, bundle);
+    }
+
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        return null;
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
     }
 }

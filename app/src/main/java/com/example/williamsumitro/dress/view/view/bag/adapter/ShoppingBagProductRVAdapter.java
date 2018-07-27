@@ -8,10 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +29,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,13 +70,17 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
     private ProgressDialog progressDialog;
     private final static String PRODUCT_ID = "PRODUCT_ID";
     private final static String IMAGE = "IMAGE";
-    public ShoppingBagProductRVAdapter(ArrayList<ProductInfo> productArrayList, Context context){
+    private ShoppingBagSizeRV adapter;
+    private ShoppingBag shoppingBag;
+    public ShoppingBagProductRVAdapter(ArrayList<ProductInfo> productArrayList, Context context, ShoppingBag shoppingBag){
         this.context = context;
         this.productArrayList = productArrayList;
+        this.shoppingBag = shoppingBag;
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(context);
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -87,33 +97,48 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.product);
         holder.totalqty.setText(formatter.format(Double.parseDouble(product.getTotalQty())));
         holder.price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(product.getPriceUnit()))));
         holder.subtotal.setText("IDR " + formatter.format(Double.parseDouble(product.getPriceTotal())));
-        for (int i = 0; i<product.getSizeInfo().size(); i++){
-            if (product.getSizeInfo().get(i).getProductSizeId() == 1){
-                holder.container_s.setVisibility(View.VISIBLE);
-                holder.qtyS.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
+
+        adapter = new ShoppingBagSizeRV(context, product.getSizeInfo());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
             }
-            else if (product.getSizeInfo().get(i).getProductSizeId() == 2){
-                holder.container_m.setVisibility(View.VISIBLE);
-                holder.qtyM.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
-            }
-            else if (product.getSizeInfo().get(i).getProductSizeId() == 3){
-                holder.container_l.setVisibility(View.VISIBLE);
-                holder.qtyL.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
-            }
-            else if (product.getSizeInfo().get(i).getProductSizeId() == 4){
-                holder.container_xl.setVisibility(View.VISIBLE);
-                holder.qtyXL.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
-            }
-            else if (product.getSizeInfo().get(i).getProductSizeId() == 5){
-                holder.container_free.setVisibility(View.VISIBLE);
-                holder.qtyFree.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
-            }
-        }
+        };
+        holder.recyclerView.setLayoutManager(layoutManager);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        holder.recyclerView.setAdapter(alphaAdapter);
+//        for (int i = 0; i<product.getSizeInfo().size(); i++){
+//            if (product.getSizeInfo().get(i).getProductSizeId() == 1){
+//                holder.container_s.setVisibility(View.VISIBLE);
+//                holder.qtyS.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
+//            }
+//            else if (product.getSizeInfo().get(i).getProductSizeId() == 2){
+//                holder.container_m.setVisibility(View.VISIBLE);
+//                holder.qtyM.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
+//            }
+//            else if (product.getSizeInfo().get(i).getProductSizeId() == 3){
+//                holder.container_l.setVisibility(View.VISIBLE);
+//                holder.qtyL.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
+//            }
+//            else if (product.getSizeInfo().get(i).getProductSizeId() == 4){
+//                holder.container_xl.setVisibility(View.VISIBLE);
+//                holder.qtyXL.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
+//            }
+//            else if (product.getSizeInfo().get(i).getProductSizeId() == 5){
+//                holder.container_free.setVisibility(View.VISIBLE);
+//                holder.qtyFree.setText(String.valueOf(product.getSizeInfo().get(i).getProductQty()));
+//            }
+//        }
         holder.container_qty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +170,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
             }
         });
     }
-    private void api_deleteproduct(final ProductInfo product){
+    private void api_deleteproduct(final ProductInfo product, final SweetAlertDialog sweetAlertDialog, final SweetAlertDialog sDialog){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
         progressDialog.setCancelable(true);
@@ -161,11 +186,16 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                             String message = jsonResults.getString("message");
                             Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                             progressDialog.dismiss();
-                            Intent intent = new Intent(context, ShoppingBag.class);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                initanim(intent);
-                            }
-                            ((Activity) context).finish();
+                            shoppingBag.initRefresh();
+                            sDialog.setTitleText("Removed")
+                                    .setConfirmText("OK")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            sweetAlertDialog.dismiss();
+                                        }
+                                    })
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                         }
                         else{
                             String message = jsonResults.getString("message");
@@ -197,22 +227,23 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
         @BindView(R.id.itemshoppingbagproduct_tvprice) TextView price;
         @BindView(R.id.itemshoppingbagproduct_tv_productname) TextView productname;
         @BindView(R.id.itemshoppingbagproduct_totalqty) TextView totalqty;
-        @BindView(R.id.itemshoppingbagproduct_qtyXL) TextView qtyXL;
-        @BindView(R.id.itemshoppingbagproduct_qtyM) TextView qtyM;
-        @BindView(R.id.itemshoppingbagproduct_qtyL) TextView qtyL;
-        @BindView(R.id.itemshoppingbagproduct_qtyFree) TextView qtyFree;
-        @BindView(R.id.itemshoppingbagproduct_qtyS) TextView qtyS;
-        @BindView(R.id.itemshoppingbagproduct_ln_xl) LinearLayout container_xl;
-        @BindView(R.id.itemshoppingbagproduct_ln_l) LinearLayout container_l;
-        @BindView(R.id.itemshoppingbagproduct_ln_s) LinearLayout container_s;
-        @BindView(R.id.itemshoppingbagproduct_ln_m) LinearLayout container_m;
-        @BindView(R.id.itemshoppingbagproduct_ln_free) LinearLayout container_free;
+//        @BindView(R.id.itemshoppingbagproduct_qtyXL) TextView qtyXL;
+//        @BindView(R.id.itemshoppingbagproduct_qtyM) TextView qtyM;
+//        @BindView(R.id.itemshoppingbagproduct_qtyL) TextView qtyL;
+//        @BindView(R.id.itemshoppingbagproduct_qtyFree) TextView qtyFree;
+//        @BindView(R.id.itemshoppingbagproduct_qtyS) TextView qtyS;
+//        @BindView(R.id.itemshoppingbagproduct_ln_xl) LinearLayout container_xl;
+//        @BindView(R.id.itemshoppingbagproduct_ln_l) LinearLayout container_l;
+//        @BindView(R.id.itemshoppingbagproduct_ln_s) LinearLayout container_s;
+//        @BindView(R.id.itemshoppingbagproduct_ln_m) LinearLayout container_m;
+//        @BindView(R.id.itemshoppingbagproduct_ln_free) LinearLayout container_free;
         @BindView(R.id.itemshoppingbagproduct_ln_qtydetail) LinearLayout container_qtydetail;
         @BindView(R.id.itemshoppingbagproduct_ln_qty) LinearLayout container_qty;
         @BindView(R.id.itemshoppingbagproduct_imgcaret) ImageView caret;
         @BindView(R.id.itemshoppingbagproduct_img_product) ImageView product;
         @BindView(R.id.itemshoppingbagproduct_img_delete) ImageView delete;
         @BindView(R.id.itemshoppingbagproduct_btn_viewproduct) Button viewproduct;
+        @BindView(R.id.itemshoppingbagproduct_rv) RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -234,17 +265,8 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             // reuse previous dialog instance
-                            api_deleteproduct(product);
-                            sDialog.setTitleText("Deleted!")
-                                    .setContentText("Your imaginary file has been deleted!")
-                                    .setConfirmText("OK")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            sweetAlertDialog.dismiss();
-                                        }
-                                    })
-                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            api_deleteproduct(product, sweetAlertDialog, sDialog);
+
                         }
                     })
                     .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {

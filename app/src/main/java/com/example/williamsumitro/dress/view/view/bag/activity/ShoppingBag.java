@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -29,13 +29,13 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.ShoppingBagRVAdapter;
-import com.example.williamsumitro.dress.view.view.checkout.activity.Checkout;
+import com.example.williamsumitro.dress.view.view.checkout.activity.AltCheckout;
+import com.example.williamsumitro.dress.view.view.checkout.activity.CheckoutActivity;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +56,7 @@ public class ShoppingBag extends AppCompatActivity {
     @BindView(R.id.bag_ln_top) LinearLayout top;
     @BindView(R.id.bag_ln_buttom) LinearLayout bottom;
     @BindView(R.id.bag_btn_continue) Button btn_continue;
+    @BindView(R.id.bag_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
 
 //    @BindView(R.id.bag_tvpoint) TextView point;
     private ShoppingBagRVAdapter adapter;
@@ -73,27 +74,29 @@ public class ShoppingBag extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bag);
         initView();
-        api_viewshoppingbag();
         setuptoolbar();
+        initRefresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                initRefresh();
+            }
+        });
+
+        initonClick();
+    }
+    public void initRefresh(){
+        api_viewshoppingbag();
+    }
+    private void initonClick() {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, Checkout.class);
+                Intent intent = new Intent(context, AltCheckout.class);
                 initanim(intent);
             }
         });
-        initonClick();
-    }
-
-    private void initonClick() {
-//        continues.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//                overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
-//                finish();
-//            }
-//        });
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +108,7 @@ public class ShoppingBag extends AppCompatActivity {
     }
 
     private void api_viewshoppingbag() {
+        swipeRefreshLayout.setRefreshing(false);
         progressDialog.setMessage("Please wait ....");
         progressDialog.show();
         progressDialog.setCancelable(false);
@@ -118,8 +122,13 @@ public class ShoppingBag extends AppCompatActivity {
                     if (bagArrayList.size() == 0){
                         btn_continue.setVisibility(View.VISIBLE);
                         top.setVisibility(View.VISIBLE);
+                        bottom.setVisibility(View.GONE);
+                        nestedScrollView.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                     else {
+                        btn_continue.setVisibility(View.GONE);
+                        top.setVisibility(View.GONE);
                         bottom.setVisibility(View.VISIBLE);
                         nestedScrollView.setVisibility(View.VISIBLE);
                     }
@@ -127,6 +136,7 @@ public class ShoppingBag extends AppCompatActivity {
                     total_qty = response.body().getTotalQty();
                     initData();
                     setupRV();
+                    swipeRefreshLayout.setRefreshing(false);
                     progressDialog.dismiss();
                 }
             }
@@ -164,7 +174,7 @@ public class ShoppingBag extends AppCompatActivity {
         });
     }
     private void setupRV(){
-        adapter = new ShoppingBagRVAdapter(bagArrayList, context);
+        adapter = new ShoppingBagRVAdapter(bagArrayList, context, ShoppingBag.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);

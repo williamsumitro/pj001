@@ -46,7 +46,10 @@ import com.example.williamsumitro.dress.view.view.profile.activity.Profile;
 import com.example.williamsumitro.dress.view.view.search.activity.Search;
 import com.example.williamsumitro.dress.view.view.wallet.fragment.WalletFragment;
 import com.example.williamsumitro.dress.view.view.wishlist.fragment.WishlistFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -135,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void api_getauthuser(){
         progressDialog.setMessage("Loading ...");
@@ -153,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
                     nama.setText(userDetails.getFullName());
                     Picasso.with(context)
                             .load(userDetails.getAvatar())
+                            .memoryPolicy(MemoryPolicy.NO_CACHE )
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
                             .into(image);
                     progressDialog.dismiss();
                 }

@@ -17,7 +17,10 @@ import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,7 @@ public class MyPartnershipDetail_RV extends RecyclerView.Adapter<MyPartnershipDe
     public MyPartnershipDetail_RV(Context context, ArrayList<ProductInfo> productArrayList){
         this.context = context;
         this.productArrayList = productArrayList;
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -52,6 +56,8 @@ public class MyPartnershipDetail_RV extends RecyclerView.Adapter<MyPartnershipDe
         holder.status.setText("Status : " + product.getStatus());
         Picasso.with(context)
                 .load(product.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.product_name.setText(product.getProductName());

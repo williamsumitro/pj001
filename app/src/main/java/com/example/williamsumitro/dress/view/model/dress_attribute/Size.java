@@ -1,5 +1,7 @@
 package com.example.williamsumitro.dress.view.model.dress_attribute;
 
+import android.content.Intent;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,8 +23,14 @@ public class Size implements Serializable{
     private String createdAt;
     @SerializedName("updated_at")
     @Expose
-    private Object updatedAt;
+    private String updatedAt;
+    private Integer qty;
 
+    public Size(Integer sizeId, String sizeName, Integer qty){
+        this.sizeId = sizeId;
+        this.sizeName = sizeName;
+        this.qty = qty;
+    }
     public Integer getSizeId() {
         return sizeId;
     }
@@ -47,11 +55,19 @@ public class Size implements Serializable{
         this.createdAt = createdAt;
     }
 
-    public Object getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Object updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getQty() {
+        return qty;
+    }
+
+    public void setQty(Integer qty) {
+        this.qty = qty;
     }
 }

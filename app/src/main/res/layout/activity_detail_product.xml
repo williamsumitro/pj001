@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fastScrollEnabled="false"
     android:layout_height="match_parent">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:fastScrollEnabled="false"
         android:stateListAnimator="@null"
         android:id="@+id/detailproduct_appbar">
         <android.support.design.widget.CollapsingToolbarLayout
@@ -16,6 +18,7 @@
             android:layout_height="400dp"
             android:id="@+id/detailproduct_collapstoolbar"
             android:fitsSystemWindows="true"
+            android:fastScrollEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false">
             <RelativeLayout
@@ -38,6 +41,7 @@
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/detailproduct_swiperefreshlayout"
+        android:fastScrollEnabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -680,7 +684,8 @@
                                 android:id="@+id/detailproduct_tv_size"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
+                                android:gravity="center"
+                                android:layout_gravity="center"
                                 android:text=""
                                 android:textColor="@color/gray3"
                                 android:textSize="12sp" />
@@ -765,32 +770,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
                         </LinearLayout>
-                        <!--<LinearLayout-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:orientation="vertical">-->
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text="Order Success"-->
-                        <!--android:textColor="@color/gray2"-->
-                        <!--android:textSize="12sp" />-->
-                        <!--<ImageView-->
-                        <!--android:layout_width="50dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:background="@drawable/businessdeal" />-->
-
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text="20%"-->
-                        <!--android:textColor="@color/black"-->
-                        <!--android:textSize="12sp" />-->
-                        <!--</LinearLayout>-->
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

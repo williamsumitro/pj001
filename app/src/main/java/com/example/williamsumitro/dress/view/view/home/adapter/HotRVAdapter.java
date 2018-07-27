@@ -29,7 +29,10 @@ import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -57,6 +60,7 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
     public HotRVAdapter (List<ProductInfo> productInfoList, Context context){
         this.productInfoList = productInfoList;
         this.context = context;
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -81,6 +85,8 @@ public class HotRVAdapter extends RecyclerView.Adapter<HotRVAdapter.ViewHolder>{
 
         Picasso.with(context)
                 .load(productInfo.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .resize(180, 200)
                 .placeholder(R.drawable.default_product)
                 .into(holder.image);

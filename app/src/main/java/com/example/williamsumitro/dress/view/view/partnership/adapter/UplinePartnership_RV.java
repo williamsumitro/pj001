@@ -37,7 +37,10 @@ import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatch
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.partnership.fragment.UplinePartnershipFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +88,7 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         priceList = new ArrayList<>();
         progressDialog = new ProgressDialog(context);
         sessionManagement = new SessionManagement(context);
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -101,6 +105,8 @@ public class UplinePartnership_RV extends RecyclerView.Adapter<UplinePartnership
         holder.productname.setText(item.getProductname());
         Picasso.with(context)
                 .load(item.getImage())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.image);
         holder.storename.setText(item.getStorename());

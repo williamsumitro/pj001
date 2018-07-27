@@ -33,7 +33,10 @@ import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.store.activity.DetailStore;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +91,7 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
         priceminlist = new ArrayList<>();
         availablesizelist = new ArrayList<>();
         sizeList = new ArrayList<>();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -125,7 +129,11 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
         }
         holder.name.setText(wishlist.getProductName());
         holder.storename.setText(wishlist.getStoreName());
-        Picasso.with(context).load(wishlist.getPhoto()).into(holder.imageView);
+        Picasso.with(context)
+                .load(wishlist.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .into(holder.imageView);
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

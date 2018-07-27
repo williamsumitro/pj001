@@ -31,7 +31,10 @@ import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.Util;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -96,6 +99,8 @@ public class Profile extends AppCompatActivity {
         Picasso.with(context)
                 .load(userDetails.getAvatar())
                 .placeholder(R.drawable.logo404)
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(user_image);
         user_name.setText(userDetails.getFullName());
         phonenumber.setText(userDetails.getPhoneNumber());
@@ -119,6 +124,7 @@ public class Profile extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         service = apiUtils.getAPIService();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);

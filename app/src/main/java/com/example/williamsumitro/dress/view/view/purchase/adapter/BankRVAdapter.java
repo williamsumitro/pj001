@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Bank;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,7 @@ public class BankRVAdapter extends RecyclerView.Adapter<BankRVAdapter.ViewHolder
     public BankRVAdapter(ArrayList<Bank> bankList, Context context){
         this.bankList = bankList;
         this.context = context;
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -45,9 +49,10 @@ public class BankRVAdapter extends RecyclerView.Adapter<BankRVAdapter.ViewHolder
 
         Picasso.with(context)
                 .load(bank.getLogo())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.logo404)
                 .into(holder.imageView);
-        Picasso.with(context).cancelRequest(holder.imageView);
     }
 
     @Override

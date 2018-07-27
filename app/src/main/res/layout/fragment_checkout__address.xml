@@ -139,14 +139,5 @@
                     android:layout_height="0.5dp"/>
             </LinearLayout>
         </LinearLayout>
-        <Button
-            android:layout_marginTop="20dp"
-            android:id="@+id/checkout_address_btn_check"
-            android:textColor="@color/white"
-            android:text="Check"
-            android:layout_gravity="center"
-            android:background="@drawable/button1_3"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

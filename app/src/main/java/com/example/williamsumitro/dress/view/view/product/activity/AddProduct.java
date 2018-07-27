@@ -184,6 +184,7 @@ public class AddProduct extends AppCompatActivity {
         picture.setImageDrawable(camera);
         sessionManagement = new SessionManagement(getApplicationContext());
         progressDialog = new ProgressDialog(this);
+        service = apiUtils.getAPIService();
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -353,7 +354,9 @@ public class AddProduct extends AppCompatActivity {
         }
     }
     private void api_getdressattributes(){
-        service = apiUtils.getAPIService();
+        progressDialog.setMessage("Preparing ...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
         service.req_get_dress_attributes().enqueue(new Callback<DressAttribute>() {
             @Override
             public void onResponse(Call<DressAttribute> call, Response<DressAttribute> response) {
@@ -581,6 +584,7 @@ public class AddProduct extends AppCompatActivity {
 
             }
         });
+        progressDialog.dismiss();
     }
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {

@@ -44,7 +44,11 @@ import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.Util;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -166,12 +170,16 @@ public class MyStore extends AppCompatActivity {
 
         Picasso.with(context)
                 .load(storeDetails.getBanner())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_banner)
                 .into(banner);
 
         Log.d("SEARCHERROR", String.valueOf(storeDetails.getBanner()));
         Picasso.with(context)
                 .load(storeDetails.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(circleImageView);
         if (Double.parseDouble(storeDetails.getRating()) == 0){
@@ -260,6 +268,7 @@ public class MyStore extends AppCompatActivity {
         df = new DecimalFormat("###.#");
         courierServiceList = new ArrayList<>();
         service = apiUtils.getAPIService();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));

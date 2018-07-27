@@ -20,7 +20,10 @@ import com.example.williamsumitro.dress.view.model.OfferHistoryResult;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.request.adapter.MyRequestHistoryOfferRV;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
 
@@ -72,6 +76,8 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
         holder.budget.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMin()))) + " - IDR" + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMax()))));
         Picasso.with(context)
                 .load(result.getRequestPhoto().getFilePath())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.image_product);
         holder.accepted.setVisibility(View.GONE);
@@ -120,6 +126,8 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
 
         Picasso.with(context)
                 .load(offer_photo)
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(image);
         price.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(price_unit))));
         weight.setText(formatter.format(Double.parseDouble(String.valueOf(weight_unit))) + " gr");

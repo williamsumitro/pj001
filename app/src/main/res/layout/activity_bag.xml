@@ -16,94 +16,102 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
     </android.support.design.widget.AppBarLayout>
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/bag_ln_top"
-        android:layout_marginTop="100dp"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/bag_swiperefreshlayout"
         android:layout_below="@+id/bag_appbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <ImageView
-            android:src="@drawable/emptybag"
-            android:layout_gravity="center"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:text="It's empty, go check other products"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:visibility="gone"
-        android:id="@+id/bag_nestedscrollview"
-        android:scrollbars="vertical"
-        android:layout_below="@+id/bag_appbarlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp">
-        <LinearLayout
-            android:focusableInTouchMode="true"
+        android:layout_height="wrap_content">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="5dp"
-                android:id="@+id/bag_rvshoppingbag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/bag_ln_buttom"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:background="@color/white"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/bag_ln_top"
+                android:layout_marginTop="100dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:src="@drawable/emptybag"
+                    android:layout_gravity="center"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp" />
                 <TextView
-                    android:id="@+id/bag_tvTotal"
-                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
                     android:textColor="@color/black"
-                    android:text="Total "
-                    android:textSize="18sp"
+                    android:text="It's empty, go check other products"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/bag_tvTotalPembayaran"
-                    android:gravity="right"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="IDR XXX"
-                    android:textSize="18sp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <Button
-                android:layout_marginTop="5dp"
-                android:id="@+id/bag_btncheckout"
-                android:textColor="@color/white"
-                android:text="Checkout"
-                android:background="@color/green1"
+            <android.support.v4.widget.NestedScrollView
+                android:visibility="gone"
+                android:id="@+id/bag_nestedscrollview"
+                android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="80dp">
+                <LinearLayout
+                    android:focusableInTouchMode="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/bag_rvshoppingbag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/bag_ln_buttom"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/bag_tvTotal"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="Total "
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/bag_tvTotalPembayaran"
+                            android:gravity="right"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="IDR XXX"
+                            android:textSize="18sp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <Button
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/bag_btncheckout"
+                        android:textColor="@color/white"
+                        android:text="Checkout"
+                        android:background="@color/green1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <Button
         android:visibility="gone"
         android:layout_alignParentBottom="true"

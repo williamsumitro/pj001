@@ -22,7 +22,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
 import com.example.williamsumitro.dress.view.view.store.activity.DetailStore;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,6 +68,7 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         df = new DecimalFormat("###.#");
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -107,6 +111,8 @@ public class FavoritestoreRVAdapter extends RecyclerView.Adapter<FavoritestoreRV
         }
         Picasso.with(context)
                 .load(store.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(holder.storeimage);
         holder.storename.setText(store.getName());

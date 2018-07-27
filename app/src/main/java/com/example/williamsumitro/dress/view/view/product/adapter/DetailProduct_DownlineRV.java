@@ -14,7 +14,10 @@ import android.widget.TextView;
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.DownlinePartner;
 import com.example.williamsumitro.dress.view.view.product.activity.DetailProduct;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,7 @@ public class DetailProduct_DownlineRV extends RecyclerView.Adapter<DetailProduct
     public DetailProduct_DownlineRV(Context context, ArrayList<DownlinePartner> downlinePartnerArrayList){
         this.context = context;
         this.downlinePartnerArrayList = downlinePartnerArrayList;
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public DetailProduct_DownlineRV.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,6 +52,8 @@ public class DetailProduct_DownlineRV extends RecyclerView.Adapter<DetailProduct
         holder.storename.setText(downlinePartner.getStoreNamePartner());
         Picasso.with(context)
                 .load(downlinePartner.getStorePhotoPartner())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(holder.image);
         holder.button.setOnClickListener(new View.OnClickListener() {

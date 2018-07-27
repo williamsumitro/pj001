@@ -57,7 +57,10 @@ import com.example.williamsumitro.dress.view.view.openstore.adapter.OpenStore_Co
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -145,10 +148,14 @@ public class EditStore extends AppCompatActivity {
     private void initData() {
         Picasso.with(context)
                 .load(storeDetails.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(logo);
         Picasso.with(context)
                 .load(storeDetails.getBanner())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_banner)
                 .into(banner);
         storename.setText(storeDetails.getName());
@@ -322,6 +329,7 @@ public class EditStore extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(this);
         service = apiUtils.getAPIService();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

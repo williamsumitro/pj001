@@ -25,7 +25,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
 import com.example.williamsumitro.dress.view.view.partnership.fragment.DownlinePartnershipFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +75,7 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -88,6 +92,8 @@ public class DownlinePartnership_RV extends RecyclerView.Adapter<DownlinePartner
         holder.productname.setText(item.getProduct().getProductName());
         Picasso.with(context)
                 .load(item.getProduct().getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.imageView);
         holder.accept.setOnClickListener(new View.OnClickListener() {

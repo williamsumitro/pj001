@@ -33,7 +33,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -251,6 +254,7 @@ public class AddNewRequest extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(this);
         formatter = new DecimalFormat("#,###,###");
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -317,7 +321,8 @@ public class AddNewRequest extends AppCompatActivity {
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     mediapathPhoto = cursor.getString(columnIndex);
-                    Picasso.with(context).load(new File(mediapathPhoto))
+                    Picasso.with(context)
+                            .load(new File(mediapathPhoto))
                             .into(image);
                     cursor.close();
                     dialog.dismiss();

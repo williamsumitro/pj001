@@ -18,7 +18,10 @@ import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ProductRating;
 import com.example.williamsumitro.dress.view.model.SubmitReviewRating;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.ArrayList;
 
@@ -41,6 +44,7 @@ public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<Purchase
         this.context = context;
         this.productArrayList = productArrayList;
         productRatingArrayList = new ArrayList<>();
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     public ArrayList<ProductRating> retrivedata(){
@@ -65,6 +69,8 @@ public class PurchaseReviewRatingDetail_RV extends RecyclerView.Adapter<Purchase
         holder.product_name.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.product);
         updateProductArrayList(product, "0", "");

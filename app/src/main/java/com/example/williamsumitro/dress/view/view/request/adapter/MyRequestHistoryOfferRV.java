@@ -19,7 +19,10 @@ import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.Offer;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ public class MyRequestHistoryOfferRV extends RecyclerView.Adapter<MyRequestHisto
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public MyRequestHistoryOfferRV.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,6 +67,8 @@ public class MyRequestHistoryOfferRV extends RecyclerView.Adapter<MyRequestHisto
         final Offer offer = offers.get(position);
         Picasso.with(context)
                 .load(offer.getPhoto().getFilePath())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.imageView);
         holder.total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(offer.getTotalPrice()))));

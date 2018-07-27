@@ -120,6 +120,19 @@ public class SessionManagement {
         Checkout_CourierArrayList obj = gson.fromJson(json, Checkout_CourierArrayList.class);
         return obj;
     }
+    public void clearCheckoutData(){
+        editor.remove(CHECKOUT_RECEIVER_NAME);
+        editor.remove(CHECKOUT_ADDRESS);
+        editor.remove(CHECKOUT_PHONE_NUMBER);
+        editor.remove(CHECKOUT_IDPROVINCE);
+        editor.remove(CHECKOUT_IDCITY);
+        editor.remove(CHECKOUT_POSTAL_CODE);
+        editor.remove(CHECKOUT_TOTAL_PRICE);
+        editor.remove(CHECKOUT_TOTAL_QTY);
+        editor.remove(CHECKOUT_POINT);
+        editor.remove(CHECKOUT_COURIER);
+        editor.commit();
+    }
     public void keepCheckoutNote(String note){
         editor.putString(CHECKOUT_NOTE, note);
         editor.commit();

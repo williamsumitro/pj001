@@ -29,7 +29,10 @@ import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +99,8 @@ public class ChangeProfilePicture extends AppCompatActivity {
                         if (response.code()==200){
                             Picasso.with(context)
                                     .load(response.body().getUserDetails().getAvatar())
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                    .networkPolicy(NetworkPolicy.NO_CACHE)
                                     .placeholder(R.drawable.logo404)
                                     .into(pictures);
                         }
@@ -176,6 +181,7 @@ public class ChangeProfilePicture extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         service = apiUtils.getAPIService();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);

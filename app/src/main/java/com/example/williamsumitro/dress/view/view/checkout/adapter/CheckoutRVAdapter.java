@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
 /**
@@ -54,12 +55,10 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
     private CheckoutProductRVAdapter rvadapter;
     private ArrayList<Checkout_Courier> checkout_courierArrayList;
     private SessionManagement sessionManagement;
-    private Checkout_CourierFragment checkout_courierFragment;
 
-    public CheckoutRVAdapter(ArrayList<CheckoutInfo> checkoutInfoArrayList, Context context, Checkout_CourierFragment checkout_courierFragment){
+    public CheckoutRVAdapter(ArrayList<CheckoutInfo> checkoutInfoArrayList, Context context){
         this.context = context;
         this.checkoutInfoArrayList = checkoutInfoArrayList;
-        this.checkout_courierFragment = checkout_courierFragment;
         checkout_courierArrayList = new ArrayList<>();
         sessionManagement = new SessionManagement(context);
     }
@@ -117,13 +116,11 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkout_courierFragment.setCheck(false);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 boolean check = false;
-                checkout_courierFragment.setCheck(false);
                 int j = -1;
                 for (int i = 0; i<checkout_courierArrayList.size();i++){
                     if (String.valueOf(checkoutInfo.getStoreId()).equals(checkout_courierArrayList.get(i).getStore_id())){
@@ -138,9 +135,9 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
                     int selected = holder.courierservice.getSelectedItemPosition();
                     CourierSpinner cs = new CourierSpinner(adapter.getItem(selected));
                     Checkout_Courier checkout_courier = new Checkout_Courier(String.valueOf(checkoutInfo.getStoreId()),
-                            cs.getCourier_id(),
-                            cs.getCourier_service(),
-                            cs.getFee(),
+                            checkout_courierArrayList.get(j).getCourier_id(),
+                            checkout_courierArrayList.get(j).getCourier_service(),
+                            checkout_courierArrayList.get(j).getFee(),
                             s.toString());
                     checkout_courierArrayList.set(j, checkout_courier);
                     sessionManagement.keepCheckoutCourierService(new Checkout_CourierArrayList(checkout_courierArrayList));
@@ -162,7 +159,6 @@ public class CheckoutRVAdapter extends RecyclerView.Adapter<CheckoutRVAdapter.Vi
         holder.courierservice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkout_courierFragment.setCheck(false);
                 CourierSpinner courierSpinner = (CourierSpinner) parent.getItemAtPosition(position);
                 idcourier = courierSpinner.getCourier_id();
                 boolean check = false;

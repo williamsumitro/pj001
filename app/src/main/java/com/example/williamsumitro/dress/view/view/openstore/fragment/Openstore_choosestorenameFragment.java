@@ -6,16 +6,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -30,7 +33,9 @@ import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.openstore.activity.OpenStore;
 import com.example.williamsumitro.dress.view.view.openstore.adapter.OpenStore_Button;
 import com.example.williamsumitro.dress.view.view.sellerpanel.OnNavigationBarListener;
+import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.Step;
+import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import org.json.JSONException;
@@ -51,11 +56,11 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Openstore_choosestorenameFragment extends Fragment implements Step {
-    @BindView(R.id.openstore_choosestorename_btnCheckStore) Button button_checkstore;
+public class Openstore_choosestorenameFragment extends Fragment implements BlockingStep {
+//    @BindView(R.id.openstore_choosestorename_btnCheckStore) Button button_checkstore;
     @BindView(R.id.openstore_choosestorename_etStorename) EditText edittext_storename;
-    @BindView(R.id.openstore_choosestorename_tvStatus) TextView tv_status;
-    @BindView(R.id.openstore_choosestorename_btnRegistereStore) Button button_registerstore;
+//    @BindView(R.id.openstore_choosestorename_tvStatus) TextView tv_status;
+//    @BindView(R.id.openstore_choosestorename_btnRegistereStore) Button button_registerstore;
     private apiService service;
     private SessionManagement sessionManagement;
     private boolean check = false, success = false, trigger = false, registered = false;
@@ -78,27 +83,6 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
         View view = inflater.inflate(R.layout.fragment_openstore_choosestorename, container, false);
         initView(view);
         initSession();
-        button_checkstore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                api_checkstore();
-            }
-        });
-        button_registerstore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (trigger&&check)
-                    api_registerstorename();
-                else if (!trigger){
-                    Toasty.info(context, "Please fill your store name", Toast.LENGTH_SHORT, true).show();
-                    edittext_storename.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
-                }
-                else if (!check){
-                    Toasty.info(context, "Please check your store name", Toast.LENGTH_SHORT, true).show();
-                    button_checkstore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
-                }
-            }
-        });
         edittext_storename.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -107,14 +91,17 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                trigger = true;
-                check = false;
-                tv_status.setText("");
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                if (editable.toString().equals(""))
+                    trigger =false;
+                else {
+                    trigger = true;
+                    check = false;
+                }
             }
         });
         return view;
@@ -124,65 +111,53 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
         context = getContext();
         sessionManagement = new SessionManagement(context);
         progressDialog = new ProgressDialog(context);
+        service = apiUtils.getAPIService();
     }
     private void initSession(){
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
     }
 
-    private boolean api_checkstore(){
+    private boolean api_checkstore(final StepperLayout.OnNextClickedCallback callback){
         nama_toko = edittext_storename.getText().toString();
-        progressDialog.setMessage("Wait a sec..");
+        progressDialog.setMessage("Checking store name ...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
-        if (nama_toko.equals("")){
-            edittext_storename.setError("Please fill the store name");
-            check = false;
-            progressDialog.dismiss();
-        }
-        else {
-            service = apiUtils.getAPIService();
-            service.req_check_store(nama_toko)
-                    .enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if(response.code() == 200){
-                                try {
-                                    JSONObject jsonResults = new JSONObject(response.body().string());
-                                    if(jsonResults.getString("status").toLowerCase().equals("true")){
-                                        String message = jsonResults.getString("message");
-                                        check = true;
-                                        tv_status.setText(message);
-                                        tv_status.setTextColor(getResources().getColor(R.color.green));
-                                        progressDialog.dismiss();
-                                    }
-                                    else {
-                                        String message = jsonResults.getString("message");
-                                        check = false;
-                                        tv_status.setText(message);
-                                        tv_status.setTextColor(getResources().getColor(R.color.red));
-                                        progressDialog.dismiss();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            else {
-                                progressDialog.dismiss();
-                                check = false;
-                                initDialog("", 3);
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+        service.req_check_store(nama_toko).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200){
+                    try {
+                        JSONObject jsonResults = new JSONObject(response.body().string());
+                        if(jsonResults.getBoolean("status")){
+                            check = true;
                             progressDialog.dismiss();
-                            initDialog(t.getMessage(), 3);
-                            check = false;
+                            dialog_storename(callback);
                         }
-                    });
-        }
+                        else {
+                            Toasty.error(context, jsonResults.getString("message"), Toast.LENGTH_SHORT, true).show();
+                            check = false;
+                            progressDialog.dismiss();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    progressDialog.dismiss();
+                    check = false;
+                    initDialog("", 3);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
+                initDialog(t.getMessage(), 3);
+                check = false;
+            }
+        });
         return check;
     }
 
@@ -191,9 +166,6 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
             return true;
         }
         else return false;
-    }
-    public void api_registerstorename(){
-        initDialog("",4);
     }
     @Override
     public void onAttach(Context context) {
@@ -207,14 +179,6 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
     @Override
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
-        if(!isStoreValid()){
-            if (!trigger)
-                verificationError = new VerificationError("Please fill your store name");
-            else if (!check)
-                verificationError = new VerificationError("Please check your store name");
-            else if (!registered)
-                verificationError = new VerificationError("Please registered your store name");
-        }
         return verificationError;
     }
 
@@ -227,10 +191,6 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
     public void onError(@NonNull VerificationError error) {
         if (!trigger)
             edittext_storename.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
-        else if(!check)
-        button_checkstore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
-        else if (!registered)
-            button_registerstore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
 
     }
     private void updateNavigationBar() {
@@ -238,23 +198,23 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
             onNavigationBarListener.onChangeEndButtonsEnabled(isStoreValid());
         }
     }
+    private void dialog_success(String message, final StepperLayout.OnNextClickedCallback callback){
+        sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.setTitleText("Registered Success!")
+                .setContentText(message)
+                .setConfirmText("Ok")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        callback.goToNextStep();
+                        sweetAlertDialog.dismiss();
+                    }
+                }).show();
+    }
     private void initDialog(String message, int stats){
-        if(stats == 1) {
-            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.setTitleText("Registered Success!")
-                    .setContentText(message)
-                    .setConfirmText("Ok")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Toasty.info(context, "Please click the next button to continue", Toast.LENGTH_LONG, true).show();
-                            sweetAlertDialog.dismiss();
-                        }
-                    }).show();
-        }
-        else if(stats == 0){
+        if(stats == 0){
             sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -282,27 +242,44 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
                         }
                     }).show();
         }
-        else if (stats==4){
-            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.setTitleText("Confirm")
-                    .setContentText("Are you sure ?")
-                    .setContentText("After your press ok, your store name will automatically save and can't be change Are you Sure ?")
-                    .setConfirmText("Yes")
-                    .setCancelText("No")
-                    .showCancelButton(true)
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            api_registerit();
-                            sweetAlertDialog.dismiss();
-                        }
-                    })
-                    .show();
-        }
     }
-    private void api_registerit(){
+    private void dialog_storename(final StepperLayout.OnNextClickedCallback callback){
+        sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.setTitleText("Store name Available")
+                .setContentText("Do you want to register it ?")
+                .setConfirmText("Yes")
+                .setCancelText("No")
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        dialog_register(callback, sweetAlertDialog);
+                    }
+                })
+                .show();
+    }
+    private void dialog_register(final StepperLayout.OnNextClickedCallback callback, final SweetAlertDialog sweetAlertDialog1){
+        sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.setTitleText("Are you sure ?")
+                .setContentText("After your press ok, your store name will automatically save and can't be change")
+                .setConfirmText("Yes")
+                .setCancelText("No")
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        api_registerit(callback);
+                        sweetAlertDialog.dismiss();
+                        sweetAlertDialog1.dismiss();
+                    }
+                })
+                .show();
+    }
+    private void api_registerit(final StepperLayout.OnNextClickedCallback callback){
         nama_toko = edittext_storename.getText().toString();
         progressDialog.setMessage("Wait a sec..");
         progressDialog.show();
@@ -317,17 +294,12 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
                                 String status = jsonResults.getString("status").toLowerCase();
                                 if(status.equals("true")){
                                     String message = jsonResults.getString("message");
-                                    initDialog(message,1);
                                     ((OpenStore)getActivity()).ChangeColor(1);
                                     sessionManagement.keepStoreName(edittext_storename.getText().toString());
                                     progressDialog.dismiss();
                                     success = true;
                                     edittext_storename.setEnabled(false);
-                                    button_checkstore.setEnabled(false);
-                                    button_checkstore.setClickable(false);
-                                    button_registerstore.setEnabled(false);
-                                    button_registerstore.setClickable(false);
-                                    tv_status.setText("Successful");
+                                    dialog_success(message, callback);
                                 }
                                 else if(status.equals("false")) {
                                     String message = jsonResults.getString("message");
@@ -353,4 +325,27 @@ public class Openstore_choosestorenameFragment extends Fragment implements Step 
                 });
     }
 
+    @Override
+    public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
+        if (edittext_storename.isEnabled()){
+            if (!trigger)
+                Toasty.error(context, "Please fill your store name", Toast.LENGTH_SHORT, true).show();
+            else {
+                api_checkstore(callback);
+            }
+        }
+        else {
+            callback.goToNextStep();
+        }
+    }
+
+    @Override
+    public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+
+    }
+
+    @Override
+    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+
+    }
 }

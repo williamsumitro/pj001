@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/itemsize_tv"
+        android:layout_gravity="center_vertical"
+        android:text="FREE : "
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <me.himanshusoni.quantityview.QuantityView
+            android:id="@+id/itemsize_qv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:qv_quantity="0"
+            app:qv_minQuantity="0"
+            app:qv_maxQuantity="100"
+            app:qv_addButtonBackground="@color/green"
+            app:qv_addButtonText=" + "
+            app:qv_addButtonTextColor="@color/white"
+            app:qv_removeButtonBackground="@color/red"
+            app:qv_removeButtonText=" - "
+            app:qv_removeButtonTextColor="@color/white"
+            app:qv_quantityPadding="30dp"
+            app:qv_quantityDialog="true"/>
+    </LinearLayout>
+
+</LinearLayout>

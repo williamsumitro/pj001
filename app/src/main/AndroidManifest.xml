@@ -25,7 +25,7 @@
         <activity android:name=".view.view.Help" />
         <activity android:name=".view.view.bag.activity.AddToBagActivity" />
         <activity android:name=".view.view.bag.activity.ShoppingBag" />
-        <activity android:name=".view.view.checkout.activity.Checkout" />
+        <activity android:name=".view.view.checkout.activity.CheckoutActivity" />
         <activity android:name=".view.view.filter.Filter" />
         <activity android:name=".view.view.search.activity.Search" />
         <activity android:name=".view.view.search.activity.SearchResult" />
@@ -36,7 +36,6 @@
         <activity android:name=".view.view.profile.activity.ChangeProfilePicture" />
         <activity android:name=".view.view.openstore.activity.OpenStore" />
         <activity android:name=".view.view.authentication.Unauthorized" />
-        <activity android:name=".view.view.wallet.activity.Mywallet" />
         <activity android:name=".view.view.wallet.activity.Withdraw" />
         <activity android:name=".view.view.product.activity.AddProduct" />
         <activity android:name=".view.view.openstore.activity.Openstrore_Fileupload" />
@@ -69,7 +68,8 @@
         <activity android:name=".view.view.product.activity.MyProduct" />
         <activity android:name=".view.view.mystore.activity.MyStore" />
         <activity android:name=".view.view.mystore.activity.SupportingDocument" />
-        <activity android:name=".view.view.mystore.activity.CourierServiceActivity"></activity>
+        <activity android:name=".view.view.mystore.activity.CourierServiceActivity" />
+        <activity android:name=".view.view.checkout.activity.AltCheckout"></activity>
     </application>
 
 </manifest>

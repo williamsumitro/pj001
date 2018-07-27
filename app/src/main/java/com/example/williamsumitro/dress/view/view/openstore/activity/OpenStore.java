@@ -38,6 +38,7 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
         setuptoolbar();
         int startingStepPosition = savedInstanceState != null ? savedInstanceState.getInt(CURRENT_STEP_POSITION_KEY) : 0;
         stepperLayout.setAdapter(new StepAdapter(getSupportFragmentManager(), this), startingStepPosition);
+        stepperLayout.setOffscreenPageLimit(2);
         stepperLayout.setListener(this);
 
     }
@@ -82,16 +83,16 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
     public void onCompleted(View completeButton) {
         Intent intent = new Intent(this, Openstrore_Fileupload.class);
         initanim(intent);
-        finish();
     }
 
     @Override
     public void onError(VerificationError verificationError) {
-        Toasty.info(this, verificationError.getErrorMessage(), Toast.LENGTH_SHORT, true).show();
+        Toasty.warning(this, verificationError.getErrorMessage(), Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void onStepSelected(int newStepPosition) {
+
     }
 
     @Override

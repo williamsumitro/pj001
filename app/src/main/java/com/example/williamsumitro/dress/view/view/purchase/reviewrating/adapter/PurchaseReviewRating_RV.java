@@ -25,7 +25,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
 import com.example.williamsumitro.dress.view.view.purchase.reviewrating.fragment.P_reviewratingFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,6 +85,7 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -136,6 +140,8 @@ public class PurchaseReviewRating_RV extends RecyclerView.Adapter<PurchaseReview
 
         Picasso.with(context)
                 .load(storephoto)
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(store_photo);
         Picasso.with(context).cancelRequest(store_photo);

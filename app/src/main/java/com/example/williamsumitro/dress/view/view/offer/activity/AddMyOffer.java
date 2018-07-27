@@ -256,7 +256,8 @@ public class AddMyOffer extends AppCompatActivity {
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     mediapathPhoto = cursor.getString(columnIndex);
-                    Picasso.with(context).load(new File(mediapathPhoto))
+                    Picasso.with(context)
+                            .load(new File(mediapathPhoto))
                             .into(image);
                     cursor.close();
                     dialog.dismiss();

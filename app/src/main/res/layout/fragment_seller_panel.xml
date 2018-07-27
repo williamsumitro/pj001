@@ -6,46 +6,81 @@
     tools:context="com.example.williamsumitro.dress.view.view.sellerpanel.fragment.SellerPanelFragment">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/seller_panel_swiperefreshlayout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-            <ImageView
-                android:id="@+id/seller_panel_img_status"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
-            <TextView
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:id="@+id/seller_panel_tv_status"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:text="Waiting for admin approval heheheheh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
             <LinearLayout
-                android:layout_margin="10dp"
-                android:id="@+id/seller_panel_ln_top_bottom"
+                android:visibility="gone"
+                android:id="@+id/seller_panel_ln_top"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:src="@drawable/store4"
+                    android:layout_gravity="center"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp" />
                 <TextView
                     android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:text="Reject Comment : "
+                    android:layout_marginTop="10dp"
+                    android:text="You don't have store"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/seller_panel_btn_openstore"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Open Store"
+                    android:background="@drawable/button1_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/seller_panel_ln_bottom"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/seller_panel_img_status"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
                 <TextView
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/seller_panel_tv_comment"
-                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:id="@+id/seller_panel_tv_status"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
                     android:text="Waiting for admin approval heheheheh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:id="@+id/seller_panel_ln_top_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:text="Reject Comment : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/seller_panel_tv_comment"
+                        android:textSize="20sp"
+                        android:text="Waiting for admin approval heheheheh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -61,5 +96,4 @@
         app:icvp_max_page_scale="0.8"
         app:icvp_min_page_scale="0.55"
         app:icvp_medium_scaled="false"/>
-
 </FrameLayout>

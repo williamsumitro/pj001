@@ -14,7 +14,10 @@ import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -44,6 +47,7 @@ public class CheckoutProductRVAdapter extends RecyclerView.Adapter<CheckoutProdu
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,6 +64,8 @@ public class CheckoutProductRVAdapter extends RecyclerView.Adapter<CheckoutProdu
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.product);
         holder.totalqty.setText(formatter.format(Double.parseDouble(product.getTotalQty())));

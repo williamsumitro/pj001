@@ -18,7 +18,10 @@ import com.example.williamsumitro.dress.view.model.CheckApproveOrderProduct;
 import com.example.williamsumitro.dress.view.model.Product;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,6 +53,7 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
         this.productArrayList = productArrayList;
         approveOrderProductArrayList = new ArrayList<>();
         checkApproveOrderProductArrayList = new ArrayList<>();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     public ArrayList<ApproveOrderProduct> retrivedata(){
         return approveOrderProductArrayList;
@@ -98,6 +102,8 @@ public class OC_ProductRVAdapter extends RecyclerView.Adapter<OC_ProductRVAdapte
         holder.productname.setText(product.getProductName());
         Picasso.with(context)
                 .load(product.getProductPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.product);
         holder.container_acceptreject.setVisibility(View.VISIBLE);

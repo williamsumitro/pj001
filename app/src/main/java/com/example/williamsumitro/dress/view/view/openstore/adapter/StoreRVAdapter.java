@@ -22,7 +22,10 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.Store;
 import com.example.williamsumitro.dress.view.model.StoreInfo;
 import com.example.williamsumitro.dress.view.view.store.activity.DetailStore;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,7 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
     public StoreRVAdapter(ArrayList<StoreInfo> storeInfoArrayList, Context context) {
         this.storeInfoArrayList = storeInfoArrayList;
         this.context = context;
+        PicassoTools.clearCache(Picasso.with(context));
     }
 
     @Override
@@ -76,6 +80,8 @@ public class StoreRVAdapter extends RecyclerView.Adapter<StoreRVAdapter.ViewHold
         }
         Picasso.with(context)
                 .load(storeInfo.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(holder.image);
         holder.name.setText(storeInfo.getFullName());

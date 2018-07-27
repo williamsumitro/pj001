@@ -27,7 +27,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.request.fragment.ActiveRequestFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +78,7 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        PicassoTools.clearCache(Picasso.with(context));
     }
     @Override
     public ActiveRequestRV.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -91,6 +95,8 @@ public class ActiveRequestRV extends RecyclerView.Adapter<ActiveRequestRV.ViewHo
         holder.budget.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMin()))) + " - IDR" + formatter.format(Double.parseDouble(String.valueOf(result.getBudgetUnitMax()))));
         Picasso.with(context)
                 .load(result.getPhoto().getFilePath())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(holder.image_product);
         holder.viewoffer.setOnClickListener(new View.OnClickListener() {

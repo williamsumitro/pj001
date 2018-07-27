@@ -36,7 +36,10 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.store.adapter.StoreDetailVPAdapter;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -194,10 +197,14 @@ public class DetailStore extends AppCompatActivity {
         transaction.setText(storeDetails.getTransaction().toString());
         Picasso.with(context)
                 .load(storeDetails.getBanner())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_banner)
                 .into(banner);
         Picasso.with(context)
                 .load(storeDetails.getPhoto())
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_photo)
                 .into(circleImageView);
         if (Double.parseDouble(storeDetails.getRating()) == 0){
@@ -282,6 +289,7 @@ public class DetailStore extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
         df = new DecimalFormat("###.#");
         courierServiceList = new ArrayList<>();
+        PicassoTools.clearCache(Picasso.with(context));
     }
     private void initCollapToolbar(){
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, R.color.colorPrimary));
