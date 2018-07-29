@@ -89,12 +89,16 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
             }
         });
         if (result.getStatus().equals("0")){
-            holder.status.setText("Status : Rejected");
-            holder.status.setTextColor(context.getResources().getColor(R.color.red));
+            holder.status.setText("Status : Waiting for Seller Response");
+            holder.status.setTextColor(context.getResources().getColor(R.color.black));
         }
         else if (result.getStatus().equals("1")){
             holder.status.setText("Status : Accepted");
             holder.status.setTextColor(context.getResources().getColor(R.color.green));
+        }
+        else if (result.getStatus().equals("2")){
+            holder.status.setText("Status : Closed by User");
+            holder.status.setTextColor(context.getResources().getColor(R.color.red));
         }
     }
 

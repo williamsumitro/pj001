@@ -112,7 +112,7 @@ public class WalletFragment extends Fragment {
         return view;
     }
     private void initspinner(){
-        monthadapter = ArrayAdapter.createFromResource(context, R.array.dashboard, R.layout.item_spinner);
+        monthadapter = ArrayAdapter.createFromResource(context, R.array.month, R.layout.item_spinner);
         monthadapter.setDropDownViewResource(R.layout.item_spinner);
         spinner.setAdapter(monthadapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

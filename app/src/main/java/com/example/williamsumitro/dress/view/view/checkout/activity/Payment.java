@@ -295,20 +295,20 @@ public class Payment extends AppCompatActivity {
         city = address.get(SessionManagement.CHECKOUT_IDCITY);
         phonenumber = address.get(SessionManagement.CHECKOUT_PHONE_NUMBER);
         postalcode = address.get(SessionManagement.CHECKOUT_POSTAL_CODE);
-        Toasty.info(context, "Receiver name = " + receivername +
-                "\nAlamat = " + alamat +
-                "\nProvince = " + province +
-                "\nCity = " + city +
-                "\nPhonenumber = " + phonenumber +
-                "\nPostalCode = " + postalcode, Toast.LENGTH_LONG, true).show();
-        for (int i = 0; i < ccal.getCheckout_courierArrayList().size(); i++){
-            Toasty.info(context, "Courier ID = " + ccal.getCheckout_courierArrayList().get(i).getCourier_id() +
-                    "\nCourier Service = " + ccal.getCheckout_courierArrayList().get(i).getCourier_service() +
-                    "\nNote = " + ccal.getCheckout_courierArrayList().get(i).getNote() +
-                    "\nFee = " + ccal.getCheckout_courierArrayList().get(i).getFee(), Toast.LENGTH_LONG, true).show();
-        }
-        Toasty.info(context, "Receiver name = " + subtotal +
-                "\nPoint = " + point, Toast.LENGTH_LONG, true).show();
+//        Toasty.info(context, "Receiver name = " + receivername +
+//                "\nAlamat = " + alamat +
+//                "\nProvince = " + province +
+//                "\nCity = " + city +
+//                "\nPhonenumber = " + phonenumber +
+//                "\nPostalCode = " + postalcode, Toast.LENGTH_LONG, true).show();
+//        for (int i = 0; i < ccal.getCheckout_courierArrayList().size(); i++){
+//            Toasty.info(context, "Courier ID = " + ccal.getCheckout_courierArrayList().get(i).getCourier_id() +
+//                    "\nCourier Service = " + ccal.getCheckout_courierArrayList().get(i).getCourier_service() +
+//                    "\nNote = " + ccal.getCheckout_courierArrayList().get(i).getNote() +
+//                    "\nFee = " + ccal.getCheckout_courierArrayList().get(i).getFee(), Toast.LENGTH_LONG, true).show();
+//        }
+//        Toasty.info(context, "Receiver name = " + subtotal +
+//                "\nPoint = " + point, Toast.LENGTH_LONG, true).show();
         service = apiUtils.getAPIService();
 
         if (getResources().getBoolean(R.bool.portrait_only)) {

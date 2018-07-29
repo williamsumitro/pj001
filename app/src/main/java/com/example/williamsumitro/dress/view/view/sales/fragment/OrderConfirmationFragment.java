@@ -103,13 +103,15 @@ public class OrderConfirmationFragment extends Fragment {
                 if (response.code() == 200){
                     if (response.body().getStatus()){
                         if (response.body().getSales_OrderResult().size()>0){
+                            top.setVisibility(View.GONE);
                             bottom.setVisibility(View.VISIBLE);
                             orderResultArrayList = response.body().getSales_OrderResult();
                             setupRV();
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
-                            top.setVisibility(View.VISIBLE);
+                            top.setVisibility(View.GONE);
+                            bottom.setVisibility(View.VISIBLE);
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }
