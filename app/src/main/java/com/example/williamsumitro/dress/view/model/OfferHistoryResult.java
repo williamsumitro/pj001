@@ -55,6 +55,15 @@ public class OfferHistoryResult implements Serializable {
     @SerializedName("budget_unit_max")
     @Expose
     private Integer budgetUnitMax;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("accept_rfq_offer_id")
+    @Expose
+    private Integer acceptRfqOfferId;
+    @SerializedName("offer_status")
+    @Expose
+    private String offerStatus;
     @SerializedName("request_photo")
     @Expose
     private Photo requestPhoto;
@@ -196,5 +205,29 @@ public class OfferHistoryResult implements Serializable {
 
     public void setOfferPhoto(Photo offerPhoto) {
         this.offerPhoto = offerPhoto;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getAcceptRfqOfferId() {
+        return acceptRfqOfferId;
+    }
+
+    public void setAcceptRfqOfferId(Integer acceptRfqOfferId) {
+        this.acceptRfqOfferId = acceptRfqOfferId;
+    }
+
+    public String getOfferStatus() {
+        return offerStatus;
+    }
+
+    public void setOfferStatus(String offerStatus) {
+        this.offerStatus = offerStatus;
     }
 }

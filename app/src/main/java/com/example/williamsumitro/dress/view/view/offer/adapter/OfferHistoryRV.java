@@ -88,7 +88,14 @@ public class OfferHistoryRV extends RecyclerView.Adapter<OfferHistoryRV.ViewHold
                 initDialog1(result.getDescription(), result.getPriceUnit().toString(), result.getWeightUnit().toString(), result.getOfferPhoto().getFilePath());
             }
         });
-        holder.status.setVisibility(View.GONE);
+        if (result.getStatus().equals("0")){
+            holder.status.setText("Status : Rejected");
+            holder.status.setTextColor(context.getResources().getColor(R.color.red));
+        }
+        else if (result.getStatus().equals("1")){
+            holder.status.setText("Status : Accepted");
+            holder.status.setTextColor(context.getResources().getColor(R.color.green));
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.CourierService;
+import com.example.williamsumitro.dress.view.model.StoreDetailResponse;
 import com.example.williamsumitro.dress.view.model.model_CourierService;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
@@ -46,6 +47,7 @@ import retrofit2.Response;
 
 public class CourierServiceRVAdapter extends RecyclerView.Adapter<CourierServiceRVAdapter.ViewHolder> {
     private ArrayList<model_CourierService> courierServices;
+    private ArrayList<model_CourierService> check_courierServices;
     private Context context;
     private SessionManagement sessionManagement;
     private String token;
@@ -65,6 +67,8 @@ public class CourierServiceRVAdapter extends RecyclerView.Adapter<CourierService
         sessionManagement = new SessionManagement(context);
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
+        check_courierServices = new ArrayList<>();
+        api_getCourierServices();
     }
     @Override
     public CourierServiceRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,35 +83,41 @@ public class CourierServiceRVAdapter extends RecyclerView.Adapter<CourierService
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                service.req_delete_user_store_courier(token, store_id, courierService.getCourierId()).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.code()==200){
-                            try{
-                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                String message = jsonResults.getString("message");
-                                if(jsonResults.getBoolean("status")){
-                                    Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                    courierServiceActivity.initRefresh();
-                                }else if (!jsonResults.getBoolean("status")){
-                                    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+                if (check_courierServices.size() > 1){
+                    service.req_delete_user_store_courier(token, store_id, courierService.getCourierId()).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.code()==200){
+                                try{
+                                    JSONObject jsonResults = new JSONObject(response.body().string());
+                                    String message = jsonResults.getString("message");
+                                    if(jsonResults.getBoolean("status")){
+                                        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                        courierServiceActivity.initRefresh();
+                                    }else if (!jsonResults.getBoolean("status")){
+                                        Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
+                                    }
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }catch (IOException e){
+                                    e.printStackTrace();
                                 }
-                            }catch (JSONException e){
-                                e.printStackTrace();
-                            }catch (IOException e){
-                                e.printStackTrace();
+                            }
+                            else {
+                                Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
                             }
                         }
-                        else {
-                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        initDialog(3);
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            initDialog(3);
+                        }
+                    });
+                }
+                else {
+                    Toasty.error(context, "You can't delete all the courier", Toast.LENGTH_SHORT, true).show();
+                }
+
             }
         });
     }
@@ -140,5 +150,23 @@ public class CourierServiceRVAdapter extends RecyclerView.Adapter<CourierService
                         }
                     }).show();
         }
+    }
+    private void api_getCourierServices(){
+        service.req_get_store_detail(store_id).enqueue(new Callback<StoreDetailResponse>() {
+            @Override
+            public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+                if (response.code()==200){
+                    check_courierServices = response.body().getResult().getCourierService();
+                }
+                else {
+                    Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
+                initDialog(3);
+            }
+        });
     }
 }

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
@@ -29,6 +30,8 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -57,6 +60,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.helper.FinancialTextWatcher;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.product.adapter.Decoration_Spinner_Adapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.Fabrictype_Spinner_Adapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.Material_Spinner_Adapter;
@@ -185,6 +189,9 @@ public class AddProduct extends AppCompatActivity {
         sessionManagement = new SessionManagement(getApplicationContext());
         progressDialog = new ProgressDialog(this);
         service = apiUtils.getAPIService();
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -838,5 +845,24 @@ public class AddProduct extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

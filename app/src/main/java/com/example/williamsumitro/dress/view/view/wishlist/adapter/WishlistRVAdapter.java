@@ -131,6 +131,7 @@ public class WishlistRVAdapter extends RecyclerView.Adapter<WishlistRVAdapter.Vi
         holder.storename.setText(wishlist.getStoreName());
         Picasso.with(context)
                 .load(wishlist.getPhoto())
+                .placeholder(R.drawable.default_product)
                 .memoryPolicy(MemoryPolicy.NO_CACHE )
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(holder.imageView);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -139,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         PicassoTools.clearCache(Picasso.with(context));
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void api_getauthuser(){
         progressDialog.setMessage("Loading ...");

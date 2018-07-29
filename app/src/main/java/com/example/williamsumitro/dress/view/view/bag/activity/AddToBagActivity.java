@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.bag.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
@@ -167,6 +168,10 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
         sessionManagement = new SessionManagement(getApplicationContext());
         sizes = new ArrayList<>();
         data = new ArrayList<>();
+
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void getactivityIntent(){
         Intent getintent = getIntent();

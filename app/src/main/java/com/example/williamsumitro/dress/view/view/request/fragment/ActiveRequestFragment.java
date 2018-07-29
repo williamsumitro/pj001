@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,11 +116,20 @@ public class ActiveRequestFragment extends Fragment {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }
+                    else {
+                        Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+                else {
+                    Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<RFQ_ActiveResponse> call, Throwable t) {
+                Log.d("SEARCHERROR", t.toString());
                 Toasty.error(context, "Please swipe down to refresh again", Toast.LENGTH_SHORT, true).show();
                 swipeRefreshLayout.setRefreshing(false);
             }

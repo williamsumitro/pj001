@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.profile.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.AuthActivity;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,6 +111,9 @@ public class EditProfile extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         service = apiUtils.getAPIService();
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);
@@ -210,9 +215,10 @@ public class EditProfile extends AppCompatActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Intent intent = new Intent(context, Profile.class);
+                            Intent intent = new Intent(context, MainActivity.class);
                             initanim(intent);
                             finish();
+                            Profile.PROFILE.finish();
                             sweetAlertDialog.dismiss();
                         }
                     }).show();

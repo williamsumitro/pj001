@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
@@ -334,6 +335,9 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         ButterKnife.bind(this);
         context = this;
         sessionManagement = new SessionManagement(context);
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         HashMap<String, String> store = sessionManagement.getStoreInformation();
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
@@ -347,6 +351,17 @@ public class Openstrore_Fileupload extends AppCompatActivity {
         store_description = store.get(SessionManagement.STORE_DESCRIPTION);
         store_courier = store.get(SessionManagement.STORE_COURIER);
         store_businesstype = store.get(SessionManagement.STORE_BUSINESS_TYPE);
+//
+//        Toasty.info(context, store_name+"\n"+
+//                store_contact_person_name +"\n"+
+//                store_contact_person_job_title +"\n"+
+//                store_contact_person_phone_number +"\n"+
+//                store_established_year +"\n"+
+//                store_province+"\n"+
+//                store_city +"\n"+
+//                store_description +"\n"+
+//                store_courier +"\n"+
+//                store_businesstype, Toast.LENGTH_LONG, true).show();
 
 
         progressDialog = new ProgressDialog(this);

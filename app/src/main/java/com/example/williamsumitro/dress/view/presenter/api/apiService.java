@@ -10,6 +10,7 @@ import com.example.williamsumitro.dress.view.model.Checkout;
 import com.example.williamsumitro.dress.view.model.CheckoutResponse;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
+import com.example.williamsumitro.dress.view.model.DashboardResponse;
 import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
 import com.example.williamsumitro.dress.view.model.FavoriteResponse;
 import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
@@ -184,6 +185,7 @@ public interface apiService {
     @POST("confirm_payment")
     Call<ResponseBody> req_confirm_payment(@Field("token") String token,
                                            @Field("transaction_id") String transaction_id,
+                                           @Field("date") String date,
                                            @Field("company_bank_id") String company_bank_id,
                                            @Field("amount") String amount,
                                            @Field("sender_bank") String sender_bank,
@@ -482,5 +484,14 @@ public interface apiService {
     @FormUrlEncoded
     @POST("get_product_by_style")
     Call<BestResponse> req_get_product_by_style(@Field("style_id") String style_id);
+
+    @FormUrlEncoded
+    @POST("delete_all_product_from_bag")
+    Call<ResponseBody> req_delete_all_product_from_bag(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("dashboard")
+    Call<DashboardResponse> req_dashboard(@Field("token") String token,
+                                          @Field("type") String type);
 
 }

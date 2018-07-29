@@ -172,7 +172,7 @@
                 </LinearLayout>
                 <Button
                     android:id="@+id/altcheckout_btn_submit"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:layout_gravity="center"
                     android:text="Submit"
                     android:textColor="@color/white"

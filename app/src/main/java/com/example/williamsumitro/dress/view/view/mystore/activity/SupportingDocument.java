@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
@@ -394,6 +395,9 @@ public class SupportingDocument extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         service = apiUtils.getAPIService();
         PicassoTools.clearCache(Picasso.with(context));
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -412,7 +416,7 @@ public class SupportingDocument extends AppCompatActivity {
             }
         });
     }
-    private void api_updatelegaldoc(){
+    private void api_updatelegaldoc(final SweetAlertDialog sweetAlertDialog){
         progressDialog.setMessage("Uploading, please wait ....");
         progressDialog.show();
         MultipartBody.Part body_ktp;
@@ -427,50 +431,188 @@ public class SupportingDocument extends AppCompatActivity {
         RequestBody request_token = RequestBody.create(text, token);
         RequestBody request_store_id = RequestBody.create(text, storeDetails.getStoreId().toString());
         RequestBody request_store_name = RequestBody.create(text, storeDetails.getName());
-        if (click_KTP){
+
+
+        if (click_KTP && click_NPWP && click_TDP && click_SKDP && click_SIUP ){
             File file_ktp = new File(mediaPathktp);
             RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
             body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-            body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
-            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
-            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
-        }
-        else if (click_NPWP){
             File file_npwp = new File(mediaPathnpwp);
             RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
             body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
-            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
-        }
-        else if (click_TDP){
             File file_tdp = new File(mediaPathtdp);
             RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
             body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
-            body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
-            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-        }
-        else if (click_SKDP){
             File file_skdp = new File(mediaPathskdp);
             RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
             body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
-            body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
-            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-        }
-        else if (click_SIUP){
             File file_siup = new File(mediaPathsiup);
             RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
             body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
-            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_NPWP && click_TDP && click_SIUP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_siup = new File(mediaPathsiup);
+            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
+            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_NPWP && click_TDP && click_SKDP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_SIUP && click_TDP && click_SKDP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+        }
+        else if (click_NPWP && click_SIUP && click_TDP && click_SKDP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_NPWP && click_TDP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_NPWP && click_SIUP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_siup = new File(mediaPathsiup);
+            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
+            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
             body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
             body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_NPWP && click_SKDP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
+        }
+        else if (click_NPWP && click_TDP && click_SKDP){
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
+        }
+        else if (click_NPWP && click_TDP && click_SIUP){
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_siup = new File(mediaPathsiup);
+            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
+            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
+            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
+        }
+        else if (click_NPWP && click_SKDP && click_SIUP){
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            File file_siup = new File(mediaPathsiup);
+            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
+            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
+            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
+        }
+        else if (click_TDP && click_SKDP && click_SIUP){
+            File file_tdp = new File(mediaPathtdp);
+            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
+            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            File file_siup = new File(mediaPathsiup);
+            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
+            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
             body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
+            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
+        }
+        else if (click_KTP && click_NPWP && click_SKDP){
+            File file_ktp = new File(mediaPathktp);
+            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+            File file_npwp = new File(mediaPathnpwp);
+            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
+            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
+            File file_skdp = new File(mediaPathskdp);
+            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
+            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
         }
         else if (click_KTP && click_NPWP){
             File file_ktp = new File(mediaPathktp);
@@ -582,156 +724,50 @@ public class SupportingDocument extends AppCompatActivity {
             body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
             body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
         }
-        else if (click_KTP && click_NPWP && click_TDP){
+        else if (click_KTP){
             File file_ktp = new File(mediaPathktp);
             RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
             body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_tdp = new File(mediaPathtdp);
-            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
             body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
-        }
-        else if (click_KTP && click_NPWP && click_SIUP){
-            File file_ktp = new File(mediaPathktp);
-            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_siup = new File(mediaPathsiup);
-            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
-            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
             body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
             body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
         }
-        else if (click_KTP && click_NPWP && click_SKDP){
-            File file_ktp = new File(mediaPathktp);
-            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
+        else if (click_NPWP){
             File file_npwp = new File(mediaPathnpwp);
             RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
             body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_skdp = new File(mediaPathskdp);
-            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
-            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
-        }
-        else if (click_NPWP && click_TDP && click_SKDP){
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_tdp = new File(mediaPathtdp);
-            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
-            File file_skdp = new File(mediaPathskdp);
-            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
-            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
             body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
-        }
-        else if (click_NPWP && click_TDP && click_SIUP){
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_tdp = new File(mediaPathtdp);
-            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
-            File file_siup = new File(mediaPathsiup);
-            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
-            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
             body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
-            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
-        }
-        else if (click_NPWP && click_SKDP && click_SIUP){
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_skdp = new File(mediaPathskdp);
-            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
-            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            File file_siup = new File(mediaPathsiup);
-            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
-            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
             body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
-            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
         }
-        else if (click_TDP && click_SKDP && click_SIUP){
+        else if (click_TDP){
             File file_tdp = new File(mediaPathtdp);
             RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
             body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
+            body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
+            body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
+            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
+        }
+        else if (click_SKDP){
             File file_skdp = new File(mediaPathskdp);
             RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
             body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            File file_siup = new File(mediaPathsiup);
-            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
-            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
             body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
             body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
-        }
-        else if (click_KTP && click_NPWP && click_SKDP){
-            File file_ktp = new File(mediaPathktp);
-            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_skdp = new File(mediaPathskdp);
-            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
-            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
             body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
         }
-        else if (click_KTP && click_NPWP && click_TDP && click_SIUP){
-            File file_ktp = new File(mediaPathktp);
-            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_tdp = new File(mediaPathtdp);
-            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
+        else if (click_SIUP){
             File file_siup = new File(mediaPathsiup);
             RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
             body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
             body_skdp = MultipartBody.Part.createFormData("skdp", "", attachmentEmpty);
-        }
-        else if (click_KTP && click_NPWP && click_TDP && click_SKDP){
-            File file_ktp = new File(mediaPathktp);
-            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_tdp = new File(mediaPathtdp);
-            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
-            File file_skdp = new File(mediaPathskdp);
-            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
-            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            body_siup = MultipartBody.Part.createFormData("siup", "", attachmentEmpty);
-        }
-        else if (click_KTP && click_NPWP && click_TDP && click_SKDP && click_SIUP ){
-            File file_ktp = new File(mediaPathktp);
-            RequestBody requestfile_ktp = RequestBody.create(MediaType.parse("multipart/form-data"), file_ktp);
-            body_ktp = MultipartBody.Part.createFormData("ktp", file_ktp.getName(), requestfile_ktp);
-            File file_npwp = new File(mediaPathnpwp);
-            RequestBody requestfile_npwp = RequestBody.create(MediaType.parse("multipart/form-data"), file_npwp);
-            body_npwp = MultipartBody.Part.createFormData("npwp", file_npwp.getName(), requestfile_npwp);
-            File file_tdp = new File(mediaPathtdp);
-            RequestBody requestfile_tdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_tdp);
-            body_tdp = MultipartBody.Part.createFormData("tdp", file_tdp.getName(), requestfile_tdp);
-            File file_skdp = new File(mediaPathskdp);
-            RequestBody requestfile_skdp = RequestBody.create(MediaType.parse("multipart/form-data"), file_skdp);
-            body_skdp = MultipartBody.Part.createFormData("skdp", file_skdp.getName(), requestfile_skdp);
-            File file_siup = new File(mediaPathsiup);
-            RequestBody requestfile_siup = RequestBody.create(MediaType.parse("multipart/form-data"), file_siup);
-            body_siup = MultipartBody.Part.createFormData("siup", file_siup.getName(), requestfile_siup);
+            body_tdp = MultipartBody.Part.createFormData("tdp", "", attachmentEmpty);
+            body_npwp = MultipartBody.Part.createFormData("npwp", "", attachmentEmpty);
         }
         else {
             body_ktp = MultipartBody.Part.createFormData("ktp", "", attachmentEmpty);
@@ -748,9 +784,12 @@ public class SupportingDocument extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.code()==200){
                             Toasty.success(context, "Updated Successfully", Toast.LENGTH_SHORT, true).show();
-                            finish();
+                            Intent intent = new Intent(context, MyStore.class);
+                            initanim(intent);
                             MyStore.MYSTORE.finish();
+                            finish();
                             progressDialog.dismiss();
+                            sweetAlertDialog.dismiss();
                         }
                         else {
                             Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
@@ -791,7 +830,7 @@ public class SupportingDocument extends AppCompatActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            api_updatelegaldoc();
+                            api_updatelegaldoc(sweetAlertDialog);
                         }
                     })
                         .show();
@@ -810,5 +849,26 @@ public class SupportingDocument extends AppCompatActivity {
                         }
                     }).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            MyStore.MYSTORE.finish();
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

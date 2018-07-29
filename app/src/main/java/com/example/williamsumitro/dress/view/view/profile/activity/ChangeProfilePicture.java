@@ -29,6 +29,7 @@ import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -97,18 +98,26 @@ public class ChangeProfilePicture extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                         if (response.code()==200){
-                            Picasso.with(context)
-                                    .load(response.body().getUserDetails().getAvatar())
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE )
-                                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                                    .placeholder(R.drawable.logo404)
-                                    .into(pictures);
+                            if (response.body().getStatus()){
+                                Picasso.with(context)
+                                        .load(response.body().getUserDetails().getAvatar())
+                                        .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                                        .placeholder(R.drawable.logo404)
+                                        .into(pictures);
+                            }
+                            else {
+                                Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                            }
+                        }
+                        else {
+                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<UserResponse> call, Throwable t) {
-                        Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                        Log.d("SEARCHERROR", t.toString());
                         progressDialog.dismiss();
                         initDialog(t.getMessage(), 3);
                     }
@@ -271,9 +280,10 @@ public class ChangeProfilePicture extends AppCompatActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Intent intent = new Intent(context, Profile.class);
+                            Intent intent = new Intent(context, MainActivity.class);
                             initanim(intent);
                             finish();
+                            Profile.PROFILE.finish();
                             sweetAlertDialog.dismiss();
                         }
                     }).show();

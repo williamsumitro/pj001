@@ -2,6 +2,7 @@ package com.example.williamsumitro.dress.view.view.openstore.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,9 @@ public class OpenStore extends AppCompatActivity implements StepperLayout.Steppe
         ButterKnife.bind(this);
         context = this;
         sessionManagement = new SessionManagement(context);
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

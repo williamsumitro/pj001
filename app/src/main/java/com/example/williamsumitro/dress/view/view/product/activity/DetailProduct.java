@@ -18,6 +18,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,6 +45,7 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.authentication.Login;
 import com.example.williamsumitro.dress.view.view.bag.activity.AddToBagActivity;
 import com.example.williamsumitro.dress.view.view.bag.adapter.BuyRVAdapter;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductReviewsRVADapter;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProduct_DownlineRV;
@@ -332,65 +335,70 @@ public class DetailProduct extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code()==200){
-                    if (wishliststatus){
-                        service.req_delete_from_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.code()==200){
-                                    try{
-                                        JSONObject jsonResults = new JSONObject(response.body().string());
-                                        if(jsonResults.getBoolean("status")){
-                                            String message = jsonResults.getString("message");
-                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                            addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
-                                            addtowishlist.setText("Add to Wishlist");
-                                            wishliststatus = false;
-                                            progressDialog.dismiss();
+                    if (response.body().getStatus()){
+                        if (wishliststatus){
+                            service.req_delete_from_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.code()==200){
+                                        try{
+                                            JSONObject jsonResults = new JSONObject(response.body().string());
+                                            if(jsonResults.getBoolean("status")){
+                                                String message = jsonResults.getString("message");
+                                                Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                                addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
+                                                addtowishlist.setText("Add to Wishlist");
+                                                wishliststatus = false;
+                                                progressDialog.dismiss();
+                                            }
+                                        }catch (JSONException e){
+                                            e.printStackTrace();
+                                        }catch (IOException e){
+                                            e.printStackTrace();
                                         }
-                                    }catch (JSONException e){
-                                        e.printStackTrace();
-                                    }catch (IOException e){
-                                        e.printStackTrace();
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                progressDialog.dismiss();
-                                initDialog(3);
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    initDialog(3);
+                                }
+                            });
+                        }
+                        else {
+                            service.req_add_to_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.code()==200){
+                                        try{
+                                            JSONObject jsonResults = new JSONObject(response.body().string());
+                                            if(jsonResults.getBoolean("status")){
+                                                String message = jsonResults.getString("message");
+                                                Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+                                                addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
+                                                addtowishlist.setText("Delete from Wishlist");
+                                                wishliststatus = true;
+                                                progressDialog.dismiss();
+                                            }
+                                        }catch (JSONException e){
+                                            e.printStackTrace();
+                                        }catch (IOException e){
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    initDialog(3);
+                                }
+                            });
+                        }
                     }
                     else {
-                        service.req_add_to_wishlist(token, String.valueOf(productInfo.getProductId())).enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.code()==200){
-                                    try{
-                                        JSONObject jsonResults = new JSONObject(response.body().string());
-                                        if(jsonResults.getBoolean("status")){
-                                            String message = jsonResults.getString("message");
-                                            Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
-                                            addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
-                                            addtowishlist.setText("Delete from Wishlist");
-                                            wishliststatus = true;
-                                            progressDialog.dismiss();
-                                        }
-                                    }catch (JSONException e){
-                                        e.printStackTrace();
-                                    }catch (IOException e){
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                progressDialog.dismiss();
-                                initDialog(3);
-                            }
-                        });
+                        Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
                     }
                 }
                 else {
@@ -870,4 +878,23 @@ public class DetailProduct extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -89,6 +90,9 @@ public class Register extends AppCompatActivity {
         ButterKnife.bind(this);
         context= this;
         progressDialog = new ProgressDialog(this);
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

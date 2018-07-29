@@ -47,7 +47,9 @@ import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
 import com.example.williamsumitro.dress.view.view.openstore.adapter.OpenStore_CourierAdapter;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
+import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.Step;
+import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.text.SimpleDateFormat;
@@ -70,7 +72,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Openstore_storeinformationFragment extends Fragment implements Step{
+public class Openstore_storeinformationFragment extends Fragment implements BlockingStep{
     @BindView(R.id.openstore_storeinformation_spinner_province) Spinner province;
     @BindView(R.id.openstore_storeinformation_spinner_city) Spinner city;
     @BindView(R.id.openstore_storeinformation_phonenumber) TextInputEditText phonenumber;
@@ -81,8 +83,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     @BindView(R.id.openstore_storeinformation_layout_detail) TextInputLayout layout_detail;
     @BindView(R.id.openstore_storeinformation_jobtitle) TextInputEditText jobtitle;
     @BindView(R.id.openstore_storeinformation_detail) TextInputEditText detail;
-    @BindView(R.id.openstore_storeinformation_btn_check) Button check;
-    @BindView(R.id.openstore_storeinformation_tvStatus) TextView status;
     @BindView(R.id.openstore_storeinformation_container) ScrollView container;
     @BindView(R.id.openstore_storeinformation_spinner_businesstype) Spinner spinner_businesstype;
     @BindView(R.id.openstore_storeinformation_rv_courier) RecyclerView rv_courier;
@@ -99,7 +99,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     private SpinCityAdapter spinCityAdapter;
     private SessionManagement sessionManagement;
     private String idprovince, idcity, choosen_province, choosen_city, chosen_businesstype, year="";
-    private Boolean checked = false;
     private List<String> bisnis = new ArrayList<>();
     private List<CourierDetails> courierDetailsList;
     private OpenStore_CourierAdapter adapter;
@@ -200,119 +199,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                 dateTimeFragment.show(getFragmentManager(), TAG_DATETIME_FRAGMENT);
             }
         });
-        name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        jobtitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        phonenumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        detail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checked = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checked = true;
-                layout_detail.setErrorEnabled(false);
-                layout_jobtitle.setErrorEnabled(false);
-                layout_name.setErrorEnabled(false);
-                layout_phonenumber.setErrorEnabled(false);
-                if (TextUtils.isEmpty(name.getText().toString())){
-                    layout_name.setErrorEnabled(true);
-                    layout_name.setError("Name of contact person is required");
-                    checked = false;
-                    return;
-                }if (TextUtils.isEmpty(jobtitle.getText().toString())){
-                    layout_jobtitle.setErrorEnabled(true);
-                    layout_jobtitle.setError("Job title is required");
-                    checked = false;
-                    return;
-                }if (TextUtils.isEmpty(phonenumber.getText().toString())){
-                    layout_phonenumber.setErrorEnabled(true);
-                    layout_phonenumber.setError("Phone number is required");
-                    checked = false;
-                    return;
-                }if (TextUtils.isEmpty(year)){
-                    Snackbar.make(container, "Please choose your year established", Snackbar.LENGTH_SHORT).show();
-                    checked = false;
-                    return;
-                }if (TextUtils.isEmpty(detail.getText().toString())){
-                    layout_detail.setErrorEnabled(true);
-                    layout_detail.setError("Description is required");
-                    checked = false;
-                    return;
-                }if (!ischecked()){
-                    Snackbar.make(container, "Please pick any courier", Snackbar.LENGTH_SHORT).show();
-                    checked = false;
-                    return;
-                }
-                if (checked) {
-                    status.setText("Successful");
-                    Toasty.info(context, "Please click the complete button to continue", Toast.LENGTH_SHORT, true).show();
-                    ((OpenStore)getActivity()).ChangeColor(2);
-                    status.setTextColor(getResources().getColor(R.color.green));
-                }
-                else {
-                    status.setText("Please check the information again, something is error");
-                    status.setTextColor(getResources().getColor(R.color.red));
-                }
-            }
-        });
     }
     public void api_getcourier(){
         service = apiUtils.getAPIService();
@@ -408,13 +294,6 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
     @Override
     public VerificationError verifyStep() {
         VerificationError verificationError = null;
-        if (isInformationValid()) {
-            sessionManagement.keepStoreInformation(year, idprovince, idcity, name.getText().toString(),
-                    jobtitle.getText().toString(), phonenumber.getText().toString(), detail.getText().toString(), choosen_province, choosen_city, chosen_businesstype);
-        }
-        else {
-            verificationError = new VerificationError("Please press the button check");
-        }
         return verificationError;
     }
 
@@ -425,16 +304,9 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
 
     @Override
     public void onError(@NonNull VerificationError error) {
-        if(!checked)
-            check.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.shake_error));
     }
     private void updateNavigationBar() {
-        if (onNavigationBarListener != null) {
-            onNavigationBarListener.onChangeEndButtonsEnabled(isInformationValid());
-        }
-    }
-    private boolean isInformationValid(){
-        return checked;
+
     }
     private boolean ischecked(){
         StringBuilder stringBuilder = new StringBuilder();
@@ -468,4 +340,55 @@ public class Openstore_storeinformationFragment extends Fragment implements Step
                     }).show();
         }
     }
+
+    @Override
+    public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+
+    }
+
+    @Override
+    public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+        layout_name.setErrorEnabled(false);
+        layout_jobtitle.setErrorEnabled(false);
+        layout_phonenumber.setErrorEnabled(false);
+        layout_detail.setErrorEnabled(false);
+        if (TextUtils.isEmpty(name.getText().toString())){
+            layout_name.setErrorEnabled(true);
+            layout_name.setError("Name of contact person is required");
+            Snackbar.make(container,"Name of contact person is required", Snackbar.LENGTH_SHORT).show();
+            return;
+        }if (TextUtils.isEmpty(jobtitle.getText().toString())){
+            layout_jobtitle.setErrorEnabled(true);
+            layout_jobtitle.setError("Job title is required");
+            Snackbar.make(container,"Job title is required", Snackbar.LENGTH_SHORT).show();
+            return;
+        }if (TextUtils.isEmpty(phonenumber.getText().toString())){
+            layout_phonenumber.setErrorEnabled(true);
+            layout_phonenumber.setError("Phone number is required");
+            Snackbar.make(container, "Phone number is required", Snackbar.LENGTH_SHORT).show();
+            return;
+        }if (TextUtils.isEmpty(year)){
+            Snackbar.make(container, "Please choose your year established", Snackbar.LENGTH_SHORT).show();
+            return;
+        }if (TextUtils.isEmpty(detail.getText().toString())){
+            layout_detail.setErrorEnabled(true);
+            layout_detail.setError("Description is required");
+            Snackbar.make(container,"Description is required", Snackbar.LENGTH_SHORT).show();
+            return;
+        }if (!ischecked()){
+            Snackbar.make(container, "Please pick any courier", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            sessionManagement.keepStoreInformation(year, idprovince, idcity, name.getText().toString(),
+                    jobtitle.getText().toString(), phonenumber.getText().toString(), detail.getText().toString(), choosen_province, choosen_city, chosen_businesstype);
+            callback.complete();
+        }
+    }
+
+    @Override
+    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+
+    }
+
 }

@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,8 +112,8 @@ public class WalletFragment extends Fragment {
         return view;
     }
     private void initspinner(){
-        monthadapter = ArrayAdapter.createFromResource(context, R.array.month, android.R.layout.simple_spinner_item);
-        monthadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        monthadapter = ArrayAdapter.createFromResource(context, R.array.dashboard, R.layout.item_spinner);
+        monthadapter.setDropDownViewResource(R.layout.item_spinner);
         spinner.setAdapter(monthadapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -137,12 +138,12 @@ public class WalletFragment extends Fragment {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                     else {
-                        initDialog("You need to re-login",0);
+                        initDialog("",3);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }
                 else {
-                    initDialog("You need to re-login",0);
+                    initDialog("",3);
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -204,25 +205,36 @@ public class WalletFragment extends Fragment {
                     @Override
                     public void onResponse(Call<FinancialHistoryResponse> call, Response<FinancialHistoryResponse> response) {
                         if (response.code()==200){
-                            results = response.body().getResult();
-                            if (results.size()>0){
-                                status.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                                setuprv();
-                                swipeRefreshLayout.setRefreshing(false);
-                                progressDialog.dismiss();
+                            if (response.body().getStatus()){
+                                results = response.body().getResult();
+                                if (results.size()>0){
+                                    status.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    setuprv();
+                                    swipeRefreshLayout.setRefreshing(false);
+                                    progressDialog.dismiss();
+                                }
+                                else{
+                                    status.setVisibility(View.VISIBLE);
+                                    recyclerView.setVisibility(View.GONE);
+                                    swipeRefreshLayout.setRefreshing(false);
+                                    progressDialog.dismiss();
+                                }
                             }
-                            else{
-                                status.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
+                            else {
+                                Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
                                 swipeRefreshLayout.setRefreshing(false);
-                                progressDialog.dismiss();
                             }
+                        }
+                        else {
+                            Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<FinancialHistoryResponse> call, Throwable t) {
+                        Log.d("SEARCHERROR", t.toString());
                         Toasty.error(context, "Please swipe down to refresh", Toast.LENGTH_SHORT, true).show();
                         swipeRefreshLayout.setRefreshing(false);
                         progressDialog.dismiss();

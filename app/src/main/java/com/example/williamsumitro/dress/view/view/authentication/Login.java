@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -109,6 +110,9 @@ public class Login extends AppCompatActivity{
         context = this;
         progressDialog = new ProgressDialog(this);
         sessionManagement = new SessionManagement(getApplicationContext());
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void api_login(final View view){
         service = apiUtils.getAPIService();

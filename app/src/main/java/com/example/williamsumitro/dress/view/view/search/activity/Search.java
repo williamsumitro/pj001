@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -199,6 +201,9 @@ public class Search extends AppCompatActivity {
         cityDetailsList = new ArrayList<>();
         courierDetailsList = new ArrayList<>();
         service = apiUtils.getAPIService();
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void setuptoolbar(){
@@ -283,7 +288,16 @@ public class Search extends AppCompatActivity {
         rv.setLayoutManager(grid_layoutmanager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
-        progressDialog.dismiss();
+        Runnable progressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        };
+
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 3000);
     }
     private void dialog_filter(){
         dialog = new Dialog(context);

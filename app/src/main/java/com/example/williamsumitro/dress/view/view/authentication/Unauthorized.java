@@ -2,6 +2,7 @@ package com.example.williamsumitro.dress.view.view.authentication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -35,5 +36,10 @@ public class Unauthorized extends AppCompatActivity {
                 finish();
             }
         }, 2000);
+
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
+
 }

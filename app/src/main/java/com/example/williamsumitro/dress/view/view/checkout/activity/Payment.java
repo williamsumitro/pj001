@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.checkout.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -150,7 +152,6 @@ public class Payment extends AppCompatActivity {
     }
     private void api_submit(){
         String pointz;
-        service = apiUtils.getAPIService();
         if (et_point.getText().toString().equals(""))
             pointz = "0";
         else
@@ -161,6 +162,7 @@ public class Payment extends AppCompatActivity {
             public void onResponse(Call<PaymentResponse> call, Response<PaymentResponse> response) {
                 if (response.code()==200){
                     if (response.body().getStatus()){
+                        api_delete();
                         paymentResponse = response.body();
                         Gson gson = new Gson();
                         String json = gson.toJson(paymentResponse);
@@ -168,6 +170,7 @@ public class Payment extends AppCompatActivity {
                         Intent intent = new Intent(context, CheckoutSuccess.class);
                         intent.putExtra(PAYMENTRESPONSE, json);
                         initanim(intent);
+                        AltCheckout.ALTCHECKOUT.finish();
                         finish();
                     }
                     else {
@@ -178,6 +181,24 @@ public class Payment extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PaymentResponse> call, Throwable t) {
+                initDialog("",3);
+            }
+        });
+    }
+    private void api_delete(){
+        service.req_delete_all_product_from_bag(token).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code()==200){
+
+                }
+                else {
+                    Toasty.error(context, "error in delete all product", Toast.LENGTH_SHORT, true).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 initDialog("",3);
             }
         });
@@ -274,6 +295,25 @@ public class Payment extends AppCompatActivity {
         city = address.get(SessionManagement.CHECKOUT_IDCITY);
         phonenumber = address.get(SessionManagement.CHECKOUT_PHONE_NUMBER);
         postalcode = address.get(SessionManagement.CHECKOUT_POSTAL_CODE);
+        Toasty.info(context, "Receiver name = " + receivername +
+                "\nAlamat = " + alamat +
+                "\nProvince = " + province +
+                "\nCity = " + city +
+                "\nPhonenumber = " + phonenumber +
+                "\nPostalCode = " + postalcode, Toast.LENGTH_LONG, true).show();
+        for (int i = 0; i < ccal.getCheckout_courierArrayList().size(); i++){
+            Toasty.info(context, "Courier ID = " + ccal.getCheckout_courierArrayList().get(i).getCourier_id() +
+                    "\nCourier Service = " + ccal.getCheckout_courierArrayList().get(i).getCourier_service() +
+                    "\nNote = " + ccal.getCheckout_courierArrayList().get(i).getNote() +
+                    "\nFee = " + ccal.getCheckout_courierArrayList().get(i).getFee(), Toast.LENGTH_LONG, true).show();
+        }
+        Toasty.info(context, "Receiver name = " + subtotal +
+                "\nPoint = " + point, Toast.LENGTH_LONG, true).show();
+        service = apiUtils.getAPIService();
+
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

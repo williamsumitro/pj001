@@ -22,6 +22,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,10 +40,13 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
+import com.example.williamsumitro.dress.view.view.bag.activity.ShoppingBag;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.mystore.adapter.MyStoreVP;
 import com.example.williamsumitro.dress.view.view.product.adapter.DetailProductCourierRVAdapter;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomButtons.SimpleCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.Util;
 import com.squareup.picasso.LruCache;
@@ -102,6 +107,8 @@ public class MyStore extends AppCompatActivity {
     private DetailProductCourierRVAdapter adapter;
     private Boolean favoritestatus =false;
     private SweetAlertDialog sweetAlertDialog;
+    private final static String FILEUPLOAD = "FILEUPLOAD";
+    private final static String CHECKOUT = "CHECKOUT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +120,7 @@ public class MyStore extends AppCompatActivity {
         setupToolbar();
         initCollapToolbar();
     }
+
 
     private void api_getuserstore() {
         progressDialog.setMessage("Loading ...");
@@ -445,5 +453,24 @@ public class MyStore extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

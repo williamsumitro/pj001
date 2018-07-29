@@ -9,15 +9,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,14 +36,21 @@ import com.example.williamsumitro.dress.view.presenter.session.SessionManagement
 import com.example.williamsumitro.dress.view.view.purchase.adapter.SpinBankAdapter;
 import com.example.williamsumitro.dress.view.view.purchase.payment.activity.PP_InvoiceDetail;
 import com.example.williamsumitro.dress.view.view.purchase.payment.fragment.P_paymentFragment;
+import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,14 +74,16 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
     private SpinBankAdapter spinBankAdapter;
     private String company_bank_id;
     private apiService service;
-    private String token;
+    private String token, year="";
     private SessionManagement sessionManagement;
     private ArrayList<OrderStore> orderStoreArrayList;
     private P_paymentFragment p_paymentFragment;
+    private SwitchDateTimeDialogFragment dateTimeFragment;
 
     private final static String ORDERSTORELIST = "ORDERSTORELIST";
     private final static String INVOICENUMBER = "INVOICENUMBER";
     private final static String GRANDTOTAL = "GRANDTOTAL";
+    private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
 
     public PurchasePaymentRVInvoice(Context context, ArrayList<Purchase_PaymentResult> purchasePaymentResultArrayList, ArrayList<Bank> bankArrayList, P_paymentFragment p_paymentFragment){
         this.context = context;
@@ -100,13 +112,12 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
         holder.invoicenumber.setText("Invoice Number : " + String.valueOf(purchase_paymentResponse.getTransactionId()));
         holder.date.setText(purchase_paymentResponse.getInvoiceDate());
         holder.grandtotal.setText("Grand Total : " +  "IDR " + formatter.format(Double.parseDouble(purchase_paymentResponse.getInvoiceGrandTotal())));
-        orderStoreArrayList = purchase_paymentResponse.getOrderStore();
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     Intent intent = new Intent(context, PP_InvoiceDetail.class);
-                    intent.putExtra(ORDERSTORELIST, orderStoreArrayList);
+                    intent.putExtra(ORDERSTORELIST, purchase_paymentResponse.getOrderStore());
                     intent.putExtra(GRANDTOTAL, purchase_paymentResponse.getInvoiceGrandTotal());
                     intent.putExtra(INVOICENUMBER, String.valueOf(purchase_paymentResponse.getTransactionId()));
                     Bundle bundle = ActivityOptions.makeCustomAnimation(context,R.anim.slideright, R.anim.fadeout).toBundle();
@@ -158,6 +169,57 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
         Spinner spinner = (Spinner) dialog.findViewById(R.id.paymentdialog_spinner);
         final Button buttonok = (Button) dialog.findViewById(R.id.paymentdialog_btnok);
         final Button buttoncancel = (Button) dialog.findViewById(R.id.paymentdialog_btncancel);
+        final LinearLayout container_year = (LinearLayout) dialog.findViewById(R.id.paymentdialog_ln_year);
+        final TextView tv_year = (TextView) dialog.findViewById(R.id.paymentdialog_tv_year);
+
+        container_year.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimeFragment = (SwitchDateTimeDialogFragment) p_paymentFragment.getFragmentManager().findFragmentByTag(TAG_DATETIME_FRAGMENT);
+                if(dateTimeFragment == null) {
+                    dateTimeFragment = SwitchDateTimeDialogFragment.newInstance(
+                            context.getString(R.string.label_datetime_dialog),
+                            context.getString(android.R.string.ok),
+                            context.getString(android.R.string.cancel)
+                    );
+                }
+                dateTimeFragment.setTimeZone(TimeZone.getDefault());
+
+                final SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+                dateTimeFragment.set24HoursMode(true);
+                dateTimeFragment.setMinimumDateTime(new GregorianCalendar(2000, Calendar.JANUARY, 1).getTime());
+                dateTimeFragment.setMaximumDateTime(new GregorianCalendar(2050, Calendar.DECEMBER, 31).getTime());
+
+                try {
+                    dateTimeFragment.setSimpleDateMonthAndDayFormat(new SimpleDateFormat("MMMM dd", Locale.getDefault()));
+                } catch (SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException e) {
+                    Log.e("TAG", e.getMessage());
+                }
+
+                dateTimeFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonWithNeutralClickListener() {
+                    @Override
+                    public void onPositiveButtonClick(Date date) {
+                        year = myDateFormat.format(date);
+                        tv_year.setText("Year Established : " + year);
+                    }
+
+                    @Override
+                    public void onNegativeButtonClick(Date date) {
+                    }
+
+                    @Override
+                    public void onNeutralButtonClick(Date date) {
+                    }
+                });
+                dateTimeFragment.startAtCalendarView();
+                if (year.equals("")){
+                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(2018, Calendar.MARCH, 8, 3, 20).getTime());
+                }else {
+                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(Integer.parseInt(year), Calendar.MARCH, 4, 15, 20).getTime());
+                }
+                dateTimeFragment.show(p_paymentFragment.getFragmentManager(), TAG_DATETIME_FRAGMENT);
+            }
+        });
 
         if (grand_total.equals("0")){
             amount.setText("0");
@@ -199,7 +261,11 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
                 layout_bankaccount.setErrorEnabled(false);
                 layout_name.setErrorEnabled(false);
                 layout_note.setErrorEnabled(false);
-                if (TextUtils.isEmpty(amount.getText().toString())){
+                if (TextUtils.isEmpty(year)){
+                    Toasty.warning(context, "Please choose your date", Toast.LENGTH_SHORT, true).show();
+                    return;
+                }
+                else if (TextUtils.isEmpty(amount.getText().toString())){
                     layout_amount.setErrorEnabled(true);
                     layout_amount.setError("Amount is required");
                     return;
@@ -219,7 +285,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
 
                 service = apiUtils.getAPIService();
                 String amounts = FinancialTextWatcher.trimCommaOfString(amount.getText().toString());
-                service.req_confirm_payment(grand_total, invoice_number, company_bank_id, amounts, bankname.getText().toString(), bankaccount.getText().toString(),
+                service.req_confirm_payment(token, invoice_number, year,  company_bank_id, amounts, bankname.getText().toString(), bankaccount.getText().toString(),
                         name.getText().toString(), note.getText().toString()).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

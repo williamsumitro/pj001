@@ -49,6 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Profile extends AppCompatActivity {
+    public static Profile PROFILE;
     @BindView(R.id.profile_circleimageview) CircleImageView user_image;
     @BindView(R.id.profile_tv_name) TextView user_name;
     @BindView(R.id.profile_img_gender) ImageView gender;
@@ -125,6 +126,7 @@ public class Profile extends AppCompatActivity {
         token = user.get(SessionManagement.TOKEN);
         service = apiUtils.getAPIService();
         PicassoTools.clearCache(Picasso.with(context));
+        PROFILE = this;
     }
     private void setupToolbar(){
         setSupportActionBar(toolbar);

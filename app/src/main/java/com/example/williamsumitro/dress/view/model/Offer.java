@@ -51,7 +51,7 @@ public class Offer implements Serializable {
     private Integer qty;
     @SerializedName("total_price")
     @Expose
-    private Integer totalPrice;
+    private String totalPrice;
     @SerializedName("photo")
     @Expose
     private Photo photo;
@@ -160,11 +160,11 @@ public class Offer implements Serializable {
         this.qty = qty;
     }
 
-    public Integer getTotalPrice() {
+    public String getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(String totalPrice) {
         this.totalPrice = totalPrice;
     }
 

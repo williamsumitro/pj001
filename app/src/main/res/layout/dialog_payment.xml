@@ -6,7 +6,7 @@
     android:layout_gravity="center">
     <LinearLayout
         android:background="@color/gray"
-         android:layout_width="325dp"
+         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -49,6 +49,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/paymentdialog_ln_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/paymentdialog_tv_year"
+                    android:textSize="20sp"
+                    android:text="Choose the date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

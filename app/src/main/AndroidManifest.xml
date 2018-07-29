@@ -25,10 +25,8 @@
         <activity android:name=".view.view.Help" />
         <activity android:name=".view.view.bag.activity.AddToBagActivity" />
         <activity android:name=".view.view.bag.activity.ShoppingBag" />
-        <activity android:name=".view.view.checkout.activity.CheckoutActivity" />
         <activity android:name=".view.view.filter.Filter" />
         <activity android:name=".view.view.search.activity.Search" />
-        <activity android:name=".view.view.search.activity.SearchResult" />
         <activity android:name=".view.view.category.activity.CategoryDetail" />
         <activity android:name=".view.view.profile.activity.Profile" />
         <activity android:name=".view.view.profile.activity.EditProfile" />
@@ -36,7 +34,6 @@
         <activity android:name=".view.view.profile.activity.ChangeProfilePicture" />
         <activity android:name=".view.view.openstore.activity.OpenStore" />
         <activity android:name=".view.view.authentication.Unauthorized" />
-        <activity android:name=".view.view.wallet.activity.Withdraw" />
         <activity android:name=".view.view.product.activity.AddProduct" />
         <activity android:name=".view.view.openstore.activity.Openstrore_Fileupload" />
         <activity android:name=".view.view.checkout.activity.Payment" />
@@ -50,9 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.view.sellerpanel.activity.NoStore" />
         <activity android:name=".view.view.purchase.payment.activity.PP_InvoiceDetail" />
-        <activity android:name=".view.view.sales.activity.OrderApproveProduct" />
         <activity android:name=".view.view.purchase.reviewrating.activity.PurchaseReviewRatingDetail" />
         <activity android:name=".view.view.purchase.history.activity.PurchaseHistoryDetail" />
         <activity android:name=".view.view.partnership.activity.MyUplinePartnership" />
@@ -69,7 +64,8 @@
         <activity android:name=".view.view.mystore.activity.MyStore" />
         <activity android:name=".view.view.mystore.activity.SupportingDocument" />
         <activity android:name=".view.view.mystore.activity.CourierServiceActivity" />
-        <activity android:name=".view.view.checkout.activity.AltCheckout"></activity>
+        <activity android:name=".view.view.checkout.activity.AltCheckout" />
+        <activity android:name=".view.view.dashboard.DashboardActivity"></activity>
     </application>
 
 </manifest>

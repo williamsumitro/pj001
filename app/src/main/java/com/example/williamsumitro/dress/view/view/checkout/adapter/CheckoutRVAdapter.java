@@ -5,7 +5,6 @@ import android.os.Build;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -25,18 +24,15 @@ import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.CheckoutInfo;
 import com.example.williamsumitro.dress.view.model.Checkout_Courier;
 import com.example.williamsumitro.dress.view.model.Checkout_CourierArrayList;
-import com.example.williamsumitro.dress.view.model.CourierService;
 import com.example.williamsumitro.dress.view.model.CourierSpinner;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
-import com.example.williamsumitro.dress.view.view.checkout.fragment.Checkout_CourierFragment;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
 /**

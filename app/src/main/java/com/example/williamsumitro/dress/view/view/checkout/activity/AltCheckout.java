@@ -3,13 +3,12 @@ package com.example.williamsumitro.dress.view.view.checkout.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,14 +17,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
@@ -40,11 +38,10 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutRVAdapter;
-import com.example.williamsumitro.dress.view.view.checkout.fragment.Checkout_CourierFragment;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinCityAdapter;
 import com.example.williamsumitro.dress.view.view.sellerpanel.SpinProvinceAdapter;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +55,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AltCheckout extends AppCompatActivity {
+    public static AltCheckout ALTCHECKOUT;
     @BindView(R.id.altcheckout_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.altcheckout_toolbar) Toolbar toolbar;
     @BindView(R.id.altcheckout_spinner_province) Spinner spinner_province;
@@ -125,6 +123,11 @@ public class AltCheckout extends AppCompatActivity {
         service = apiUtils.getAPIService();
         progressDialog = new ProgressDialog(context);
         sessionManagement.clearCheckoutData();
+        ALTCHECKOUT = this;
+
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);
@@ -300,21 +303,40 @@ public class AltCheckout extends AppCompatActivity {
                 temp_city = address.get(SessionManagement.CHECKOUT_IDCITY);
                 temp_phonenumber = address.get(SessionManagement.CHECKOUT_PHONE_NUMBER);
                 temp_postalcode = address.get(SessionManagement.CHECKOUT_POSTAL_CODE);
-                Toasty.info(context, "Receiver name = " + temp_receivername +
-                "\nAlamat = " + temp_alamat +
-                        "\nProvince = " + temp_province +
-                        "\nCity = " + temp_city +
-                        "\nPhonenumber = " + temp_phonenumber +
-                        "\nPostalCode = " + temp_postalcode, Toast.LENGTH_LONG, true).show();
-                for (int i = 0; i < ccal.getCheckout_courierArrayList().size(); i++){
-                    Toasty.info(context, "Courier ID = " + ccal.getCheckout_courierArrayList().get(i).getCourier_id() +
-                            "\nCourier Service = " + ccal.getCheckout_courierArrayList().get(i).getCourier_service() +
-                            "\nNote = " + ccal.getCheckout_courierArrayList().get(i).getNote() +
-                            "\nFee = " + ccal.getCheckout_courierArrayList().get(i).getFee(), Toast.LENGTH_LONG, true).show();
-                }
-                Toasty.info(context, "Receiver name = " + temp_subtotal +
-                        "\nPoint = " + temp_point, Toast.LENGTH_LONG, true).show();
+//                Toasty.info(context, "Receiver name = " + temp_receivername +
+//                "\nAlamat = " + temp_alamat +
+//                        "\nProvince = " + temp_province +
+//                        "\nCity = " + temp_city +
+//                        "\nPhonenumber = " + temp_phonenumber +
+//                        "\nPostalCode = " + temp_postalcode, Toast.LENGTH_LONG, true).show();
+//                for (int i = 0; i < ccal.getCheckout_courierArrayList().size(); i++){
+//                    Toasty.info(context, "Courier ID = " + ccal.getCheckout_courierArrayList().get(i).getCourier_id() +
+//                            "\nCourier Service = " + ccal.getCheckout_courierArrayList().get(i).getCourier_service() +
+//                            "\nNote = " + ccal.getCheckout_courierArrayList().get(i).getNote() +
+//                            "\nFee = " + ccal.getCheckout_courierArrayList().get(i).getFee(), Toast.LENGTH_LONG, true).show();
+//                }
+//                Toasty.info(context, "Receiver name = " + temp_subtotal +
+//                        "\nPoint = " + temp_point, Toast.LENGTH_LONG, true).show();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

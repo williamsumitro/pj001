@@ -3,6 +3,7 @@ package com.example.williamsumitro.dress.view.view.bag.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.NestedScrollView;
@@ -30,7 +31,6 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.bag.adapter.ShoppingBagRVAdapter;
 import com.example.williamsumitro.dress.view.view.checkout.activity.AltCheckout;
-import com.example.williamsumitro.dress.view.view.checkout.activity.CheckoutActivity;
 import com.example.williamsumitro.dress.view.view.main.MainActivity;
 
 import java.text.DecimalFormat;
@@ -155,6 +155,10 @@ public class ShoppingBag extends AppCompatActivity {
         HashMap<String, String> user = sessionManagement.getUserDetails();
         token = user.get(SessionManagement.TOKEN);
         progressDialog = new ProgressDialog(context);
+
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void setuptoolbar(){
         setSupportActionBar(toolbar);

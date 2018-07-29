@@ -24,6 +24,8 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.AuthActivity;
+import com.example.williamsumitro.dress.view.view.main.MainActivity;
+import com.example.williamsumitro.dress.view.view.mystore.activity.MyStore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,17 +160,25 @@ public class ChangePassword extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_save, menu);
+        getMenuInflater().inflate(R.menu.toolbar_home, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.save) {
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.toolbarhome) {
+            Intent intent = new Intent(context, MainActivity.class);
+            initanim(intent);
+            Profile.PROFILE.finish();
+            finish();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -225,4 +235,6 @@ public class ChangePassword extends AppCompatActivity {
         context.startActivity(intent);
         overridePendingTransition(R.anim.slideright, R.anim.fadeout);
     }
+
+
 }
