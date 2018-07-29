@@ -494,4 +494,7 @@ public interface apiService {
     Call<DashboardResponse> req_dashboard(@Field("token") String token,
                                           @Field("type") String type);
 
+    @FormUrlEncoded
+    @POST("delete_product")
+    Call<ResponseBody> req_deleteproduct(@Field("product_id") String product_id);
 }

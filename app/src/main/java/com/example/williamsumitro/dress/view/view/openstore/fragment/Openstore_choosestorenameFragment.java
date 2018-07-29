@@ -198,21 +198,6 @@ public class Openstore_choosestorenameFragment extends Fragment implements Block
             onNavigationBarListener.onChangeEndButtonsEnabled(isStoreValid());
         }
     }
-    private void dialog_success(String message, final StepperLayout.OnNextClickedCallback callback){
-        sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setCanceledOnTouchOutside(false);
-        sweetAlertDialog.setTitleText("Registered Success!")
-                .setContentText(message)
-                .setConfirmText("Ok")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        callback.goToNextStep();
-                        sweetAlertDialog.dismiss();
-                    }
-                }).show();
-    }
     private void initDialog(String message, int stats){
         if(stats == 0){
             sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
@@ -248,81 +233,17 @@ public class Openstore_choosestorenameFragment extends Fragment implements Block
         sweetAlertDialog.setCancelable(false);
         sweetAlertDialog.setCanceledOnTouchOutside(false);
         sweetAlertDialog.setTitleText("Store name Available")
-                .setContentText("Do you want to register it ?")
                 .setConfirmText("Yes")
-                .setCancelText("No")
                 .showCancelButton(true)
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-                        dialog_register(callback, sweetAlertDialog);
-                    }
-                })
-                .show();
-    }
-    private void dialog_register(final StepperLayout.OnNextClickedCallback callback, final SweetAlertDialog sweetAlertDialog1){
-        sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setCanceledOnTouchOutside(false);
-        sweetAlertDialog.setTitleText("Are you sure ?")
-                .setContentText("After your press ok, your store name will automatically save and can't be change")
-                .setConfirmText("Yes")
-                .setCancelText("No")
-                .showCancelButton(true)
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        api_registerit(callback);
+                        sessionManagement.keepStoreName(edittext_storename.getText().toString());
+                        callback.goToNextStep();
                         sweetAlertDialog.dismiss();
-                        sweetAlertDialog1.dismiss();
                     }
                 })
                 .show();
-    }
-    private void api_registerit(final StepperLayout.OnNextClickedCallback callback){
-        nama_toko = edittext_storename.getText().toString();
-        progressDialog.setMessage("Wait a sec..");
-        progressDialog.show();
-        service = apiUtils.getAPIService();
-        service.req_register_store_name(token, nama_toko)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.code()==200){
-                            try {
-                                JSONObject jsonResults = new JSONObject(response.body().string());
-                                String status = jsonResults.getString("status").toLowerCase();
-                                if(status.equals("true")){
-                                    String message = jsonResults.getString("message");
-                                    ((OpenStore)getActivity()).ChangeColor(1);
-                                    sessionManagement.keepStoreName(edittext_storename.getText().toString());
-                                    progressDialog.dismiss();
-                                    success = true;
-                                    edittext_storename.setEnabled(false);
-                                    dialog_success(message, callback);
-                                }
-                                else if(status.equals("false")) {
-                                    String message = jsonResults.getString("message");
-                                    initDialog(message,0);
-                                    progressDialog.dismiss();
-                                    success = false;
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-                        progressDialog.dismiss();
-                        initDialog(t.getMessage(), 3);
-                        success = false;
-                    }
-                });
     }
 
     @Override

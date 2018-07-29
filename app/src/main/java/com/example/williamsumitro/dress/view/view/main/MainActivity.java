@@ -32,6 +32,7 @@ import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.UserDetails;
 import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
+import com.example.williamsumitro.dress.view.view.About;
 import com.example.williamsumitro.dress.view.view.Test;
 import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
 import com.example.williamsumitro.dress.view.view.home.fragment.HomeFragment;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String NOSTORE = "NOSTORE";
     private static final String MYWALLET = "MYWALLET";
     private static final String RFQ = "RFQ";
+    private static final String ABOUT = "ABOUT";
     public static String CURRENT = HOME;
 
     private String[] activityTitles;
@@ -301,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.drawer_help:
                             navIndex = 7;
-                            CURRENT = HELP;
+                            CURRENT = ABOUT;
                             break;
                         case R.id.drawer_logout:
                             initDialog(2);
@@ -412,8 +414,8 @@ public class MainActivity extends AppCompatActivity {
                 FavoriteStoreFragment favoriteStoreFragment = new FavoriteStoreFragment();
                 return favoriteStoreFragment;
             case 7:
-                Intent intent = new Intent(context, Test.class);
-                initanim(intent);
+                About about = new About();
+                return about;
             default:
                 return new HomeFragment();
         }
@@ -544,30 +546,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-//            prettyDialog.setTitle("")
-//                    .setMessage("")
-//                    .setIcon(R.drawable.pdlg_icon_info)
-//                    .setIconTint(R.color.pdlg_color_red)
-//                    .addButton("Yes",
-//                            R.color.pdlg_color_white,
-//                            R.color.pdlg_color_green, new PrettyDialogCallback() {
-//                                @Override
-//                                public void onClick() {
-//                                    prettyDialog.dismiss();
-//                                }
-//                            })
-//                    .addButton("No",
-//                            R.color.pdlg_color_white,
-//                            R.color.pdlg_color_red, new PrettyDialogCallback() {
-//                                @Override
-//                                public void onClick() {
-//                                    prettyDialog.dismiss();
-//                                    navigationView.getMenu().getItem(8).setChecked(false);
-//                                    navigationView.getMenu().getItem(navIndex).setChecked(true);
-//                                }
-//                            })
-//                    .setAnimationEnabled(true)
-//                    .show();
         }
     }
     @Override

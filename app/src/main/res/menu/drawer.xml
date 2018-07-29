@@ -31,7 +31,7 @@
             android:title="Favorite Store" />
         <item
             android:id="@+id/drawer_help"
-            android:title="Help" />
+            android:title="About" />
         <item
             android:checkable="false"
             android:id="@+id/drawer_logout"

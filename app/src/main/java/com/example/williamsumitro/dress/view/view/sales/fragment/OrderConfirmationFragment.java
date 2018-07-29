@@ -110,8 +110,8 @@ public class OrderConfirmationFragment extends Fragment {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
-                            top.setVisibility(View.GONE);
-                            bottom.setVisibility(View.VISIBLE);
+                            top.setVisibility(View.VISIBLE);
+                            bottom.setVisibility(View.GONE);
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pireply</string>
+    <string name="app_name">Dress Marketplace</string>
     <string name="Cart">Cart</string>
     <string name="Home">Home</string>
     <string name="Profile">Profile</string>
@@ -24,8 +24,7 @@
         <item>Purchase</item>
         <item>Wishlist</item>
         <item>Favorite Store</item>
-        <item>Settings</item>
-        <item>Help</item>
+        <item>About</item>
         <item>Logout</item>
         <!--<item>@string/app_name</item>-->
     </string-array>

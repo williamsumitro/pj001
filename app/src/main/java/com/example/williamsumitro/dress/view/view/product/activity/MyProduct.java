@@ -102,7 +102,7 @@ public class MyProduct extends AppCompatActivity {
         });
     }
 
-    private void initRefresh() {
+    public void initRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         initGetData();
     }
@@ -137,7 +137,7 @@ public class MyProduct extends AppCompatActivity {
 
     }
     private void setupRV(){
-        adapter = new MyProductRV(productArrayList, context);
+        adapter = new MyProductRV(productArrayList, context, MyProduct.this);
         RecyclerView.LayoutManager grid_layoutmanager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(grid_layoutmanager);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
