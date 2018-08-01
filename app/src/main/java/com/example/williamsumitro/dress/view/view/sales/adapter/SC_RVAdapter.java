@@ -25,6 +25,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiService;
 import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.checkout.adapter.CheckoutProductRVAdapter;
+import com.example.williamsumitro.dress.view.view.home.adapter.HotRVAdapter;
 import com.example.williamsumitro.dress.view.view.sales.fragment.ShippingConfirmationFragment;
 
 import org.json.JSONException;
@@ -90,6 +91,20 @@ public class SC_RVAdapter extends RecyclerView.Adapter<SC_RVAdapter.ViewHolder> 
         holder.total.setText("Total : IDR " + formatter.format(Double.parseDouble(String.valueOf(orderResult.getTotalPrice()))));
         holder.subtotal.setText("Sub Total : IDR " + formatter.format(Double.parseDouble(String.valueOf(orderResult.getSubtotalPrice()))));
         holder.shipping.setText("Shipping Fee : IDR " + formatter.format(Double.parseDouble(String.valueOf(orderResult.getShippingPrice()))));
+        if (orderResult.getShippingStatus().equals("1")){
+            holder.submit.setVisibility(View.GONE);
+            holder.container_receipt.setVisibility(View.GONE);
+            holder.receipt.setVisibility(View.VISIBLE);
+            holder.receipt.setText("Receipt Number : " + orderResult.getReceiptNumber());
+            if (orderResult.getReceiptStatus().equals("1")){
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("Received by Buyer");
+            }
+            else if (orderResult.getReceiptStatus().equals("0")){
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("Not yet Received");
+            }
+        }
         if (orderResult.getNote()== null)
             note = "";
         else
@@ -205,6 +220,8 @@ public class SC_RVAdapter extends RecyclerView.Adapter<SC_RVAdapter.ViewHolder> 
         @BindView(R.id.item_salesshipping_btn_submit) Button submit;
         @BindView(R.id.item_salesshipping_tv_noproduct) TextView noproduct;
         @BindView(R.id.item_salesshipping_ln_receipt) LinearLayout container_receipt;
+        @BindView(R.id.item_salesshipping_tv_status) TextView status;
+        @BindView(R.id.item_salesshipping_tv_receiptnumber) TextView receipt;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

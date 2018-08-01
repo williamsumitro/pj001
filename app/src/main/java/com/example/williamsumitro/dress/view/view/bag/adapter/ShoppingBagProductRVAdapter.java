@@ -170,7 +170,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
             }
         });
     }
-    private void api_deleteproduct(final ProductInfo product, final SweetAlertDialog sweetAlertDialog, final SweetAlertDialog sDialog){
+    private void api_deleteproduct(final ProductInfo product, final SweetAlertDialog sweetAlertDialog){
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
         progressDialog.setCancelable(true);
@@ -187,15 +187,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                             Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
                             progressDialog.dismiss();
                             shoppingBag.initRefresh();
-                            sDialog.setTitleText("Removed")
-                                    .setConfirmText("OK")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            sweetAlertDialog.dismiss();
-                                        }
-                                    })
-                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            sweetAlertDialog.dismiss();
                         }
                         else{
                             String message = jsonResults.getString("message");
@@ -265,7 +257,7 @@ public class ShoppingBagProductRVAdapter extends RecyclerView.Adapter<ShoppingBa
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             // reuse previous dialog instance
-                            api_deleteproduct(product, sweetAlertDialog, sDialog);
+                            api_deleteproduct(product, sweetAlertDialog);
 
                         }
                     })

@@ -200,7 +200,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
                     @Override
                     public void onPositiveButtonClick(Date date) {
                         year = myDateFormat.format(date);
-                        tv_year.setText("Year Established : " + year);
+                        tv_year.setText("Upload Date : " + year);
                     }
 
                     @Override
@@ -213,9 +213,9 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
                 });
                 dateTimeFragment.startAtCalendarView();
                 if (year.equals("")){
-                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(2018, Calendar.MARCH, 8, 3, 20).getTime());
+                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(2018, Calendar.AUGUST, 3, 3, 20).getTime());
                 }else {
-                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(Integer.parseInt(year), Calendar.MARCH, 4, 15, 20).getTime());
+                    dateTimeFragment.setDefaultDateTime(new GregorianCalendar(Integer.parseInt(year), Calendar.AUGUST, 3, 15, 20).getTime());
                 }
                 dateTimeFragment.show(p_paymentFragment.getFragmentManager(), TAG_DATETIME_FRAGMENT);
             }

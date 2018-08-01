@@ -132,6 +132,7 @@ public class DetailProduct extends AppCompatActivity {
     private final static String PRODUCT_ID = "PRODUCT_ID";
     private final static String STORE_ID = "STORE_ID";
     private final static String IMAGE = "IMAGE";
+    private final static String INBAG = "INBAG";
 
 
     private static final Integer[] XMEN= {R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake,R.drawable.fake};
@@ -325,6 +326,7 @@ public class DetailProduct extends AppCompatActivity {
         intent.putStringArrayListExtra(QTYMINORDER, qtyminlist);
         intent.putStringArrayListExtra(QTYMAXORDER, qtymaxlist);
         intent.putExtra(SIZELIST, productInfo.getSize());
+        intent.putExtra(INBAG, productInfo.getInBag().toString());
     }
     private void api_wishlist(){
         progressDialog.setMessage("Loading ...");
@@ -611,28 +613,38 @@ public class DetailProduct extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                             if (response.code()==200){
-                                productInfo = response.body().getProductInfo();
-                                storeInfo = response.body().getStoreInfo();
-                                priceList = productInfo.getPrice();
-                                sizeList = productInfo.getSize();
-                                courierServiceList = storeInfo.getCourierService();
-                                wishliststatus = response.body().getWishlistStatus();
-                                is_partnerhsip = productInfo.getIsPartnership();
-                                averagerating = productInfo.getRating();
-                                downlinePartnerArrayList = productInfo.getDownlinePartner();
-                                reviewRatingArrayList = productInfo.getReviewRating();
-                                if (wishliststatus){
-                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
-                                    addtowishlist.setText("Delete from Wishlist");
+                                if (response.body().getStatus()){
+                                    productInfo = response.body().getProductInfo();
+                                    storeInfo = response.body().getStoreInfo();
+                                    priceList = productInfo.getPrice();
+                                    sizeList = productInfo.getSize();
+                                    courierServiceList = storeInfo.getCourierService();
+                                    wishliststatus = response.body().getWishlistStatus();
+                                    is_partnerhsip = productInfo.getIsPartnership();
+                                    averagerating = productInfo.getRating();
+                                    downlinePartnerArrayList = productInfo.getDownlinePartner();
+                                    reviewRatingArrayList = productInfo.getReviewRating();
+                                    if (wishliststatus){
+                                        addtowishlist.setBackgroundColor(getResources().getColor(R.color.red2));
+                                        addtowishlist.setText("Delete from Wishlist");
+                                    }
+                                    else {
+                                        addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
+                                        addtowishlist.setText("Add to Wishlist");
+                                    }
+                                    initProductDetails();
+                                    setupRV();
+                                    initClick();
+                                    progressDialog.dismiss();
                                 }
                                 else {
-                                    addtowishlist.setBackgroundColor(getResources().getColor(R.color.blue1));
-                                    addtowishlist.setText("Add to Wishlist");
+                                    Toasty.error(context, "Product Non Active", Toast.LENGTH_SHORT, true).show();
+                                    onBackPressed();
+                                    overridePendingTransition(R.anim.slideleft, R.anim.fadeout);
+                                    finish();
+                                    progressDialog.dismiss();
                                 }
-                                initProductDetails();
-                                setupRV();
-                                initClick();
-                                progressDialog.dismiss();
+
                             }
                             else {
                                 Toasty.error(context, response.message(), Toast.LENGTH_SHORT, true).show();

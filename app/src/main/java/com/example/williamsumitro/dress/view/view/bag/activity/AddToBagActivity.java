@@ -98,8 +98,9 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
     private final static String PRICELIST = "PRICELIST";
     private final static String SIZELIST = "SIZELIST";
     private final static String PRODUCT_ID = "PRODUCT_ID";
+    private final static String INBAG = "INBAG";
 
-    private String extra_namaproduct, extra_gambarproduct, extra_minorder, token, extra_productid;
+    private String extra_namaproduct, extra_gambarproduct, extra_minorder, token, extra_productid, extra_inbag;
     private ArrayList<String> extra_priceminlist, extra_qtyminorder, extra_sizelist, extra_qtymaxorder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +185,7 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
             extra_qtyminorder = getintent.getStringArrayListExtra(QTYMINORDER);
             extra_qtymaxorder = getintent.getStringArrayListExtra(QTYMAXORDER);
             sizes = (ArrayList<Size>) getintent.getSerializableExtra(SIZELIST);
+            extra_inbag = getintent.getExtras().getString(INBAG);
         }
         else{
             Toasty.error(context, "SOMETHING WRONG", Toast.LENGTH_SHORT, true).show();
@@ -217,7 +219,12 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.default_product)
                 .into(imageproduct);
-        minorder.setText(extra_minorder);
+        if (extra_inbag.equals("true")){
+            minorder.setText("1");
+        }
+        else {
+            minorder.setText(extra_minorder);
+        }
         setupRV();
     }
     private void setupRV(){
@@ -289,15 +296,21 @@ public class AddToBagActivity extends AppCompatActivity implements QuantityView.
             }
 
         }
-
-        if(sum < Integer.parseInt(extra_minorder)){
-            continues.setEnabled(false);
-            continues.setBackgroundColor(getResources().getColor(R.color.gray1));
-        }
-        else {
+        if (extra_inbag.equals("true")){
             continues.setEnabled(true);
             continues.setBackgroundColor(getResources().getColor(R.color.green1));
         }
+        else {
+            if(sum < Integer.parseInt(extra_minorder)){
+                continues.setEnabled(false);
+                continues.setBackgroundColor(getResources().getColor(R.color.gray1));
+            }
+            else {
+                continues.setEnabled(true);
+                continues.setBackgroundColor(getResources().getColor(R.color.green1));
+            }
+        }
+
         priceproduct.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(percen))));
         tot = sum * percen;
         total.setText("IDR " + formatter.format(Double.parseDouble(String.valueOf(tot))));

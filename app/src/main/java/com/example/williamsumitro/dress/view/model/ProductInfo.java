@@ -242,6 +242,9 @@ public class ProductInfo implements Serializable{
     @SerializedName("price_total")
     @Expose
     private String priceTotal;
+    @SerializedName("in_bag")
+    @Expose
+    private Boolean inBag;
     @SerializedName("has_partnership")
     @Expose
     private Boolean hasPartnership;
@@ -729,5 +732,13 @@ public class ProductInfo implements Serializable{
 
     public void setStoreNamePartner(String storeNamePartner) {
         this.storeNamePartner = storeNamePartner;
+    }
+
+    public Boolean getInBag() {
+        return inBag;
+    }
+
+    public void setInBag(Boolean inBag) {
+        this.inBag = inBag;
     }
 }
