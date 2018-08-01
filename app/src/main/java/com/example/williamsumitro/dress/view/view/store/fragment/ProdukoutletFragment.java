@@ -38,6 +38,7 @@ import com.example.williamsumitro.dress.view.model.CityDetails;
 import com.example.williamsumitro.dress.view.model.CityResponse;
 import com.example.williamsumitro.dress.view.model.CourierDetails;
 import com.example.williamsumitro.dress.view.model.CourierResponse;
+import com.example.williamsumitro.dress.view.model.FilterProductStore;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ProvinceDetails;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
@@ -234,23 +235,20 @@ public class ProdukoutletFragment extends Fragment {
 
     private void dialog_filter(){
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_filter);
+        dialog.setContentView(R.layout.dialog_filter1);
 
-        final QuantityView qv_minorder = (QuantityView) dialog.findViewById(R.id.dialog_filter_qv_minorder);
-        final TextView minpricerangevalue = (TextView) dialog.findViewById(R.id.dialog_filter_tvminpricerangevalue);
-        final TextView maxpricerangevalue = (TextView) dialog.findViewById(R.id.dialog_filter_tvmaxpricerangevalue);
-        final TextView maxprice = (TextView) dialog.findViewById(R.id.dialog_filter_tvmaxpricerange);
-        final TextView minprice = (TextView) dialog.findViewById(R.id.dialog_filter_tvminpricerange);
-        final TextView min_rating = (TextView) dialog.findViewById(R.id.dialog_filter_tv_ratingmin);
-        final TextView max_rating = (TextView) dialog.findViewById(R.id.dialog_filter_tv_ratingmax);
-        final TextView minrate = (TextView) dialog.findViewById(R.id.dialog_filter_tv_minrate);
-        final TextView maxrate = (TextView) dialog.findViewById(R.id.dialog_filter_tv_maxrate);
-        final Spinner courier = (Spinner) dialog.findViewById(R.id.dialog_filter_spinner_shipping);
-        final Spinner province = (Spinner) dialog.findViewById(R.id.dialog_filter_spinner_province);
-        final Spinner city = (Spinner) dialog.findViewById(R.id.dialog_filter_spinner_city);
-        final CrystalRangeSeekbar price = (CrystalRangeSeekbar) dialog.findViewById(R.id.dialog_filter_rangeseekbar_price);
-        final CrystalRangeSeekbar rate = (CrystalRangeSeekbar) dialog.findViewById(R.id.dialog_filter_rangeseekbar_rate);
-        final Button set = (Button) dialog.findViewById(R.id.dialog_filter_btnSet);
+        final QuantityView qv_minorder = (QuantityView) dialog.findViewById(R.id.dialog_filter1_qv_minorder);
+        final TextView minpricerangevalue = (TextView) dialog.findViewById(R.id.dialog_filter1_tvminpricerangevalue);
+        final TextView maxpricerangevalue = (TextView) dialog.findViewById(R.id.dialog_filter1_tvmaxpricerangevalue);
+        final TextView maxprice = (TextView) dialog.findViewById(R.id.dialog_filter1_tvmaxpricerange);
+        final TextView minprice = (TextView) dialog.findViewById(R.id.dialog_filter1_tvminpricerange);
+        final TextView min_rating = (TextView) dialog.findViewById(R.id.dialog_filter1_tv_ratingmin);
+        final TextView max_rating = (TextView) dialog.findViewById(R.id.dialog_filter1_tv_ratingmax);
+        final TextView minrate = (TextView) dialog.findViewById(R.id.dialog_filter1_tv_minrate);
+        final TextView maxrate = (TextView) dialog.findViewById(R.id.dialog_filter1_tv_maxrate);
+        final CrystalRangeSeekbar price = (CrystalRangeSeekbar) dialog.findViewById(R.id.dialog_filter1_rangeseekbar_price);
+        final CrystalRangeSeekbar rate = (CrystalRangeSeekbar) dialog.findViewById(R.id.dialog_filter1_rangeseekbar_rate);
+        final Button set = (Button) dialog.findViewById(R.id.dialog_filter1_btnSet);
 
         min_rating.setText("0");
         max_rating.setText("5");
@@ -308,97 +306,16 @@ public class ProdukoutletFragment extends Fragment {
                 builder.show();
             }
         });
-        service.req_get_province_list().enqueue(new Callback<ProvinceResponse>() {
-            @Override
-            public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
-                if(response.code() == 200){
-                    provinceDetailsList = response.body().getProvinceDetails();
-                    spinProvinceAdapter = new SpinProvinceAdapter(context, R.layout.item_spinner, provinceDetailsList);
-                    province.setAdapter(spinProvinceAdapter);
-                    province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                            ProvinceDetails provinceDetails = spinProvinceAdapter.getItem(position);
-                            idprovince = provinceDetails.getProvinceId();
-                            choosen_province = provinceDetails.getProvinceName();service = apiUtils.getAPIService();
-                            service.req_get_city(idprovince).enqueue(new Callback<CityResponse>() {
-                                @Override
-                                public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
-                                    if(response.code() == 200){
-                                        cityDetailsList = response.body().getCityDetails();
-                                        spinCityAdapter = new SpinCityAdapter(context, R.layout.item_spinner, cityDetailsList);
-                                        city.setAdapter(spinCityAdapter);
-                                        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                            @Override
-                                            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                                                CityDetails citydetails = spinCityAdapter.getItem(position);
-                                                idcity = citydetails.getCityId();
-                                                choosen_city = citydetails.getCityName();
-                                            }
-                                            @Override
-                                            public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<CityResponse> call, Throwable t) {
-                                    initDialog(3);
-                                }
-                            });
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProvinceResponse> call, Throwable t) {
-                initDialog(3);
-            }
-        });
-        service.req_get_courier_list().enqueue(new Callback<CourierResponse>() {
-            @Override
-            public void onResponse(Call<CourierResponse> call, Response<CourierResponse> response) {
-                if(response.code() == 200){
-                    courierDetailsList = response.body().getCourier();
-                    courierAdapter = new CourierAdapter(context, R.layout.item_spinner, courierDetailsList);
-                    courier.setAdapter(courierAdapter);
-                    courier.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                            CourierDetails courierdetails = courierAdapter.getItem(position);
-                            idcourier = courierdetails.getCourierId();
-                            choosen_courier = courierdetails.getCourierName();
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CourierResponse> call, Throwable t) {
-                initDialog(3);
-            }
-        });
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog.setMessage("Wait a sec..");
                 progressDialog.show();
                 progressDialog.setCancelable(false);
-                service.req_advance_search(String.valueOf(qv_minorder.getQuantity()), min_rating.getText().toString(), max_rating.getText().toString(), idprovince, idcity, idcourier,
-                        FinancialTextWatcher.trimCommaOfString(minprice.getText().toString()), FinancialTextWatcher.trimCommaOfString(maxprice.getText().toString())).enqueue(new Callback<AdvancedSearchResult>() {
+                service.req_filter_product_store(String.valueOf(qv_minorder.getQuantity()), min_rating.getText().toString(), max_rating.getText().toString(),
+                        storeDetails.getStoreId().toString(), FinancialTextWatcher.trimCommaOfString(minprice.getText().toString()), FinancialTextWatcher.trimCommaOfString(maxprice.getText().toString())).enqueue(new Callback<FilterProductStore>() {
                     @Override
-                    public void onResponse(Call<AdvancedSearchResult> call, Response<AdvancedSearchResult> response) {
+                    public void onResponse(Call<FilterProductStore> call, Response<FilterProductStore> response) {
                         if (response.code()==200){
                             searchList = response.body().getProductInfo();
                             if (searchList.size()>0){
@@ -419,7 +336,7 @@ public class ProdukoutletFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<AdvancedSearchResult> call, Throwable t) {
+                    public void onFailure(Call<FilterProductStore> call, Throwable t) {
                         progressDialog.dismiss();
                         Toasty.error(context, "Please try again", Toast.LENGTH_SHORT, true).show();
                     }

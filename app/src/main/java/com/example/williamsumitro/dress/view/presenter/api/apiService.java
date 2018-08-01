@@ -13,6 +13,7 @@ import com.example.williamsumitro.dress.view.model.CourierResponse;
 import com.example.williamsumitro.dress.view.model.DashboardResponse;
 import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
 import com.example.williamsumitro.dress.view.model.FavoriteResponse;
+import com.example.williamsumitro.dress.view.model.FilterProductStore;
 import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
 import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
 import com.example.williamsumitro.dress.view.model.PartnershipResponse;
@@ -497,4 +498,13 @@ public interface apiService {
     @FormUrlEncoded
     @POST("delete_product")
     Call<ResponseBody> req_deleteproduct(@Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("filter_product_store")
+    Call<FilterProductStore> req_filter_product_store(@Field("min_order") String min_order,
+                                                @Field("rating_min") String rating_min,
+                                                @Field("rating_max") String rating_max,
+                                                @Field("store_id") String store_id,
+                                                @Field("price_min") String price_min,
+                                                @Field("price_max") String price_max);
 }
