@@ -35,6 +35,7 @@ import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
 import com.example.williamsumitro.dress.view.model.ReviewRating;
 import com.example.williamsumitro.dress.view.model.StoreInfo;
+import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UplinePartner;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.dress_attribute.Size;
@@ -616,6 +617,22 @@ public class DetailProduct extends AppCompatActivity {
                                 if (response.body().getStatus()){
                                     productInfo = response.body().getProductInfo();
                                     storeInfo = response.body().getStoreInfo();
+                                    service.req_get_user_store(token).enqueue(new Callback<StoreResponse>() {
+                                        @Override
+                                        public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                                            if(response.body().getHaveStore()){
+                                                if (storeInfo.getStoreId().toString().equals(response.body().getStore().getStoreId().toString())){
+                                                    addtobag.setBackgroundColor(getResources().getColor(R.color.grey3));
+                                                    addtobag.setEnabled(false);
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<StoreResponse> call, Throwable t) {
+
+                                        }
+                                    });
                                     priceList = productInfo.getPrice();
                                     sizeList = productInfo.getSize();
                                     courierServiceList = storeInfo.getCourierService();
