@@ -13,6 +13,7 @@
             android:clipToPadding="false"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:background="@color/gold"
             app:stl_defaultTabTextColor="@color/black"
             app:stl_defaultTabTextHorizontalPadding="18dp"
             app:stl_dividerColor="@color/transparent"

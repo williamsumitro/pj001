@@ -90,10 +90,6 @@ public class Login extends AppCompatActivity{
             layoutemail.setErrorEnabled(true);
             layoutemail.setError("Email is required");
             return;
-        }else if (!AuthActivity.isemailvalid(email.getText().toString())) {
-            layoutemail.setErrorEnabled(true);
-            layoutemail.setError("Email is not valid");
-            return;
         }else if (TextUtils.isEmpty(password.getText())) {
             layoutpassword.setErrorEnabled(true);
             layoutpassword.setError("Password is required");
