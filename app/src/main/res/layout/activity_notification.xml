@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/white"
+            android:id="@+id/notification_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/p_history_swiperefreshlayout"
+        android:id="@+id/notification_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -16,27 +24,22 @@
             <LinearLayout
                 android:visibility="gone"
                 android:gravity="center"
-                android:id="@+id/p_history_ln_top"
+                android:id="@+id/notification_ln_top"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <ImageView
-                    android:src="@drawable/transactionhistory1"
-                    android:layout_gravity="center"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp" />
                 <TextView
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center"
-                    android:textSize="20sp"
+                    android:textSize="25sp"
                     android:textColor="@color/black"
-                    android:text="There are no Transaction History"
+                    android:text="There are no product"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/p_history_ln_bottom"
+                android:id="@+id/notification_ln_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -48,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/p_history_rv"
+                            android:id="@+id/notification_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>

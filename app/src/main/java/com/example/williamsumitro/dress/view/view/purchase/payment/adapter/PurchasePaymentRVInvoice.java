@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -154,6 +156,7 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
     private void initDialog(final String invoice_number, final String grand_total){
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_payment);
+        final boolean check = false;
         TextView invoicenumber = (TextView) dialog.findViewById(R.id.paymentdialog_tv_invoicenumber);
         final TextView total = (TextView) dialog.findViewById(R.id.paymentdialog_tv_total);
         final TextInputLayout layout_amount = (TextInputLayout) dialog.findViewById(R.id.paymentdialog_layout_amount);
@@ -171,7 +174,18 @@ public class PurchasePaymentRVInvoice extends RecyclerView.Adapter<PurchasePayme
         final Button buttoncancel = (Button) dialog.findViewById(R.id.paymentdialog_btncancel);
         final LinearLayout container_year = (LinearLayout) dialog.findViewById(R.id.paymentdialog_ln_year);
         final TextView tv_year = (TextView) dialog.findViewById(R.id.paymentdialog_tv_year);
-
+        final CheckBox cb = (CheckBox) dialog.findViewById(R.id.paymentdialog_checkbox);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (cb.isChecked()){
+                    amount.setText(grand_total);
+                }
+                else {
+                    amount.setText("");
+                }
+            }
+        });
         container_year.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

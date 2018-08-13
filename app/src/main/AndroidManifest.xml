@@ -65,7 +65,8 @@
         <activity android:name=".view.view.mystore.activity.SupportingDocument" />
         <activity android:name=".view.view.mystore.activity.CourierServiceActivity" />
         <activity android:name=".view.view.checkout.activity.AltCheckout" />
-        <activity android:name=".view.view.dashboard.DashboardActivity"></activity>
+        <activity android:name=".view.view.dashboard.DashboardActivity" />
+        <activity android:name=".view.view.home.activity.Notification"></activity>
     </application>
 
 </manifest>

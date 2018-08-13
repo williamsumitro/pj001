@@ -129,6 +129,25 @@
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/detailproduct_ln_report"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:foregroundGravity="right"
+                        android:layout_gravity="right"
+                        android:src="@drawable/chat"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/red1"
+                        android:text="Report this product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
                     android:visibility="gone"
                     android:id="@+id/detailproduct_ln_downlinepartnership"
                     android:background="@color/white"

@@ -11,6 +11,7 @@
         android:id="@+id/menu_notification"
         android:title="Notification"
         android:icon="@drawable/notification"
+        app:actionLayout="@layout/custom_notification"
         app:showAsAction="always">
         <menu>
             <item

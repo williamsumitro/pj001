@@ -21,15 +21,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.FullScreenImage;
 import com.example.williamsumitro.dress.view.model.DownlinePartner;
+import com.example.williamsumitro.dress.view.model.FilterProductStore;
 import com.example.williamsumitro.dress.view.model.Price;
 import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.ProductInfo;
@@ -63,6 +68,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,6 +128,7 @@ public class DetailProduct extends AppCompatActivity {
     @BindView(R.id.detailproduct_img_uplinepartnership) CircleImageView imagestore_uplinepartnership;
     @BindView(R.id.detailproduct_caret_downlinepartnership) ImageView caret_downline;
     @BindView(R.id.detailproduct_swiperefreshlayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.detailproduct_ln_report) LinearLayout reportproduct;
 
     private final static String NAMAPRODUCT = "NAMAPRODUCT";
     private final static String QTYMINORDER = "QTYMINORDER";
@@ -141,6 +148,7 @@ public class DetailProduct extends AppCompatActivity {
     private Context context;
     private static int currentPage = 0;
 
+    private List<String> report = new ArrayList<>();
     private BuyRVAdapter pricedetailsadapter;
     private apiService service;
     private ProductInfo productInfo;
@@ -151,7 +159,7 @@ public class DetailProduct extends AppCompatActivity {
     private Boolean detailclick = false, wishliststatus= false, click_downline = false;
     private ArrayList<model_CourierService> courierServiceList;
     private String extra_productid;
-    private String token, total_qty="0", averagerating;
+    private String token, total_qty="0", averagerating, choosen_report;
     private SessionManagement sessionManagement;
     private ProgressDialog progressDialog;
     private Dialog dialog;
@@ -519,6 +527,12 @@ public class DetailProduct extends AppCompatActivity {
                 initanim(intent);
             }
         });
+        reportproduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_report();
+            }
+        });
     }
     private void initanim(Intent intent){
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -737,6 +751,21 @@ public class DetailProduct extends AppCompatActivity {
                     })
                     .show();
         }
+        if (stats == 2){
+            sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.setTitleText("Success")
+                    .setConfirmText("Ok")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
         if (stats == 3){
             sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
             sweetAlertDialog.setCancelable(false);
@@ -902,6 +931,61 @@ public class DetailProduct extends AppCompatActivity {
                 Intent intent = new Intent(context, DetailStore.class);
                 intent.putExtra(STORE_ID, storeInfo.getStoreId().toString());
                 initanim(intent);
+            }
+        });
+        dialog.show();
+    }
+
+    private void dialog_report(){
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_report);
+
+        final Spinner spinner = (Spinner) dialog.findViewById(R.id.dialog_report_spinner);
+        final EditText comment = (EditText) dialog.findViewById(R.id.dialog_report_et);
+        final Button buttonok = (Button) dialog.findViewById(R.id.dialog_report_btn_submit);
+        final Button close = (Button) dialog.findViewById(R.id.dialog_report_btn_close);
+        report.add("Images does not match product");
+        report.add("Offensive or adult content");
+        report.add("Incorrect Information");
+        report.add("Missing Information");
+        report.add("Other");
+        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, R.layout.item_spinner, report);
+        dataAdapter.setDropDownViewResource(R.layout.item_spinner);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                choosen_report = dataAdapter.getItem(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                service.req_reportproduct(token, productInfo.getProductId().toString(), choosen_report, comment.getText().toString()).enqueue(new Callback<FilterProductStore>() {
+                    @Override
+                    public void onResponse(Call<FilterProductStore> call, Response<FilterProductStore> response) {
+                        if (response.code()==200){
+                            initDialog(2);
+                            dialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FilterProductStore> call, Throwable t) {
+
+                    }
+                });
             }
         });
         dialog.show();

@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.williamsumitro.dress.R;
 import com.example.williamsumitro.dress.view.model.BagResponse;
+import com.example.williamsumitro.dress.view.model.NotificationResponse;
 import com.example.williamsumitro.dress.view.model.StoreResponse;
 import com.example.williamsumitro.dress.view.model.UserResponse;
 import com.example.williamsumitro.dress.view.model.UserDetails;
@@ -35,6 +36,7 @@ import com.example.williamsumitro.dress.view.presenter.api.apiUtils;
 import com.example.williamsumitro.dress.view.view.About;
 import com.example.williamsumitro.dress.view.view.Test;
 import com.example.williamsumitro.dress.view.view.authentication.Unauthorized;
+import com.example.williamsumitro.dress.view.view.home.activity.Notification;
 import com.example.williamsumitro.dress.view.view.home.fragment.HomeFragment;
 import com.example.williamsumitro.dress.view.presenter.session.SessionManagement;
 import com.example.williamsumitro.dress.view.view.authentication.Login;
@@ -92,14 +94,17 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private Context context;
     private SessionManagement sessionManagement;
-    private String token ="", total_qty="0";
+    private String token ="", total_qty="0", total_notif;
     private apiService service;
     private Boolean status = false;
-    private TextView itemcount;
+    private TextView itemcount, notificationcount;
     private ProgressDialog progressDialog;
     private SweetAlertDialog sweetAlertDialog;
     private final static String CHECKOUT = "CHECKOUT";
     private final static String FILEUPLOAD = "FILEUPLOAD";
+    private final static String NOTIFICATION = "NOTIFICATION";
+    private final static String NOTIFICATION1 = "NOTIFICATION1";
+    private final static String REJECT = "REJECT";
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -118,6 +123,16 @@ public class MainActivity extends AppCompatActivity {
         else if (getintent.hasExtra(FILEUPLOAD)){
             navIndex = 1;
             CURRENT = SELLERPANEL;
+            loadHomeFragment();
+        }
+        else if (getintent.hasExtra(NOTIFICATION)){
+            navIndex = 4;
+            CURRENT = PURCHASE;
+            loadHomeFragment();
+        }
+        else if (getintent.hasExtra(REJECT)){
+            navIndex = 4;
+            CURRENT = PURCHASE;
             loadHomeFragment();
         }
         else{
@@ -406,6 +421,19 @@ public class MainActivity extends AppCompatActivity {
                 return rfqFragment;
             case 4:
                 PurchaseFragment purchaseFragment = new PurchaseFragment();
+                if (getIntent().hasExtra(NOTIFICATION)){
+                    Bundle bundle = new Bundle();
+                    bundle.putString(NOTIFICATION1, "NOTIFICATION1");
+                    purchaseFragment.setArguments(bundle);
+                    getIntent().removeExtra(NOTIFICATION);
+                }
+                if (getIntent().hasExtra(REJECT)){
+                    Toasty.info(context, "masuk", Toast.LENGTH_LONG).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(REJECT, "REJECT");
+                    purchaseFragment.setArguments(bundle);
+                    getIntent().removeExtra(REJECT);
+                }
                 return purchaseFragment;
             case 5:
                 WishlistFragment wishlistFragment = new WishlistFragment();
@@ -439,9 +467,38 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             api_viewshoppingbag();
+            final MenuItem menuItem1 = menu.findItem(R.id.menu_notification);
+            View actionView1 = MenuItemCompat.getActionView(menuItem1);
+            notificationcount = (TextView) actionView1.findViewById(R.id.custom_notification_badge);
+            actionView1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, Notification.class);
+                    initanim(intent);
+                }
+            });
+            api_viewnotification();
         }
         return true;
     }
+
+    private void api_viewnotification() {
+        service = apiUtils.getAPIService();
+        service.req_view_notification(token).enqueue(new Callback<NotificationResponse>() {
+            @Override
+            public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
+                if (response.code()==200){
+                    total_notif = response.body().getCountUnread().toString();
+                    setup_badge();
+                }
+            }
+            @Override
+            public void onFailure(Call<NotificationResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -459,6 +516,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void setup_badge(){
+        int qtynot = 0;
+        if (total_notif!=null){
+            qtynot = Integer.parseInt(total_notif);
+        }
+        if (qtynot==0){
+            if (notificationcount.getVisibility() != View.GONE)
+                notificationcount.setVisibility(View.GONE);
+        }
+        else {
+            notificationcount.setText(String.valueOf(Math.min(qtynot, 99)));
+            if (notificationcount.getVisibility() != View.VISIBLE)
+                notificationcount.setVisibility(View.VISIBLE);
+        }
     }
     private void setupBadge(){
         int qtytot = 0;

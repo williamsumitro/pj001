@@ -15,6 +15,7 @@ import com.example.williamsumitro.dress.view.model.DownlinePartnershipResponse;
 import com.example.williamsumitro.dress.view.model.FavoriteResponse;
 import com.example.williamsumitro.dress.view.model.FilterProductStore;
 import com.example.williamsumitro.dress.view.model.FinancialHistoryResponse;
+import com.example.williamsumitro.dress.view.model.NotificationResponse;
 import com.example.williamsumitro.dress.view.model.OfferHistoryResponse;
 import com.example.williamsumitro.dress.view.model.PartnershipResponse;
 import com.example.williamsumitro.dress.view.model.PaymentResponse;
@@ -22,6 +23,7 @@ import com.example.williamsumitro.dress.view.model.ProductResponse;
 import com.example.williamsumitro.dress.view.model.ProvinceResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_OrderResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_PaymentResponse;
+import com.example.williamsumitro.dress.view.model.Purchase_RejectResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_ReviewRatingResponse;
 import com.example.williamsumitro.dress.view.model.Purchase_TransactionHistoryResponse;
 import com.example.williamsumitro.dress.view.model.RFQResponse;
@@ -159,6 +161,10 @@ public interface apiService {
     @FormUrlEncoded
     @POST("view_shopping_bag")
     Call<BagResponse> req_view_shopping_bag(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("get_notification")
+    Call<NotificationResponse> req_view_notification(@Field("token") String token);
 
     @FormUrlEncoded
     @POST("delete_product_from_bag")
@@ -507,4 +513,21 @@ public interface apiService {
                                                 @Field("store_id") String store_id,
                                                 @Field("price_min") String price_min,
                                                 @Field("price_max") String price_max);
+
+    @FormUrlEncoded
+    @POST("report_product")
+    Call<FilterProductStore> req_reportproduct(@Field("token") String token,
+                                                      @Field("product_id") String product_id,
+                                                      @Field("issue") String issue,
+                                                      @Field("comment") String comment);
+
+    @FormUrlEncoded
+    @POST("read_notification")
+    Call<ResponseBody> req_read_notification(@Field("token") String token,
+                                               @Field("notification_id") String notification_id);
+
+    @FormUrlEncoded
+    @POST("reject_payment_history")
+    Call<Purchase_RejectResponse> req_reject(@Field("token") String token);
+
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/p_history_swiperefreshlayout"
+        android:id="@+id/p_reject_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -16,27 +16,27 @@
             <LinearLayout
                 android:visibility="gone"
                 android:gravity="center"
-                android:id="@+id/p_history_ln_top"
+                android:id="@+id/p_reject_ln_top"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <ImageView
-                    android:src="@drawable/transactionhistory1"
+                    android:src="@drawable/paymentstatus1"
                     android:layout_gravity="center"
                     android:layout_width="200dp"
                     android:layout_height="200dp" />
                 <TextView
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center"
-                    android:textSize="20sp"
+                    android:textSize="25sp"
                     android:textColor="@color/black"
-                    android:text="There are no Transaction History"
+                    android:text="There are no payments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/p_history_ln_bottom"
+                android:id="@+id/p_reject_ln_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/p_history_rv"
+                            android:id="@+id/p_reject_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>

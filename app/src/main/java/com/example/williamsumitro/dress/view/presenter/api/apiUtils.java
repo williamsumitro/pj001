@@ -5,7 +5,7 @@ package com.example.williamsumitro.dress.view.presenter.api;
  */
 
 public class apiUtils {
-    public static final String IP ="http://192.168.42.192/";
+    public static final String IP ="http://192.168.42.209/";
 
     public static final String BASE = IP+"dress_marketplace/";
     public static final String BASE_URL = BASE+"api/";
